@@ -1,0 +1,69 @@
+package DAO;
+
+import java.util.Date;
+
+public class GIAI_DOAN_NGHIEM_THU {
+	private int MA_GIAI_DOAN_NGHIEM_THU;
+	private Date THOI_DIEM_TIEP_NHAN;
+	private int THOI_GIAN_DU_KIEN_HOAN_THANH;
+	private Date THOI_DIEM_CHUYEN_GIAO;
+	private Date THOI_DIEM_KET_THUC;
+	private String GHI_CHU;
+	private Date MA_QUATRINH_NGHIEMTHU_QUYETTOAN;
+
+	public int getMA_GIAI_DOAN_NGHIEM_THU() {
+		return MA_GIAI_DOAN_NGHIEM_THU;
+	}
+
+	public void setMA_GIAI_DOAN_NGHIEM_THU(int mA_GIAI_DOAN_NGHIEM_THU) {
+		MA_GIAI_DOAN_NGHIEM_THU = mA_GIAI_DOAN_NGHIEM_THU;
+	}
+
+	public Date getTHOI_DIEM_TIEP_NHAN() {
+		return THOI_DIEM_TIEP_NHAN;
+	}
+
+	public void setTHOI_DIEM_TIEP_NHAN(Date tHOI_DIEM_TIEP_NHAN) {
+		THOI_DIEM_TIEP_NHAN = tHOI_DIEM_TIEP_NHAN;
+	}
+
+	public int getTHOI_GIAN_DU_KIEN_HOAN_THANH() {
+		return THOI_GIAN_DU_KIEN_HOAN_THANH;
+	}
+
+	public void setTHOI_GIAN_DU_KIEN_HOAN_THANH(int tHOI_GIAN_DU_KIEN_HOAN_THANH) {
+		THOI_GIAN_DU_KIEN_HOAN_THANH = tHOI_GIAN_DU_KIEN_HOAN_THANH;
+	}
+
+	public Date getTHOI_DIEM_CHUYEN_GIAO() {
+		return THOI_DIEM_CHUYEN_GIAO;
+	}
+
+	public void setTHOI_DIEM_CHUYEN_GIAO(Date tHOI_DIEM_CHUYEN_GIAO) {
+		THOI_DIEM_CHUYEN_GIAO = tHOI_DIEM_CHUYEN_GIAO;
+	}
+
+	public Date getTHOI_DIEM_KET_THUC() {
+		return THOI_DIEM_KET_THUC;
+	}
+
+	public void setTHOI_DIEM_KET_THUC(Date tHOI_DIEM_KET_THUC) {
+		THOI_DIEM_KET_THUC = tHOI_DIEM_KET_THUC;
+	}
+
+	public String getGHI_CHU() {
+		return GHI_CHU;
+	}
+
+	public void setGHI_CHU(String gHI_CHU) {
+		GHI_CHU = gHI_CHU;
+	}
+
+	public Date getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() {
+		return MA_QUATRINH_NGHIEMTHU_QUYETTOAN;
+	}
+
+	public void setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(Date mA_QUATRINH_NGHIEMTHU_QUYETTOAN) {
+		MA_QUATRINH_NGHIEMTHU_QUYETTOAN = mA_QUATRINH_NGHIEMTHU_QUYETTOAN;
+	}
+}

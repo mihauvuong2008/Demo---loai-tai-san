@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Application>
+	<host id="1001">
+		<ip>localhost</ip>
+		<port>3306</port>
+		<TimeDelay>500</TimeDelay>
+		<ssl>true</ssl>
+		<password>7eA+OGk9p1Z+e10ITszgpA==</password>
+	</host>
+	<sercurity id="2">
+		<password_session>u8v8ntr9fuhekbtt</password_session>
+	</sercurity>
+</Application>

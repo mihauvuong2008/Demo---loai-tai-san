@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="91e55930-df10-4741-b9b2-ea9b7f115f2a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="9749e9f5-a4d5-447e-aaa5-7f1357e01189">
+		<field name="data" class="java.awt.Image"/>
+	</subDataset>
+	<parameter name="ItemdataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<field name="socongvan" class="java.lang.String"/>
+	<field name="coquanbanhanh" class="java.lang.String"/>
+	<field name="ngaythangVanban" class="java.lang.String"/>
+	<field name="macongvan" class="java.lang.String"/>
+	<field name="trichyeu" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="147" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="144" height="20" uuid="010a98be-18f3-4e49-8204-4298ecb75086"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Số công văn:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="144" height="20" uuid="b07e9259-c2a5-4eff-80be-af2c59de16d3"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Cơ quan ban hành:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="144" height="20" uuid="575d159e-da0d-4a2f-a85d-862feadf3ee6"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Ngày tháng văn bản:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="144" height="20" uuid="ef99c236-c2d4-49a0-9060-c9d473609811"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Mã công văn:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="144" height="20" uuid="7f2f0b28-92d7-41e1-9d0e-277b181e8675"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Trích yếu:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="144" y="0" width="411" height="20" uuid="170d36cb-49e1-4f26-8a39-7b85266a7c5a"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{socongvan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="20" width="411" height="20" uuid="04342952-abb9-4106-8005-5b10b70e24af"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coquanbanhanh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="40" width="411" height="20" uuid="c2ae690b-e917-42e6-8cf0-78cbf2a7c32b"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ngaythangVanban}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="60" width="411" height="20" uuid="f4a78e29-5930-4086-a853-790521bd55e1"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{macongvan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="80" width="411" height="67" uuid="561309e4-2492-44ea-bf6e-675fe84da519"/>
+				<textElement verticalAlignment="Top">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trichyeu}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="703" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="0" y="0" width="555" height="703" uuid="2a323ef3-0320-4245-8d6b-041ec8e580ad"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="f35dc4df-bb1d-457c-a398-79e5c01a5a68">
+						<dataSourceExpression><![CDATA[$P{ItemdataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="550" uuid="15430ff6-1f40-4bfc-8912-0bb904679a40">
+						<jr:tableHeader style="table 2_TH" height="1" rowSpan="1"/>
+						<jr:tableFooter style="table 2_TH" height="1" rowSpan="1"/>
+						<jr:columnHeader style="table 2_CH" height="0" rowSpan="1"/>
+						<jr:columnFooter style="table 2_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 2_TD" height="800" rowSpan="1">
+							<image>
+								<reportElement x="0" y="0" width="550" height="800" uuid="26762afb-e76e-43f1-87f4-5418fc31a741"/>
+								<imageExpression><![CDATA[$F{data}]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

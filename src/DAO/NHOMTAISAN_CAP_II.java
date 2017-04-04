@@ -1,0 +1,31 @@
+package DAO;
+
+public class NHOMTAISAN_CAP_II {
+	int MA_NHOMTAISAN_CAP_II;
+	String TEN_NHOMTAISAN_CAP_II;
+	int MA_NHOMTAISAN_CAP_I;
+
+	public int getMA_NHOMTAISAN_CAP_II() {
+		return MA_NHOMTAISAN_CAP_II;
+	}
+
+	public void setMA_NHOMTAISAN_CAP_II(int mA_NHOMTAISAN_CAP_II) {
+		MA_NHOMTAISAN_CAP_II = mA_NHOMTAISAN_CAP_II;
+	}
+
+	public String getTEN_NHOMTAISAN_CAP_II() {
+		return TEN_NHOMTAISAN_CAP_II;
+	}
+
+	public void setTEN_NHOMTAISAN_CAP_II(String tEN_NHOMTAISAN_CAP_II) {
+		TEN_NHOMTAISAN_CAP_II = tEN_NHOMTAISAN_CAP_II;
+	}
+
+	public int getMA_NHOMTAISAN_CAP_I() {
+		return MA_NHOMTAISAN_CAP_I;
+	}
+
+	public void setMA_NHOMTAISAN_CAP_I(int mA_NHOMTAISAN_CAP_I) {
+		MA_NHOMTAISAN_CAP_I = mA_NHOMTAISAN_CAP_I;
+	}
+}

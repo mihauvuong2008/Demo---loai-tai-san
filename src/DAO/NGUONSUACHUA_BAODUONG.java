@@ -1,0 +1,40 @@
+package DAO;
+
+public class NGUONSUACHUA_BAODUONG {
+	private int MA_NGUONSUACHUA_BAODUONG;
+	private String TEN_NGUONSUACHUA_BAODUONG;
+	private String GIOI_THIEU;
+	private String LIEN_HE;
+
+	public int getMA_NGUONSUACHUA_BAODUONG() {
+		return MA_NGUONSUACHUA_BAODUONG;
+	}
+
+	public void setMA_NGUONSUACHUA_BAODUONG(int mA_NGUONSUACHUA_BAODUONG) {
+		MA_NGUONSUACHUA_BAODUONG = mA_NGUONSUACHUA_BAODUONG;
+	}
+
+	public String getTEN_NGUONSUACHUA_BAODUONG() {
+		return TEN_NGUONSUACHUA_BAODUONG;
+	}
+
+	public void setTEN_NGUONSUACHUA_BAODUONG(String tEN_NGUONSUACHUA_BAODUONG) {
+		TEN_NGUONSUACHUA_BAODUONG = tEN_NGUONSUACHUA_BAODUONG;
+	}
+
+	public String getGIOI_THIEU() {
+		return GIOI_THIEU;
+	}
+
+	public void setGIOI_THIEU(String gIOI_THIEU) {
+		GIOI_THIEU = gIOI_THIEU;
+	}
+
+	public String getLIEN_HE() {
+		return LIEN_HE;
+	}
+
+	public void setLIEN_HE(String lIEN_HE) {
+		LIEN_HE = lIEN_HE;
+	}
+}

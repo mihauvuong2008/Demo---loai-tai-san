@@ -1,0 +1,31 @@
+package DAO;
+
+public class LOAITAISAN_CAP_II {
+	private int MA_LOAITAISAN_CAP_II;
+	private String TEN_LOAITAISAN_CAP_II;
+	private int MA_LOAITAISAN_CAP_I;
+
+	public int getMA_LOAITAISAN_CAP_II() {
+		return MA_LOAITAISAN_CAP_II;
+	}
+
+	public void setMA_LOAITAISAN_CAP_II(int mA_LOAITAISAN_CAP_II) {
+		MA_LOAITAISAN_CAP_II = mA_LOAITAISAN_CAP_II;
+	}
+
+	public String getTEN_LOAITAISAN_CAP_II() {
+		return TEN_LOAITAISAN_CAP_II;
+	}
+
+	public void setTEN_LOAITAISAN_CAP_II(String tEN_LOAITAISAN_CAP_II) {
+		TEN_LOAITAISAN_CAP_II = tEN_LOAITAISAN_CAP_II;
+	}
+
+	public int getMA_LOAITAISAN_CAP_I() {
+		return MA_LOAITAISAN_CAP_I;
+	}
+
+	public void setMA_LOAITAISAN_CAP_I(int mA_LOAITAISAN_CAP_I) {
+		MA_LOAITAISAN_CAP_I = mA_LOAITAISAN_CAP_I;
+	}
+}

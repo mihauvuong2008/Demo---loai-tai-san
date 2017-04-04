@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report3" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="454" leftMargin="85" rightMargin="56" topMargin="56" bottomMargin="56" uuid="4c123229-d644-44a8-8e7c-374d2a46ab16">
+	<property name="ireport.zoom" value="0.9330147604194674"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<subDataset name="dataset1" uuid="ab836473-859e-40f4-89d6-874a3fec5410">
+		<field name="bienso" class="java.lang.String">
+			<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+		</field>
+	</subDataset>
+	<field name="ma_lenh_dieu_xe" class="java.lang.String"/>
+	<field name="bien_so" class="java.lang.String"/>
+	<field name="ten_canbo" class="java.lang.String"/>
+	<field name="diem_xuatphat" class="java.lang.String"/>
+	<field name="diem_den" class="java.lang.String"/>
+	<field name="ngay_di" class="java.lang.String"/>
+	<field name="ngay_ve" class="java.lang.String"/>
+	<field name="so_km_hientai" class="java.lang.String"/>
+	<field name="quang_duong_dukien" class="java.lang.String"/>
+	<field name="phieu_xang_duoccap" class="java.lang.String"/>
+	<field name="diadiem_giodon" class="java.lang.String"/>
+	<field name="noidung_chuyendi" class="java.lang.String"/>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="69" y="9" width="332" height="38" uuid="a363cc5e-b229-47e7-b171-54dbcb84f913"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="26" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[LỆNH ĐIỀU XE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="36">
+			<staticText>
+				<reportElement x="0" y="0" width="454" height="36" uuid="69d47246-9eb2-4ed5-bffb-90cd04eb10f8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[          Căn cứ tình tình thực tiễn yêu cầu công tác và phương tiện cơ giới tại đơn vị, Lãnh đạo Cục ra quyết định điều xe:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="500" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="0" width="212" height="20" backcolor="#CCCCCC" uuid="f703a8a0-451a-48f8-a1e7-f04cfff8a0a4"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[1. Mã lệnh điều xe:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="0" width="204" height="20" backcolor="#CCCCCC" uuid="33e3e70f-e060-47bd-b79b-64493a08a2aa"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ma_lenh_dieu_xe}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="20" width="212" height="20" backcolor="#CCCCCC" uuid="20639cf3-f54e-4f7f-baea-87759be3d3e2"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[2. Xe ô tô Biển số:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="20" width="204" height="20" backcolor="#CCCCCC" uuid="eec2a9fe-2ea6-4673-b172-283c9b524338"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bien_so}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="60" width="212" height="20" backcolor="#CCCCCC" uuid="75ce131b-dbab-400a-9be5-55976d65bdaf"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[4. Điểm xuất phát:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="40" width="204" height="20" backcolor="#CCCCCC" uuid="c39de273-f010-411e-8e3d-a439da81cbe1"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ten_canbo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="80" width="204" height="20" backcolor="#CCCCCC" uuid="45449aaa-4f19-4ea2-bea0-123d491de693"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diem_den}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="40" width="212" height="20" backcolor="#CCCCCC" uuid="8d67ee74-b390-4670-8f12-dc049d45b815"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[3. Cán bộ nhận lệnh lái:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="60" width="204" height="20" backcolor="#CCCCCC" uuid="2be6b104-fce4-4073-9ea1-85e7fdc6ca13"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diem_xuatphat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="80" width="212" height="20" backcolor="#CCCCCC" uuid="908bf023-4f01-471e-87dc-017e7ba39477"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[5. Điểm đến:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="100" width="212" height="20" backcolor="#CCCCCC" uuid="0f78b7ea-3f22-4145-967a-05996a5b5e95"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[6. Ngày đi:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="120" width="212" height="20" backcolor="#CCCCCC" uuid="44100427-aa65-4911-832c-7f377b6d7c6b"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[7. Ngày về:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="140" width="212" height="20" backcolor="#CCCCCC" uuid="43e3bb0c-fe5c-41a1-b93e-e66d321aa899"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[8. Số Km hiện tại:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="160" width="212" height="20" backcolor="#CCCCCC" uuid="7f83a8a3-1432-4840-ae71-7d844a47f7d3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[9. Quãng đường dự kiến:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="180" width="212" height="20" backcolor="#CCCCCC" uuid="35c55fad-b81a-44be-8ac5-f9859da52689"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[10. Phiếu xăng được cấp:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="200" width="212" height="20" backcolor="#CCCCCC" uuid="b5efad83-7fc2-4897-8f17-2dbad2984fa1"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[11. Địa điểm - Giờ đón:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="260" width="212" height="20" backcolor="#CCCCCC" uuid="c89e0ce7-f998-410b-9041-4906b86b0468"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<text><![CDATA[12. Nội dung chuyến đi:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="100" width="204" height="20" backcolor="#CCCCCC" uuid="02f15a28-714e-4337-85b2-5e016ba55f02"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ngay_di}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="120" width="204" height="20" backcolor="#CCCCCC" uuid="4f156ead-7ed6-43e7-b4e6-7441f2ddcb79"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ngay_ve}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="140" width="204" height="20" backcolor="#CCCCCC" uuid="75575890-13a1-4b24-badd-e9383f082550"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{so_km_hientai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="160" width="204" height="20" backcolor="#CCCCCC" uuid="ad0dcce1-650c-4121-9434-5f7c747105be"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quang_duong_dukien}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="180" width="204" height="20" backcolor="#CCCCCC" uuid="85b15c3b-24ac-430e-af74-4f2e0b180b33"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phieu_xang_duoccap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="200" width="204" height="60" backcolor="#CCCCCC" uuid="1acc0395-eff7-4e91-bd81-c295be0e2ea5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diadiem_giodon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="260" width="204" height="116" backcolor="#CCCCCC" uuid="50c28aed-b030-4873-924a-5b29437c01ce"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="14"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="1.15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{noidung_chuyendi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="376" width="302" height="20" backcolor="#CCCCCC" uuid="30f4e45b-af0c-474e-a369-f4bdbc1df984"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tp. Hồ Chí Minh, ngày           tháng         năm 20]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="396" width="133" height="20" backcolor="#CCCCCC" uuid="28742100-fccb-42e0-a9e2-3a428c49144d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NGƯỜI ĐỀ XUẤT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="396" width="168" height="20" backcolor="#CCCCCC" uuid="3f6760ba-2576-47b7-a6a3-4964ed1c8bdf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LÃNH ĐẠO PHÊ DUYỆT]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

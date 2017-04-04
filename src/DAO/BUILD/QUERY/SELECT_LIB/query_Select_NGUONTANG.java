@@ -1,0 +1,47 @@
+package DAO.BUILD.QUERY.SELECT_LIB;
+
+import DAO.DOT_THUCHIEN_TANG_TAISAN;
+
+public class query_Select_NGUONTANG {
+
+	public String getString_NguontangTaisan(int ma_NguonTang) {
+		try {
+			return "SELECT * FROM NGUONTANG WHERE MA_NGUONTANG = '" + ma_NguonTang + "'; ";
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_Tatca_Nguongtang(String pattern) {
+		try {
+			return "SELECT * " + " FROM NGUONTANG " + (pattern.equals("") ? ""
+					: "WHERE TEN_NGUONTANG LIKE '%" + pattern + "%' OR LIEN_HE LIKE '%" + pattern
+							+ "%' OR GIOI_THIEU LIKE '%" + pattern + "%'");
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_Nguontang_Taisan(int ma_TAISAN) {
+		try {
+			return "SELECT NGUONTANG.MA_NGUONTANG, TEN_NGUONTANG, GIOI_THIEU, LIEN_HE FROM GIAI_DOAN_NGHIEM_THU, DOT_THUCHIEN_TANG_TAISAN, NGUONTANG "
+					+ "WHERE THOI_DIEM_KET_THUC  IN ( SELECT MAX( THOI_DIEM_KET_THUC ) FROM (SELECT THOI_DIEM_KET_THUC, tbl22.MA_QUATRINH_NGHIEMTHU_QUYETTOAN, tbl11.MA_DOT_TANG  FROM  (SELECT MA_DOT_TANG FROM TAISAN_DOT_THUCHIEN_TANG_TAISAN WHERE  TAISAN_DOT_THUCHIEN_TANG_TAISAN.MA_TAISAN = '"
+					+ ma_TAISAN
+					+ "') as tbl11,  (SELECT MA_DOT_TANG, DOT_THUCHIEN_TANG_TAISAN.MA_QUATRINH_NGHIEMTHU_QUYETTOAN, GIAI_DOAN_NGHIEM_THU.MA_GIAI_DOAN_NGHIEM_THU, THOI_DIEM_KET_THUC   FROM DOT_THUCHIEN_TANG_TAISAN,   GIAI_DOAN_NGHIEM_THU WHERE  DOT_THUCHIEN_TANG_TAISAN.MA_QUATRINH_NGHIEMTHU_QUYETTOAN = GIAI_DOAN_NGHIEM_THU.MA_QUATRINH_NGHIEMTHU_QUYETTOAN) as tbl22 WHERE  tbl11.MA_DOT_TANG=tbl22.MA_DOT_TANG)as t ) AND DOT_THUCHIEN_TANG_TAISAN.MA_QUATRINH_NGHIEMTHU_QUYETTOAN = GIAI_DOAN_NGHIEM_THU.MA_QUATRINH_NGHIEMTHU_QUYETTOAN AND NGUONTANG.MA_NGUONTANG=DOT_THUCHIEN_TANG_TAISAN.MA_NGUONTANG;";
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_Nguontang_DottangTaisan(DOT_THUCHIEN_TANG_TAISAN dtt) {
+		try {
+
+			return "SELECT * " + " FROM NGUONTANG " + " INNER JOIN (SELECT DOT_THUCHIEN_TANG_TAISAN.MA_NGUONTANG "
+					+ " FROM DOT_THUCHIEN_TANG_TAISAN " + " WHERE DOT_THUCHIEN_TANG_TAISAN.MA_DOT_TANG = '"
+					+ dtt.getMA_DOT_TANG() + "')as t1 " + " ON NGUONTANG.MA_NGUONTANG = t1.MA_NGUONTANG;";
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+}
