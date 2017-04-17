@@ -5,6 +5,7 @@ import java.util.Date;
 public class DOT_THUCHIEN_DANGKIEM {
 	private int MA_DOT_THUCHIEN_DANGKIEM;// INTEGER(10) NOT NULL AUTO_INCREMENT,
 	private Date NGAY_THUCHIEN;// DATE,
+	private String TEN_TAI_KHOAN;
 	private int MA_TAPHOSO;// INTEGER,
 	private String MA_PHUONGTIEN_GIAOTHONG;// INTEGER,
 	private String GHI_CHU;// VARCHAR(400),
@@ -23,6 +24,14 @@ public class DOT_THUCHIEN_DANGKIEM {
 
 	public final void setNGAY_THUCHIEN(Date nGAY_THUCHIEN) {
 		NGAY_THUCHIEN = nGAY_THUCHIEN;
+	}
+
+	public final String getTEN_TAI_KHOAN() {
+		return TEN_TAI_KHOAN;
+	}
+
+	public final void setTEN_TAI_KHOAN(String tEN_TAI_KHOAN) {
+		TEN_TAI_KHOAN = tEN_TAI_KHOAN;
 	}
 
 	public final int getMA_TAPHOSO() {

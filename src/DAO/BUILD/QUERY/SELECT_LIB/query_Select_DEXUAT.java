@@ -59,8 +59,8 @@ public class query_Select_DEXUAT {
 		try {
 			return "SELECT * FROM DE_XUAT as dx" + " INNER JOIN QUATRINH_DEXUAT_THUCHIEN as qtdxth "
 					+ " ON qtdxth.MA_DE_XUAT = dx.MA_DE_XUAT " + " INNER JOIN 	DOT_THUCHIEN_SUACHUA_BAODUONG as dsb "
-					+ " ON dsb.MA_QUATRINH_DEXUAT_THUCHIEN = qtdxth.MA_QUATRINH_DEXUAT_THUCHIEN WHERE NGAYTHANG_VANBAN > '"
-					+ mdf.getSQLStringDate(begin) + "' AND NGAYTHANG_VANBAN < '" + mdf.getSQLStringDate(end) + "'"
+					+ " ON dsb.MA_QUATRINH_DEXUAT_THUCHIEN = qtdxth.MA_QUATRINH_DEXUAT_THUCHIEN WHERE NGAYTHANG_VANBAN >= '"
+					+ mdf.getSQLStringDate(begin) + "' AND NGAYTHANG_VANBAN <= '" + mdf.getSQLStringDate(end) + "'"
 					+ ((text_pattern.equals("")) ? "" : " AND dx.SODEXUAT LIKE '%" + text_pattern + "%'");
 		} catch (Exception e) {
 			return null;

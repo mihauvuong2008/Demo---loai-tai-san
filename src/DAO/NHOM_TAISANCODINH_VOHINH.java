@@ -1,0 +1,59 @@
+package DAO;
+
+public class NHOM_TAISANCODINH_VOHINH {
+	private int MA_NHOM_TAISANCODINH_VOHINH;
+	private String TEN_NHOM_TAISANCODINH_VOHINH;
+	public static final int PHAN_NHOMTAISAN = 1;
+	private int MA_NHOMTAISAN_CAP_IV;
+	private int THOIGIAN_SUDUNG;
+	private double TILE_HAOMON;
+
+	public NHOM_TAISANCODINH_VOHINH(int MA_NHOMTAISAN_CAP_IV) {
+		this.MA_NHOMTAISAN_CAP_IV = MA_NHOMTAISAN_CAP_IV;
+	}
+
+	public final int getMA_NHOM_TAISANCODINH_VOHINH() {
+		return MA_NHOM_TAISANCODINH_VOHINH;
+	}
+
+	public final void setMA_NHOM_TAISANCODINH_VOHINH(int mA_NHOM_TAISANCODINH_VOHINH) {
+		MA_NHOM_TAISANCODINH_VOHINH = mA_NHOM_TAISANCODINH_VOHINH;
+	}
+
+	public final String getTEN_NHOM_TAISANCODINH_VOHINH() {
+		return TEN_NHOM_TAISANCODINH_VOHINH;
+	}
+
+	public final void setTEN_NHOM_TAISANCODINH_VOHINH(String tEN_NHOM_TAISANCODINH_VOHINH) {
+		TEN_NHOM_TAISANCODINH_VOHINH = tEN_NHOM_TAISANCODINH_VOHINH;
+	}
+
+	public final double getTILE_HAOMON() {
+		return TILE_HAOMON;
+	}
+
+	public final void setTILE_HAOMON(double tILE_HAOMON) {
+		TILE_HAOMON = tILE_HAOMON;
+	}
+
+	public final int getMA_NHOMTAISAN_CAP_IV() {
+		return MA_NHOMTAISAN_CAP_IV;
+	}
+
+	public final void setMA_NHOMTAISAN_CAP_IV(int mA_NHOMTAISAN_CAP_IV) {
+		MA_NHOMTAISAN_CAP_IV = mA_NHOMTAISAN_CAP_IV;
+	}
+
+	public final int getMaPhannhom() {
+		return PHAN_NHOMTAISAN;
+	}
+
+	public void setTHOIGIAN_SUDUNG(int THOIGIAN_SUDUNG) {
+		this.THOIGIAN_SUDUNG = THOIGIAN_SUDUNG;
+	}
+
+	public int getTHOIGIAN_SUDUNG() {
+		return this.THOIGIAN_SUDUNG;
+	}
+
+}

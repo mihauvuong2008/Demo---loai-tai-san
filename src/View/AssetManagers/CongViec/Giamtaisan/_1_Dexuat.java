@@ -218,6 +218,23 @@ public class _1_Dexuat extends Shell {
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				try {
+					if (dx.getMA_TAPHOSO() <= 0) {
+						TAP_HO_SO t = new TAP_HO_SO();
+						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất Thanh lý, bàn giao");
+						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất Thanh lý, bàn giao");
+						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
+						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
+					}
+					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+
+					TAPHOSO_View view = new TAPHOSO_View(getShell(), SWT.NONE, user, ths, false);
+					view.open();
+					fillTaphoso(ths);
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
 				if (checkTextNotNULL()) {
 					dx.setMA_DE_XUAT(controler.getControl_DEXUAT().getNextKey());
 					dx.setSODEXUAT(text_Sodexuat.getText());
@@ -233,6 +250,20 @@ public class _1_Dexuat extends Shell {
 				} else {
 					showMessage_FillText();
 				}
+			}
+
+			private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
+				table.removeAll();
+				ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
+				int i = 1;
+				if (vbl != null)
+					for (VANBAN vanban : vbl) {
+						TableItem tableItem = new TableItem(table, SWT.NONE);
+						tableItem.setText(new String[] { (i++) + "", vanban.getSO_VANBAN(), vanban.getTRICH_YEU(),
+								vanban.getCO_QUAN_BAN_HANH(), ((vanban.getNGAY_BAN_HANH() == null) ? "-"
+										: mdf.getViewStringDate(vanban.getNGAY_BAN_HANH())) });
+						tableItem.setData(vanban);
+					}
 			}
 
 			protected boolean checkTextNotNULL() {

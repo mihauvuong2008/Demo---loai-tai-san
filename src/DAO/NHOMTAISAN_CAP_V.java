@@ -4,6 +4,7 @@ public class NHOMTAISAN_CAP_V {
 	private int MA_NHOMTAISAN_CAP_V;
 	private String TEN_NHOMTAISAN_CAP_V;
 	private int MA_NHOMTAISAN_CAP_IV;
+	public static final int PHAN_NHOMTAISAN = 0;
 	private int THOIGIAN_SUDUNG;
 	private double TILE_HAOMON;
 

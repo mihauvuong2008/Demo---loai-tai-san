@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
@@ -69,6 +68,8 @@ import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 
 public class CongViecCuaToi extends Shell {
 	private Tree tree_Dangthuchien;
@@ -83,23 +84,6 @@ public class CongViecCuaToi extends Shell {
 	private Text text_Gioithieu;
 	private Text text_Lienhe;
 	private Tree tree_Tiepnhan;
-	private Text text_6;
-	private Table table;
-	private Text text_7;
-	private Text text_8;
-	private Text text_9;
-	private Text text_10;
-	private Table table_1;
-	private Text text_12;
-	private Text text_13;
-	private Table table_2;
-	private Text text_11;
-	private Text text_14;
-	private Text text_15;
-	private Table table_3;
-	private Text text_16;
-	private Text text_17;
-	private TabItem tbtmNguonsuachua;
 	private Text text_Congviectruoc_TenPhanviec;
 	private Text text_Congviectruoc_Ngaybatdau;
 	private Text text_Congviectruoc_Ngaychuyengiao;
@@ -130,6 +114,7 @@ public class CongViecCuaToi extends Shell {
 	private final Controler controler;
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(CongViecCuaToi.class);
+	private ExpandItem xpndtmNgunThamgiaCongviec;
 
 	/**
 	 * Launch the application.
@@ -165,6 +150,7 @@ public class CongViecCuaToi extends Shell {
 		this.setLayout(new GridLayout(1, false));
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmHSLu = new ToolItem(toolBar, SWT.NONE);
 		tltmHSLu.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Places-folder-documents-icon (1).png"));
@@ -834,29 +820,19 @@ public class CongViecCuaToi extends Shell {
 		trclmnNewColumn.setWidth(100);
 		trclmnNewColumn.setText("TRẠNG THÁI");
 
-		SashForm sashForm_8 = new SashForm(sashForm_7, SWT.NONE);
-
-		TabFolder tabFolder_2 = new TabFolder(sashForm_8, SWT.NONE);
-
-		TabItem tbtmPhngTinTi = new TabItem(tabFolder_2, SWT.NONE);
-		tbtmPhngTinTi.setText("Thông tin phần việc trước");
-
-		SashForm sashForm_10 = new SashForm(tabFolder_2, SWT.NONE);
-		tbtmPhngTinTi.setControl(sashForm_10);
+		SashForm sashForm_10 = new SashForm(sashForm_7, SWT.NONE);
 
 		Composite composite_4 = new Composite(sashForm_10, SWT.NONE);
 		composite_4.setLayout(new GridLayout(2, false));
 
 		Label lblTnPhnVic = new Label(composite_4, SWT.NONE);
-		lblTnPhnVic.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblTnPhnVic.setText("Tên phần việc:");
+		lblTnPhnVic.setText("Tên phần việc trước:");
 
 		text_Congviectruoc_TenPhanviec = new Text(composite_4, SWT.NONE);
 		text_Congviectruoc_TenPhanviec.setEditable(false);
 		text_Congviectruoc_TenPhanviec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyBtu_1 = new Label(composite_4, SWT.NONE);
-		lblNgyBtu_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblNgyBtu_1.setText("Ngày bắt đầu:");
 
 		text_Congviectruoc_Ngaybatdau = new Text(composite_4, SWT.NONE);
@@ -864,7 +840,6 @@ public class CongViecCuaToi extends Shell {
 		text_Congviectruoc_Ngaybatdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyChuynGiao = new Label(composite_4, SWT.NONE);
-		lblNgyChuynGiao.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblNgyChuynGiao.setText("Ngày chuyển giao:");
 
 		text_Congviectruoc_Ngaychuyengiao = new Text(composite_4, SWT.NONE);
@@ -872,7 +847,6 @@ public class CongViecCuaToi extends Shell {
 		text_Congviectruoc_Ngaychuyengiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblTongsongay = new Label(composite_4, SWT.NONE);
-		lblTongsongay.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTongsongay.setText("Tổng số ngày:");
 
 		text_Congviectruoc_Tongsongay = new Text(composite_4, SWT.NONE);
@@ -880,7 +854,7 @@ public class CongViecCuaToi extends Shell {
 		text_Congviectruoc_Tongsongay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblGhiCh_2 = new Label(composite_4, SWT.NONE);
-		lblGhiCh_2.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		lblGhiCh_2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblGhiCh_2.setText("Ghi chú:");
 
 		text_Congviectruoc_Ghichu = new Text(composite_4, SWT.WRAP);
@@ -935,7 +909,6 @@ public class CongViecCuaToi extends Shell {
 		});
 		mntmXem.setText("Xem Tập hồ sơ");
 		sashForm_10.setWeights(new int[] { 300, 479 });
-		sashForm_8.setWeights(new int[] { 1 });
 		sashForm_7.setWeights(new int[] { 1000, 618 });
 		TabItem tbtmCngVicang = new TabItem(tabFolder, SWT.NONE);
 		tbtmCngVicang.setText("C\u00F4ng vi\u1EC7c \u0111ang th\u1EF1c hi\u1EC7n");
@@ -1170,11 +1143,18 @@ public class CongViecCuaToi extends Shell {
 		MenuItem mntmThmVnBn = new MenuItem(menu_3, SWT.NONE);
 		mntmThmVnBn.setText("Thêm văn bản");
 
-		TabItem tbtmThngTin_1 = new TabItem(tabFolder_4, SWT.NONE);
-		tbtmThngTin_1.setText("Thông tin đề xuất");
+		TabItem tbtmChiTit = new TabItem(tabFolder_4, SWT.NONE);
+		tbtmChiTit.setText("Chi tiết");
 
-		Composite composite_6 = new Composite(tabFolder_4, SWT.NONE);
-		tbtmThngTin_1.setControl(composite_6);
+		ExpandBar expandBar = new ExpandBar(tabFolder_4, SWT.V_SCROLL);
+		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
+		tbtmChiTit.setControl(expandBar);
+
+		ExpandItem xpndtmXemXut = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmXemXut.setText("Xem Đề xuất");
+
+		Composite composite_6 = new Composite(expandBar, SWT.NONE);
+		xpndtmXemXut.setControl(composite_6);
 		composite_6.setLayout(new GridLayout(2, false));
 
 		Label label_13 = new Label(composite_6, SWT.NONE);
@@ -1237,20 +1217,16 @@ public class CongViecCuaToi extends Shell {
 		tree_3.setLinesVisible(true);
 		tree_3.setHeaderVisible(true);
 		tree_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		sashForm_4.setWeights(new int[] { 1000, 618 });
+		xpndtmXemXut.setHeight(xpndtmXemXut.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
-		SashForm sashForm_3 = new SashForm(sashForm, SWT.NONE);
+		ExpandItem xpndtmDanhSchTi = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmDanhSchTi.setText("Danh sách tài sản");
 
-		TabFolder tabFolder_1 = new TabFolder(sashForm_3, SWT.NONE);
-
-		TabItem tbtmDanhSchTi = new TabItem(tabFolder_1, SWT.NONE);
-		tbtmDanhSchTi.setText("Danh s\u00E1ch t\u00E0i s\u1EA3n");
-
-		tree_1 = new Tree(tabFolder_1, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+		tree_1 = new Tree(expandBar, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+		xpndtmDanhSchTi.setControl(tree_1);
 		tree_1.setLinesVisible(true);
 		tree_1.setHeaderVisible(true);
 		ts.setTreeItemHeight(tree_1, ItemHeight);
-		tbtmDanhSchTi.setControl(tree_1);
 
 		TreeColumn trclmnStt_1 = new TreeColumn(tree_1, SWT.NONE);
 		trclmnStt_1.setWidth(55);
@@ -1327,12 +1303,13 @@ public class CongViecCuaToi extends Shell {
 
 		MenuItem mntmXa = new MenuItem(menu, SWT.NONE);
 		mntmXa.setText("X\u00F3a");
+		xpndtmDanhSchTi.setHeight(120);
 
-		tbtmNguonsuachua = new TabItem(tabFolder_1, SWT.NONE);
-		tbtmNguonsuachua.setText("Nguồn sửa chữa - bảo dưỡng");
+		xpndtmNgunThamgiaCongviec = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmNgunThamgiaCongviec.setText("Nguồn sửa chữa - bảo dưỡng");
 
-		Composite composite_2 = new Composite(tabFolder_1, SWT.NONE);
-		tbtmNguonsuachua.setControl(composite_2);
+		Composite composite_2 = new Composite(expandBar, SWT.NONE);
+		xpndtmNgunThamgiaCongviec.setControl(composite_2);
 		composite_2.setLayout(new GridLayout(2, false));
 
 		Label lblTnNgun_1 = new Label(composite_2, SWT.NONE);
@@ -1361,14 +1338,13 @@ public class CongViecCuaToi extends Shell {
 		text_Lienhe = new Text(composite_2, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		text_Lienhe.setEditable(false);
 		text_Lienhe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		xpndtmNgunThamgiaCongviec.setHeight(120);
 
-		TabFolder tabFolder_3 = new TabFolder(sashForm_3, SWT.NONE);
+		ExpandItem xpndtmLcSSa = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmLcSSa.setText("Lược sử sửa chữa tài sản theo tháng");
 
-		TabItem tbtmLcSSa_1 = new TabItem(tabFolder_3, SWT.NONE);
-		tbtmLcSSa_1.setText("L\u01B0\u1EE3c s\u1EED s\u1EEDa ch\u1EEFa t\u00E0i s\u1EA3n theo th\u00E1ng");
-
-		tree_LuocSuSuachua = new Tree(tabFolder_3, SWT.BORDER);
-		tbtmLcSSa_1.setControl(tree_LuocSuSuachua);
+		tree_LuocSuSuachua = new Tree(expandBar, SWT.BORDER);
+		xpndtmLcSSa.setControl(tree_LuocSuSuachua);
 		tree_LuocSuSuachua.setLinesVisible(true);
 		tree_LuocSuSuachua.setHeaderVisible(true);
 		ts.setTreeItemHeight(tree_LuocSuSuachua, ItemHeight);
@@ -1380,10 +1356,12 @@ public class CongViecCuaToi extends Shell {
 		TreeColumn trclmnSXut = new TreeColumn(tree_LuocSuSuachua, SWT.NONE);
 		trclmnSXut.setWidth(100);
 		trclmnSXut.setText("S\u1ED0 \u0110\u1EC0 XU\u1EA4T");
+		xpndtmLcSSa.setHeight(120);
 
-		TabItem tbtmHSPhn = new TabItem(tabFolder_3, SWT.NONE);
-		tbtmHSPhn.setText("Hồ sơ phần việc trước");
-		sashForm.setWeights(new int[] { 1000, 618 });
+		ExpandItem xpndtmHSPhn = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmHSPhn.setText("Hồ sơ phần việc trước");
+		sashForm_4.setWeights(new int[] { 1000, 618 });
+		sashForm.setWeights(new int[] { 1000 });
 
 		TabItem tbtmCngVic_1 = new TabItem(tabFolder, SWT.NONE);
 		tbtmCngVic_1.setText("C\u00F4ng vi\u1EC7c \u0111\u00E3 th\u1EF1c hi\u1EC7n");
@@ -1472,22 +1450,11 @@ public class CongViecCuaToi extends Shell {
 		trclmnNgyKtThc.setWidth(110);
 		trclmnNgyKtThc.setText("NG\u00C0Y K\u1EBET TH\u00DAC");
 
-		TabFolder tabFolder_5 = new TabFolder(sashForm_5, SWT.NONE);
+		SashForm sashForm_6 = new SashForm(sashForm_5, SWT.VERTICAL);
 
-		TabItem tbtmThngTin = new TabItem(tabFolder_5, SWT.NONE);
-		tbtmThngTin.setText("Th\u00F4ng tin");
-
-		SashForm sashForm_6 = new SashForm(tabFolder_5, SWT.VERTICAL);
-		tbtmThngTin.setControl(sashForm_6);
-
-		Group grpHSLu = new Group(sashForm_6, SWT.NONE);
-		grpHSLu.setText("H\u1ED3 s\u01A1 l\u01B0u tr\u1EEF");
-		grpHSLu.setLayout(new GridLayout(1, false));
-
-		tree_Hoso_Dathuchien = new Tree(grpHSLu, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_Hoso_Dathuchien = new Tree(sashForm_6, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_Hoso_Dathuchien.setLinesVisible(true);
 		tree_Hoso_Dathuchien.setHeaderVisible(true);
-		tree_Hoso_Dathuchien.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		TreeColumn trclmnStt_5 = new TreeColumn(tree_Hoso_Dathuchien, SWT.CENTER);
 		trclmnStt_5.setWidth(40);
@@ -1548,142 +1515,7 @@ public class CongViecCuaToi extends Shell {
 		text_Lienhe_Dathuchien.setEditable(false);
 		text_Lienhe_Dathuchien.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm_6.setWeights(new int[] { 1000, 618 });
-
-		TabItem tbtmTin = new TabItem(tabFolder_5, SWT.NONE);
-		tbtmTin.setText("Ti\u1EBFn \u0111\u1ED9");
-
-		SashForm sashForm_9 = new SashForm(tabFolder_5, SWT.VERTICAL);
-		tbtmTin.setControl(sashForm_9);
-
-		Group grpXut = new Group(sashForm_9, SWT.NONE);
-		grpXut.setText("\u0110\u1EC1 xu\u1EA5t - Ch\u1EE7 tr\u01B0\u01A1ng");
-		grpXut.setLayout(new GridLayout(3, false));
-
-		Label lblNgyBtu = new Label(grpXut, SWT.NONE);
-		lblNgyBtu.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblNgyBtu.setText("Ng\u00E0y b\u1EAFt \u0111\u1EA7u:");
-
-		text_6 = new Text(grpXut, SWT.NONE);
-		text_6.setEditable(false);
-		text_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		table = new Table(grpXut, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-		table.setLinesVisible(true);
-
-		Label lblTngThiGian = new Label(grpXut, SWT.NONE);
-		lblTngThiGian.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblTngThiGian.setText("Th\u1EDDi gian th\u1EF1c hi\u1EC7n:");
-
-		text_7 = new Text(grpXut, SWT.NONE);
-		text_7.setEditable(false);
-		text_7.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblGhiCh = new Label(grpXut, SWT.NONE);
-		lblGhiCh.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblGhiCh.setText("Ghi ch\u00FA:");
-
-		text_8 = new Text(grpXut, SWT.WRAP | SWT.MULTI);
-		text_8.setEditable(false);
-		text_8.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		Group grpTChc = new Group(sashForm_9, SWT.NONE);
-		grpTChc.setText("T\u1ED5 ch\u1EE9c - th\u1EF1c hi\u1EC7n");
-		grpTChc.setLayout(new GridLayout(3, false));
-
-		Label label_1 = new Label(grpTChc, SWT.NONE);
-		label_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_1.setText("Ng\u00E0y b\u1EAFt \u0111\u1EA7u:");
-
-		text_9 = new Text(grpTChc, SWT.NONE);
-		text_9.setEditable(false);
-		text_9.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		table_1 = new Table(grpTChc, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1.setLinesVisible(true);
-		table_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-
-		Label lblThiGianThc = new Label(grpTChc, SWT.NONE);
-		lblThiGianThc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblThiGianThc.setText("Th\u1EDDi gian th\u1EF1c hi\u1EC7n:");
-
-		text_10 = new Text(grpTChc, SWT.NONE);
-		text_10.setEditable(false);
-		text_10.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_3 = new Label(grpTChc, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_3.setText("Ghi ch\u00FA:");
-
-		text_11 = new Text(grpTChc, SWT.WRAP | SWT.MULTI);
-		text_11.setEditable(false);
-		text_11.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		Group grpNghimThu = new Group(sashForm_9, SWT.NONE);
-		grpNghimThu.setText("Nghi\u1EC7m thu - B\u00E0n giao");
-		grpNghimThu.setLayout(new GridLayout(3, false));
-
-		Label label_2 = new Label(grpNghimThu, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_2.setText("Ng\u00E0y b\u1EAFt \u0111\u1EA7u:");
-
-		text_12 = new Text(grpNghimThu, SWT.NONE);
-		text_12.setEditable(false);
-		text_12.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		table_2 = new Table(grpNghimThu, SWT.BORDER | SWT.FULL_SELECTION);
-		table_2.setLinesVisible(true);
-		table_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-
-		Label label_4 = new Label(grpNghimThu, SWT.NONE);
-		label_4.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_4.setText("Th\u1EDDi gian th\u1EF1c hi\u1EC7n:");
-
-		text_13 = new Text(grpNghimThu, SWT.NONE);
-		text_13.setEditable(false);
-		text_13.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_5 = new Label(grpNghimThu, SWT.NONE);
-		label_5.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_5.setText("Ghi ch\u00FA:");
-
-		text_14 = new Text(grpNghimThu, SWT.WRAP | SWT.MULTI);
-		text_14.setEditable(false);
-		text_14.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-
-		Group group = new Group(sashForm_9, SWT.NONE);
-		group.setText("Nghi\u1EC7m thu - B\u00E0n giao");
-		group.setLayout(new GridLayout(3, false));
-
-		Label label_6 = new Label(group, SWT.NONE);
-		label_6.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_6.setText("Ng\u00E0y b\u1EAFt \u0111\u1EA7u:");
-
-		text_15 = new Text(group, SWT.NONE);
-		text_15.setEditable(false);
-		text_15.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		table_3 = new Table(group, SWT.BORDER | SWT.FULL_SELECTION);
-		table_3.setLinesVisible(true);
-		table_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
-
-		Label label_7 = new Label(group, SWT.NONE);
-		label_7.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_7.setText("Th\u1EDDi gian th\u1EF1c hi\u1EC7n:");
-
-		text_16 = new Text(group, SWT.NONE);
-		text_16.setEditable(false);
-		text_16.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_8 = new Label(group, SWT.NONE);
-		label_8.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_8.setText("Ghi ch\u00FA:");
-
-		text_17 = new Text(group, SWT.WRAP | SWT.MULTI);
-		text_17.setEditable(false);
-		text_17.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		sashForm_9.setWeights(new int[] { 1, 1, 1, 1 });
-		sashForm_5.setWeights(new int[] { 480, 307 });
+		sashForm_5.setWeights(new int[] { 1000, 618 });
 
 		TabItem tbtmNhtKThc = new TabItem(tabFolder, SWT.NONE);
 		tbtmNhtKThc.setText("Nhật ký Làm việc");
@@ -2616,7 +2448,7 @@ public class CongViecCuaToi extends Shell {
 	}
 
 	protected void setField_ThongTin_NGUON_GIAM(DOT_THUCHIEN_GIAM_TAISAN dgt) throws SQLException {
-		tbtmNguonsuachua.setText("Nguồn giảm PTTS");
+		xpndtmNgunThamgiaCongviec.setText("Nguồn giảm PTTS");
 		NGUONGIAM nt = controler.getControl_NGUONGIAM().get_NguonGiam(dgt);
 		if (nt != null) {
 			text_Nguon.setText(nt.getTEN_NGUONGIAM());
@@ -2694,7 +2526,7 @@ public class CongViecCuaToi extends Shell {
 	}
 
 	protected void setField_ThongTin_NGUON_TANG(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
-		tbtmNguonsuachua.setText("Nguồn tăng PTTS");
+		xpndtmNgunThamgiaCongviec.setText("Nguồn tăng PTTS");
 		NGUONTANG nt = controler.getControl_NGUONTANG().get_NguonTang(dtt);
 		if (nt != null) {
 			text_Nguon.setText(nt.getTEN_NGUONTANG());
@@ -2727,7 +2559,7 @@ public class CongViecCuaToi extends Shell {
 	}
 
 	protected void setField_ThongTin_NGUONSUACHUA_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
-		tbtmNguonsuachua.setText("Nguồn Sửa chữa - Bảo dưỡng");
+		xpndtmNgunThamgiaCongviec.setText("Nguồn Sửa chữa - Bảo dưỡng");
 		NGUONSUACHUA_BAODUONG nsb = controler.getControl_NGUONSUACHUA_BAODUONG().get_NguonSuachua_Baoduong(dsb);
 		if (nsb != null) {
 			text_Nguon.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());

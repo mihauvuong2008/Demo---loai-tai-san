@@ -97,7 +97,7 @@ public class LichDangkiem extends Dialog {
 		shlngKim = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlngKim.setImage(
 				SWTResourceManager.getImage(LichDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		shlngKim.setSize(728, 450);
+		shlngKim.setSize(760, 450);
 		new FormTemplate().setCenterScreen(shlngKim);
 		shlngKim.setText("\u0110\u0103ng ki\u1EC3m \u00F4 t\u00F4");
 		shlngKim.setLayout(new GridLayout(5, false));
@@ -130,7 +130,7 @@ public class LichDangkiem extends Dialog {
 					TableItem ti = new TableItem(table_DotthuchienDangkiem, SWT.NONE);
 					boolean hoanthanh = getHoanthanhCongviec(dtd);
 					ti.setText(new String[] { new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()),
-							!hoanthanh ? "Đang thực hiện" : "Hoàn thành" });
+							dtd.getTEN_TAI_KHOAN(), !hoanthanh ? "Đang thực hiện" : "Hoàn thành" });
 					ti.setData(dtd);
 				}
 			}
@@ -231,8 +231,12 @@ public class LichDangkiem extends Dialog {
 		table_DotthuchienDangkiem.setLinesVisible(true);
 
 		TableColumn tblclmnLnngKim = new TableColumn(table_DotthuchienDangkiem, SWT.NONE);
-		tblclmnLnngKim.setWidth(150);
+		tblclmnLnngKim.setWidth(125);
 		tblclmnLnngKim.setText("LỊCH SỬ ĐĂNG KIỂM");
+
+		TableColumn tblclmnNgiThcHin = new TableColumn(table_DotthuchienDangkiem, SWT.NONE);
+		tblclmnNgiThcHin.setWidth(117);
+		tblclmnNgiThcHin.setText("NGƯỜI THỰC HIỆN");
 
 		TableColumn tblclmnTnhTrng = new TableColumn(table_DotthuchienDangkiem, SWT.NONE);
 		tblclmnTnhTrng.setWidth(100);
@@ -286,7 +290,7 @@ public class LichDangkiem extends Dialog {
 			}
 		});
 		mntmXemHS.setText("Xem Hồ sơ");
-		sashForm.setWeights(new int[] { 1000, 618 });
+		sashForm.setWeights(new int[] { 432, 299 });
 
 		Label lblPhngBan = new Label(shlngKim, SWT.NONE);
 		lblPhngBan.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -319,6 +323,12 @@ public class LichDangkiem extends Dialog {
 		btnTmKim.setText("T\u00ECm ki\u1EBFm");
 
 		Button btnng = new Button(shlngKim, SWT.NONE);
+		btnng.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlngKim.dispose();
+			}
+		});
 		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
@@ -327,6 +337,8 @@ public class LichDangkiem extends Dialog {
 	}
 
 	protected boolean getHoanthanhCongviec(DOT_THUCHIEN_DANGKIEM dtd) throws SQLException {
+		if (dtd == null)
+			return true;
 		boolean hoanthanh = true;
 		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 		if (ths == null)

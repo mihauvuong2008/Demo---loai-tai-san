@@ -220,7 +220,6 @@ public class _2_Taodot_Suachua extends Shell {
 
 						int i;
 						i = controler.getControl_DEXUAT().insert_DEXUAT(dx);
-
 						if (i >= 0) {
 							QUATRINH_DEXUAT_THUCHIEN qdt = new QUATRINH_DEXUAT_THUCHIEN();
 							qdt.setMA_DE_XUAT(dx.getMA_DE_XUAT());

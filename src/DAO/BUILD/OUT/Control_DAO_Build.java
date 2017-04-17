@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import DAO.CHUKY_DANGKIEM;
 import DAO.DE_XUAT;
+import DAO.DOT_BANGIAO_TAISAN_NOIBO;
 import DAO.DOT_THUCHIEN_DANGKIEM;
 import DAO.DOT_THUCHIEN_GIAM_TAISAN;
 import DAO.DOT_THUCHIEN_SUACHUA_BAODUONG;
@@ -16,6 +17,7 @@ import DAO.Hinhthuc_Baoduong;
 import DAO.KY_HAN_THONGKE_XANG_DAU;
 import DAO.Kyhan_Baoduong;
 import DAO.LENH_DIEU_XE;
+import DAO.LICH_CONG_TAC;
 import DAO.LOAITAISAN_CAP_I;
 import DAO.LOAITAISAN_CAP_II;
 import DAO.LOAITAISAN_CAP_III;
@@ -33,6 +35,9 @@ import DAO.NHOMTAISAN_CAP_III;
 import DAO.NHOMTAISAN_CAP_IV;
 import DAO.NHOMTAISAN_CAP_V;
 import DAO.NHOM_DONVI_THAMGIA_THONGKE;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.PHUONGTIEN_GIAOTHONG;
@@ -256,6 +261,8 @@ public class Control_DAO_Build {
 		NHOMTAISAN_CAP_V lt = new NHOMTAISAN_CAP_V();
 		lt.setMA_NHOMTAISAN_CAP_V(Integer.valueOf(rs.getInt("MA_NHOMTAISAN_CAP_V")));
 		lt.setTEN_NHOMTAISAN_CAP_V(rs.getString("TEN_NHOMTAISAN_CAP_V"));
+		lt.setTHOIGIAN_SUDUNG(rs.getInt("THOIGIAN_SUDUNG"));
+		lt.setTILE_HAOMON(rs.getDouble("TILE_HAOMON"));
 		lt.setMA_NHOMTAISAN_CAP_IV(Integer.valueOf(rs.getInt("MA_NHOMTAISAN_CAP_IV")));
 		return lt;
 	}
@@ -326,6 +333,9 @@ public class Control_DAO_Build {
 		t.setMA_DON_VI_SU_DUNG(rs.getInt(6));
 		PHONGBAN donvi_Sudung = new PHONGBAN();
 		donvi_Sudung.setTEN_PHONGBAN(rs.getString(7));
+		t.setMA_NHOMTAISAN_CAP_V(rs.getInt(8));
+		t.setTINH_TRANG(rs.getInt(9));
+		t.setTRANG_THAI(rs.getInt(10));
 		t.setDonvi_Sudung(donvi_Sudung);
 		return t;
 	}
@@ -342,6 +352,7 @@ public class Control_DAO_Build {
 		t.setTINH_TRANG(rs.getInt("TINH_TRANG"));
 		t.setTRANG_THAI(rs.getInt("TRANG_THAI"));
 		t.setDON_VI_TINH(rs.getString("DON_VI_TINH"));
+		t.setSOLUONG(rs.getInt("SOLUONG"));
 		t.setNGUYEN_GIA(rs.getLong("NGUYEN_GIA"));
 		t.setGHI_CHU(rs.getString("GHI_CHU"));
 		t.setMA_TANSAN_KETOAN(rs.getString("MA_TANSAN_KETOAN"));
@@ -517,6 +528,7 @@ public class Control_DAO_Build {
 	public DOT_THUCHIEN_DANGKIEM get_DOT_THUCHIEN_DANGKIEM(ResultSet rs) throws SQLException {
 		DOT_THUCHIEN_DANGKIEM result = new DOT_THUCHIEN_DANGKIEM();
 		result.setMA_DOT_THUCHIEN_DANGKIEM(rs.getInt("MA_DOT_THUCHIEN_DANGKIEM"));
+		result.setTEN_TAI_KHOAN(rs.getString("TEN_TAI_KHOAN"));
 		result.setNGAY_THUCHIEN(rs.getTimestamp("NGAY_THUCHIEN"));
 		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 		result.setMA_PHUONGTIEN_GIAOTHONG(rs.getString("MA_PHUONGTIEN_GIAOTHONG"));
@@ -524,4 +536,76 @@ public class Control_DAO_Build {
 		return result;
 	}
 
+	public NHOM_TAISANCODINH_VOHINH get_NHOM_TAISANCODINH_VOHINH(ResultSet rs) throws SQLException {
+		NHOM_TAISANCODINH_VOHINH result = new NHOM_TAISANCODINH_VOHINH(0);
+		result.setMA_NHOM_TAISANCODINH_VOHINH(rs.getInt("MA_NHOMTAISAN_CAP_V"));
+		result.setTEN_NHOM_TAISANCODINH_VOHINH(rs.getString("TEN_NHOMTAISAN_CAP_V"));
+		result.setMA_NHOMTAISAN_CAP_IV(rs.getInt("MA_NHOMTAISAN_CAP_IV"));
+		result.setTHOIGIAN_SUDUNG(rs.getInt("THOIGIAN_SUDUNG"));
+		result.setTILE_HAOMON(rs.getDouble("TILE_HAOMON"));
+		return result;
+	}
+
+	public NHOM_TAISANCODINH_DACTHU get_NHOM_TAISANCODINH_DACTHU(ResultSet rs) throws SQLException {
+		NHOM_TAISANCODINH_DACTHU result = new NHOM_TAISANCODINH_DACTHU(0);
+		result.setMA_NHOM_TAISANCODINH_DACTHU(rs.getInt("MA_NHOMTAISAN_CAP_V"));
+		result.setTEN_NHOM_TAISANCODINH_DACTHU(rs.getString("TEN_NHOMTAISAN_CAP_V"));
+		result.setMA_NHOMTAISAN_CAP_IV(rs.getInt("MA_NHOMTAISAN_CAP_IV"));
+		result.setTHOIGIAN_SUDUNG(rs.getInt("THOIGIAN_SUDUNG"));
+		result.setTILE_HAOMON(rs.getDouble("TILE_HAOMON"));
+		return result;
+	}
+
+	public NHOM_TAISANCODINH_DACBIET get_NHOM_TAISANCODINH_DACBIET(ResultSet rs) throws SQLException {
+		NHOM_TAISANCODINH_DACBIET result = new NHOM_TAISANCODINH_DACBIET(0);
+		result.setMA_NHOM_TAISANCODINH_DACBIET(rs.getInt("MA_NHOMTAISAN_CAP_V"));
+		result.setTEN_NHOM_TAISANCODINH_DACBIET(rs.getString("TEN_NHOMTAISAN_CAP_V"));
+		result.setMA_NHOMTAISAN_CAP_IV(rs.getInt("MA_NHOMTAISAN_CAP_IV"));
+		result.setTHOIGIAN_SUDUNG(rs.getInt("THOIGIAN_SUDUNG"));
+		result.setGIA_QUYUOC(rs.getInt("TILE_HAOMON"));
+		return result;
+	}
+
+	public String get_MATAISAN_KETOAN(ResultSet rs) throws SQLException {
+		return rs.getString("MA_TANSAN_KETOAN");
+	}
+
+	public int get_MA_NHOMTAISAN_CODINH_CAP_I(ResultSet rs) throws SQLException {
+		return rs.getInt("MA_NHOMTAISAN_CAP_I");
+	}
+
+	public int get_MA_NHOMTAISAN_CODINH_CAP_II(ResultSet rs) throws SQLException {
+		return rs.getInt("MA_NHOMTAISAN_CAP_II");
+	}
+
+	public int get_MA_NHOMTAISAN_CODINH_CAP_III(ResultSet rs) throws SQLException {
+		return rs.getInt("MA_NHOMTAISAN_CAP_III");
+	}
+
+	public int get_MA_NHOMTAISAN_CODINH_CAP_IV(ResultSet rs) throws SQLException {
+		return rs.getInt("MA_NHOMTAISAN_CAP_IV");
+	}
+
+	public int get_PHANHOM_CAP_V(ResultSet rs) throws SQLException {
+		return rs.getInt("PHAN_NHOMTAISAN");
+	}
+
+	public DOT_BANGIAO_TAISAN_NOIBO get_DOT_BANGIAO_TAISAN_NOIBO(ResultSet rs) throws SQLException {
+		DOT_BANGIAO_TAISAN_NOIBO result = new DOT_BANGIAO_TAISAN_NOIBO();
+		result.setMA_DOT_BANGIAO_TAISAN_NOIBO(rs.getInt("MA_DOT_BANGIAO_TAISAN_NOIBO"));
+		result.setTEN_DOT_BANGIAO_TAISAN_NOIBO(rs.getString("TEN_DOT_BANGIAO_TAISAN_NOIBO"));
+		result.setNGAY_THUCHIEN(rs.getDate("NGAY_THUCHIEN"));
+		result.setBEN_GIAO(rs.getInt("BEN_GIAO"));
+		result.setBEN_NHAN(rs.getInt("BEN_NHAN"));
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		return result;
+	}
+
+	public LICH_CONG_TAC get_LICH_CONG_TAC(ResultSet rs) throws SQLException {
+		LICH_CONG_TAC result = new LICH_CONG_TAC();
+		result.setMA_LICH_CONG_TAC(rs.getInt("MA_LICH_CONG_TAC"));
+		result.setNOIDUNG(rs.getString("NOIDUNG"));
+		result.setTHOIGIAN(rs.getTimestamp("THOIGIAN"));
+		return result;
+	}
 }

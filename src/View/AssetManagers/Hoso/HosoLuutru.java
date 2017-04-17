@@ -795,7 +795,7 @@ public class HosoLuutru extends Shell {
 				return;
 			}
 		});
-		btnXem.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnXem.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Accept-icon (1).png"));
 		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnXem.widthHint = 75;
 		btnXem.setLayoutData(gd_btnXem);

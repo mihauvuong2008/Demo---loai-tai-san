@@ -154,7 +154,7 @@ public class Control_PHONGBAN {
 					return null;
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
-				PHONGBAN donvi_Sudung = new PHONGBAN();
+				PHONGBAN donvi_Sudung = null;
 				while (rs.next()) {
 					donvi_Sudung = (new Control_DAO_Build()).get_PHONGBAN(rs);
 					break;

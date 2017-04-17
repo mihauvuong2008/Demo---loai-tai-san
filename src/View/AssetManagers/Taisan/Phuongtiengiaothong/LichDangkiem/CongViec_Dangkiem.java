@@ -36,6 +36,7 @@ import DAO.VANBAN;
 
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -186,18 +187,18 @@ public class CongViec_Dangkiem extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				TAP_HO_SO ths;
 				try {
-					ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
-					if (ths != null) {
-						Vanban_View vv = new Vanban_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, null, false);
-						vv.open();
-						loadVanban();
-					} else {
-						if (pg == null) {
-							pg = controler.getControl_PHUONGTIEN_GIAOTHONG()
-									.get_PHUONGTIEN_GIAOTHONG(dtd.getMA_PHUONGTIEN_GIAOTHONG());
-						}
-						if (pg != null) {
-							if (dtd != null) {
+					if (dtd != null) {
+						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
+						if (ths != null) {
+							Vanban_View vv = new Vanban_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, null, false);
+							vv.open();
+							loadVanban();
+						} else {
+							if (pg == null) {
+								pg = controler.getControl_PHUONGTIEN_GIAOTHONG()
+										.get_PHUONGTIEN_GIAOTHONG(dtd.getMA_PHUONGTIEN_GIAOTHONG());
+							}
+							if (pg != null) {
 								ths = new TAP_HO_SO();
 								ths.setTEN_TAPHOSO("Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
 										+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()));
@@ -214,9 +215,13 @@ public class CongViec_Dangkiem extends Dialog {
 								}
 							}
 						}
+					} else {
+						MessageBox m = new MessageBox(shlngKimPhng, SWT.DIALOG_TRIM);
+						m.setText("Lỗi");
+						m.setMessage("Tạo Đợt đăng kiểm trước");
+						m.open();
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
@@ -283,6 +288,7 @@ public class CongViec_Dangkiem extends Dialog {
 
 			private DOT_THUCHIEN_DANGKIEM getDOT_THUCHIEN_DANGKIEM() {
 				DOT_THUCHIEN_DANGKIEM rs = new DOT_THUCHIEN_DANGKIEM();
+				rs.setTEN_TAI_KHOAN(user.getTEN_TAI_KHOAN());
 				rs.setNGAY_THUCHIEN(new MyDateFormat().getDate(dateTime));
 				rs.setGHI_CHU(text_Ghichu.getText());
 				return rs;

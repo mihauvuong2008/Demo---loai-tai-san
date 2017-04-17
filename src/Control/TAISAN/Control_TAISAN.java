@@ -20,6 +20,7 @@ import DAO.BUILD.QUERY.DELETE_LIB.query_Delete_TAISAN;
 import DAO.BUILD.QUERY.INSERT_LIB.query_Insert_TAISAN;
 import DAO.BUILD.QUERY.SELECT_LIB.query_Select_TAISAN;
 import DAO.BUILD.QUERY.UPDATE_LIB.query_Update_TAISAN;
+import DAO.DOT_BANGIAO_TAISAN_NOIBO;
 import DAO.DOT_THUCHIEN_GIAM_TAISAN;
 import DAO.DOT_THUCHIEN_SUACHUA_BAODUONG;
 import DAO.DOT_THUCHIEN_TANG_TAISAN;
@@ -490,6 +491,53 @@ public class Control_TAISAN {
 			return null;
 		}
 
+		public ArrayList<TAISAN> get_TAINSAN_DOT_BANGIAO_TAISAN_NOIBO(DOT_BANGIAO_TAISAN_NOIBO data)
+				throws SQLException {
+			if (conn != null && isPrivilegeREA()) {
+				ArrayList<TAISAN> result = new ArrayList<>();
+				String query = (new query_Select_TAISAN()).getString_TAINSAN_DOT_BANGIAO_TAISAN_NOIBO(data);
+				if (query == null)
+					return null;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					TAISAN t = (new Control_DAO_Build()).get_TAISAN_FULL(rs);
+
+					PHONGBAN donvi_Sundung = cdv.get_PHONGBAN(t.getMA_DON_VI_SU_DUNG());
+					t.setDonvi_Sudung(donvi_Sundung);
+
+					PHONGBAN donvi_Quanly = cdv.get_PHONGBAN(t.getMA_DON_VI_QUAN_LY());
+					t.setDonvi_Quanly(donvi_Quanly);
+
+					ArrayList<PHUKIEN> pklist = get_DataPhuKien(t);
+					t.setPhukienList(pklist);
+					result.add(t);
+				}
+				rs.close();
+				st.close();
+				return result;
+			}
+			return null;
+		}
+
+		public String get_MataisanKetoan(int ma_TAISAN) throws SQLException {
+			if (conn != null && isPrivilegeREA()) {
+				String result = null;
+				String query = (new query_Select_TAISAN()).getString_MataisanKetoan(ma_TAISAN);
+				if (query == null)
+					return null;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					result = (new Control_DAO_Build()).get_MATAISAN_KETOAN(rs);
+				}
+				rs.close();
+				st.close();
+				return result;
+			}
+			return null;
+		}
+
 	}
 
 	private class Update extends EDIactivity {
@@ -751,6 +799,14 @@ public class Control_TAISAN {
 
 	public boolean Update_NhomTaisan(int key, int mA_NhomTaisan) throws SQLException {
 		return getUpdater().Update_NhomTaisan(key, mA_NhomTaisan);
+	}
+
+	public String get_MataisanKetoan(int ma_TAISAN) throws SQLException {
+		return getSelecter().get_MataisanKetoan(ma_TAISAN);
+	}
+
+	public ArrayList<TAISAN> get_TAINSAN_DOT_BANGIAO_TAISAN_NOIBO(DOT_BANGIAO_TAISAN_NOIBO data) throws SQLException {
+		return getSelecter().get_TAINSAN_DOT_BANGIAO_TAISAN_NOIBO(data);
 	}
 
 }

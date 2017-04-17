@@ -39,7 +39,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 	private Table table;
 	private int Mode;
 	protected ArrayList<LOAI_XE> insert = new ArrayList<>();
-	protected ArrayList<LOAI_XE> delete;
+	protected ArrayList<LOAI_XE> delete_list;
 	private Button btnOto;
 	private Button btnXeMay;
 	private final Controler controler;
@@ -173,9 +173,9 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 
 			private void removeTableItem(TableItem[] til) {
 				LOAI_XE r = (LOAI_XE) til[0].getData();
-				if (delete == null)
-					delete = new ArrayList<>();
-				delete.add(r);
+				if (delete_list == null)
+					delete_list = new ArrayList<>();
+				delete_list.add(r);
 				table.remove(table.indexOf(til[0]));
 
 			}
@@ -227,11 +227,11 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 			}
 
 			private void removeItem() throws SQLException {
-				if (delete != null)
-					for (LOAI_XE i : delete) {
+				if (delete_list != null)
+					for (LOAI_XE i : delete_list) {
 						controler.getControl_LOAI_XE().remove_LOAI_XE(i);
 					}
-				delete = new ArrayList<>();
+				delete_list = new ArrayList<>();
 			}
 		});
 		tltmLu.setText("L\u01B0u");

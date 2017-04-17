@@ -100,6 +100,20 @@ public class Control_DEXUAT {
 		return rs;
 	}
 
+	public DE_XUAT get_DEXUAT(Object o) throws SQLException {
+		DE_XUAT rs = null;
+		if (o instanceof DOT_THUCHIEN_TANG_TAISAN) {
+			rs = get_DEXUAT((DOT_THUCHIEN_TANG_TAISAN) o);
+		} else if (o instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
+			rs = get_DEXUAT((DOT_THUCHIEN_SUACHUA_BAODUONG) o);
+		} else if (o instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+			rs = get_DEXUAT((DOT_THUCHIEN_GIAM_TAISAN) o);
+		}
+		if (rs != null)
+			cs.insertLog(new Log_Library().getString_Xem_Dexuat(rs.getMA_DE_XUAT()));
+		return rs;
+	}
+
 	public ArrayList<DE_XUAT> get_All_Dexuat_Suachua_Baoduong(Date begin, Date end, String text_pattern)
 			throws SQLException {
 		ArrayList<DE_XUAT> rs = getSelecter().get_All_Dexuat_Suachua_Baoduong(begin, end, text_pattern);

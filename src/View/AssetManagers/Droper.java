@@ -12,6 +12,9 @@ import org.eclipse.swt.widgets.TreeItem;
 
 import DAO.LOAITAISAN_CAP_III;
 import DAO.NHOMTAISAN_CAP_V;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.PHONGBAN;
 
 public class Droper {
@@ -43,8 +46,7 @@ public class Droper {
 		this.target_Type = target_Data;
 	}
 
-	public void setListennerNhomTaisan() {
-
+	public void setListennerNhomTaisan_Codinh_Huuhinh() {
 		target_Type.addDropListener(new DropTargetAdapter() {
 			public void dragEnter(DropTargetEvent event) {
 				if (event.detail == DND.DROP_DEFAULT) {
@@ -97,7 +99,7 @@ public class Droper {
 
 			public void drop(DropTargetEvent event) {
 				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object o = ((TreeItem) event.item).getData("lv5");
+					Object o = ((TreeItem) event.item).getData();
 					if (o instanceof NHOMTAISAN_CAP_V) {
 						String text = event.data.toString();
 						NHOMTAISAN_CAP_V dv = (NHOMTAISAN_CAP_V) o;
@@ -161,7 +163,7 @@ public class Droper {
 
 			public void drop(DropTargetEvent event) {
 				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					Object o = ((TreeItem) event.item).getData("l_lv3");
+					Object o = ((TreeItem) event.item).getData();
 					if (o instanceof LOAITAISAN_CAP_III) {
 						String text = event.data.toString();
 						LOAITAISAN_CAP_III dv = (LOAITAISAN_CAP_III) o;
@@ -239,6 +241,202 @@ public class Droper {
 					PHONGBAN dv = (PHONGBAN) ((TreeItem) event.item).getData();
 					int MAPHONGBAN = dv.getMA_PHONGBAN();
 					mh.OpenForm_ChuyenGiaoTaiSan_NoiBo(text.split(" "), MAPHONGBAN);
+				}
+			}
+		});
+	}
+
+	public void setListennerNhomTaisan_Codinh_Vohinh() {
+		target_Type.addDropListener(new DropTargetAdapter() {
+			public void dragEnter(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// will accept text but prefer to have files dropped
+				for (int i = 0; i < event.dataTypes.length; i++) {
+					if (TextTransfer.getInstance().isSupportedType(event.dataTypes[i])) {
+						event.currentDataType = event.dataTypes[i];
+						// files should only be copied
+						if (event.detail != DND.DROP_COPY) {
+							event.detail = DND.DROP_NONE;
+						}
+						break;
+					}
+				}
+			}
+
+			public void dragOver(DropTargetEvent event) {
+				event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+				}
+			}
+
+			public void dragOperationChanged(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// allow text to be moved but files should only be copied
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					if (event.detail != DND.DROP_COPY) {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+			}
+
+			public void dragLeave(DropTargetEvent event) {
+			}
+
+			public void dropAccept(DropTargetEvent event) {
+			}
+
+			public void drop(DropTargetEvent event) {
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					Object o = ((TreeItem) event.item).getData();
+					if (o instanceof NHOM_TAISANCODINH_VOHINH) {
+						String text = event.data.toString();
+						NHOM_TAISANCODINH_VOHINH dv = (NHOM_TAISANCODINH_VOHINH) o;
+						int MA_NHOMTAISAN = dv.getMA_NHOM_TAISANCODINH_VOHINH();
+						mh.OpenForm_ChuyenNhomTaisan(Display.getDefault(), text.split(" "), MA_NHOMTAISAN);
+					}
+				}
+			}
+		});
+	}
+
+	public void setListennerNhomTaisan_Codinh_Dacthu() {
+		target_Type.addDropListener(new DropTargetAdapter() {
+			public void dragEnter(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// will accept text but prefer to have files dropped
+				for (int i = 0; i < event.dataTypes.length; i++) {
+					if (TextTransfer.getInstance().isSupportedType(event.dataTypes[i])) {
+						event.currentDataType = event.dataTypes[i];
+						// files should only be copied
+						if (event.detail != DND.DROP_COPY) {
+							event.detail = DND.DROP_NONE;
+						}
+						break;
+					}
+				}
+			}
+
+			public void dragOver(DropTargetEvent event) {
+				event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+				}
+			}
+
+			public void dragOperationChanged(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// allow text to be moved but files should only be copied
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					if (event.detail != DND.DROP_COPY) {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+			}
+
+			public void dragLeave(DropTargetEvent event) {
+			}
+
+			public void dropAccept(DropTargetEvent event) {
+			}
+
+			public void drop(DropTargetEvent event) {
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					Object o = ((TreeItem) event.item).getData();
+					System.out.println("++++++++++");
+					if (o instanceof NHOM_TAISANCODINH_DACTHU) {
+						String text = event.data.toString();
+						NHOM_TAISANCODINH_DACTHU dv = (NHOM_TAISANCODINH_DACTHU) o;
+						int MA_NHOMTAISAN = dv.getMA_NHOM_TAISANCODINH_DACTHU();
+						mh.OpenForm_ChuyenNhomTaisan(Display.getDefault(), text.split(" "), MA_NHOMTAISAN);
+					}
+				}
+			}
+		});
+	}
+
+	public void setListennerNhomTaisan_Codinh_Dacbiet() {
+		target_Type.addDropListener(new DropTargetAdapter() {
+			public void dragEnter(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// will accept text but prefer to have files dropped
+				for (int i = 0; i < event.dataTypes.length; i++) {
+					if (TextTransfer.getInstance().isSupportedType(event.dataTypes[i])) {
+						event.currentDataType = event.dataTypes[i];
+						// files should only be copied
+						if (event.detail != DND.DROP_COPY) {
+							event.detail = DND.DROP_NONE;
+						}
+						break;
+					}
+				}
+			}
+
+			public void dragOver(DropTargetEvent event) {
+				event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+				}
+			}
+
+			public void dragOperationChanged(DropTargetEvent event) {
+				if (event.detail == DND.DROP_DEFAULT) {
+					if ((event.operations & DND.DROP_COPY) != 0) {
+						event.detail = DND.DROP_COPY;
+					} else {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+				// allow text to be moved but files should only be copied
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					if (event.detail != DND.DROP_COPY) {
+						event.detail = DND.DROP_NONE;
+					}
+				}
+			}
+
+			public void dragLeave(DropTargetEvent event) {
+			}
+
+			public void dropAccept(DropTargetEvent event) {
+			}
+
+			public void drop(DropTargetEvent event) {
+				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					Object o = ((TreeItem) event.item).getData();
+					if (o instanceof NHOM_TAISANCODINH_DACBIET) {
+						String text = event.data.toString();
+						NHOM_TAISANCODINH_DACBIET dv = (NHOM_TAISANCODINH_DACBIET) o;
+						int MA_NHOMTAISAN = dv.getMA_NHOM_TAISANCODINH_DACBIET();
+						mh.OpenForm_ChuyenNhomTaisan(Display.getDefault(), text.split(" "), MA_NHOMTAISAN);
+					}
 				}
 			}
 		});

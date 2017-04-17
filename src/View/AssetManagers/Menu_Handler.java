@@ -17,15 +17,15 @@ import View.AssetManagers.HoatdongNguoidung.HoatDongNguoidung;
 import View.AssetManagers.NguonGiam.QuanlyNguonGiam;
 import View.AssetManagers.NguonSuachua_Baoduong.Quanly_NguonSuachua_Baoduong;
 import View.AssetManagers.NguonTang.QuanLy_NguonTang;
-import View.AssetManagers.NhapDulieu_Excel.ImportExcel_Loaitaisan;
-import View.AssetManagers.NhapDulieu_Excel.ImportExcel_NhomTaisan;
-import View.AssetManagers.NhapDulieu_Excel.ImportExcel_PTGT;
-import View.AssetManagers.NhapDulieu_Excel.ImportExcel_PTTS;
 import View.AssetManagers.Role.QuanlyQuyenhan;
 import View.AssetManagers.Taikhoan.QuanlyTaikhoan;
 import View.AssetManagers.Taikhoan.TaikhoanHienhanh;
 import View.AssetManagers.Taisan.ChuyenGiaoTaiSanNoibo._1_HinhThuc_Chuyen_DuLieu_Noibo;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.Loaixe_DinhmucNhienlieu.Loaixe_DinhmucNhienlieu;
+import View.AssetManagers.excel_NhapDulieu.ImportExcel_Loaitaisan;
+import View.AssetManagers.excel_NhapDulieu.ImportExcel_NhomTaisan;
+import View.AssetManagers.excel_NhapDulieu.ImportExcel_PTGT;
+import View.AssetManagers.excel_NhapDulieu.ImportExcel_PTTS;
 
 public class Menu_Handler {
 	private final NGUOIDUNG user;
@@ -288,6 +288,10 @@ public class Menu_Handler {
 	public void OpenForm_Danhmuc_Nguongiam(Shell shell) throws SQLException {
 		QuanlyNguonGiam qng = new QuanlyNguonGiam(shell, SWT.DIALOG_TRIM, user);
 		qng.open();
+	}
+
+	public void OpenForm_Xuat_Dulieu_Tasaisan() {
+		
 	}
 
 }

@@ -2,6 +2,7 @@ package View.AssetManagers.Taisan.Phuongtiengiaothong;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -68,6 +70,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 		this.t = t;
 		controler = new Controler(user);
 		ptgt = controler.getControl_PHUONGTIEN_GIAOTHONG().get_PHUONGTIEN_GIAOTHONG_FromTaisan(t.getMA_TAISAN());
+		t.setPhuongtien_Giaothong(ptgt);
 	}
 
 	/**
@@ -95,7 +98,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlCpNhtPhng = new Shell(getParent(), getStyle());
+		shlCpNhtPhng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
 		shlCpNhtPhng.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class,
 				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		shlCpNhtPhng.setSize(350, 480);
@@ -230,11 +233,27 @@ public class EditPhuongtienGiaothong extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					controler.getControl_PHUONGTIEN_GIAOTHONG()
-							.update_PHUONGTIEN_GIAOTHONG(t.getPhuongtien_Giaothong());
+					if (checkField()) {
+						controler.getControl_PHUONGTIEN_GIAOTHONG()
+								.update_PHUONGTIEN_GIAOTHONG(getPhuongtienGiaothong());
+						shlCpNhtPhng.dispose();
+					} else {
+						MessageBox m = new MessageBox(shlCpNhtPhng, SWT.NONE);
+						m.setText("Thông tin không hợp lệ");
+						m.setMessage("Kiểm tra lại các thông tin cập nhật");
+						m.open();
+					}
 				} catch (Exception e2) {
+					e2.printStackTrace();
 					log.error(e2.getMessage());
 				}
+			}
+
+			private boolean checkField() {
+				boolean flag = true;
+				if (combo_LoainhienLieu.getSelectionIndex() < 0)
+					flag = false;
+				return flag;
 			}
 		});
 		btnLu.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class,
@@ -289,4 +308,17 @@ public class EditPhuongtienGiaothong extends Dialog {
 				mdf.getDay(ptgt.getTHOIHAN_DANGKIEM()));
 	}
 
+	PHUONGTIEN_GIAOTHONG getPhuongtienGiaothong() {
+		PHUONGTIEN_GIAOTHONG pg = ptgt;
+		pg.setLOAI_PHUONGTIEN_GIAOTHONG((int) combo_LoaiPhuongtien.getData(combo_LoaiPhuongtien.getText()));
+		pg.setMA_LOAI_XE(((LOAI_XE) combo_Loaixe.getData(combo_Loaixe.getText())).getMA_LOAI_XE());
+		pg.setBIENSO(text_Biensoxe.getText());
+		pg.setSOKHUNG(text_Sokhung.getText());
+		pg.setSOMAY(text_Somay.getText());
+		pg.setSO_KM_XE(Integer.valueOf(text_Sokm.getText()));
+		pg.setXANG_DAU((int) combo_LoainhienLieu.getData(combo_LoainhienLieu.getText()));
+		Date date = mdf.getDate(dateTime);
+		pg.setTHOIHAN_DANGKIEM(date);
+		return pg;
+	}
 }

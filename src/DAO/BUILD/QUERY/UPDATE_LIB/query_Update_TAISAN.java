@@ -22,11 +22,13 @@ public class query_Update_TAISAN {
 			return "UPDATE TAISAN  SET TEN_TAISAN='" + t.getTEN_TAISAN() + "', MODEL='" + t.getMODEL() + "', SERI = '"
 					+ t.getSERI() + "', NGAY_SU_DUNG = " + d + ", XUAT_XU = '" + t.getXUAT_XU() + "', BAO_HANH = '"
 					+ t.getBAO_HANH() + "', TINH_TRANG = '" + t.getTINH_TRANG() + "', TRANG_THAI = '"
-					+ t.getTRANG_THAI() + "', DON_VI_TINH = '" + t.getDON_VI_TINH() + "', GHI_CHU = '" + t.getGHI_CHU()
-					+ "', MA_LOAITAISAN_CAP_III = '" + t.getMA_LOAITAISAN_CAP_III() + "', MA_NHOMTAISAN_CAP_V ='"
-					+ t.getMA_NHOMTAISAN_CAP_V() + "', MA_DON_VI_SU_DUNG = '" + t.getMA_DON_VI_SU_DUNG()
-					+ "', MA_DON_VI_QUAN_LY = '" + t.getMA_DON_VI_QUAN_LY() + "', MA_TANSAN_KETOAN='"
-					+ t.getMA_TANSAN_KETOAN() + "' WHERE MA_TAISAN= '" + t.getMA_TAISAN() + "';";
+					+ t.getTRANG_THAI() + "', DON_VI_TINH = '" + t.getDON_VI_TINH() + "' , SOLUONG = '" + t.getSOLUONG()
+					+ "', GHI_CHU = '" + t.getGHI_CHU() + "', MA_LOAITAISAN_CAP_III = '" + t.getMA_LOAITAISAN_CAP_III()
+					+ "', MA_NHOMTAISAN_CAP_V ='" + t.getMA_NHOMTAISAN_CAP_V() + "', MA_DON_VI_SU_DUNG = '"
+					+ t.getMA_DON_VI_SU_DUNG() + "', MA_DON_VI_QUAN_LY = '" + t.getMA_DON_VI_QUAN_LY()
+					+ "', MA_TANSAN_KETOAN="
+					+ (t.getMA_TANSAN_KETOAN().equals("") ? "null" : " '" + t.getMA_TANSAN_KETOAN() + "' ")
+					+ " WHERE MA_TAISAN= '" + t.getMA_TAISAN() + "';";
 		} catch (Exception e) {
 			return null;
 		}

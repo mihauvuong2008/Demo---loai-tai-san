@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Control.ControlTool.Control_Tool;
 import Control.ROLE.PrivilegeChecker;
@@ -236,5 +237,10 @@ public class Control_DOT_THUCHIEN_DANGKIEM {
 	public DOT_THUCHIEN_DANGKIEM get_DOT_THUCHIEN_DANGKIEM_GANNHAT(PHUONGTIEN_GIAOTHONG pg) throws SQLException {
 		DOT_THUCHIEN_DANGKIEM rs = getSelecter().get_DOT_THUCHIEN_DANGKIEM_GANNHAT(pg);
 		return rs;
+	}
+
+	public ArrayList<DOT_THUCHIEN_DANGKIEM> get_AllDOT_THUCHIEN_DANGKIEM(Date last, Date thiss) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

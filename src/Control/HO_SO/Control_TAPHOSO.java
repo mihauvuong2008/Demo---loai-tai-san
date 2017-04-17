@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Control.ControlTool.Control_Tool;
@@ -48,39 +49,6 @@ public class Control_TAPHOSO {
 		if (deleter == null)
 			deleter = new Delete();
 		return deleter;
-	}
-
-	public Control_TAPHOSO(NGUOIDUNG user) {
-		conn = user.getConn();
-		pvc = user.getPrivilegeChecker();
-	}
-
-	public TAP_HO_SO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
-		return getSelecter().get_TAP_HO_SO(MA_TAPHOSO);
-	}
-
-	public int Create_TAP_HO_SO(TAP_HO_SO t) throws SQLException {
-		return getInserter().Create_TAP_HO_SO(t);
-	}
-
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
-		return getSelecter().get_TAP_HO_SO(ndth);
-	}
-
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
-		return getSelecter().get_TAP_HO_SO(ndnt);
-	}
-
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
-		return getSelecter().get_TAP_HO_SO(ndqt);
-	}
-
-	public int update_TAPHOSO(TAP_HO_SO ths) throws SQLException {
-		return getUpdater().update_TAPHOSO(ths);
-	}
-
-	public boolean delete_TAPHOSO(TAP_HO_SO ths) throws SQLException {
-		return getDeleter().delete_TAPHOSO(ths);
 	}
 
 	abstract class ADDactivity {
@@ -229,6 +197,31 @@ public class Control_TAPHOSO {
 			return null;
 		}
 
+		public ArrayList<TAP_HO_SO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
+			if (conn != null && isPrivilegeREA()) {
+				ArrayList<TAP_HO_SO> thsl = null;
+				String query = "SELECT * FROM TAPHOSO  WHERE  NGAY_TAO_TAPHOSO>='" + mdf.getSQLStringDate(last)
+						+ "' AND NGAY_TAO_TAPHOSO <='" + mdf.getSQLStringDate(thiss) + "' AND TEN_TAPHOSO LIKE '%"
+						+ string + "%'  ";
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				thsl = new ArrayList<>();
+				while (rs.next()) {
+					TAP_HO_SO ths = new TAP_HO_SO();
+					ths = new TAP_HO_SO();
+					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
+					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
+					ths.setGIOITHIEU_TAPHOSO(rs.getString("GIOITHIEU_TAPHOSO"));
+					thsl.add(ths);
+				}
+				rs.close();
+				st.close();
+				return thsl;
+			}
+			return null;
+		}
+
 	}
 
 	private class Update extends EDIactivity {
@@ -262,4 +255,42 @@ public class Control_TAPHOSO {
 			return false;
 		}
 	}
+
+	public Control_TAPHOSO(NGUOIDUNG user) {
+		conn = user.getConn();
+		pvc = user.getPrivilegeChecker();
+	}
+
+	public TAP_HO_SO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
+		return getSelecter().get_TAP_HO_SO(MA_TAPHOSO);
+	}
+
+	public int Create_TAP_HO_SO(TAP_HO_SO t) throws SQLException {
+		return getInserter().Create_TAP_HO_SO(t);
+	}
+
+	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
+		return getSelecter().get_TAP_HO_SO(ndth);
+	}
+
+	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
+		return getSelecter().get_TAP_HO_SO(ndnt);
+	}
+
+	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
+		return getSelecter().get_TAP_HO_SO(ndqt);
+	}
+
+	public ArrayList<TAP_HO_SO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
+		return getSelecter().get_All_TAPHOSO(last, thiss, string);
+	}
+
+	public int update_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+		return getUpdater().update_TAPHOSO(ths);
+	}
+
+	public boolean delete_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+		return getDeleter().delete_TAPHOSO(ths);
+	}
+
 }

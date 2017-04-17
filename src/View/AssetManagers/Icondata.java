@@ -7,13 +7,11 @@ public class Icondata {
 	public final Image LenhDieuxeIcon = SWTResourceManager.getImage(Icondata.class, "/car (1).png");
 	public final Image MainIcon = SWTResourceManager.getImage(Icondata.class, "/application-dock-tab-icon.png");
 	public final Image NhatkyDieuxeIcon = SWTResourceManager.getImage(Icondata.class, "/Schedule-icon.png");
-	public final Image LichDangkiemIcon = SWTResourceManager.getImage(Icondata.class,
-			"/javax/swing/plaf/basic/icons/JavaCup16.png");
+	public final Image LichDangkiemIcon = SWTResourceManager.getImage(Icondata.class, "/Calendar-Blank-icon.png");
 	public final Image ThongkeLichtrinhIcon = SWTResourceManager.getImage(Icondata.class,
 			"/Mimetypes-gnome-mime-application-vnd-lotus-1-2-3-icon.png");
 	public final Image TieuChuanBaoduongIcon = SWTResourceManager.getImage(Icondata.class, "/Process-Warning-icon.png");
-	public final Image KyhanDangkiem = SWTResourceManager.getImage(Icondata.class,
-			"/javax/swing/plaf/basic/icons/JavaCup16.png");
+	public final Image KyhanDangkiem = SWTResourceManager.getImage(Icondata.class, "/Folder-Accept-icon.png");
 	public final Image DinhmucNhienlieu = SWTResourceManager.getImage(Icondata.class, "/fuel-icon.png");
 	public final Image BaoduongIcon = SWTResourceManager.getImage(Icondata.class, "/New-file-icon.png");
 	public final Image MuasamIcon = SWTResourceManager.getImage(Icondata.class, "/add-icon.png");
@@ -35,5 +33,5 @@ public class Icondata {
 	public final Image ThongbaoChuadocIcon = SWTResourceManager.getImage(Icondata.class,
 			"/Status-mail-unread-new-icon.png");
 	public final Image ThongbaoIcon = SWTResourceManager.getImage(Icondata.class, "/Places-mail-message-icon.png");
-
+	public final Image BangiaoTaisanIcon = SWTResourceManager.getImage(Icondata.class, "/Import-export-icon.png");
 }

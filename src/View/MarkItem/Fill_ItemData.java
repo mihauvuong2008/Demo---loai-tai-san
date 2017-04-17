@@ -26,11 +26,10 @@ public class Fill_ItemData {
 	}
 
 	public void setComboBox_TRANGTHAI_TAISAN(Combo combo_Trangthai) {
-		combo_Trangthai.setItems(new String[] { "Đang thực hiện tăng", "Sử dụng", "Kho", "Đã thực hiện giảm" });
-		combo_Trangthai.setData("Đang thực hiện tăng", 0);
+		combo_Trangthai.setItems(new String[] { "Sử dụng", "Kho", "Đã Bàn giao" });
 		combo_Trangthai.setData("Sử dụng", 1);
 		combo_Trangthai.setData("Kho", 2);
-		combo_Trangthai.setData("Đã thực hiện giảm", 3);
+		combo_Trangthai.setData("Đã Bàn giao", 3);
 
 	}
 
@@ -96,8 +95,10 @@ public class Fill_ItemData {
 			return "Trung bình";
 		case 4:
 			return "Kém";
-		default:
+		case 5:
 			return "Không sử dụng được";
+		default:
+			return "Mới";
 		}
 	}
 

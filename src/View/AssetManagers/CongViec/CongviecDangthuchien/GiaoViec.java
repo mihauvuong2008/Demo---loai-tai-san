@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -74,6 +73,8 @@ import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 
 public class GiaoViec {
 
@@ -109,10 +110,8 @@ public class GiaoViec {
 	private Text text_QUYETTOAN_Hoanthanh;
 	private Tree tree_QUYETTOAN;
 	private Text text_Ngay_Hoantat_GiaoViec;
-	private TabFolder tabFolder_Phanviec;
 	private Text text_TenCB;
 	private TabFolder tabFolder_2;
-	private Text text;
 	private Text text_Ghichu_Thuchien;
 	private Text text_Ghichu_Nghiemthu;
 	private Text text_Ghichu_Quyettoan;
@@ -121,6 +120,7 @@ public class GiaoViec {
 	private DE_XUAT dx;
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(Nhatky_Lamviec.class);
+	private ExpandItem xpndtmNgunThamgia;
 
 	public GiaoViec(NGUOIDUNG user) {
 		GiaoViec.user = user;
@@ -160,43 +160,33 @@ public class GiaoViec {
 		sashForm_13.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		SashForm sashForm = new SashForm(sashForm_13, SWT.VERTICAL);
 
-		TabFolder tabFolder_Congviec = new TabFolder(sashForm, SWT.NONE);
-
-		TabItem tbtmCngVic = new TabItem(tabFolder_Congviec, SWT.NONE);
-		tbtmCngVic.setImage(SWTResourceManager.getImage(GiaoViec.class, "/table-sum-icon.png"));
-		tbtmCngVic.setText("Tổng hợp Công việc");
-
-		SashForm sashForm_9 = new SashForm(tabFolder_Congviec, SWT.NONE);
-		tbtmCngVic.setControl(sashForm_9);
-
-		tabFolder_2 = new TabFolder(sashForm_9, SWT.NONE);
+		tabFolder_2 = new TabFolder(sashForm, SWT.NONE);
 		tabFolder_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				int i = tabFolder_2.getSelectionIndex();
 				switch (i) {
 				case 0:
-					if (tabFolder_Phanviec != null)
-						tabFolder_Phanviec.getItems()[2].setText("Nguồn Sửa chữa");
+					if (xpndtmNgunThamgia != null)
+						xpndtmNgunThamgia.setText("Nguồn Sửa chữa");
 					break;
 				case 1:
-					if (tabFolder_Phanviec != null)
-						tabFolder_Phanviec.getItems()[2].setText("Nguồn Tăng");
+					if (xpndtmNgunThamgia != null)
+						xpndtmNgunThamgia.setText("Nguồn Tăng");
 					break;
 				case 2:
-					if (tabFolder_Phanviec != null)
-						tabFolder_Phanviec.getItems()[2].setText("Nguồn Giảm");
+					if (xpndtmNgunThamgia != null)
+						xpndtmNgunThamgia.setText("Nguồn Giảm");
 					break;
 				default:
-					if (tabFolder_Phanviec != null)
-						tabFolder_Phanviec.getItems()[2].setText("Nguồn Sửa chữa");
+					if (xpndtmNgunThamgia != null)
+						xpndtmNgunThamgia.setText("Nguồn Sửa chữa");
 					break;
 				}
 			}
 		});
 
 		TabItem tbtmBoDng_1 = new TabItem(tabFolder_2, SWT.NONE);
-		tbtmBoDng_1.setImage(SWTResourceManager.getImage(GiaoViec.class, "/maintenance-icon (1).png"));
 		tbtmBoDng_1.setText("Bảo dưỡng - Sửa chữa PTTS");
 
 		tree_CongviecSuachua = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
@@ -212,9 +202,7 @@ public class GiaoViec {
 					if (items.length > 0) {
 						DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) items[0].getData();
 						if (dsb != null) {
-							text.setText(dsb.getMO_TA());
 							setField_ThongTin_DE_XUAT(dsb);
-
 							setField_ThongTin_NGUONSUACHUA_BAODUONG(dsb);
 							setTree_Danhsach_TAISAN(dsb);
 							TinhTrang_Thuchien(dsb);
@@ -308,14 +296,15 @@ public class GiaoViec {
 		});
 		mntmXa.setText("Xóa");
 
-		TabItem tbtmMuaSm_1 = new TabItem(tabFolder_2, SWT.NONE);
-		tbtmMuaSm_1.setImage(SWTResourceManager.getImage(GiaoViec.class, "/add-icon (1).png"));
+		TreeColumn treeColumn_3 = new TreeColumn(tree_CongviecSuachua, SWT.NONE);
+		treeColumn_3.setWidth(250);
+		treeColumn_3.setText("MÔ TẢ");
+
+		TabItem tbtmMuaSm_1 = new TabItem(tabFolder_2, 0);
 		tbtmMuaSm_1.setText("Mua sắm - Tiếp nhận PTTS");
 
-		SashForm sashForm_10 = new SashForm(tabFolder_2, SWT.VERTICAL);
-		tbtmMuaSm_1.setControl(sashForm_10);
-
-		tree_CongViecMuasam = new Tree(sashForm_10, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_CongViecMuasam = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
+		tbtmMuaSm_1.setControl(tree_CongViecMuasam);
 		tree_CongViecMuasam.setLinesVisible(true);
 		tree_CongViecMuasam.setHeaderVisible(true);
 		tree_CongViecMuasam.addListener(SWT.Selection, new Listener() {
@@ -327,7 +316,6 @@ public class GiaoViec {
 					if (items.length > 0) {
 						DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) items[0].getData();
 						if (dtt != null) {
-							text.setText(dtt.getMO_TA());
 							setField_ThongTin_DE_XUAT(dtt);
 
 							setField_ThongTin_NGUONTANG(dtt);
@@ -402,16 +390,16 @@ public class GiaoViec {
 			}
 		});
 		mntmXa_1.setText("Xóa");
-		sashForm_10.setWeights(new int[] { 1 });
 
-		TabItem tbtmThanhL_1 = new TabItem(tabFolder_2, SWT.NONE);
-		tbtmThanhL_1.setImage(SWTResourceManager.getImage(GiaoViec.class, "/database_remove.png"));
+		TreeColumn trclmnMT = new TreeColumn(tree_CongViecMuasam, SWT.NONE);
+		trclmnMT.setWidth(250);
+		trclmnMT.setText("MÔ TẢ");
+
+		TabItem tbtmThanhL_1 = new TabItem(tabFolder_2, 0);
 		tbtmThanhL_1.setText("Thanh lý - Bàn giao PTTS");
 
-		SashForm sashForm_6 = new SashForm(tabFolder_2, SWT.VERTICAL);
-		tbtmThanhL_1.setControl(sashForm_6);
-
-		tree_CongviecThanhly = new Tree(sashForm_6, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_CongviecThanhly = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
+		tbtmThanhL_1.setControl(tree_CongviecThanhly);
 		tree_CongviecThanhly.setLinesVisible(true);
 		tree_CongviecThanhly.setHeaderVisible(true);
 		tree_CongviecThanhly.addListener(SWT.Selection, new Listener() {
@@ -423,7 +411,6 @@ public class GiaoViec {
 					if (items.length > 0) {
 						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) items[0].getData();
 						if (dgt != null) {
-							text.setText(dgt.getMO_TA());
 							setField_ThongTin_DE_XUAT(dgt);
 
 							setField_ThongTin_NGUONGIAM(dgt);
@@ -499,10 +486,185 @@ public class GiaoViec {
 			}
 		});
 		mntmXoa.setText("Xóa");
-		sashForm_6.setWeights(new int[] { 1 });
 
-		Group grpThngTin = new Group(sashForm_9, SWT.NONE);
-		grpThngTin.setText("Thông tin đề xuất");
+		TreeColumn treeColumn_4 = new TreeColumn(tree_CongviecThanhly, SWT.NONE);
+		treeColumn_4.setWidth(250);
+		treeColumn_4.setText("MÔ TẢ");
+
+		SashForm sashForm_1 = new SashForm(sashForm, SWT.NONE);
+
+		tree_DanhsachCanbo = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_DanhsachCanbo.setLinesVisible(true);
+		tree_DanhsachCanbo.setHeaderVisible(true);
+		ts.setTreeItemHeight(tree_DanhsachCanbo, treeHeight);
+		tree_DanhsachCanbo.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				try {
+					/* get selection */
+					TreeItem[] items = tree_DanhsachCanbo.getSelection();
+					if (items.length > 0) {
+						NGUOIDUNG nd = (NGUOIDUNG) items[0].getData();
+						if (nd != null) {
+							view_Congviec_Dang_Thuchien(nd);
+							view_Congviec_Da_Thuchien(nd);
+						}
+						// Show data on Cong viec}
+					}
+				} catch (SQLException e) {
+					log.error(e.getMessage());
+					e.printStackTrace();
+				}
+			}
+		});
+		TreeColumn trclmnStt_2 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
+		trclmnStt_2.setWidth(50);
+		trclmnStt_2.setText("STT");
+
+		TreeColumn trclmnTnCnB_1 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
+		trclmnTnCnB_1.setWidth(100);
+		trclmnTnCnB_1.setText("T\u00CAN C\u00C1N B\u1ED8");
+
+		TreeColumn trclmnPhngBan = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
+		trclmnPhngBan.setWidth(100);
+		trclmnPhngBan.setText("PH\u00D2NG BAN");
+
+		TreeColumn trclmnTnTiKhon_1 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
+		trclmnTnTiKhon_1.setWidth(100);
+		trclmnTnTiKhon_1.setText("T\u00CAN T\u00C0I KHO\u1EA2N");
+
+		DragSource dragSource = new DragSource(tree_DanhsachCanbo, SWT.DRAG);
+
+		dragSource.setTransfer(types);
+
+		ExpandBar expandBar_1 = new ExpandBar(sashForm_1, SWT.V_SCROLL);
+		expandBar_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
+		// expandBar_1.setFont(SWTResourceManager.getFont("Segoe UI", 9,
+		// SWT.BOLD));
+
+		ExpandItem xpndtmCngVicang = new ExpandItem(expandBar_1, SWT.NONE);
+		xpndtmCngVicang.setExpanded(true);
+		xpndtmCngVicang.setText("Công việc đang thực hiện");
+
+		tree_PhanViecDangThucHien = new Tree(expandBar_1, SWT.BORDER | SWT.FULL_SELECTION);
+		xpndtmCngVicang.setControl(tree_PhanViecDangThucHien);
+		tree_PhanViecDangThucHien.setLinesVisible(true);
+		tree_PhanViecDangThucHien.setHeaderVisible(true);
+		ts.setTreeItemHeight(tree_PhanViecDangThucHien, treeHeight);
+
+		TreeColumn trclmnStt_3 = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
+		trclmnStt_3.setWidth(50);
+		trclmnStt_3.setText("STT");
+
+		TreeColumn trclmnLoaijCongViec = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
+		trclmnLoaijCongViec.setWidth(120);
+		trclmnLoaijCongViec.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnPhnVic = new TreeColumn(tree_PhanViecDangThucHien, SWT.NONE);
+		trclmnPhnVic.setWidth(100);
+		trclmnPhnVic.setText("PHẦN VIỆC");
+
+		TreeColumn trclmnTencongviec = new TreeColumn(tree_PhanViecDangThucHien, SWT.NONE);
+		trclmnTencongviec.setWidth(100);
+		trclmnTencongviec.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnIdCngVic = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
+
+		trclmnIdCngVic.setWidth(100);
+		trclmnIdCngVic.setText("ID C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnNgyBtu_1 = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
+		trclmnNgyBtu_1.setWidth(100);
+		trclmnNgyBtu_1.setText("NG\u00C0Y B\u1EAET \u0110\u1EA6U");
+
+		TreeColumn trclmnTin = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
+		trclmnTin.setWidth(100);
+		trclmnTin.setText("TI\u1EBEN \u0110\u1ED8");
+		xpndtmCngVicang.setHeight(150);
+
+		ExpandItem xpndtmNewExpanditem = new ExpandItem(expandBar_1, SWT.NONE);
+		xpndtmNewExpanditem.setText("Công việc đã thực hiện");
+
+		tree_PhanViecDaThucHien = new Tree(expandBar_1, SWT.BORDER);
+		xpndtmNewExpanditem.setControl(tree_PhanViecDaThucHien);
+		tree_PhanViecDaThucHien.setSize(493, 172);
+		tree_PhanViecDaThucHien.setLinesVisible(true);
+		tree_PhanViecDaThucHien.setHeaderVisible(true);
+		ts.setTreeItemHeight(tree_PhanViecDaThucHien, treeHeight);
+
+		TreeColumn trclmnStt_5 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
+		trclmnStt_5.setWidth(52);
+		trclmnStt_5.setText("STT");
+
+		TreeColumn trclmnIdCngVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
+		trclmnIdCngVic_1.setWidth(89);
+		trclmnIdCngVic_1.setText("ID C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnLoiCngVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
+		trclmnLoiCngVic_1.setWidth(120);
+		trclmnLoiCngVic_1.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnPhnVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
+		trclmnPhnVic_1.setWidth(100);
+		trclmnPhnVic_1.setText("PHẦN VIỆC");
+
+		TreeColumn trclmnTencongviec_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
+		trclmnTencongviec_1.setWidth(129);
+		trclmnTencongviec_1.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnNgyBtu_2 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
+		trclmnNgyBtu_2.setWidth(100);
+		trclmnNgyBtu_2.setText("NG\u00C0Y B\u1EAET \u0110\u1EA6U");
+
+		TreeColumn trclmnNgyKtThc = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
+		trclmnNgyKtThc.setWidth(120);
+		trclmnNgyKtThc.setText("NG\u00C0Y K\u1EBET TH\u00DAC");
+
+		TreeColumn trclmnTngSNgy = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
+		trclmnTngSNgy.setWidth(170);
+		trclmnTngSNgy.setText("T\u1ED4NG S\u1ED0 NG\u00C0Y TH\u1EF0C HI\u1EC6N");
+		xpndtmNewExpanditem.setHeight(250);
+		dragSource.addDragListener(new DragSourceAdapter() {
+			public void dragSetData(DragSourceEvent event) {
+
+				// Get the selected items in the drag source
+				DragSource ds = (DragSource) event.widget;
+				Tree tree = (Tree) ds.getControl();
+				TreeItem[] selection = tree.getSelection();
+				StringBuffer buff = new StringBuffer();
+				for (int i = 0, n = selection.length; i < n; i++) {
+					// TreeItem t = selection[i];
+					if (selection[i].getData() != null)
+						buff.append(((NGUOIDUNG) selection[i].getData()).getTEN_TAI_KHOAN() + " ");
+				}
+				event.data = buff.toString();
+				// System.out.println((String) event.data);
+			}
+		});
+		sashForm_1.setWeights(new int[] { 618, 809 });
+		sashForm.setWeights(new int[] { 1000, 618 });
+
+		TabFolder tabFolder_1 = new TabFolder(sashForm_13, SWT.NONE);
+
+		TabItem tbtmTinThc = new TabItem(tabFolder_1, SWT.NONE);
+		tbtmTinThc.setText("Tiến độ thực hiện");
+
+		/* Create the example widgets */
+
+		ExpandBar expandBar = new ExpandBar(tabFolder_1, SWT.V_SCROLL);
+		expandBar.setSpacing(8);
+		expandBar.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		tbtmTinThc.setControl(expandBar);
+		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
+		expandBar.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+
+		ExpandItem xpndtmThngTin = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmThngTin.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Mimes-ooo-writer-icon.png"));
+		xpndtmThngTin.setExpanded(true);
+		xpndtmThngTin.setText("Thông tin đề xuất");
+
+		Composite grpThngTin = new Composite(expandBar, SWT.NONE);
+		xpndtmThngTin.setControl(grpThngTin);
 		grpThngTin.setLayout(new GridLayout(2, false));
 
 		Label lblSXut = new Label(grpThngTin, SWT.NONE);
@@ -584,180 +746,20 @@ public class GiaoViec {
 			}
 		});
 		btnHSLu.setText("Hồ sơ Đề xuất");
-		sashForm_9.setWeights(new int[] { 2, 1 });
+		xpndtmThngTin.setHeight(200);
 
-		TabItem tbtmNhnLc = new TabItem(tabFolder_Congviec, SWT.NONE);
-		tbtmNhnLc.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Group-Black-Folder-icon.png"));
-		tbtmNhnLc.setText("Hiện trạng Nhân lực");
+		ExpandItem xpndtmTChcThc = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmTChcThc.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmTChcThc.setText("Tổ chức thực hiện");
 
-		SashForm sashForm_1 = new SashForm(tabFolder_Congviec, SWT.NONE);
-		tbtmNhnLc.setControl(sashForm_1);
-
-		tree_DanhsachCanbo = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
-		tree_DanhsachCanbo.setLinesVisible(true);
-		tree_DanhsachCanbo.setHeaderVisible(true);
-		ts.setTreeItemHeight(tree_DanhsachCanbo, treeHeight);
-		tree_DanhsachCanbo.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				try {
-					/* get selection */
-					TreeItem[] items = tree_DanhsachCanbo.getSelection();
-					if (items.length > 0) {
-						NGUOIDUNG nd = (NGUOIDUNG) items[0].getData();
-						if (nd != null) {
-							view_Congviec_Dang_Thuchien(nd);
-							view_Congviec_Da_Thuchien(nd);
-						}
-						// Show data on Cong viec}
-					}
-				} catch (SQLException e) {
-					log.error(e.getMessage());
-					e.printStackTrace();
-				}
-			}
-		});
-		TreeColumn trclmnStt_2 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
-		trclmnStt_2.setWidth(50);
-		trclmnStt_2.setText("STT");
-
-		TreeColumn trclmnTnCnB_1 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
-		trclmnTnCnB_1.setWidth(100);
-		trclmnTnCnB_1.setText("T\u00CAN C\u00C1N B\u1ED8");
-
-		TreeColumn trclmnPhngBan = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
-		trclmnPhngBan.setWidth(100);
-		trclmnPhngBan.setText("PH\u00D2NG BAN");
-
-		TreeColumn trclmnTnTiKhon_1 = new TreeColumn(tree_DanhsachCanbo, SWT.CENTER);
-		trclmnTnTiKhon_1.setWidth(100);
-		trclmnTnTiKhon_1.setText("T\u00CAN T\u00C0I KHO\u1EA2N");
-
-		DragSource dragSource = new DragSource(tree_DanhsachCanbo, SWT.DRAG);
-
-		dragSource.setTransfer(types);
-		dragSource.addDragListener(new DragSourceAdapter() {
-			public void dragSetData(DragSourceEvent event) {
-
-				// Get the selected items in the drag source
-				DragSource ds = (DragSource) event.widget;
-				Tree tree = (Tree) ds.getControl();
-				TreeItem[] selection = tree.getSelection();
-				StringBuffer buff = new StringBuffer();
-				for (int i = 0, n = selection.length; i < n; i++) {
-					// TreeItem t = selection[i];
-					if (selection[i].getData() != null)
-						buff.append(((NGUOIDUNG) selection[i].getData()).getTEN_TAI_KHOAN() + " ");
-				}
-				event.data = buff.toString();
-				// System.out.println((String) event.data);
-			}
-		});
-
-		TabFolder tabFolder = new TabFolder(sashForm_1, SWT.NONE);
-
-		TabItem tbtmPhnVicang = new TabItem(tabFolder, SWT.NONE);
-		tbtmPhnVicang.setText("Công việc đang thực hiện");
-
-		tree_PhanViecDangThucHien = new Tree(tabFolder, SWT.BORDER | SWT.FULL_SELECTION);
-		tree_PhanViecDangThucHien.setLinesVisible(true);
-		tree_PhanViecDangThucHien.setHeaderVisible(true);
-		tbtmPhnVicang.setControl(tree_PhanViecDangThucHien);
-		ts.setTreeItemHeight(tree_PhanViecDangThucHien, treeHeight);
-
-		TreeColumn trclmnStt_3 = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
-		trclmnStt_3.setWidth(50);
-		trclmnStt_3.setText("STT");
-
-		TreeColumn trclmnLoaijCongViec = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
-		trclmnLoaijCongViec.setWidth(120);
-		trclmnLoaijCongViec.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnPhnVic = new TreeColumn(tree_PhanViecDangThucHien, SWT.NONE);
-		trclmnPhnVic.setWidth(100);
-		trclmnPhnVic.setText("PHẦN VIỆC");
-
-		TreeColumn trclmnTencongviec = new TreeColumn(tree_PhanViecDangThucHien, SWT.NONE);
-		trclmnTencongviec.setWidth(100);
-		trclmnTencongviec.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnIdCngVic = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
-
-		trclmnIdCngVic.setWidth(100);
-		trclmnIdCngVic.setText("ID C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnNgyBtu_1 = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
-		trclmnNgyBtu_1.setWidth(100);
-		trclmnNgyBtu_1.setText("NG\u00C0Y B\u1EAET \u0110\u1EA6U");
-
-		TreeColumn trclmnTin = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
-		trclmnTin.setWidth(100);
-		trclmnTin.setText("TI\u1EBEN \u0110\u1ED8");
-
-		TabItem tbtmLchSPhn = new TabItem(tabFolder, SWT.NONE);
-		tbtmLchSPhn.setText("Công việc đã thực hiện");
-
-		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
-		tbtmLchSPhn.setControl(composite_1);
-		composite_1.setLayout(new GridLayout(1, false));
-
-		tree_PhanViecDaThucHien = new Tree(composite_1, SWT.BORDER);
-		tree_PhanViecDaThucHien.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		tree_PhanViecDaThucHien.setSize(493, 172);
-		tree_PhanViecDaThucHien.setLinesVisible(true);
-		tree_PhanViecDaThucHien.setHeaderVisible(true);
-		ts.setTreeItemHeight(tree_PhanViecDaThucHien, treeHeight);
-
-		TreeColumn trclmnStt_5 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
-		trclmnStt_5.setWidth(52);
-		trclmnStt_5.setText("STT");
-
-		TreeColumn trclmnIdCngVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
-		trclmnIdCngVic_1.setWidth(89);
-		trclmnIdCngVic_1.setText("ID C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnLoiCngVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
-		trclmnLoiCngVic_1.setWidth(120);
-		trclmnLoiCngVic_1.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnPhnVic_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
-		trclmnPhnVic_1.setWidth(100);
-		trclmnPhnVic_1.setText("PHẦN VIỆC");
-
-		TreeColumn trclmnTencongviec_1 = new TreeColumn(tree_PhanViecDaThucHien, SWT.NONE);
-		trclmnTencongviec_1.setWidth(129);
-		trclmnTencongviec_1.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnNgyBtu_2 = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
-		trclmnNgyBtu_2.setWidth(100);
-		trclmnNgyBtu_2.setText("NG\u00C0Y B\u1EAET \u0110\u1EA6U");
-
-		TreeColumn trclmnNgyKtThc = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
-		trclmnNgyKtThc.setWidth(120);
-		trclmnNgyKtThc.setText("NG\u00C0Y K\u1EBET TH\u00DAC");
-
-		TreeColumn trclmnTngSNgy = new TreeColumn(tree_PhanViecDaThucHien, SWT.CENTER);
-		trclmnTngSNgy.setWidth(170);
-		trclmnTngSNgy.setText("T\u1ED4NG S\u1ED0 NG\u00C0Y TH\u1EF0C HI\u1EC6N");
-		sashForm_1.setWeights(new int[] { 467, 511 });
-
-		tabFolder_Phanviec = new TabFolder(sashForm, SWT.NONE);
-
-		TabItem tbtmPhnVic = new TabItem(tabFolder_Phanviec, SWT.NONE);
-		tbtmPhnVic.setText("Phần việc đang triển khai");
-
-		SashForm sashForm_7 = new SashForm(tabFolder_Phanviec, SWT.NONE);
-		tbtmPhnVic.setControl(sashForm_7);
-
-		Group grpTChcThc = new Group(sashForm_7, SWT.NONE);
-		grpTChcThc.setText("Tổ chức - thực hiện");
+		Composite grpTChcThc = new Composite(expandBar, SWT.NONE);
+		xpndtmTChcThc.setControl(grpTChcThc);
 		grpTChcThc.setFont(new Font(display, "Consolas", 9, SWT.BOLD));
 		grpTChcThc.setForeground(new Color(null, 255, 1, 51));
 		GridLayout gl_grpTChcThc = new GridLayout(2, false);
 		grpTChcThc.setLayout(gl_grpTChcThc);
 
 		Label lblNgyBtu = new Label(grpTChcThc, SWT.NONE);
-		lblNgyBtu.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblNgyBtu.setText("Ngày bắt đầu:");
 
 		text_THUCHIEN_Batdau = new Text(grpTChcThc, SWT.NONE);
@@ -766,7 +768,6 @@ public class GiaoViec {
 		text_THUCHIEN_Batdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblDKin = new Label(grpTChcThc, SWT.NONE);
-		lblDKin.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblDKin.setText("Dự kiến:");
 
 		text_THUCHIEN_Dukien = new Text(grpTChcThc, SWT.NONE);
@@ -775,7 +776,6 @@ public class GiaoViec {
 		text_THUCHIEN_Dukien.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyChuynGiao = new Label(grpTChcThc, SWT.NONE);
-		lblNgyChuynGiao.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblNgyChuynGiao.setText("Ngày chuyển giao:");
 
 		text_THUCHIEN_Chuyengiao = new Text(grpTChcThc, SWT.NONE);
@@ -784,7 +784,7 @@ public class GiaoViec {
 		text_THUCHIEN_Chuyengiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyHonThnh = new Label(grpTChcThc, SWT.NONE);
-		lblNgyHonThnh.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		lblNgyHonThnh.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblNgyHonThnh.setText("Ngày hoàn thành:");
 
 		text_THUCHIEN_Hoanthanh = new Text(grpTChcThc, SWT.NONE);
@@ -793,7 +793,7 @@ public class GiaoViec {
 		text_THUCHIEN_Hoanthanh.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
 		Label lblGhiCh_1 = new Label(grpTChcThc, SWT.NONE);
-		lblGhiCh_1.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		lblGhiCh_1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblGhiCh_1.setText("Ghi chú:");
 		text_Ghichu_Thuchien = new Text(grpTChcThc, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		text_Ghichu_Thuchien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
@@ -937,6 +937,55 @@ public class GiaoViec {
 		});
 		mntmTubo.setText("Từ bỏ");
 
+		MenuItem mntmXemHS = new MenuItem(menu_3, SWT.NONE);
+		mntmXemHS.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					int s = tabFolder_2.getSelectionIndex();
+					switch (s) {
+					case 0:
+						TreeItem[] ti = tree_CongviecSuachua.getSelection();
+						if (ti.length > 0) {
+							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
+							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							vph.open();
+							//
+						}
+						break;
+					case 1:
+						TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
+						if (ti2.length > 0) {
+							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
+							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							vph.open();
+							//
+						}
+						break;
+					case 2:
+						TreeItem[] ti3 = tree_CongViecMuasam.getSelection();
+						if (ti3.length > 0) {
+							DOT_THUCHIEN_GIAM_TAISAN dsb = (DOT_THUCHIEN_GIAM_TAISAN) ti3[0].getData();
+							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							vph.open();
+							//
+						}
+						break;
+
+					default:
+						break;
+					}
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXemHS.setText("Xem hồ sơ");
+
 		TreeColumn trclmnHnhThcNhn = new TreeColumn(tree_THUCHIEN, SWT.NONE);
 		trclmnHnhThcNhn.setWidth(100);
 		trclmnHnhThcNhn.setText("Hình thức nhận việc");
@@ -1076,107 +1125,56 @@ public class GiaoViec {
 				}
 			}
 		});
-				new Label(grpTChcThc, SWT.NONE);
-		
-				Button btnHSThc = new Button(grpTChcThc, SWT.NONE);
-				btnHSThc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-				btnHSThc.setImage(SWTResourceManager.getImage(GiaoViec.class, "/folder-documents-icon(1).png"));
-				btnHSThc.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						try {
-							int s = tabFolder_2.getSelectionIndex();
-							switch (s) {
-							case 0:
-								TreeItem[] ti = tree_CongviecSuachua.getSelection();
-								if (ti.length > 0) {
-									DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
-									GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
-									vph.open();
-									//
-								}
-								break;
-							case 1:
-								TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
-								if (ti2.length > 0) {
-									DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
-									GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
-									vph.open();
-									//
-								}
-								break;
-							case 2:
-								TreeItem[] ti3 = tree_CongViecMuasam.getSelection();
-								if (ti3.length > 0) {
-									DOT_THUCHIEN_GIAM_TAISAN dsb = (DOT_THUCHIEN_GIAM_TAISAN) ti3[0].getData();
-									GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
-									vph.open();
-									//
-								}
-								break;
+		xpndtmTChcThc.setHeight(xpndtmTChcThc.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
-							default:
-								break;
-							}
-						} catch (SQLException e1) {
-							log.error(e1.getMessage());
-							e1.printStackTrace();
-						}
-					}
-				});
-				btnHSThc.setText("Hồ sơ thực hiện");
+		ExpandItem xpndtmNghimThu = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmNghimThu.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmNghimThu.setText("Nghiệm thu - bàn giao");
 
-		Group grpNghimThu = new Group(sashForm_7, SWT.NONE);
+		Composite grpNghimThu = new Composite(expandBar, SWT.NONE);
+		xpndtmNghimThu.setControl(grpNghimThu);
 		grpNghimThu.setFont(new Font(display, "Consolas", 9, SWT.BOLD));
 		grpNghimThu.setForeground(new Color(null, 255, 1, 51));
-		grpNghimThu.setText("Nghiệm thu - bàn giao");
 		grpNghimThu.setLayout(new GridLayout(2, false));
 
 		Label label = new Label(grpNghimThu, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label.setText("Ngày bắt đầu:");
 
 		text_NGHIEMTHU_Batdau = new Text(grpNghimThu, SWT.NONE);
-		text_NGHIEMTHU_Batdau.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_NGHIEMTHU_Batdau.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_NGHIEMTHU_Batdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_NGHIEMTHU_Batdau.setEditable(false);
 
 		Label label_1 = new Label(grpNghimThu, SWT.NONE);
-		label_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label_1.setText("Dự kiến:");
 
 		text_NGHIEMTHU_dukien = new Text(grpNghimThu, SWT.NONE);
-		text_NGHIEMTHU_dukien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_NGHIEMTHU_dukien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_NGHIEMTHU_dukien.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		text_NGHIEMTHU_dukien.setEditable(false);
 
 		Label label_7 = new Label(grpNghimThu, SWT.NONE);
-		label_7.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label_7.setText("Ngày chuyển giao:");
 
 		text_NGHIEMTHU_Chuyengiao = new Text(grpNghimThu, SWT.NONE);
-		text_NGHIEMTHU_Chuyengiao.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_NGHIEMTHU_Chuyengiao.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_NGHIEMTHU_Chuyengiao.setEditable(false);
 		text_NGHIEMTHU_Chuyengiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyHonThnh_1 = new Label(grpNghimThu, SWT.NONE);
-		lblNgyHonThnh_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblNgyHonThnh_1.setText("Ngày hoàn thành:");
 
 		text_NGHIEMTHU_Hoanthanh = new Text(grpNghimThu, SWT.NONE);
-		text_NGHIEMTHU_Hoanthanh.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_NGHIEMTHU_Hoanthanh.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_NGHIEMTHU_Hoanthanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		text_NGHIEMTHU_Hoanthanh.setEditable(false);
 
 		Label label_5 = new Label(grpNghimThu, SWT.NONE);
 		label_5.setText("Ghi chú:");
-		label_5.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		label_5.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 
 		text_Ghichu_Nghiemthu = new Text(grpNghimThu, SWT.V_SCROLL | SWT.MULTI);
-		text_Ghichu_Nghiemthu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_Ghichu_Nghiemthu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		GridData gd_text_Ghichu_Nghiemthu = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_text_Ghichu_Nghiemthu.heightHint = 50;
 		text_Ghichu_Nghiemthu.setLayoutData(gd_text_Ghichu_Nghiemthu);
@@ -1343,6 +1341,52 @@ public class GiaoViec {
 		});
 		mntmTubo1.setText("Từ bỏ");
 
+		MenuItem mntmHSThc = new MenuItem(menu_4, SWT.NONE);
+		mntmHSThc.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					int s = tabFolder_2.getSelectionIndex();
+					switch (s) {
+					case 0:
+						TreeItem[] ti = tree_CongviecSuachua.getSelection();
+						if (ti.length > 0) {
+							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
+							GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
+									gdth);
+
+							vph.open();
+
+							//
+						}
+						break;
+					case 1:
+						TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
+						if (ti2.length > 0) {
+							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
+							GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
+									gdth);
+							vph.open();
+							//
+						}
+						break;
+					case 2:
+						// do nothing
+						break;
+
+					default:
+						break;
+					}
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmHSThc.setText("Hồ sơ thực hiện");
+
 		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree_NGHIEMTHU, SWT.NONE);
 		trclmnNewColumn_2.setWidth(100);
 		trclmnNewColumn_2.setText("Hình thức nhận việc");
@@ -1499,96 +1543,48 @@ public class GiaoViec {
 				}
 			}
 		});
-				new Label(grpNghimThu, SWT.NONE);
-		
-				Button button = new Button(grpNghimThu, SWT.NONE);
-				button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-				button.setImage(SWTResourceManager.getImage(GiaoViec.class, "/folder-documents-icon(1).png"));
-				button.addSelectionListener(new SelectionAdapter() {
+		xpndtmNghimThu.setHeight(xpndtmNghimThu.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						try {
-							int s = tabFolder_2.getSelectionIndex();
-							switch (s) {
-							case 0:
-								TreeItem[] ti = tree_CongviecSuachua.getSelection();
-								if (ti.length > 0) {
-									DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
-									GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
-											gdth);
+		ExpandItem xpndtmQuytTon = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmQuytTon.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmQuytTon.setText("Quyết toán - thanh toán hợp đồng");
 
-									vph.open();
-
-									//
-								}
-								break;
-							case 1:
-								TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
-								if (ti2.length > 0) {
-									DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
-									GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
-											gdth);
-									vph.open();
-									//
-								}
-								break;
-							case 2:
-								// do nothing
-								break;
-
-							default:
-								break;
-							}
-						} catch (SQLException e1) {
-							log.error(e1.getMessage());
-							e1.printStackTrace();
-						}
-					}
-				});
-				button.setText("Hồ sơ thực hiện");
-
-		Group grpQuytTon = new Group(sashForm_7, SWT.NONE);
+		Composite grpQuytTon = new Composite(expandBar, SWT.NONE);
+		xpndtmQuytTon.setControl(grpQuytTon);
 		grpQuytTon.setFont(new Font(display, "Consolas", 9, SWT.BOLD));
 		grpQuytTon.setForeground(new Color(null, 255, 1, 51));
-		grpQuytTon.setText("Quyết toán - Thanh lý hợp đồng");
 		grpQuytTon.setLayout(new GridLayout(2, false));
 
 		Label label_2 = new Label(grpQuytTon, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label_2.setText("Ngày bắt đầu:");
 
 		text_QUYETTOAN_Batdau = new Text(grpQuytTon, SWT.NONE);
-		text_QUYETTOAN_Batdau.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_QUYETTOAN_Batdau.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_QUYETTOAN_Batdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		text_QUYETTOAN_Batdau.setEditable(false);
 
 		Label label_3 = new Label(grpQuytTon, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label_3.setText("Dự kiến:");
 
 		text_QUYETTOAN_Dukien = new Text(grpQuytTon, SWT.NONE);
-		text_QUYETTOAN_Dukien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_QUYETTOAN_Dukien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_QUYETTOAN_Dukien.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		text_QUYETTOAN_Dukien.setEditable(false);
 
 		Label label_4 = new Label(grpQuytTon, SWT.NONE);
-		label_4.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		label_4.setText("Ngày hoàn thành:");
 
 		text_QUYETTOAN_Hoanthanh = new Text(grpQuytTon, SWT.NONE);
-		text_QUYETTOAN_Hoanthanh.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_QUYETTOAN_Hoanthanh.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_QUYETTOAN_Hoanthanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		text_QUYETTOAN_Hoanthanh.setEditable(false);
 
 		Label label_6 = new Label(grpQuytTon, SWT.NONE);
 		label_6.setText("Ghi chú:");
-		label_6.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		label_6.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 
 		text_Ghichu_Quyettoan = new Text(grpQuytTon, SWT.V_SCROLL | SWT.MULTI);
-		text_Ghichu_Quyettoan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		text_Ghichu_Quyettoan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		GridData gd_text_Ghichu_Quyettoan = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_text_Ghichu_Quyettoan.heightHint = 50;
 		text_Ghichu_Quyettoan.setLayoutData(gd_text_Ghichu_Quyettoan);
@@ -1734,6 +1730,52 @@ public class GiaoViec {
 		});
 		mntmTubo2.setText("Từ bỏ");
 
+		MenuItem mntmHSThc_1 = new MenuItem(menu_5, SWT.NONE);
+		mntmHSThc_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					int s = tabFolder_2.getSelectionIndex();
+					switch (s) {
+					case 0:
+						TreeItem[] ti = tree_CongviecSuachua.getSelection();
+						if (ti.length > 0) {
+							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
+							GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
+									gdth);
+
+							vph.open();
+
+							//
+						}
+						break;
+					case 1:
+						TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
+						if (ti2.length > 0) {
+							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
+							GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
+									gdth);
+							vph.open();
+							//
+						}
+						break;
+					case 2:
+						// do nothing
+						break;
+
+					default:
+						break;
+					}
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmHSThc_1.setText("Hồ sơ thực hiện");
+
 		TreeColumn trclmnHnhThcNhn_1 = new TreeColumn(tree_QUYETTOAN, SWT.NONE);
 		trclmnHnhThcNhn_1.setWidth(100);
 		trclmnHnhThcNhn_1.setText("Hình thức nhận việc");
@@ -1863,62 +1905,20 @@ public class GiaoViec {
 				}
 			}
 		});
-				new Label(grpQuytTon, SWT.NONE);
-		
-				Button button_1 = new Button(grpQuytTon, SWT.NONE);
-				button_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-				button_1.setImage(SWTResourceManager.getImage(GiaoViec.class, "/folder-documents-icon(1).png"));
-				button_1.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						try {
-							int s = tabFolder_2.getSelectionIndex();
-							switch (s) {
-							case 0:
-								TreeItem[] ti = tree_CongviecSuachua.getSelection();
-								if (ti.length > 0) {
-									DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
-									GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
-											gdth);
+		xpndtmQuytTon.setHeight(xpndtmQuytTon.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
-									vph.open();
+		TabItem tbtmChiTit = new TabItem(tabFolder_1, SWT.NONE);
+		tbtmChiTit.setText("Chi tiết");
 
-									//
-								}
-								break;
-							case 1:
-								TreeItem[] ti2 = tree_CongViecMuasam.getSelection();
-								if (ti2.length > 0) {
-									DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
-									GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-									ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
-											gdth);
-									vph.open();
-									//
-								}
-								break;
-							case 2:
-								// do nothing
-								break;
+		ExpandBar expandBar_2 = new ExpandBar(tabFolder_1, SWT.NONE);
+		expandBar_2.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
+		tbtmChiTit.setControl(expandBar_2);
 
-							default:
-								break;
-							}
-						} catch (SQLException e1) {
-							log.error(e1.getMessage());
-							e1.printStackTrace();
-						}
-					}
-				});
-				button_1.setText("Hồ sơ thực hiện");
-		sashForm_7.setWeights(new int[] { 1, 1, 1 });
+		ExpandItem xpndtmExa = new ExpandItem(expandBar_2, SWT.NONE);
+		xpndtmExa.setText("Phương tiện tài sản tham gia");
 
-		TabItem tbtmPhngTinTi = new TabItem(tabFolder_Phanviec, SWT.NONE);
-		tbtmPhngTinTi.setText("Phương tiện tài sản tham gia");
-
-		tree_TaiSanXuly = new Tree(tabFolder_Phanviec, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
-		tbtmPhngTinTi.setControl(tree_TaiSanXuly);
+		tree_TaiSanXuly = new Tree(expandBar_2, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+		xpndtmExa.setControl(tree_TaiSanXuly);
 		tree_TaiSanXuly.setLinesVisible(true);
 		tree_TaiSanXuly.setHeaderVisible(true);
 
@@ -1959,8 +1959,7 @@ public class GiaoViec {
 					TreeItem[] til = tree_TaiSanXuly.getSelection();
 					if (til.length > 0) {
 						TAISAN ts = (TAISAN) til[0].getData();
-						View_Taisan vt = new View_Taisan(display.getShells()[0], SWT.DIALOG_TRIM, user,
-								ts.getMA_TAISAN());
+						View_Taisan vt = new View_Taisan(shlQunLCng, SWT.DIALOG_TRIM, user, ts.getMA_TAISAN());
 						vt.open();
 					}
 				} catch (SQLException e1) {
@@ -1970,52 +1969,46 @@ public class GiaoViec {
 			}
 		});
 		mntmXemThngTin.setText("Xem thông tin Phương tiện tài sản");
+		xpndtmExa.setHeight(150);
 
-		TabItem tbtmNgunTng = new TabItem(tabFolder_Phanviec, SWT.NONE);
-		tbtmNgunTng.setText("Nguồn Sửa chữa");
+		xpndtmNgunThamgia = new ExpandItem(expandBar_2, SWT.NONE);
+		xpndtmNgunThamgia.setText("Nguồn sửa chữa - bảo dưỡng");
 
-		Composite composite_4 = new Composite(tabFolder_Phanviec, SWT.NONE);
-		tbtmNgunTng.setControl(composite_4);
+		Composite composite_4 = new Composite(expandBar_2, SWT.NONE);
+		xpndtmNgunThamgia.setControl(composite_4);
 		composite_4.setLayout(new GridLayout(2, false));
 
 		Label lblTnNgunTng = new Label(composite_4, SWT.NONE);
-		lblTnNgunTng.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTnNgunTng.setText("Tên nguồn tăng:");
 
 		text_Nguontang = new Text(composite_4, SWT.NONE);
+		text_Nguontang.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text_Nguontang.setEditable(false);
 		text_Nguontang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblGiiThiu = new Label(composite_4, SWT.NONE);
-		GridData gd_lblGiiThiu = new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1);
+		GridData gd_lblGiiThiu = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_lblGiiThiu.verticalIndent = 3;
 		lblGiiThiu.setLayoutData(gd_lblGiiThiu);
 		lblGiiThiu.setText("Giới thiệu:");
 
 		text_Gioithieu = new Text(composite_4, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		text_Gioithieu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text_Gioithieu.setEditable(false);
 		text_Gioithieu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Label lblLinH = new Label(composite_4, SWT.NONE);
-		GridData gd_lblLinH = new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1);
+		GridData gd_lblLinH = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_lblLinH.verticalIndent = 3;
 		lblLinH.setLayoutData(gd_lblLinH);
 		lblLinH.setText("Liên hệ:");
 
-		text_LienHe = new Text(composite_4, SWT.WRAP | SWT.MULTI);
+		text_LienHe = new Text(composite_4, SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		text_LienHe.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		text_LienHe.setEditable(false);
 		text_LienHe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		Group grpGhiCh = new Group(sashForm, SWT.NONE);
-		grpGhiCh.setText("Mô tả");
-		grpGhiCh.setLayout(new GridLayout(1, false));
-
-		text = new Text(grpGhiCh, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		text.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-		sashForm.setWeights(new int[] {163, 260, 62});
-		sashForm_13.setWeights(new int[] { 1000 });
+		xpndtmNgunThamgia.setHeight(150);
+		sashForm_13.setWeights(new int[] { 1000, 618 });
 
 		fill_DanhsachCanbo();
 		FillTableSuachua();
@@ -2813,6 +2806,7 @@ public class GiaoViec {
 					Item.setText(1, String.valueOf(n.getMA_DOT_GIAM()));
 					Item.setText(2, "" + n.getTEN_DOT_GIAM());
 					Item.setText(3, "" + n.getLY_DO_GIAM());
+					Item.setText(4, "" + n.getMO_TA());
 					Item.setData(n);
 					x++;
 				}
@@ -2831,7 +2825,7 @@ public class GiaoViec {
 				for (DOT_THUCHIEN_TANG_TAISAN n : nt) {
 					TreeItem Item = new TreeItem(tree_CongViecMuasam, SWT.NONE);
 					Item.setText(new String[] { x + "", n.getMA_DOT_TANG() + "", n.getTEN_DOT_TANG(),
-							n.getLY_DO_TANG() + "" });
+							n.getLY_DO_TANG() + "", n.getMO_TA() });
 					Item.setData(n);
 					x++;
 				}
@@ -2848,20 +2842,19 @@ public class GiaoViec {
 			int x = 1;
 			if (nt != null)
 				for (DOT_THUCHIEN_SUACHUA_BAODUONG n : nt) {
-					TreeItem Item = new TreeItem(tree_CongviecSuachua, SWT.NONE);
-					Item.setText(0, "" + x);
-					Item.setText(1, String.valueOf(n.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG()));
-					Item.setText(2, "" + n.getTEN_DOT_THUCHIEN_SUACHUA_BAODUONG());
 					Fill_ItemData f = new Fill_ItemData();
-					Item.setText(3, f.getStringOfSUACHUA_BAODUONG(n.getSUACHUA_BAODUONG()));
 					DE_XUAT d = new DE_XUAT();
 					d = controler.getControl_DEXUAT().get_DEXUAT(n);
-					if (d != null) {
-						Item.setText(4,
-								controler.getControl_PHONGBAN().get_PHONGBAN(d.getMA_PHONGBAN()).getTEN_PHONGBAN());
-						Item.setData(n);
-						x++;
-					}
+					TreeItem Item = new TreeItem(tree_CongviecSuachua, SWT.NONE);
+					Item.setText(new String[] { x + "", String.valueOf(n.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG()),
+							n.getTEN_DOT_THUCHIEN_SUACHUA_BAODUONG(),
+							f.getStringOfSUACHUA_BAODUONG(n.getSUACHUA_BAODUONG()),
+							d == null ? "--"
+									: controler.getControl_PHONGBAN().get_PHONGBAN(d.getMA_PHONGBAN())
+											.getTEN_PHONGBAN(),
+							n.getMO_TA() });
+					Item.setData(n);
+					x++;
 				}
 			treePack(tree_CongviecSuachua);
 		}
@@ -2883,5 +2876,4 @@ public class GiaoViec {
 		shlQunLCng.setText("Công việc đang thực hiện");
 
 	}
-
 }

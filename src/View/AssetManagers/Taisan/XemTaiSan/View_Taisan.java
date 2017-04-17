@@ -16,6 +16,9 @@ import DAO.LOAITAISAN_CAP_III;
 import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
 import DAO.NHOMTAISAN_CAP_V;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.PHONGBAN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAISAN;
@@ -205,9 +208,31 @@ public class View_Taisan extends Dialog {
 			text_nhomtaisan = new Text(shlThngTinTi, SWT.READ_ONLY);
 			text_nhomtaisan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 			text_nhomtaisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			NHOMTAISAN_CAP_V nc5 = controler.getControl_NHOMTAISAN_CAP_V()
-					.getNHOMTAISAN_CAP_V(t.getMA_NHOMTAISAN_CAP_V());
-			text_nhomtaisan.setText(nc5.getTEN_NHOMTAISAN_CAP_V());
+			int PHANNHOM = controler.getControl_NHOMTAISAN_CAP_V().getPHANNHOM(t.getMA_NHOMTAISAN_CAP_V());
+			switch (PHANNHOM) {
+			case 0:
+				NHOMTAISAN_CAP_V nc5 = controler.getControl_NHOMTAISAN_CAP_V()
+						.getNHOMTAISAN_CAP_V(t.getMA_NHOMTAISAN_CAP_V());
+				text_nhomtaisan.setText(nc5.getTEN_NHOMTAISAN_CAP_V());
+				break;
+			case 1:
+				NHOM_TAISANCODINH_VOHINH ctv = controler.getControl_NHOM_TAISANCODINH_VOHINH()
+						.getNHOM_TAISANCODINH_VOHINH(t.getMA_NHOMTAISAN_CAP_V());
+				text_nhomtaisan.setText(ctv.getTEN_NHOM_TAISANCODINH_VOHINH());
+				break;
+			case 2:
+				NHOM_TAISANCODINH_DACTHU ctt = controler.getControl_NHOM_TAISANCODINH_DACTHU()
+						.getNHOM_TAISANCODINH_DACTHU(t.getMA_NHOMTAISAN_CAP_V());
+				text_nhomtaisan.setText(ctt.getTEN_NHOM_TAISANCODINH_DACTHU());
+				break;
+			case 3:
+				NHOM_TAISANCODINH_DACBIET ctb = controler.getControl_NHOM_TAISANCODINH_DACBIET()
+						.getNHOM_TAISANCODINH_DACBIET(t.getMA_NHOMTAISAN_CAP_V());
+				text_nhomtaisan.setText(ctb.getTEN_NHOM_TAISANCODINH_DACBIET());
+				break;
+			default:
+				break;
+			}
 
 			lblSLng = new Label(shlThngTinTi, SWT.NONE);
 			lblSLng.setText("S\u1ED1 l\u01B0\u1EE3ng:");

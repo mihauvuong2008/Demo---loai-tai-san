@@ -1,6 +1,9 @@
 package DAO.BUILD.QUERY.INSERT_LIB;
 
 import DAO.NHOMTAISAN_CAP_III;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 
 public class query_Insert_NHOMTAISAN_CAP_III {
 
@@ -20,4 +23,30 @@ public class query_Insert_NHOMTAISAN_CAP_III {
 		}
 	}
 
+	public String getString_ThemNhom_Vohinh(int NhomCapII) {
+		try {
+			return "INSERT INTO NHOMTAISAN_CAP_III (TEN_NHOMTAISAN_CAP_III, PHAN_NHOMTAISAN, MA_NHOMTAISAN_CAP_II ) VALUES( 'Nhóm tài sản cố định Vô hình', '"
+					+ NHOM_TAISANCODINH_VOHINH.PHAN_NHOMTAISAN + "', '" + NhomCapII + "' );";
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_ThemNhom_Dacbiet(int NhomCapII) {
+		try {
+			return "INSERT INTO NHOMTAISAN_CAP_III (TEN_NHOMTAISAN_CAP_III, PHAN_NHOMTAISAN, MA_NHOMTAISAN_CAP_II ) VALUES( 'Nhóm tài sản cố định Đặc biệt', '"
+					+ NHOM_TAISANCODINH_DACBIET.PHAN_NHOMTAISAN + "', '" + NhomCapII + "' );";
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_ThemNhom_Dacthu(int NhomCapII) {
+		try {
+			return "INSERT INTO NHOMTAISAN_CAP_III (TEN_NHOMTAISAN_CAP_III, PHAN_NHOMTAISAN, MA_NHOMTAISAN_CAP_II ) VALUES( 'Nhóm tài sản cố định Đặc thù', '"
+					+ NHOM_TAISANCODINH_DACTHU.PHAN_NHOMTAISAN + "', '" + NhomCapII + "' );";
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

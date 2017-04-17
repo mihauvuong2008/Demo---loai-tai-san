@@ -3,6 +3,7 @@ package DAO;
 public class NHOMTAISAN_CAP_I {
 	int MA_NHOMTAISAN_CAP_I;
 	String TEN_NHOMTAISAN_CAP_I;
+	public static final int PHAN_NHOMTAISAN = 0;
 
 	public int getMA_NHOMTAISAN_CAP_I() {
 		return MA_NHOMTAISAN_CAP_I;

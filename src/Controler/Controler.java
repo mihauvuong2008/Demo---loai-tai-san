@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import Control.CHUKY_DANGKIEM.Control_CHUKY_DANGKIEM;
 import Control.DATETIME_SERVER.Control_DATETIME_FROM_SERVER;
 import Control.DEXUAT.Control_DEXUAT;
+import Control.DOT_BANGIAO_TAISAN_NOIBO.Control_DOT_BANGIAO_TAISAN_NOIBO;
 import Control.DOT_THUCHIEN_DANGKIEM.Control_DOT_THUCHIEN_DANGKIEM;
 import Control.DOT_THUCHIEN_GIAM_TAISAN.Control_DOT_THUCHIEN_GIAM_TAISAN;
 import Control.DOT_THUCHIEN_GIAM_TAISAN.Control_TAISAN_DOT_THUCHIEN_GIAM_TAISAN;
@@ -19,6 +20,7 @@ import Control.HO_SO.Control_VANBAN;
 import Control.KY_HAN_THONGKE_XANG_DAU.Control_KY_HAN_THONGKE_XANG_DAU;
 import Control.KY_HAN_THONGKE_XANG_DAU.Control_NHOM_DONVI_THAMGIA_THONGKE;
 import Control.LENH_DIEU_XE.Control_LENH_DIEU_XE;
+import Control.LICH_CONG_TAC.Control_LICH_CONG_TAC;
 import Control.LOAITAISAN.Control_LOAITAISAN_CAP_I;
 import Control.LOAITAISAN.Control_LOAITAISAN_CAP_II;
 import Control.LOAITAISAN.Control_LOAITAISAN_CAP_III;
@@ -33,6 +35,9 @@ import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_II;
 import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_III;
 import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_IV;
 import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_V;
+import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_DACBIET;
+import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_DACTHU;
+import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_VOHINH;
 import Control.PHONGBAN.Control_PHONGBAN;
 import Control.PHUONGTIEN_GIAOTHONG.Control_LOAI_XE;
 import Control.PHUONGTIEN_GIAOTHONG.Control_PHUONGTIEN_GIAOTHONG;
@@ -106,6 +111,11 @@ public class Controler {
 	private final Control_THUCHIEN Control_THUCHIEN;
 	private final Control_CHUKY_DANGKIEM Control_CHUKY_DANGKIEM;
 	private final Control_DOT_THUCHIEN_DANGKIEM Control_DOT_THUCHIEN_DANGKIEM;
+	private final Control_NHOM_TAISANCODINH_DACBIET Control_NHOM_TAISANCODINH_DACBIET;
+	private final Control_NHOM_TAISANCODINH_VOHINH Control_NHOM_TAISANCODINH_VOHINH;
+	private final Control_NHOM_TAISANCODINH_DACTHU Control_NHOM_TAISANCODINH_DACTHU;
+	private final Control_DOT_BANGIAO_TAISAN_NOIBO Control_DOT_BANGIAO_TAISAN_NOIBO;
+	private final Control_LICH_CONG_TAC Control_LICH_CONG_TAC;
 
 	public Controler(NGUOIDUNG user) {
 		super();
@@ -157,6 +167,11 @@ public class Controler {
 		Control_THUCHIEN = new Control_THUCHIEN(user);
 		Control_CHUKY_DANGKIEM = new Control_CHUKY_DANGKIEM(user);
 		Control_DOT_THUCHIEN_DANGKIEM = new Control_DOT_THUCHIEN_DANGKIEM(user);
+		Control_NHOM_TAISANCODINH_DACBIET = new Control_NHOM_TAISANCODINH_DACBIET(user);
+		Control_NHOM_TAISANCODINH_VOHINH = new Control_NHOM_TAISANCODINH_VOHINH(user);
+		Control_NHOM_TAISANCODINH_DACTHU = new Control_NHOM_TAISANCODINH_DACTHU(user);
+		Control_DOT_BANGIAO_TAISAN_NOIBO = new Control_DOT_BANGIAO_TAISAN_NOIBO(user);
+		Control_LICH_CONG_TAC = new Control_LICH_CONG_TAC(user);
 	}
 
 	public final NGUOIDUNG getUser() {
@@ -353,6 +368,26 @@ public class Controler {
 
 	public Control_DOT_THUCHIEN_DANGKIEM getControl_DOT_THUCHIEN_DANGKIEM() {
 		return Control_DOT_THUCHIEN_DANGKIEM;
+	}
+
+	public final Control_NHOM_TAISANCODINH_DACBIET getControl_NHOM_TAISANCODINH_DACBIET() {
+		return Control_NHOM_TAISANCODINH_DACBIET;
+	}
+
+	public final Control_NHOM_TAISANCODINH_VOHINH getControl_NHOM_TAISANCODINH_VOHINH() {
+		return Control_NHOM_TAISANCODINH_VOHINH;
+	}
+
+	public final Control_NHOM_TAISANCODINH_DACTHU getControl_NHOM_TAISANCODINH_DACTHU() {
+		return Control_NHOM_TAISANCODINH_DACTHU;
+	}
+
+	public final Control_DOT_BANGIAO_TAISAN_NOIBO getControl_DOT_BANGIAO_TAISAN_NOIBO() {
+		return Control_DOT_BANGIAO_TAISAN_NOIBO;
+	}
+
+	public final Control_LICH_CONG_TAC getControl_LICH_CONG_TAC() {
+		return Control_LICH_CONG_TAC;
 	}
 
 }

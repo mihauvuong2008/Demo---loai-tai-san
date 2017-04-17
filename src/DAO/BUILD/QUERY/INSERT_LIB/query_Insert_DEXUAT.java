@@ -22,7 +22,6 @@ public class query_Insert_DEXUAT {
 					+ (dx.getTHOI_DIEM_CHUYEN_GIAO() == null ? "null"
 							: ("'" + mdf.getSQLStringDate(dx.getTHOI_DIEM_CHUYEN_GIAO()) + "'"))
 					+ ",null,'" + dx.getGHI_CHU() + "','" + dx.getTEN_TAI_KHOAN() + "', '" + dx.getMA_TAPHOSO() + "');";
-
 			return result;
 		} catch (Exception e) {
 			return null;

@@ -23,30 +23,6 @@ public class Control_NHOMTAISAN_CAP_V {
 		conn = user.getConn();
 	}
 
-	public ArrayList<NHOMTAISAN_CAP_V> getAllData() throws SQLException {
-		return new Select().getAllData();
-	}
-
-	public boolean insert_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
-		return new Insert().insert_NHOMTAISAN_CAP_V(l);
-	}
-
-	public boolean update_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
-		return new Update().update_NHOMTAISAN_CAP_V(l);
-	}
-
-	public boolean delete_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
-		return new Delete().delete_NHOMTAISAN_CAP_V(l);
-	}
-
-	public NHOMTAISAN_CAP_V getNHOMTAISAN_CAP_V(int ma_NHOMTAISAN_CAP_V) throws SQLException {
-		return new Select().getNHOMTAISAN_CAP_V(ma_NHOMTAISAN_CAP_V);
-	}
-
-	public boolean delete_All() throws SQLException {
-		return new Delete().delete_All();
-	}
-
 	class Insert {
 		public boolean insert_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
 			if (conn != null) {
@@ -68,15 +44,15 @@ public class Control_NHOMTAISAN_CAP_V {
 				String query = (new query_Select_NHOMTAISAN_CAP_V()).getString_NhomTaisanCapV(ma_NHOMTAISAN_CAP_V);
 				if (query == null)
 					return null;
-				NHOMTAISAN_CAP_V lt = new NHOMTAISAN_CAP_V();
+				NHOMTAISAN_CAP_V result = null;
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
 				while (rs.next()) {
-					lt = (new Control_DAO_Build()).get_NHOMTAISAN_CAP_V(rs);
+					result = (new Control_DAO_Build()).get_NHOMTAISAN_CAP_V(rs);
 				}
 				rs.close();
 				st.close();
-				return lt;
+				return result;
 			}
 			return null;
 		}
@@ -100,6 +76,24 @@ public class Control_NHOMTAISAN_CAP_V {
 			return null;
 		}
 
+		public int getPHANNHOMTAISAN_CAP_V(int mA_NHOMTAISAN_CAP_V) throws SQLException {
+			if (conn != null) {
+				String query = (new query_Select_NHOMTAISAN_CAP_V()).getString_PHANNhomTaisanCapV(mA_NHOMTAISAN_CAP_V);
+				if (query == null)
+					return -1;
+				int lt = 0;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					lt = (new Control_DAO_Build()).get_PHANHOM_CAP_V(rs);
+				}
+				rs.close();
+				st.close();
+				return lt;
+			}
+			return -1;
+		}
+
 	}
 
 	class Update {
@@ -108,6 +102,7 @@ public class Control_NHOMTAISAN_CAP_V {
 				String query = (new query_Update_NHOMTAISAN_CAP_V()).getString_Capnhat_NHomTaisanCapV(l);
 				if (query == null)
 					return false;
+				System.out.println(query);
 				PreparedStatement prs;
 				prs = conn.prepareStatement(query);
 				prs.executeUpdate();
@@ -145,6 +140,34 @@ public class Control_NHOMTAISAN_CAP_V {
 			}
 			return false;
 		}
+	}
+
+	public ArrayList<NHOMTAISAN_CAP_V> getAllData() throws SQLException {
+		return new Select().getAllData();
+	}
+
+	public boolean insert_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
+		return new Insert().insert_NHOMTAISAN_CAP_V(l);
+	}
+
+	public boolean update_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
+		return new Update().update_NHOMTAISAN_CAP_V(l);
+	}
+
+	public boolean delete_NHOMTAISAN_CAP_V(NHOMTAISAN_CAP_V l) throws SQLException {
+		return new Delete().delete_NHOMTAISAN_CAP_V(l);
+	}
+
+	public NHOMTAISAN_CAP_V getNHOMTAISAN_CAP_V(int ma_NHOMTAISAN_CAP_V) throws SQLException {
+		return new Select().getNHOMTAISAN_CAP_V(ma_NHOMTAISAN_CAP_V);
+	}
+
+	public boolean delete_All() throws SQLException {
+		return new Delete().delete_All();
+	}
+
+	public int getPHANNHOM(int MA_NHOMTAISAN_CAP_V) throws SQLException {
+		return new Select().getPHANNHOMTAISAN_CAP_V(MA_NHOMTAISAN_CAP_V);
 	}
 
 }

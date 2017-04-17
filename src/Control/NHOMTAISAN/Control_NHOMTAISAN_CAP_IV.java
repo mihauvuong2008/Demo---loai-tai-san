@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import Control.ControlTool.Control_Tool;
 import DAO.NGUOIDUNG;
 import DAO.NHOMTAISAN_CAP_IV;
 import DAO.BUILD.OUT.Control_DAO_Build;
@@ -48,6 +49,12 @@ public class Control_NHOMTAISAN_CAP_IV {
 	}
 
 	class Insert {
+		public int getNextKey() {
+			if (conn != null)
+				return new Control_Tool(conn).nextKey_TABLE("NHOMTAISAN_CAP_IV");
+			return -1;
+		}
+
 		public boolean insert_NHOMTAISAN_CAP_IV(NHOMTAISAN_CAP_IV l) throws SQLException {
 			if (conn != null) {
 				String query = (new query_Insert_NHOMTAISAN_CAP_IV()).getString_ThemNhomTaisanCapIV(l);
@@ -59,6 +66,48 @@ public class Control_NHOMTAISAN_CAP_IV {
 				return true;
 			}
 			return false;
+		}
+
+		public int insert_NHOMTAISAN_CODINH_VOHINH(int KeycapIII) throws SQLException {
+			if (conn != null) {
+				String query = (new query_Insert_NHOMTAISAN_CAP_IV()).getString_ThemNhom_Vohinh(KeycapIII);
+				if (query == null)
+					return -1;
+				int nextkey = getNextKey();
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return nextkey;
+			}
+			return -1;
+		}
+
+		public int insert_NHOMTAISAN_CODINH_DACTHU(int KeycapIII) throws SQLException {
+			if (conn != null) {
+				String query = (new query_Insert_NHOMTAISAN_CAP_IV()).getString_ThemNhom_Dacthu(KeycapIII);
+				if (query == null)
+					return -1;
+				int nextkey = getNextKey();
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return nextkey;
+			}
+			return -1;
+		}
+
+		public int insert_NHOMTAISAN_CODINH_DACBIET(int KeycapIII) throws SQLException {
+			if (conn != null) {
+				String query = (new query_Insert_NHOMTAISAN_CAP_IV()).getString_ThemNhom_Dacbiet(KeycapIII);
+				if (query == null)
+					return -1;
+				int nextkey = getNextKey();
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return nextkey;
+			}
+			return -1;
 		}
 	}
 
@@ -98,6 +147,60 @@ public class Control_NHOMTAISAN_CAP_IV {
 				return lt;
 			}
 			return null;
+		}
+
+		public int getMA_NHOMTAISAN_VOHINH() throws SQLException {
+			if (conn != null) {
+				String query = (new query_Select_NHOMTAISAN_CAP_IV()).getString_NhomVohinh();
+				if (query == null)
+					return -1;
+				int lt = 0;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					lt = (new Control_DAO_Build()).get_MA_NHOMTAISAN_CODINH_CAP_IV(rs);
+				}
+				rs.close();
+				st.close();
+				return lt;
+			}
+			return -1;
+		}
+
+		public int getMA_NHOMTAISAN_DACTHU() throws SQLException {
+			if (conn != null) {
+				String query = (new query_Select_NHOMTAISAN_CAP_IV()).getString_NhomDacbiet();
+				if (query == null)
+					return -1;
+				int lt = 0;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					lt = (new Control_DAO_Build()).get_MA_NHOMTAISAN_CODINH_CAP_IV(rs);
+				}
+				rs.close();
+				st.close();
+				return lt;
+			}
+			return -1;
+		}
+
+		public int getMA_NHOMTAISAN_DACBIET() throws SQLException {
+			if (conn != null) {
+				String query = (new query_Select_NHOMTAISAN_CAP_IV()).getString_NhomDacthu();
+				if (query == null)
+					return -1;
+				int lt = 0;
+				Statement st = conn.createStatement();
+				ResultSet rs = st.executeQuery(query);
+				while (rs.next()) {
+					lt = (new Control_DAO_Build()).get_MA_NHOMTAISAN_CODINH_CAP_IV(rs);
+				}
+				rs.close();
+				st.close();
+				return lt;
+			}
+			return -1;
 		}
 	}
 
@@ -143,6 +246,30 @@ public class Control_NHOMTAISAN_CAP_IV {
 			}
 			return false;
 		}
+	}
+
+	public int getkey_TaisanCodinhVohinh() throws SQLException {
+		return new Select().getMA_NHOMTAISAN_VOHINH();
+	}
+
+	public int getkey_TaisanCodinhDacbiet() throws SQLException {
+		return new Select().getMA_NHOMTAISAN_DACBIET();
+	}
+
+	public int getkey_TaisanCodinhDacthu() throws SQLException {
+		return new Select().getMA_NHOMTAISAN_DACTHU();
+	}
+
+	public int insert_getkey_TaisanCodinhVohinh(int KeycapIII) throws SQLException {
+		return new Insert().insert_NHOMTAISAN_CODINH_VOHINH(KeycapIII);
+	}
+
+	public int insert_getkey_TaisanCodinhDacthu(int KeycapIII) throws SQLException {
+		return new Insert().insert_NHOMTAISAN_CODINH_DACTHU(KeycapIII);
+	}
+
+	public int insert_getkey_TaisanCodinhDacbiet(int key_III) throws SQLException {
+		return new Insert().insert_NHOMTAISAN_CODINH_DACBIET(key_III);
 	}
 
 }

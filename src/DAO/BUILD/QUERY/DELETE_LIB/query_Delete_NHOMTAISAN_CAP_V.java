@@ -11,7 +11,8 @@ public class query_Delete_NHOMTAISAN_CAP_V {
 
 	public String getString_Xoa(NHOMTAISAN_CAP_V l) {
 		try {
-			return "DELETE FROM NHOMTAISAN_CAP_V  WHERE MA_NHOMTAISAN_CAP_V='" + l.getMA_NHOMTAISAN_CAP_V() + "';";
+			return "DELETE FROM NHOMTAISAN_CAP_V  WHERE MA_NHOMTAISAN_CAP_V='" + l.getMA_NHOMTAISAN_CAP_V()
+					+ "' AND PHAN_NHOMTAISAN ='" + NHOMTAISAN_CAP_V.PHAN_NHOMTAISAN + "';";
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return null;
@@ -20,7 +21,7 @@ public class query_Delete_NHOMTAISAN_CAP_V {
 
 	public String getString_Delete_All() {
 		try {
-			return "DELETE FROM NHOMTAISAN_CAP_V;";
+			return "DELETE FROM NHOMTAISAN_CAP_V WHERE PHAN_NHOMTAISAN ='" + NHOMTAISAN_CAP_V.PHAN_NHOMTAISAN + "';";
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return null;

@@ -53,84 +53,6 @@ public class Control_NGHIEMTHU {
 		return deleter;
 	}
 
-	public Control_NGHIEMTHU(NGUOIDUNG user) {
-		conn = user.getConn();
-		pvc = user.getPrivilegeChecker();
-	}
-
-	public int getNextKey() {
-		if (conn != null)
-			return (new Control_Tool(conn)).nextKey_TABLE("GIAI_DOAN_NGHIEM_THU");
-		return -1;
-	}
-
-	public int create_GIAI_DOAN_NGHIEMTHU(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
-		return getInserter().create_GIAI_DOAN_NGHIEMTHU(dtt);
-	}
-
-	public int create_GIAI_DOAN_NGHIEMTHU(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
-		return getInserter().create_GIAI_DOAN_NGHIEMTHU(dsb);
-	}
-
-	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
-		return getSelecter().get_GIAIDOAN_NGHIEMTHU(dtt);
-	}
-
-	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
-		return getSelecter().get_GIAIDOAN_NGHIEMTHU(dsb);
-	}
-
-	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_SUACHUA_BAODUONG(NGUOIDUNG nd) throws SQLException {
-		return getSelecter().get_DangNghiemthu_SUACHUA_BAODUONG(nd);
-	}
-
-	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_TANG_TAISAN(NGUOIDUNG nd) throws SQLException {
-		return getSelecter().get_DangNghiemthu_TANG_TAISAN(nd);
-	}
-
-	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_GIAM_TAISAN(NGUOIDUNG nd) throws SQLException {
-		return getSelecter().get_DangNghiemthu_GIAM_TAISAN(nd);
-	}
-
-	public ArrayList<CONGVIEC_PHANVIEC> get_DaNghiemthu_SUACHUA_BAODUONG(NGUOIDUNG nd) throws SQLException {
-		return getSelecter().get_DaNghiemthu_SUACHUA_BAODUONG(nd);
-	}
-
-	public ArrayList<CONGVIEC_PHANVIEC> get_DaNghiemthu_TANG_TAISAN(NGUOIDUNG nd) throws SQLException {
-		return getSelecter().get_DaNghiemthu_TANG_TAISAN(nd);
-	}
-
-	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(int ma_PHANVIEC) throws SQLException {
-		return getSelecter().get_GIAIDOAN_NGHIEMTHU(ma_PHANVIEC);
-	}
-
-	public boolean update_Ghichu(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, String text) throws SQLException {
-		return getUpdater().update_Ghichu(get_GIAIDOAN_NGHIEMTHU, text);
-	}
-
-	public boolean update_ThoiDiemBatdauCongviec(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, Date tHISDAY)
-			throws SQLException {
-		return getUpdater().update_ThoiDiemBatdauCongviec(get_GIAIDOAN_NGHIEMTHU, tHISDAY);
-	}
-
-	public boolean set_NGAYCHUYENGIAO_PHANVIEC(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, Date tHISDAY)
-			throws SQLException {
-		return getUpdater().set_NGAYCHUYENGIAO_PHANVIEC(get_GIAIDOAN_NGHIEMTHU, tHISDAY);
-	}
-
-	public boolean update_ThoiDiemKetthucPhanviec(GIAI_DOAN_NGHIEM_THU gdnt, Date tHISDAY) throws SQLException {
-		return getUpdater().update_ThoiDiemKetthucPhanviec(gdnt, tHISDAY);
-	}
-
-	public boolean update_DukienThuchien(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, int dukienThuchien)
-			throws SQLException {
-		return getUpdater().update_DukienThuchien(get_GIAIDOAN_NGHIEMTHU, dukienThuchien);
-	}
-
-	public boolean Update_Giaidoan_Nghiemthu(GIAI_DOAN_NGHIEM_THU gdnt) throws SQLException {
-		return getUpdater().Update_Giaidoan_Nghiemthu(gdnt);
-	}
-
 	abstract class ADDactivity {
 
 		public final boolean isPrivilegeADD() throws SQLException {
@@ -481,6 +403,98 @@ public class Control_NGHIEMTHU {
 	}
 
 	private class Delete extends DELactivity {
+	}
+
+	public Control_NGHIEMTHU(NGUOIDUNG user) {
+		conn = user.getConn();
+		pvc = user.getPrivilegeChecker();
+	}
+
+	public int getNextKey() {
+		if (conn != null)
+			return (new Control_Tool(conn)).nextKey_TABLE("GIAI_DOAN_NGHIEM_THU");
+		return -1;
+	}
+
+	public int create_GIAI_DOAN_NGHIEMTHU(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
+		return getInserter().create_GIAI_DOAN_NGHIEMTHU(dtt);
+	}
+
+	public int create_GIAI_DOAN_NGHIEMTHU(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
+		return getInserter().create_GIAI_DOAN_NGHIEMTHU(dsb);
+	}
+
+	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
+		return getSelecter().get_GIAIDOAN_NGHIEMTHU(dtt);
+	}
+
+	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
+		return getSelecter().get_GIAIDOAN_NGHIEMTHU(dsb);
+	}
+
+	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_SUACHUA_BAODUONG(NGUOIDUNG nd) throws SQLException {
+		return getSelecter().get_DangNghiemthu_SUACHUA_BAODUONG(nd);
+	}
+
+	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_TANG_TAISAN(NGUOIDUNG nd) throws SQLException {
+		return getSelecter().get_DangNghiemthu_TANG_TAISAN(nd);
+	}
+
+	public ArrayList<CONGVIEC_PHANVIEC> get_DangNghiemthu_GIAM_TAISAN(NGUOIDUNG nd) throws SQLException {
+		return getSelecter().get_DangNghiemthu_GIAM_TAISAN(nd);
+	}
+
+	public ArrayList<CONGVIEC_PHANVIEC> get_DaNghiemthu_SUACHUA_BAODUONG(NGUOIDUNG nd) throws SQLException {
+		return getSelecter().get_DaNghiemthu_SUACHUA_BAODUONG(nd);
+	}
+
+	public ArrayList<CONGVIEC_PHANVIEC> get_DaNghiemthu_TANG_TAISAN(NGUOIDUNG nd) throws SQLException {
+		return getSelecter().get_DaNghiemthu_TANG_TAISAN(nd);
+	}
+
+	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(int ma_PHANVIEC) throws SQLException {
+		return getSelecter().get_GIAIDOAN_NGHIEMTHU(ma_PHANVIEC);
+	}
+
+	public boolean update_Ghichu(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, String text) throws SQLException {
+		return getUpdater().update_Ghichu(get_GIAIDOAN_NGHIEMTHU, text);
+	}
+
+	public boolean update_ThoiDiemBatdauCongviec(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, Date tHISDAY)
+			throws SQLException {
+		return getUpdater().update_ThoiDiemBatdauCongviec(get_GIAIDOAN_NGHIEMTHU, tHISDAY);
+	}
+
+	public boolean set_NGAYCHUYENGIAO_PHANVIEC(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, Date tHISDAY)
+			throws SQLException {
+		return getUpdater().set_NGAYCHUYENGIAO_PHANVIEC(get_GIAIDOAN_NGHIEMTHU, tHISDAY);
+	}
+
+	public boolean update_ThoiDiemKetthucPhanviec(GIAI_DOAN_NGHIEM_THU gdnt, Date tHISDAY) throws SQLException {
+		return getUpdater().update_ThoiDiemKetthucPhanviec(gdnt, tHISDAY);
+	}
+
+	public boolean update_DukienThuchien(GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU, int dukienThuchien)
+			throws SQLException {
+		return getUpdater().update_DukienThuchien(get_GIAIDOAN_NGHIEMTHU, dukienThuchien);
+	}
+
+	public boolean Update_Giaidoan_Nghiemthu(GIAI_DOAN_NGHIEM_THU gdnt) throws SQLException {
+		return getUpdater().Update_Giaidoan_Nghiemthu(gdnt);
+	}
+
+	public GIAI_DOAN_NGHIEM_THU get_GIAIDOAN_NGHIEMTHU(Object o) throws SQLException {
+		GIAI_DOAN_NGHIEM_THU rs = null;
+		if (o instanceof DOT_THUCHIEN_TANG_TAISAN) {
+			rs = get_GIAIDOAN_NGHIEMTHU((DOT_THUCHIEN_TANG_TAISAN) o);
+		} else if (o instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
+			rs = get_GIAIDOAN_NGHIEMTHU((DOT_THUCHIEN_SUACHUA_BAODUONG) o);
+		} else if (o instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+			rs = get_GIAIDOAN_NGHIEMTHU((DOT_THUCHIEN_GIAM_TAISAN) o);
+		} else {
+			System.out.println("////");
+		}
+		return rs;
 	}
 
 }

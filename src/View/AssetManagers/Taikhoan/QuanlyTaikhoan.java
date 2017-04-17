@@ -534,10 +534,12 @@ public class QuanlyTaikhoan extends Shell {
 		for (NGUOIDUNG nd : data) {
 			TableItem ti = new TableItem(table_danhsachNguoidung, SWT.NONE);
 			PHONGBAN pb = controler.getControl_PHONGBAN().get_PHONGBAN(nd.getMA_PHONGBAN());
-			ti.setText(new String[] { i + "", nd.getTEN_TAI_KHOAN(), nd.getTEN_CAN_BO(), nd.getGIOI_THIEU(),
-					pb.getTEN_PHONGBAN() });
-			ti.setData(nd);
-			i++;
+			if (pb != null) {
+				ti.setText(new String[] { i + "", nd.getTEN_TAI_KHOAN(), nd.getTEN_CAN_BO(), nd.getGIOI_THIEU(),
+						pb.getTEN_PHONGBAN() });
+				ti.setData(nd);
+				i++;
+			}
 		}
 		tablePack(table_danhsachNguoidung);
 	}

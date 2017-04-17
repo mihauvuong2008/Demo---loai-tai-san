@@ -37,7 +37,7 @@ public class TreeTemplate {
 		if (dv != null)
 			for (PHONGBAN d : dv) {
 				TreeItem Item = new TreeItem(cuc_Item, SWT.NONE);
-				Item.setImage(SWTResourceManager.getImage(MainForm.class, "/group-icon.png"));
+				Item.setImage(SWTResourceManager.getImage(MainForm.class, "/doorway.png"));
 				Item.setText(d.getTEN_PHONGBAN());
 				Item.setData(d);
 			}
