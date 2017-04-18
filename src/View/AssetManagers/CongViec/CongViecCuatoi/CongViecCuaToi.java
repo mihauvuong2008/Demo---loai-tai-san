@@ -59,7 +59,7 @@ import DAO.VANBAN;
 import View.AssetManagers.CongViec.Baoduong._2_Taodot_Baoduong;
 import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.AssetManagers.ThongBao.Library.ThongBao_Lib_Congviec;
@@ -185,7 +185,7 @@ public class CongViecCuaToi extends Shell {
 								controler.getControl_QUYETTOAN_CANBO().update_TAPHOSO(ndqt, ths);
 							}
 							if (ths != null) {
-								TAPHOSO_View b = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+								TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 								b.open();
 
 								int style = SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL;
@@ -231,7 +231,7 @@ public class CongViecCuaToi extends Shell {
 								ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndqt.getMA_TAPHOSO());
 							}
 							if (ths != null) {
-								TAPHOSO_View b = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, true);
+								TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, true);
 								b.open();
 							}
 						}
@@ -240,7 +240,7 @@ public class CongViecCuaToi extends Shell {
 						if (til.length > 0) {
 							TAP_HO_SO ths = (TAP_HO_SO) til[0].getData();
 							boolean view_mode = true;/* Xem */
-							TAPHOSO_View thss = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
+							TapHoso_View thss = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
 							thss.open();
 						}
 					}
@@ -898,7 +898,7 @@ public class CongViecCuaToi extends Shell {
 					if (til.length > 0) {
 						TAP_HO_SO ths = (TAP_HO_SO) til[0].getData();
 						boolean view_mode = true;
-						TAPHOSO_View thss = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
+						TapHoso_View thss = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
 						thss.open();
 					}
 				} catch (SQLException e1) {

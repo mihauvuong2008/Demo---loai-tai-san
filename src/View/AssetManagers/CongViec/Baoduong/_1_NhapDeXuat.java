@@ -19,7 +19,7 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -189,7 +189,7 @@ public class _1_NhapDeXuat extends Shell {
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TAPHOSO_View b = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+					TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
@@ -230,7 +230,7 @@ public class _1_NhapDeXuat extends Shell {
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TAPHOSO_View b = new TAPHOSO_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+					TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {

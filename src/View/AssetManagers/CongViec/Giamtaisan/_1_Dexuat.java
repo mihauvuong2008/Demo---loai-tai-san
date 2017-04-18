@@ -26,7 +26,7 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -187,7 +187,7 @@ public class _1_Dexuat extends Shell {
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
 
-					TAPHOSO_View view = new TAPHOSO_View(getShell(), SWT.NONE, user, ths, false);
+					TapHoso_View view = new TapHoso_View(getShell(), SWT.NONE, user, ths, false);
 					view.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
@@ -228,7 +228,7 @@ public class _1_Dexuat extends Shell {
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
 
-					TAPHOSO_View view = new TAPHOSO_View(getShell(), SWT.NONE, user, ths, false);
+					TapHoso_View view = new TapHoso_View(getShell(), SWT.NONE, user, ths, false);
 					view.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {

@@ -116,19 +116,19 @@ public class Control_DOT_THUCHIEN_GIAM_TAISAN {
 		return rs;
 	}
 
+	public ArrayList<DOT_THUCHIEN_GIAM_TAISAN> get_AndFind_DOT_THUCHIEN_GIAM_TAISAN_list(Date date, Date date2,
+			String text) throws SQLException {
+		ArrayList<DOT_THUCHIEN_GIAM_TAISAN> rs = getSelecter().get_All_DotGiamTaisan(date, date2, text);
+		if (rs != null)
+			cs.insertLog(new Log_Library().getString_Xem_Danhsach_DOT_THUCHIEN_GIAM_TAISAN(date, date2));
+		return rs;
+	}
+
 	public ArrayList<DOT_THUCHIEN_GIAM_TAISAN> get_DOT_THUCHIEN_GIAM_TAISAN_list(Date begin, Date end)
 			throws SQLException {
 		ArrayList<DOT_THUCHIEN_GIAM_TAISAN> rs = getSelecter().get_DOT_THUCHIEN_GIAM_TAISAN_list(begin, end);
 		if (rs != null)
 			cs.insertLog(new Log_Library().getString_Xem_Danhsach_DOT_THUCHIEN_GIAM_TAISAN(begin, end));
-		return rs;
-	}
-
-	public ArrayList<DOT_THUCHIEN_GIAM_TAISAN> get_All_DotGiamTaisan(Date date, Date date2, String text)
-			throws SQLException {
-		ArrayList<DOT_THUCHIEN_GIAM_TAISAN> rs = getSelecter().get_All_DotGiamTaisan(date, date2, text);
-		if (rs != null)
-			cs.insertLog(new Log_Library().getString_Xem_Danhsach_DOT_THUCHIEN_GIAM_TAISAN(date, date2));
 		return rs;
 	}
 

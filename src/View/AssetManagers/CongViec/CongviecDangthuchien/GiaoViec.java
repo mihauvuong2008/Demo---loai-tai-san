@@ -64,10 +64,11 @@ import DAO.TAP_HO_SO;
 import DAO.user_congviec;
 import View.AssetManagers.CongViec.Baoduong._2_Taodot_Baoduong;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.Nhatky_Lamviec;
+import View.AssetManagers.CongViec.CongviecDahoanthanh.ViewPartHoso;
 import View.AssetManagers.CongViec.Giamtaisan.XemDotGiam;
 import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Taisan.XemTaiSan.View_Taisan;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -735,7 +736,7 @@ public class GiaoViec {
 					if (dx != null) {
 						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
 						if (ths != null) {
-							TAPHOSO_View thsv = new TAPHOSO_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, false);
+							TapHoso_View thsv = new TapHoso_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, false);
 							thsv.open();
 						}
 					}
@@ -949,7 +950,7 @@ public class GiaoViec {
 						if (ti.length > 0) {
 							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
 							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 							//
 						}
@@ -959,7 +960,7 @@ public class GiaoViec {
 						if (ti2.length > 0) {
 							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
 							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 							//
 						}
@@ -969,7 +970,7 @@ public class GiaoViec {
 						if (ti3.length > 0) {
 							DOT_THUCHIEN_GIAM_TAISAN dsb = (DOT_THUCHIEN_GIAM_TAISAN) ti3[0].getData();
 							GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_THUCHIEN, gdth);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 							//
 						}
@@ -984,7 +985,7 @@ public class GiaoViec {
 				}
 			}
 		});
-		mntmXemHS.setText("Xem hồ sơ");
+		mntmXemHS.setText("Hồ sơ Thực hiện");
 
 		TreeColumn trclmnHnhThcNhn = new TreeColumn(tree_THUCHIEN, SWT.NONE);
 		trclmnHnhThcNhn.setWidth(100);
@@ -1353,9 +1354,7 @@ public class GiaoViec {
 						if (ti.length > 0) {
 							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
 							GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
-									gdth);
-
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 
 							//
@@ -1366,8 +1365,7 @@ public class GiaoViec {
 						if (ti2.length > 0) {
 							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
 							GIAI_DOAN_NGHIEM_THU gdth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_NGHIEMTHU,
-									gdth);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 							//
 						}
@@ -1385,7 +1383,7 @@ public class GiaoViec {
 				}
 			}
 		});
-		mntmHSThc.setText("Hồ sơ thực hiện");
+		mntmHSThc.setText("Hồ sơ Thực hiện");
 
 		TreeColumn trclmnNewColumn_2 = new TreeColumn(tree_NGHIEMTHU, SWT.NONE);
 		trclmnNewColumn_2.setWidth(100);
@@ -1742,9 +1740,7 @@ public class GiaoViec {
 						if (ti.length > 0) {
 							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
 							GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
-									gdth);
-
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 
 							//
@@ -1755,8 +1751,7 @@ public class GiaoViec {
 						if (ti2.length > 0) {
 							DOT_THUCHIEN_TANG_TAISAN dsb = (DOT_THUCHIEN_TANG_TAISAN) ti2[0].getData();
 							GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, tree_QUYETTOAN,
-									gdth);
+							ViewPartHoso vph = new ViewPartHoso(shlQunLCng, SWT.DIALOG_TRIM, user, gdth);
 							vph.open();
 							//
 						}
@@ -1774,7 +1769,7 @@ public class GiaoViec {
 				}
 			}
 		});
-		mntmHSThc_1.setText("Hồ sơ thực hiện");
+		mntmHSThc_1.setText("Hồ sơ Thực hiện");
 
 		TreeColumn trclmnHnhThcNhn_1 = new TreeColumn(tree_QUYETTOAN, SWT.NONE);
 		trclmnHnhThcNhn_1.setWidth(100);
@@ -2009,6 +2004,18 @@ public class GiaoViec {
 		text_LienHe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		xpndtmNgunThamgia.setHeight(150);
 		sashForm_13.setWeights(new int[] { 1000, 618 });
+
+		Button btnng = new Button(shlQunLCng, SWT.NONE);
+		btnng.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlQunLCng.dispose();
+			}
+		});
+		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnng.widthHint = 75;
+		btnng.setLayoutData(gd_btnng);
+		btnng.setText("Đóng");
 
 		fill_DanhsachCanbo();
 		FillTableSuachua();

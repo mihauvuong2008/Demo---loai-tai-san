@@ -94,8 +94,7 @@ public class TieuchuanBaoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlTiuChunBo = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shlTiuChunBo.setImage(
-				SWTResourceManager.getImage(TieuchuanBaoduong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlTiuChunBo.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/Process-Warning-icon.png"));
 		shlTiuChunBo.setSize(728, 450);
 		shlTiuChunBo.setText("Ti\u00EAu chu\u1EA9n b\u1EA3o d\u01B0\u1EE1ng");
 		shlTiuChunBo.setLayout(new GridLayout(1, false));
@@ -111,8 +110,7 @@ public class TieuchuanBaoduong extends Dialog {
 			}
 		});
 		tltmSaiK.setText("Sửa đổi kỳ hạn");
-		tltmSaiK.setImage(
-				SWTResourceManager.getImage(TieuchuanBaoduong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmSaiK.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/edit-validated-icon (1).png"));
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
@@ -199,13 +197,11 @@ public class TieuchuanBaoduong extends Dialog {
 			}
 		});
 		tltmLu.setText("Lưu");
-		tltmLu.setImage(
-				SWTResourceManager.getImage(TieuchuanBaoduong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmLu.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/Actions-document-save-icon (1).png"));
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_2.setText("X\u00F3a");
-		toolItem_2.setImage(
-				SWTResourceManager.getImage(TieuchuanBaoduong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		toolItem_2.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/delete-1-icon (1).png"));
 
 		SashForm sashForm = new SashForm(shlTiuChunBo, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -348,15 +344,7 @@ public class TieuchuanBaoduong extends Dialog {
 
 		@SuppressWarnings("unused")
 		TableViewerColumn tblclmnKyHan = createTableViewerColumn("KỲ HẠN", 100, 1);
-		// tblclmnKyHan.setEditingSupport(new KYHANEditingSupport(viewer));
-		// tblclmnKyHan.setLabelProvider(new ColumnLabelProvider() {
-		// @Override
-		// public String getText(Object element) {
-		// HinhthucBaoduong htbd = (HinhthucBaoduong) element;
-		// return (htbd.getData() + " ngày");
-		// }
-		// });
-		sashForm.setWeights(new int[] { 618, 618 });
+		sashForm.setWeights(new int[] {420, 289});
 
 		Button btnng = new Button(shlTiuChunBo, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {

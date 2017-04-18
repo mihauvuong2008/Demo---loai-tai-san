@@ -123,13 +123,13 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 		return getSelecter().get_DOT_THUCHIEN_TANG_TAISAN_list(begin, end);
 	}
 
-	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_DOT_THUCHIEN_TANG_TAISAN_ChuaHoanthanh() throws SQLException {
-		return getSelecter().get_DOT_THUCHIEN_TANG_TAISAN_ChuaHoanthanh();
-	}
-
-	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_All_DotTangTaisan(Date date, Date date2, String text)
+	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(Date date, Date date2, String text)
 			throws SQLException {
 		return getSelecter().get_All_DotTangTaisan(date, date2, text);
+	}
+
+	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_DOT_THUCHIEN_TANG_TAISAN_ChuaHoanthanh() throws SQLException {
+		return getSelecter().get_DOT_THUCHIEN_TANG_TAISAN_ChuaHoanthanh();
 	}
 
 	public boolean delete_DOT_THUCHIEN_TANG_TAISAN(DOT_THUCHIEN_TANG_TAISAN dt) throws SQLException {

@@ -21,7 +21,7 @@ import DAO.PHONGBAN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -275,7 +275,7 @@ public class LichDangkiem extends Dialog {
 					try {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 						if (ths != null) {
-							TAPHOSO_View thsv = new TAPHOSO_View(shlngKim, SWT.DIALOG_TRIM, user, ths, true);
+							TapHoso_View thsv = new TapHoso_View(shlngKim, SWT.DIALOG_TRIM, user, ths, true);
 							thsv.open();
 						} else {
 							MessageBox m = new MessageBox(shlngKim, SWT.ICON_WARNING);

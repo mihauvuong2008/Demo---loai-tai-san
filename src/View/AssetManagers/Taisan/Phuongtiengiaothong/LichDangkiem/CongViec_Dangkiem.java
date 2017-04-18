@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -209,7 +209,7 @@ public class CongViec_Dangkiem extends Dialog {
 									dtd.setMA_TAPHOSO(key);
 									controler.getControl_DOT_THUCHIEN_DANGKIEM().update_DOT_THUCHIEN_DANGKIEM(dtd);
 									ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(key);
-									TAPHOSO_View tv = new TAPHOSO_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
+									TapHoso_View tv = new TapHoso_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
 									tv.open();
 									loadVanban();
 								}

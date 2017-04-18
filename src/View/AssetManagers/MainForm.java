@@ -74,9 +74,10 @@ import DAO.PHUKIEN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAISAN;
 import DAO.TAP_HO_SO;
+import View.AboutUs.AboutUs;
 import View.AssetManagers.AppMessage.DefaultBoxMessage;
 import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.ThongBao.Library.Thongbao_Lib_Hoso;
 import View.AssetManagers.Wait.Wait;
 import View.AssetManagers.excel_XuatDulieu.SelectColumn;
@@ -900,6 +901,13 @@ public class MainForm {
 		mntmPhmTt.setText("Phím tắt");
 
 		MenuItem mntmVChngTi = new MenuItem(menu_9, SWT.NONE);
+		mntmVChngTi.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				AboutUs au = new AboutUs(shell, SWT.DIALOG_TRIM);
+				au.open();
+			}
+		});
 		mntmVChngTi.setText("Về chúng tôi");
 
 		ToolBar toolBar = new ToolBar(shell, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
@@ -2455,7 +2463,7 @@ public class MainForm {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dbtn.getMA_TAPHOSO());
 						if (ths == null)
 							return;
-						TAPHOSO_View thsv = new TAPHOSO_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -2693,7 +2701,7 @@ public class MainForm {
 
 		SashForm sashForm_3 = new SashForm(sashForm_2, SWT.VERTICAL);
 
-		tree_Dexuat = new Tree(sashForm_3, SWT.BORDER);
+		tree_Dexuat = new Tree(sashForm_3, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_Dexuat.setHeaderVisible(true);
 
 		TreeColumn trclmnTnhTrng = new TreeColumn(tree_Dexuat, SWT.NONE);
@@ -2716,7 +2724,7 @@ public class MainForm {
 		trclmnNgyKtThc.setWidth(100);
 		trclmnNgyKtThc.setText("Ngày kết thúc");
 
-		tree_Thuchien = new Tree(sashForm_3, SWT.BORDER);
+		tree_Thuchien = new Tree(sashForm_3, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_Thuchien.setHeaderVisible(true);
 
 		TreeColumn trclmnThcHin = new TreeColumn(tree_Thuchien, SWT.NONE);
@@ -2739,7 +2747,7 @@ public class MainForm {
 		treeColumn_4.setWidth(100);
 		treeColumn_4.setText("Ngày kết thúc");
 
-		tree_Nghiemthu = new Tree(sashForm_3, SWT.BORDER);
+		tree_Nghiemthu = new Tree(sashForm_3, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_Nghiemthu.setHeaderVisible(true);
 
 		TreeColumn trclmnNghimThu = new TreeColumn(tree_Nghiemthu, SWT.NONE);
@@ -2762,7 +2770,7 @@ public class MainForm {
 		treeColumn_9.setWidth(100);
 		treeColumn_9.setText("Ngày kết thúc");
 
-		tree_Quyettoan = new Tree(sashForm_3, SWT.BORDER);
+		tree_Quyettoan = new Tree(sashForm_3, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_Quyettoan.setHeaderVisible(true);
 
 		TreeColumn trclmnQuytTon = new TreeColumn(tree_Quyettoan, SWT.NONE);
@@ -2824,7 +2832,7 @@ public class MainForm {
 					TAP_HO_SO tap_HO_SO = (TAP_HO_SO) ti[0].getData();
 					if (tap_HO_SO == null)
 						return;
-					TAPHOSO_View thsv = new TAPHOSO_View(shell, SWT.DIALOG_TRIM, user, tap_HO_SO, true);
+					TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, tap_HO_SO, true);
 					try {
 						thsv.open();
 					} catch (SQLException e1) {
@@ -3122,7 +3130,7 @@ public class MainForm {
 
 	private void fill_MuasamGanday() throws SQLException {
 		ArrayList<DOT_THUCHIEN_TANG_TAISAN> dttl = controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
-				.get_All_DotTangTaisan(mdf.addDate(new Date(), -180), new Date(), "");
+				.get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(mdf.addDate(new Date(), -180), new Date(), "");
 		for (DOT_THUCHIEN_TANG_TAISAN dtt : dttl) {
 			GIAI_DOAN_THUC_HIEN gth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
 			GIAI_DOAN_QUYET_TOAN gqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);

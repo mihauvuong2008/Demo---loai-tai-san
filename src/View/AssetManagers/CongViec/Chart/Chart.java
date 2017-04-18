@@ -332,11 +332,11 @@ public class Chart extends Dialog {
 					throws SQLException {
 				tree_DanhsachCongviec_Pie.removeAll();
 				ArrayList<DOT_THUCHIEN_TANG_TAISAN> dttl = controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
-						.get_All_DotTangTaisan(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
+						.get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
 				ArrayList<DOT_THUCHIEN_GIAM_TAISAN> dgtl = controler.getControl_DOT_THUCHIEN_GIAM_TAISAN()
-						.get_All_DotGiamTaisan(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
+						.get_AndFind_DOT_THUCHIEN_GIAM_TAISAN_list(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
 				ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> dsbl = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
-						.get_All_DotSuachua_BaoduongTaisan(mdf.getDate(dateTime_Start_Pie),
+						.get_AndFind_DOT_THUCHIEN_SUACHUA_BAODUONG_list(mdf.getDate(dateTime_Start_Pie),
 								mdf.getDate(dateTime_End_Pie), text);
 				ArrayList<Object> data = new ArrayList<>();
 				if (dttl != null)

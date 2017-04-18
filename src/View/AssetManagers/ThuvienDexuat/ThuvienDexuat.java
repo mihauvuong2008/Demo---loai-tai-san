@@ -12,7 +12,7 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TAPHOSO_View;
+import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -485,7 +485,7 @@ public class ThuvienDexuat extends Dialog {
 				}
 				ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 			}
-			TAPHOSO_View thsV = new TAPHOSO_View(shlThVin, SWT.DIALOG_TRIM, user, ths, false);
+			TapHoso_View thsV = new TapHoso_View(shlThVin, SWT.DIALOG_TRIM, user, ths, false);
 			thsV.open();
 			LoadData(mdf.getDate(dateTime_Begin), mdf.getDate(dateTime_End), text_pattern.getText());
 		}

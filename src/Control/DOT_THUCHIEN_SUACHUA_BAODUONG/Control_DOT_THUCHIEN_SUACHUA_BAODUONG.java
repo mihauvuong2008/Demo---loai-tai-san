@@ -895,14 +895,14 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG {
 		return getSelecter().get_DOT_THUCHIEN_SUACHUA_BAODUONG_list(begin, end, ma_TAISAN);
 	}
 
+	public ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> get_AndFind_DOT_THUCHIEN_SUACHUA_BAODUONG_list(Date date,
+			Date date2, String text) throws SQLException {
+		return getSelecter().get_All_DotSuachua_BaoduongTaisan(date, date2, text);
+	}
+
 	public ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> get_DOT_THUCHIEN_SUACHUA_BAODUONG_ChuaHoanthanh()
 			throws SQLException {
 		return getSelecter().get_DOT_THUCHIEN_SUACHUA_BAODUONG_ChuaHoanthanh();
-	}
-
-	public ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> get_All_DotSuachua_BaoduongTaisan(Date date, Date date2,
-			String text) throws SQLException {
-		return getSelecter().get_All_DotSuachua_BaoduongTaisan(date, date2, text);
 	}
 
 	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(

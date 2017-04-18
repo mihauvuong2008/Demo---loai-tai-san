@@ -21,7 +21,6 @@ import DAO.VANBAN;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
 
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -38,8 +37,9 @@ import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Composite;
 
-public class TAPHOSO_View extends Dialog {
+public class TapHoso_View extends Dialog {
 	protected Object result;
 	protected Shell shlTaphosoShow;
 	private TAP_HO_SO ths;
@@ -57,16 +57,16 @@ public class TAPHOSO_View extends Dialog {
 	private boolean view_mode = false;// false: EditModenew
 	private final Controler controler;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private static Log log = LogFactory.getLog(TAPHOSO_View.class);
+	private static Log log = LogFactory.getLog(TapHoso_View.class);
 
 	/**
 	 * Launch the application.
 	 * 
 	 * @param args
 	 */
-	public TAPHOSO_View(Shell parent, int style, NGUOIDUNG user, TAP_HO_SO ths, boolean view_mode) {
+	public TapHoso_View(Shell parent, int style, NGUOIDUNG user, TAP_HO_SO ths, boolean view_mode) {
 		super(parent, style);
-		TAPHOSO_View.user = user;
+		TapHoso_View.user = user;
 		this.ths = ths;
 		this.view_mode = view_mode;
 		controler = new Controler(user);
@@ -97,11 +97,10 @@ public class TAPHOSO_View extends Dialog {
 	 */
 
 	private void createContents() throws SQLException {
-		shlTaphosoShow = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE);
-		shlTaphosoShow.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Documents-Folder-Graphite-icon.png"));
+		shlTaphosoShow = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlTaphosoShow.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Documents-Folder-Graphite-icon.png"));
 		shlTaphosoShow.setSize(780, 480);
 		new FormTemplate().setCenterScreen(shlTaphosoShow);
-		shlTaphosoShow.setText("T\u1EADp h\u1ED3 s\u01A1");
 		if (view_mode) {
 			shlTaphosoShow.setText("T\u1EADp h\u1ED3 s\u01A1 (Xem)");
 		} else {
@@ -113,7 +112,7 @@ public class TAPHOSO_View extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmThmVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmThmVnBn.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/document-add-icon (1).png"));
+		tltmThmVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/document-add-icon (1).png"));
 		tltmThmVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -133,7 +132,7 @@ public class TAPHOSO_View extends Dialog {
 		tltmThmVnBn.setText("Th\u00EAm v\u0103n b\u1EA3n");
 
 		ToolItem tltmNhiuVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmNhiuVnBn.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Document-Add-icon-Mul.png"));
+		tltmNhiuVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Document-Add-icon-Mul.png"));
 		tltmNhiuVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -144,7 +143,7 @@ public class TAPHOSO_View extends Dialog {
 		tltmNhiuVnBn.setText("Nhi\u1EC1u v\u0103n b\u1EA3n");
 
 		ToolItem tltmXemVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmXemVnBn.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Mimetypes-Blank-Document-icon.png"));
+		tltmXemVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Mimetypes-Blank-Document-icon.png"));
 		tltmXemVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -161,7 +160,7 @@ public class TAPHOSO_View extends Dialog {
 		tltmXemVnBn.setText("Xem v\u0103n b\u1EA3n");
 
 		ToolItem tltmXaVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmXaVnBn.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Document-Delete-icon (1).png"));
+		tltmXaVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Document-Delete-icon (1).png"));
 		tltmXaVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -186,7 +185,7 @@ public class TAPHOSO_View extends Dialog {
 		tltmXaVnBn.setText("X\u00F3a v\u0103n b\u1EA3n");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Actions-document-save-icon (1).png"));
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -212,7 +211,7 @@ public class TAPHOSO_View extends Dialog {
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmInVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmInVnBn.setImage(SWTResourceManager.getImage(TAPHOSO_View.class, "/Actions-document-print-icon (1).png"));
+		tltmInVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Actions-document-print-icon (1).png"));
 		tltmInVnBn.setText("Xem và In văn bản");
 
 		SashForm sashForm = new SashForm(shlTaphosoShow, SWT.NONE);
@@ -276,74 +275,65 @@ public class TAPHOSO_View extends Dialog {
 		trclmnTrchYuNi.setWidth(200);
 		trclmnTrchYuNi.setText("TR\u00CDCH Y\u1EBEU N\u1ED8I DUNG V\u0102N B\u1EA2N");
 
-		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
+		Composite composite = new Composite(sashForm, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
 
-		Group grpThngTinTp = new Group(sashForm_1, SWT.NONE);
-		grpThngTinTp.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.BOLD));
-		grpThngTinTp.setText("Th\u00F4ng tin T\u1EADp h\u1ED3 s\u01A1");
-		grpThngTinTp.setLayout(new GridLayout(2, false));
-
-		Label lblTnTpH = new Label(grpThngTinTp, SWT.NONE);
+		Label lblTnTpH = new Label(composite, SWT.NONE);
 		lblTnTpH.setText("T\u00EAn t\u1EADp h\u1ED3 s\u01A1:");
 
-		text_Tentaphoso = new Text(grpThngTinTp, SWT.BORDER);
+		text_Tentaphoso = new Text(composite, SWT.BORDER);
 		text_Tentaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblGiiThiuTp = new Label(grpThngTinTp, SWT.NONE);
-		lblGiiThiuTp.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		Label lblGiiThiuTp = new Label(composite, SWT.NONE);
 		lblGiiThiuTp.setText("Gi\u1EDBi thi\u1EC7u t\u1EADp h\u1ED3 s\u01A1:");
 
-		text_GioithieuTaphoso = new Text(grpThngTinTp, SWT.BORDER | SWT.WRAP);
-		text_GioithieuTaphoso.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		text_GioithieuTaphoso = new Text(composite, SWT.BORDER | SWT.WRAP);
+		text_GioithieuTaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblSLngVn = new Label(grpThngTinTp, SWT.NONE);
-		lblSLngVn.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		Label lblSLngVn = new Label(composite, SWT.NONE);
 		lblSLngVn.setText("S\u1ED1 l\u01B0\u1EE3ng v\u0103n b\u1EA3n:");
 
-		text_Soluongvanban = new Text(grpThngTinTp, SWT.BORDER);
+		text_Soluongvanban = new Text(composite, SWT.BORDER);
+		text_Soluongvanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_Soluongvanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Soluongvanban.setEditable(false);
-		text_Soluongvanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Group grpThngTinVn = new Group(sashForm_1, SWT.NONE);
-		grpThngTinVn.setText("Th\u00F4ng tin v\u0103n b\u1EA3n");
-		grpThngTinVn.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.BOLD));
-		grpThngTinVn.setLayout(new GridLayout(2, false));
+		Label label = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-		Label lblMVnBn = new Label(grpThngTinVn, SWT.NONE);
+		Label lblMVnBn = new Label(composite, SWT.NONE);
 		lblMVnBn.setText("M\u00E3 v\u0103n b\u1EA3n:");
 
-		text_Mavanban = new Text(grpThngTinVn, SWT.BORDER | SWT.READ_ONLY);
-		text_Mavanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Mavanban = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
 		text_Mavanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_Mavanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 
-		Label lblSVnBn = new Label(grpThngTinVn, SWT.NONE);
+		Label lblSVnBn = new Label(composite, SWT.NONE);
 		lblSVnBn.setText("S\u1ED1 v\u0103n b\u1EA3n:");
 
-		text_Sovanban = new Text(grpThngTinVn, SWT.BORDER);
+		text_Sovanban = new Text(composite, SWT.BORDER);
 		text_Sovanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblNgyBanHnh = new Label(grpThngTinVn, SWT.NONE);
+		Label lblNgyBanHnh = new Label(composite, SWT.NONE);
 		lblNgyBanHnh.setText("Ng\u00E0y ban h\u00E0nh:");
 
-		dateTime = new DateTime(grpThngTinVn, SWT.BORDER);
-		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		dateTime = new DateTime(composite, SWT.BORDER);
+		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblnVBan = new Label(grpThngTinVn, SWT.NONE);
+		Label lblnVBan = new Label(composite, SWT.NONE);
 		lblnVBan.setText("\u0110\u01A1n v\u1ECB ban h\u00E0nh:");
 
-		text_Donvibanhanh = new Text(grpThngTinVn, SWT.BORDER);
+		text_Donvibanhanh = new Text(composite, SWT.BORDER);
 		text_Donvibanhanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblTrchYu = new Label(grpThngTinVn, SWT.NONE);
+		Label lblTrchYu = new Label(composite, SWT.NONE);
 		GridData gd_lblTrchYu = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_lblTrchYu.verticalIndent = 3;
 		lblTrchYu.setLayoutData(gd_lblTrchYu);
 		lblTrchYu.setText("Tr\u00EDch y\u1EBFu:");
 
-		text_Trichyeu = new Text(grpThngTinVn, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		text_Trichyeu = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		sashForm_1.setWeights(new int[] { 618, 1000 });
 		sashForm.setWeights(new int[] { 1000, 618 });
 
 		Button btnng = new Button(shlTaphosoShow, SWT.NONE);
@@ -380,24 +370,29 @@ public class TAPHOSO_View extends Dialog {
 
 	private void init() throws SQLException {
 		tree_taphoso.removeAll();
-		if (ths != null) {
-			ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
-			int i = 1;
-			if (vbl != null)
-				for (VANBAN vb : vbl) {
-					TreeItem ti = new TreeItem(tree_taphoso, SWT.NONE);
-					int max = 50;
-					String ty = vb.getTRICH_YEU();
-					if (ty.length() < 50)
-						max = ty.length();
-					ti.setText(new String[] { "" + i, vb.getSO_VANBAN(), mdf.getViewStringDate(vb.getNGAY_BAN_HANH()),
-							vb.getCO_QUAN_BAN_HANH(), ty.substring(0, max) });
-					ti.setData(vb);
-					i++;
-				}
-			text_Soluongvanban.setText(String.valueOf(i - 1));
-			fillTaphoso();
+		if (ths == null)
+			return;
+		if (view_mode) {
+			shlTaphosoShow.setText("T\u1EADp h\u1ED3 s\u01A1 (Xem) - " + ths.getTEN_TAPHOSO());
+		} else {
+			shlTaphosoShow.setText("T\u1EADp h\u1ED3 s\u01A1 (Quản lý) - " + ths.getTEN_TAPHOSO());
 		}
+		ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
+		int i = 1;
+		if (vbl != null)
+			for (VANBAN vb : vbl) {
+				TreeItem ti = new TreeItem(tree_taphoso, SWT.NONE);
+				int max = 50;
+				String ty = vb.getTRICH_YEU();
+				if (ty.length() < 50)
+					max = ty.length();
+				ti.setText(new String[] { "" + i, vb.getSO_VANBAN(), mdf.getViewStringDate(vb.getNGAY_BAN_HANH()),
+						vb.getCO_QUAN_BAN_HANH(), ty.substring(0, max) });
+				ti.setData(vb);
+				i++;
+			}
+		text_Soluongvanban.setText(String.valueOf(i - 1));
+		fillTaphoso();
 	}
 
 	/**
