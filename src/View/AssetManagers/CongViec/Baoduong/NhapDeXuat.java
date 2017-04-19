@@ -26,6 +26,7 @@ import View.Template.FormTemplate;
 
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -40,7 +41,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-public class _1_NhapDeXuat extends Shell {
+public class NhapDeXuat extends Dialog {
 	private DE_XUAT dx;
 	private static NGUOIDUNG user;
 	private Table table;
@@ -51,7 +52,9 @@ public class _1_NhapDeXuat extends Shell {
 	private Combo combo;
 	private final Controler controler;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private static Log log = LogFactory.getLog(_1_NhapDeXuat.class);
+	private static Log log = LogFactory.getLog(NhapDeXuat.class);
+	public DE_XUAT result;
+	private Shell shell;
 
 	/**
 	 * Launch the application.
@@ -59,20 +62,30 @@ public class _1_NhapDeXuat extends Shell {
 	 * @param args
 	 */
 
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			_1_NhapDeXuat shell = new _1_NhapDeXuat(display, user);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
+	public NhapDeXuat(Shell parent, int style, NGUOIDUNG user) {
+		super(parent, style);
+		setText("SWT Dialog");
+		NhapDeXuat.user = user;
+		controler = new Controler(user);
+	}
+
+	/**
+	 * Open the dialog.
+	 * 
+	 * @return the result
+	 * @throws SQLException
+	 */
+	public Object open() throws SQLException {
+		createContents();
+		shell.open();
+		shell.layout();
+		Display display = getParent().getDisplay();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		return result;
 	}
 
 	/**
@@ -81,14 +94,15 @@ public class _1_NhapDeXuat extends Shell {
 	 * @param display
 	 * @throws SQLException
 	 */
-	public _1_NhapDeXuat(Display display, NGUOIDUNG user) throws SQLException {
-		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(_1_NhapDeXuat.class, "/maintenance-icon (1).png"));
-		setLayout(new GridLayout(3, false));
-		_1_NhapDeXuat.user = user;
-		controler = new Controler(user);
+	public void createContents() throws SQLException {
+		shell = new Shell(getParent(), SWT.CLOSE | SWT.TITLE);
+		shell.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/maintenance-icon (1).png"));
+		shell.setText("Nhận đề xuất Bảo dưỡng Phương tiện giao thông");
+		shell.setSize(615, 380);
+		shell.setLayout(new GridLayout(3, false));
+		new FormTemplate().setCenterScreen(shell);
 
-		SashForm sashForm = new SashForm(this, SWT.NONE);
+		SashForm sashForm = new SashForm(shell, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		Composite composite = new Composite(sashForm, SWT.NONE);
@@ -162,7 +176,7 @@ public class _1_NhapDeXuat extends Shell {
 					TableItem[] til = table.getSelection();
 					if (til.length > 0) {
 						VANBAN vb = (VANBAN) til[0].getData();
-						Vanban_View vbv = new Vanban_View(getShell(), SWT.DIALOG_TRIM, user, null, vb, false);
+						Vanban_View vbv = new Vanban_View(shell, SWT.DIALOG_TRIM, user, null, vb, false);
 						vbv.open();
 					}
 				} catch (SQLException e1) {
@@ -174,9 +188,9 @@ public class _1_NhapDeXuat extends Shell {
 		mntmXemVnBn.setText("Xem Văn bản");
 		sashForm.setWeights(new int[] { 1000, 618 });
 
-		Button btnNewButton = new Button(this, SWT.NONE);
+		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.setImage(
-				SWTResourceManager.getImage(_1_NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+				SWTResourceManager.getImage(NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -189,7 +203,7 @@ public class _1_NhapDeXuat extends Shell {
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
@@ -215,10 +229,11 @@ public class _1_NhapDeXuat extends Shell {
 		btnNewButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		btnNewButton.setText("Hồ sơ - văn bản");
 
-		Button btnTip = new Button(this, SWT.NONE);
+		Button btnTip = new Button(shell, SWT.NONE);
 		btnTip.setImage(
-				SWTResourceManager.getImage(_1_NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+				SWTResourceManager.getImage(NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		btnTip.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
@@ -230,35 +245,27 @@ public class _1_NhapDeXuat extends Shell {
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
 					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
 				}
-				try {
-					if (checkTextNotNULL()) {
-						dx.setMA_DE_XUAT(controler.getControl_DEXUAT().getNextKey());
-						dx.setSODEXUAT(text_Sodexuat.getText());
-						dx.setNGAYTHANG_VANBAN(mdf.getDate(dateTime_NgaythangVanban));
-						dx.setMA_PHONGBAN(((PHONGBAN) combo.getData(combo.getText())).getMA_PHONGBAN());
-						dx.setTEN_TAI_KHOAN(user.getTEN_TAI_KHOAN());
-						dx.setGHI_CHU(text_Ghichu.getText());
-						dx.setTHOI_DIEM_BAT_DAU(mdf.getDate(dateTime_NgayNhanVanban));
-						dx.setTHOI_DIEM_CHUYEN_GIAO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
-						setVisible(false);
-						_2_Taodot_Baoduong sb = new _2_Taodot_Baoduong(display, user, getShell(),
-								/* De xuat: */ dx, /* MODE_NEW_VIEW: */1);
-
-						sb.open();
-					} else {
-						showMessage_FillText();
-					}
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
+				if (!checkTextNotNULL()) {
+					showMessage_FillText();
+					return;
 				}
+				// dx.setMA_DE_XUAT(controler.getControl_DEXUAT().getNextKey());
+				dx.setSODEXUAT(text_Sodexuat.getText());
+				dx.setNGAYTHANG_VANBAN(mdf.getDate(dateTime_NgaythangVanban));
+				dx.setMA_PHONGBAN(((PHONGBAN) combo.getData(combo.getText())).getMA_PHONGBAN());
+				dx.setTEN_TAI_KHOAN(user.getTEN_TAI_KHOAN());
+				dx.setGHI_CHU(text_Ghichu.getText());
+				dx.setTHOI_DIEM_BAT_DAU(mdf.getDate(dateTime_NgayNhanVanban));
+				dx.setTHOI_DIEM_CHUYEN_GIAO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
+				result = dx;
+				shell.dispose();
 			}
 
 			private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
@@ -278,20 +285,19 @@ public class _1_NhapDeXuat extends Shell {
 		GridData gd_btnTip = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnTip.widthHint = 75;
 		btnTip.setLayoutData(gd_btnTip);
-		btnTip.setText("Ti\u1EBFp >>");
+		btnTip.setText("Xong");
 
-		Button btnng = new Button(this, SWT.NONE);
+		Button btnng = new Button(shell, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dispose();
+				shell.dispose();
 			}
 		});
 		GridData gd_btnng = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");
-		createContents();
 		init();
 	}
 
@@ -309,7 +315,7 @@ public class _1_NhapDeXuat extends Shell {
 	}
 
 	protected void showMessage_FillText() {
-		MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
+		MessageBox m = new MessageBox(shell, SWT.ICON_WARNING);
 		m.setText("Lỗi");
 		m.setMessage("Số đề xuất, đơn vị ban hành không để trống!");
 		m.open();
@@ -323,15 +329,6 @@ public class _1_NhapDeXuat extends Shell {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText("Nhận đề xuất Bảo dưỡng Phương tiện giao thông");
-		setSize(615, 380);
-		new FormTemplate().setCenterScreen(getShell());
 	}
 
 	@Override

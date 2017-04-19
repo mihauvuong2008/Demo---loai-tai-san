@@ -139,6 +139,7 @@ public class Control_VANBAN {
 					vb.setSO_VANBAN(rs.getString("SO_VANBAN"));
 					vb.setNGAY_BAN_HANH(rs.getTimestamp("NGAY_BAN_HANH"));
 					vb.setCO_QUAN_BAN_HANH(rs.getString("CO_QUAN_BAN_HANH"));
+					vb.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					vb.setTRICH_YEU(rs.getString("TRICH_YEU"));
 					vbl.add(vb);
 				}

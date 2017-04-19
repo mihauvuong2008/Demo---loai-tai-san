@@ -1,6 +1,6 @@
 package DAO;
 
-public class Row_PTTSthamgia {
+public class Row_PTTSthamgia_Baoduong {
 	private PHUONGTIEN_GIAOTHONG ptgt;
 	private Hinhthuc_Baoduong htbd;
 	private String TEN_TAI_SAN;

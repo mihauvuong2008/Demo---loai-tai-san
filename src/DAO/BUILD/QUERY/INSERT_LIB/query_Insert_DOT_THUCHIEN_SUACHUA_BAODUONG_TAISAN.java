@@ -1,13 +1,13 @@
 package DAO.BUILD.QUERY.INSERT_LIB;
 
 import DAO.DOT_THUCHIEN_SUACHUA_BAODUONG;
-import DAO.Row_PTTSthamgia;
+import DAO.Row_PTTSthamgia_Baoduong;
 import DAO.TAISAN;
 import View.MarkItem.Fill_ItemData;
 
 public class query_Insert_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 
-	public String getString_Insert_Phuongtien_Thamgia_Baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia rp) {
+	public String getString_Insert_Phuongtien_Thamgia_Baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia_Baoduong rp) {
 		try {
 			Fill_ItemData f = new Fill_ItemData();
 			String result = "INSERT INTO DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN ( MA_TAISAN, MA_DOT_THUCHIEN_SUACHUA_BAODUONG, THAY_NHOT, THAY_LOC_NHOT, THAY_LOC_GIO, THAY_LOC_NHIEN_LIEU, THAY_DAU_PHANH_DAU_LY_HOP, THAY_DAU_HOP_SO, THAY_DAU_VI_SAI, THAY_LOC_GIO_GIAN_LANH, THAY_DAU_TRO_LUC_LAI, BAO_DUONG_KHAC ) VALUES( '"

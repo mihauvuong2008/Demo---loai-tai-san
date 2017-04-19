@@ -12,7 +12,7 @@ import DAO.DOT_THUCHIEN_SUACHUA_BAODUONG;
 import DAO.Hinhthuc_Baoduong;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
-import DAO.Row_PTTSthamgia;
+import DAO.Row_PTTSthamgia_Baoduong;
 import DAO.TAISAN;
 import DAO.BUILD.OUT.Control_DAO_Build;
 import DAO.BUILD.QUERY.DELETE_LIB.query_Delete_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN;
@@ -57,11 +57,11 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 		pvc = user.getPrivilegeChecker();
 	}
 
-	public ArrayList<Row_PTTSthamgia> getPTTS_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
+	public ArrayList<Row_PTTSthamgia_Baoduong> getPTTS_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
 		return getSelecter().getPTTS_BAODUONG(dsb);
 	}
 
-	public boolean set_DOT_THUCHIEN_SUACHUA_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia rp)
+	public boolean set_DOT_THUCHIEN_SUACHUA_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia_Baoduong rp)
 			throws SQLException {
 		return getInserter().set_DOT_THUCHIEN_SUACHUA_TAISAN(dsb, rp);
 	}
@@ -71,7 +71,7 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 		return getInserter().set_DOT_THUCHIEN_SUACHUA_TAISAN(vIEW_dsb, ts);
 	}
 
-	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia rp)
+	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia_Baoduong rp)
 			throws SQLException {
 		return getUpdater().update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN(dsb, rp);
 	}
@@ -113,7 +113,7 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 	}
 
 	private class Insert extends ADDactivity {
-		public boolean set_DOT_THUCHIEN_SUACHUA_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia rp)
+		public boolean set_DOT_THUCHIEN_SUACHUA_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, Row_PTTSthamgia_Baoduong rp)
 				throws SQLException {
 			if (conn != null && isPrivilegeADD()) {
 				String query = (new query_Insert_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN())
@@ -160,9 +160,9 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 	}
 
 	private class Select extends REAactivity {
-		public ArrayList<Row_PTTSthamgia> getPTTS_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
+		public ArrayList<Row_PTTSthamgia_Baoduong> getPTTS_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				ArrayList<Row_PTTSthamgia> result = new ArrayList<>();
+				ArrayList<Row_PTTSthamgia_Baoduong> result = new ArrayList<>();
 				String query = (new query_Select_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN())
 						.getString_Select_PhuongtienGiaothong_Thamgia_Baoduong(dsb);
 				if (query == null)
@@ -170,7 +170,7 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
 				while (rs.next()) {
-					Row_PTTSthamgia rp = new Row_PTTSthamgia();
+					Row_PTTSthamgia_Baoduong rp = new Row_PTTSthamgia_Baoduong();
 					PHUONGTIEN_GIAOTHONG p = (new Control_DAO_Build()).get_PHUONGTIEN_GIAOTHONG(rs);
 					Hinhthuc_Baoduong htbd = (new Control_DAO_Build()).get_Hinhthuc_Baoduong(rs);
 					rp = (new Control_DAO_Build()).get_Row_PTTSthamgia(rs, p, htbd);
@@ -186,7 +186,7 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 
 	private class Update extends EDIactivity {
 		public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN(DOT_THUCHIEN_SUACHUA_BAODUONG dsb,
-				Row_PTTSthamgia rp) throws SQLException {
+				Row_PTTSthamgia_Baoduong rp) throws SQLException {
 			if (conn != null & isPrivilegeEDI()) {
 				String query = (new query_Update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN())
 						.getString_Update_HinhthucBaoduong_PhuongtienThamgiaBaoduong(dsb, rp);

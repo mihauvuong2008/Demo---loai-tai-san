@@ -42,7 +42,7 @@ import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.ROLE;
-import DAO.Row_PTTSthamgia;
+import DAO.Row_PTTSthamgia_Baoduong;
 import DAO.SYSTEM_LOG;
 import DAO.TAISAN;
 import DAO.THONGBAO;
@@ -455,9 +455,9 @@ public class Control_DAO_Build {
 		return htbd;
 	}
 
-	public Row_PTTSthamgia get_Row_PTTSthamgia(ResultSet rs, PHUONGTIEN_GIAOTHONG p, Hinhthuc_Baoduong htbd)
+	public Row_PTTSthamgia_Baoduong get_Row_PTTSthamgia(ResultSet rs, PHUONGTIEN_GIAOTHONG p, Hinhthuc_Baoduong htbd)
 			throws SQLException {
-		Row_PTTSthamgia rp = new Row_PTTSthamgia();
+		Row_PTTSthamgia_Baoduong rp = new Row_PTTSthamgia_Baoduong();
 		rp.setPtgt(p);
 		rp.setHtbd(htbd);
 		rp.setMA_TAI_SAN(String.valueOf(rs.getInt("TAISAN.MA_TAISAN")));

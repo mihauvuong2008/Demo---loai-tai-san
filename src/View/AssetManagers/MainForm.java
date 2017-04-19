@@ -1041,7 +1041,7 @@ public class MainForm {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					th.OpenForm_Tool_Baoduong_Phuongtien_Giaothong();
+					th.OpenForm_Tool_Baoduong_Phuongtien_Giaothong(new ArrayList<>());
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -1638,7 +1638,26 @@ public class MainForm {
 		new MenuItem(menu_15, SWT.SEPARATOR);
 
 		MenuItem mntmSaCha = new MenuItem(menu_15, SWT.NONE);
-		mntmSaCha.setText("Sửa chữa - bảo dưỡng");
+		mntmSaCha.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_Oto.getSelection();
+				if (ti.length <= 0)
+					return;
+				ArrayList<TAISAN> data = new ArrayList<>();
+				for (TableItem tableItem : ti) {
+					TAISAN t = (TAISAN) tableItem.getData();
+					data.add(t);
+				}
+				try {
+					th.OpenForm_Tool_Baoduong_Phuongtien_Giaothong(data);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmSaCha.setText("Bảo dưỡng Phương tiện giao thông");
 
 		MenuItem mntmThanhL = new MenuItem(menu_15, SWT.NONE);
 		mntmThanhL.setText("Thanh lý");

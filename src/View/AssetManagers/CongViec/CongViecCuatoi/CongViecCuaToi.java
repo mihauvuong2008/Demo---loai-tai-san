@@ -56,7 +56,7 @@ import DAO.PHUKIEN;
 import DAO.TAISAN;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
-import View.AssetManagers.CongViec.Baoduong._2_Taodot_Baoduong;
+import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
 import View.AssetManagers.Hoso.TapHoso_View;
@@ -1261,37 +1261,42 @@ public class CongViecCuaToi extends Shell {
 			public void widgetSelected(SelectionEvent event) {
 				try {
 					TreeItem[] items = tree_Dangthuchien.getSelection();
-					if (items.length > 0) {
-						clearText_ThongTin_Congviec();
-						CONGVIEC_PHANVIEC e = (CONGVIEC_PHANVIEC) items[0].getData();
-						if (e.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
-							if (e.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
-								DOT_THUCHIEN_SUACHUA_BAODUONG d = (DOT_THUCHIEN_SUACHUA_BAODUONG) e.getCONGVIEC();
-								DE_XUAT dx;
-								dx = controler.getControl_DEXUAT().get_DEXUAT(d);
+					if (items.length <= 0)
+						return;
+					clearText_ThongTin_Congviec();
+					CONGVIEC_PHANVIEC e = (CONGVIEC_PHANVIEC) items[0].getData();
+					if (e.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
+						if (e.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
+							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) e.getCONGVIEC();
+							DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(dsb);
 
-								if (d.getSUACHUA_BAODUONG() == 1) {
-									_2_Taodot_Baoduong tdbd = new _2_Taodot_Baoduong(getDisplay(), user, getShell(), dx,
-											2);
-									tdbd.open();
-								} else if (d.getSUACHUA_BAODUONG() == 2) {
-									_2_Taodot_Suachua tdbd = new _2_Taodot_Suachua(getDisplay(), user, getShell(), dx,
-											2);
-									tdbd.open();
-								}
-							} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_TANG_TAISAN) {
-								DOT_THUCHIEN_TANG_TAISAN dt = (DOT_THUCHIEN_TANG_TAISAN) e.getCONGVIEC();
-								XemDotTangtaisan xdt = new XemDotTangtaisan(display, user, dt);
-								xdt.open();
-							} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+							switch (dsb.getSUACHUA_BAODUONG()) {
+							case 1:
+								Taodot_Baoduong tdbd = new Taodot_Baoduong(getShell(), SWT.DIALOG_TRIM, user,
+										dsb);
+								tdbd.open();
+								break;
+
+							case 2:
+								_2_Taodot_Suachua tdsc = new _2_Taodot_Suachua(getDisplay(), user, getShell(), dx, 2);
+								tdsc.open();
+								break;
+
+							default:
+								break;
 							}
-						} else {
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
-							m.setText("Hạn chế");
-							m.setMessage(
-									"Khi thực hiện phần việc [Tổ chức - Thực Hiện] hoặc [tạo Đề xuất] mới có thể cập nhật PTTS tham gia công việc");
-							m.open();
+						} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_TANG_TAISAN) {
+							DOT_THUCHIEN_TANG_TAISAN dt = (DOT_THUCHIEN_TANG_TAISAN) e.getCONGVIEC();
+							XemDotTangtaisan xdt = new XemDotTangtaisan(display, user, dt);
+							xdt.open();
+						} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_GIAM_TAISAN) {
 						}
+					} else {
+						MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
+						m.setText("Hạn chế");
+						m.setMessage(
+								"Khi thực hiện phần việc [Tổ chức - Thực Hiện] hoặc [tạo Đề xuất] mới có thể cập nhật PTTS tham gia công việc");
+						m.open();
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());

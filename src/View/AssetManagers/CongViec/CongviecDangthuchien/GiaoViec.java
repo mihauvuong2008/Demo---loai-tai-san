@@ -61,14 +61,16 @@ import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.TAISAN;
 import DAO.TAP_HO_SO;
+import DAO.VANBAN;
 import DAO.user_congviec;
-import View.AssetManagers.CongViec.Baoduong._2_Taodot_Baoduong;
+import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.Nhatky_Lamviec;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.ViewPartHoso;
 import View.AssetManagers.CongViec.Giamtaisan.XemDotGiam;
 import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
 import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.Taisan.XemTaiSan.View_Taisan;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -76,6 +78,9 @@ import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 public class GiaoViec {
 
@@ -122,6 +127,7 @@ public class GiaoViec {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(Nhatky_Lamviec.class);
 	private ExpandItem xpndtmNgunThamgia;
+	private Table table_VanbanDexuat;
 
 	public GiaoViec(NGUOIDUNG user) {
 		GiaoViec.user = user;
@@ -248,13 +254,10 @@ public class GiaoViec {
 					TreeItem ti[] = tree_CongviecSuachua.getSelection();
 					if (ti.length > 0) {
 						DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) ti[0].getData();
-						DE_XUAT dx;
-						dx = controler.getControl_DEXUAT().get_DEXUAT(dsb);
 
 						switch (dsb.getSUACHUA_BAODUONG()) {
 						case 1:
-							_2_Taodot_Baoduong vbd = new _2_Taodot_Baoduong(display, user, null, dx,
-									/* MODE_NEW_VIEW: */2);
+							Taodot_Baoduong vbd = new Taodot_Baoduong(shlQunLCng, SWT.DIALOG_TRIM, user, dsb);
 							vbd.open();
 							break;
 						case 2:
@@ -566,7 +569,7 @@ public class GiaoViec {
 		trclmnPhnVic.setText("PHẦN VIỆC");
 
 		TreeColumn trclmnTencongviec = new TreeColumn(tree_PhanViecDangThucHien, SWT.NONE);
-		trclmnTencongviec.setWidth(100);
+		trclmnTencongviec.setWidth(90);
 		trclmnTencongviec.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
 
 		TreeColumn trclmnIdCngVic = new TreeColumn(tree_PhanViecDangThucHien, SWT.CENTER);
@@ -724,30 +727,96 @@ public class GiaoViec {
 		text_Ghichu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Ghichu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		text_Ghichu.setEditable(false);
-		new Label(grpThngTin, SWT.NONE);
 
-		Button btnHSLu = new Button(grpThngTin, SWT.NONE);
-		btnHSLu.setImage(SWTResourceManager.getImage(GiaoViec.class, "/folder-documents-icon(1).png"));
-		btnHSLu.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-		btnHSLu.addSelectionListener(new SelectionAdapter() {
+		table_VanbanDexuat = new Table(grpThngTin, SWT.BORDER | SWT.FULL_SELECTION);
+		table_VanbanDexuat.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		table_VanbanDexuat.setHeaderVisible(true);
+		table_VanbanDexuat.setLinesVisible(true);
+
+		TableColumn tblclmnStt = new TableColumn(table_VanbanDexuat, SWT.NONE);
+		tblclmnStt.setWidth(45);
+		tblclmnStt.setText("STT");
+
+		TableColumn tblclmnSXut = new TableColumn(table_VanbanDexuat, SWT.NONE);
+		tblclmnSXut.setWidth(150);
+		tblclmnSXut.setText("SỐ ĐỀ XUẤT");
+
+		TableColumn tblclmnNgyBanHnh = new TableColumn(table_VanbanDexuat, SWT.NONE);
+		tblclmnNgyBanHnh.setWidth(100);
+		tblclmnNgyBanHnh.setText("NGÀY BAN HÀNH");
+
+		TableColumn tblclmnPhngBan = new TableColumn(table_VanbanDexuat, SWT.NONE);
+		tblclmnPhngBan.setWidth(100);
+		tblclmnPhngBan.setText("PHÒNG BAN");
+
+		Menu menu_7 = new Menu(table_VanbanDexuat);
+		table_VanbanDexuat.setMenu(menu_7);
+
+		MenuItem mntmMTpH = new MenuItem(menu_7, SWT.NONE);
+		mntmMTpH.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if (dx == null)
+					return;
 				try {
-					if (dx != null) {
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-						if (ths != null) {
-							TapHoso_View thsv = new TapHoso_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, false);
-							thsv.open();
-						}
-					}
+					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+					if (ths == null)
+						return;
+					boolean view = true;
+					if (user.getTEN_TAI_KHOAN().equals(dx.getTEN_TAI_KHOAN()))
+						view = false;
+					TapHoso_View thsv = new TapHoso_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, view);
+					thsv.open();
 				} catch (SQLException e1) {
-					log.error(e1.getMessage());
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		btnHSLu.setText("Hồ sơ Đề xuất");
-		xpndtmThngTin.setHeight(200);
+		mntmMTpH.setText("Mở Tập hồ sơ");
+
+		MenuItem mntmXemVnBn = new MenuItem(menu_7, SWT.NONE);
+		mntmXemVnBn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_VanbanDexuat.getSelection();
+				if (ti.length <= 0)
+					return;
+				VANBAN vb = (VANBAN) ti[0].getData();
+				Vanban_View vv = new Vanban_View(shlQunLCng, SWT.DIALOG_TRIM, user, null, vb, true);
+				try {
+					vv.open();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXemVnBn.setText("Xem Văn bản");
+
+		MenuItem mntmXa_2 = new MenuItem(menu_7, SWT.NONE);
+		mntmXa_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_VanbanDexuat.getSelection();
+				if (ti.length <= 0)
+					return;
+				VANBAN vb = (VANBAN) ti[0].getData();
+				if (vb == null)
+					return;
+				try {
+					controler.getControl_VANBAN().delete_VANBAN(vb);
+					if (dx == null)
+						return;
+					fillHosoDexuat(dx);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXa_2.setText("Xóa");
+		xpndtmThngTin.setHeight(280);
 
 		ExpandItem xpndtmTChcThc = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmTChcThc.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
@@ -1220,10 +1289,9 @@ public class GiaoViec {
 									MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
 											.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
 											.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-									dsb.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
 									controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
 											.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-													dsb);
+													dsb, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
 								}
 								int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dsb);
 								gdngth = new GIAI_DOAN_NGHIEM_THU();
@@ -1478,10 +1546,9 @@ public class GiaoViec {
 										MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
 												.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
 												.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-										dsb.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
 										controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
 												.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-														dsb);
+														dsb, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
 									}
 									int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dsb);
 									gdngth = new GIAI_DOAN_NGHIEM_THU();
@@ -2135,6 +2202,7 @@ public class GiaoViec {
 			text_Ngay_Hoantat_GiaoViec.setText(dx.getTHOI_DIEM_HOAN_THANH() == null ? "Chưa hoàn tất"
 					: mdf.getViewStringDate(dx.getTHOI_DIEM_HOAN_THANH()));
 			text_Ghichu.setText(dx.getGHI_CHU() == null ? "" : dx.getGHI_CHU());
+			fillHosoDexuat(dx);
 		} else {
 			clearText_DEXUAT();
 		}
@@ -2529,8 +2597,24 @@ public class GiaoViec {
 				text_QUYETTOAN_Hoanthanh.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 			}
 			text_Ghichu.setText(dx.getGHI_CHU() == null ? "" : dx.getGHI_CHU());
+			fillHosoDexuat(dx);
 		} else {
 			clearText_DEXUAT();
+		}
+	}
+
+	private void fillHosoDexuat(DE_XUAT dx) throws SQLException {
+		table_VanbanDexuat.removeAll();
+		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+		if (ths == null)
+			return;
+		ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
+		int i = 1;
+		for (VANBAN vanban : vbl) {
+			TableItem ti = new TableItem(table_VanbanDexuat, SWT.NONE);
+			ti.setText(new String[] { (i++) + "", vanban.getSO_VANBAN(),
+					mdf.getViewStringDate(vanban.getNGAY_BAN_HANH()), vanban.getCO_QUAN_BAN_HANH() });
+			ti.setData(vanban);
 		}
 	}
 
@@ -2784,6 +2868,7 @@ public class GiaoViec {
 			text_Ngay_Hoantat_GiaoViec.setText(dx.getTHOI_DIEM_HOAN_THANH() == null ? "Chưa hoàn tất"
 					: mdf.getViewStringDate(dx.getTHOI_DIEM_HOAN_THANH()));
 			text_Ghichu.setText(dx.getGHI_CHU() == null ? "" : dx.getGHI_CHU());
+			fillHosoDexuat(dx);
 		} else {
 			clearText_DEXUAT();
 		}
@@ -2795,7 +2880,9 @@ public class GiaoViec {
 		text_DonviDexuat.setText("");
 		text_Ngaythuchien.setText("");
 		text_TenCB.setText("");
+		text_Ngay_Hoantat_GiaoViec.setText("");
 		text_Ghichu.setText("");
+		table_VanbanDexuat.removeAll();
 
 	}
 

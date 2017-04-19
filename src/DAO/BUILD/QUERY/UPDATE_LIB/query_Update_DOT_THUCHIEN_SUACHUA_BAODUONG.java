@@ -5,10 +5,23 @@ import DAO.NGUONSUACHUA_BAODUONG;
 
 public class query_Update_DOT_THUCHIEN_SUACHUA_BAODUONG {
 
-	public String getString_Capnhat_GiaidoanQuyettoan(DOT_THUCHIEN_SUACHUA_BAODUONG dsb) {
+	public String getString_Capnhat_GiaidoanNghiemthu_Quyettoan(DOT_THUCHIEN_SUACHUA_BAODUONG dsb,
+			int MA_QUATRINH_NGHIEMTHU_QUYETTOAN) {
 		try {
 			String result = "UPDATE DOT_THUCHIEN_SUACHUA_BAODUONG  SET MA_QUATRINH_NGHIEMTHU_QUYETTOAN='"
-					+ dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() + "' WHERE MA_DOT_THUCHIEN_SUACHUA_BAODUONG='"
+					+ MA_QUATRINH_NGHIEMTHU_QUYETTOAN + "' WHERE MA_DOT_THUCHIEN_SUACHUA_BAODUONG='"
+					+ dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() + "';";
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_Capnhat_GiaidoanDexuat_Thuchien(DOT_THUCHIEN_SUACHUA_BAODUONG dsb,
+			int MA_QUATRINH_DEXUAT_THUCHIEN) {
+		try {
+			String result = "UPDATE DOT_THUCHIEN_SUACHUA_BAODUONG  SET MA_QUATRINH_DEXUAT_THUCHIEN='"
+					+ MA_QUATRINH_DEXUAT_THUCHIEN + "' WHERE MA_DOT_THUCHIEN_SUACHUA_BAODUONG='"
 					+ dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() + "';";
 			return result;
 		} catch (Exception e) {

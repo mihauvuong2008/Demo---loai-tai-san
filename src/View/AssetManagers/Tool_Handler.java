@@ -1,6 +1,7 @@
 package View.AssetManagers;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -9,11 +10,12 @@ import org.eclipse.swt.widgets.Shell;
 import Application.Setting.Setting;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
+import DAO.TAISAN;
 import View.AssetManagers.DanhMuc_Lienhe_Dichvu.DanhmucLienhe;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.LichBaoduong.TieuchuanBaoduong;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.LichDangkiem.KyhanDangkiem;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.LichDangkiem.LichDangkiem;
-import View.AssetManagers.CongViec.Baoduong._1_NhapDeXuat;
+import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.Chart.Chart;
 import View.AssetManagers.CongViec.CongViecCuatoi.CongViecCuaToi;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.QuanLyCongviec;
@@ -106,9 +108,9 @@ public class Tool_Handler {
 		tpg.open();
 	}
 
-	public void OpenForm_Tool_Baoduong_Phuongtien_Giaothong() throws SQLException {
-		_1_NhapDeXuat td = new _1_NhapDeXuat(display, user);
-		td.open();
+	public void OpenForm_Tool_Baoduong_Phuongtien_Giaothong(ArrayList<TAISAN> data) throws SQLException {
+		Taodot_Baoduong sb = new Taodot_Baoduong(mainFormShell, SWT.DIALOG_TRIM, user, data);
+		sb.open();
 	}
 
 	public void OpenForm_Tool_Thongbao_Chuadoc() throws SQLException {

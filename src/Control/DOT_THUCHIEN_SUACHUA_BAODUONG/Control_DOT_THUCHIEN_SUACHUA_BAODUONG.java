@@ -733,12 +733,28 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG {
 
 	private class Update extends EDIactivity {
 		public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-				DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
+				DOT_THUCHIEN_SUACHUA_BAODUONG dsb, int MA_QUATRINH_NGHIEMTHU_QUYETTOAN) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String query = (new query_Update_DOT_THUCHIEN_SUACHUA_BAODUONG())
-						.getString_Capnhat_GiaidoanQuyettoan(dsb);
+						.getString_Capnhat_GiaidoanNghiemthu_Quyettoan(dsb, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
 				if (query == null)
 					return false;
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return true;
+			}
+			return false;
+		}
+
+		public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_DEXUAT_THUCHIEN(
+				DOT_THUCHIEN_SUACHUA_BAODUONG dsb, int MA_QUATRINH_DEXUAT_THUCHIEN) throws SQLException {
+			if (conn != null && isPrivilegeEDI()) {
+				String query = (new query_Update_DOT_THUCHIEN_SUACHUA_BAODUONG())
+						.getString_Capnhat_GiaidoanDexuat_Thuchien(dsb, MA_QUATRINH_DEXUAT_THUCHIEN);
+				if (query == null)
+					return false;
+				System.out.println(query);
 				PreparedStatement prs = conn.prepareStatement(query);
 				prs.executeUpdate();
 				prs.close();
@@ -906,9 +922,15 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG {
 	}
 
 	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-			DOT_THUCHIEN_SUACHUA_BAODUONG dsb) throws SQLException {
-		return getUpdater().update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dsb);
+			DOT_THUCHIEN_SUACHUA_BAODUONG dsb, int MA_QUATRINH_NGHIEMTHU_QUYETTOAN) throws SQLException {
+		return getUpdater().update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dsb,
+				MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+	}
 
+	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_DEXUAT_THUCHIEN(
+			DOT_THUCHIEN_SUACHUA_BAODUONG dsb, int MA_QUATRINH_DEXUAT_THUCHIEN) throws SQLException {
+		return getUpdater().update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_DEXUAT_THUCHIEN(dsb,
+				MA_QUATRINH_DEXUAT_THUCHIEN);
 	}
 
 	public boolean update_DOT_THUCHIEN_SUACHUA_BAODUONG(DOT_THUCHIEN_SUACHUA_BAODUONG vIEW_dsb) throws SQLException {

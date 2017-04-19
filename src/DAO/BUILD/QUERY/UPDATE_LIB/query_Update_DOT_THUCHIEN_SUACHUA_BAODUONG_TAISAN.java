@@ -1,13 +1,13 @@
 package DAO.BUILD.QUERY.UPDATE_LIB;
 
 import DAO.DOT_THUCHIEN_SUACHUA_BAODUONG;
-import DAO.Row_PTTSthamgia;
+import DAO.Row_PTTSthamgia_Baoduong;
 import View.MarkItem.Fill_ItemData;
 
 public class query_Update_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN {
 
 	public String getString_Update_HinhthucBaoduong_PhuongtienThamgiaBaoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb,
-			Row_PTTSthamgia rp) {
+			Row_PTTSthamgia_Baoduong rp) {
 		try {
 			Fill_ItemData f = new Fill_ItemData();
 			String result = "UPDATE DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN SET THAY_NHOT = '"

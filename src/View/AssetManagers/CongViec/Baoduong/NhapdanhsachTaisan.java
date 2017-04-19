@@ -32,11 +32,13 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import View.DateTime.MyDateFormat;
+import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Combo;
 
-public class _3_Nhapdanhsach extends Dialog {
+public class NhapdanhsachTaisan extends Dialog {
 
 	protected Object result;
 	protected Shell shell;
@@ -47,10 +49,10 @@ public class _3_Nhapdanhsach extends Dialog {
 	final ArrayList<PHUONGTIEN_GIAOTHONG> Data_from_Parent_list_PTGT;
 	private ArrayList<PHUONGTIEN_GIAOTHONG> Result_danhsachPTTS;
 	protected boolean Accept = false;
-	private DE_XUAT dx;
 	private int loaiPTGT = 0;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private static Log log = LogFactory.getLog(_3_Nhapdanhsach.class);
+	private static Log log = LogFactory.getLog(NhapdanhsachTaisan.class);
+	private Combo combo;
 
 	public ArrayList<PHUONGTIEN_GIAOTHONG> getResult_danhsachPTTS() {
 		return Result_danhsachPTTS;
@@ -74,12 +76,12 @@ public class _3_Nhapdanhsach extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public _3_Nhapdanhsach(Shell parent, int style, NGUOIDUNG user,
-			ArrayList<PHUONGTIEN_GIAOTHONG> Data_from_Parent_list_PTGT, DE_XUAT dx, int loaiPTGT) {
+	public NhapdanhsachTaisan(Shell parent, int style, NGUOIDUNG user,
+			ArrayList<PHUONGTIEN_GIAOTHONG> Data_from_Parent_list_PTGT, DOT_THUCHIEN_SUACHUA_BAODUONG dsb,
+			int loaiPTGT) {
 		super(parent, style);
 		controler = new Controler(user);
 		this.Data_from_Parent_list_PTGT = Data_from_Parent_list_PTGT;
-		this.dx = dx;
 		this.loaiPTGT = loaiPTGT;
 		Result_danhsachPTTS = new ArrayList<>();
 	}
@@ -110,12 +112,10 @@ public class _3_Nhapdanhsach extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shell.setImage(SWTResourceManager.getImage(_3_Nhapdanhsach.class, "/maintenance-icon (1).png"));
+		shell.setImage(SWTResourceManager.getImage(NhapdanhsachTaisan.class, "/maintenance-icon (1).png"));
 		shell.setSize(728, 450);
-		shell.setText("Chọn phương tiện cơ giới ["
-				+ controler.getControl_PHONGBAN().get_PHONGBAN(dx.getMA_PHONGBAN()).getTEN_PHONGBAN() + "]");
 		new FormTemplate().setCenterScreen(shell);
-		shell.setLayout(new GridLayout(3, false));
+		shell.setLayout(new GridLayout(5, false));
 		Button button_2 = new Button(shell, SWT.CHECK);
 		button_2.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -134,8 +134,32 @@ public class _3_Nhapdanhsach extends Dialog {
 		});
 		button_2.setText("Toàn bộ");
 
+		combo = new Combo(shell, SWT.READ_ONLY);
+		combo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				PHONGBAN pb = (PHONGBAN) combo.getData(combo.getText());
+				shell.setText("Chọn phương tiện cơ giới [" + pb.getTEN_PHONGBAN() + "]");
+				try {
+					if (button_2.getSelection()) {
+						viewAll();
+					} else {
+						viewDsGanday();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_combo.widthHint = 150;
+		combo.setLayoutData(gd_combo);
+
 		text = new Text(shell, SWT.BORDER | SWT.RIGHT);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+		gd_text.widthHint = 300;
+		text.setLayoutData(gd_text);
 		text.setMessage("Tìm theo mã tài sản");
 
 		Button btnTm = new Button(shell, SWT.NONE);
@@ -150,7 +174,7 @@ public class _3_Nhapdanhsach extends Dialog {
 		btnTm.setText("Tìm");
 
 		SashForm sashForm = new SashForm(shell, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		table_Lanbaoduongganday = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table_Lanbaoduongganday.setLinesVisible(true);
@@ -211,7 +235,8 @@ public class _3_Nhapdanhsach extends Dialog {
 		tableColumn_6.setWidth(100);
 		tableColumn_6.setText("SỐ MÁY");
 		sashForm.setWeights(new int[] { 618, 1000 });
-
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 
 		Button button = new Button(shell, SWT.NONE);
@@ -245,16 +270,14 @@ public class _3_Nhapdanhsach extends Dialog {
 		gd_button_1.widthHint = 75;
 		button_1.setLayoutData(gd_button_1);
 		button_1.setText("Đóng");
-		try {
-			init();
-		} catch (SQLException e1) {
-			log.error(e1.getMessage());
-			e1.printStackTrace();
-		}
+		init();
 	}
 
 	private void init() throws SQLException {
-		fillLanbaoduong();
+		ArrayList<PHONGBAN> pbl = controler.getControl_PHONGBAN().getAllDonvi();
+		Fill_ItemData fi = new Fill_ItemData();
+		fi.setComboBox_DONVI_NOIBO(combo, pbl);
+		fillLanbaoduong((PHONGBAN) combo.getData(combo.getText()));
 	}
 
 	protected void viewDsGanday() throws SQLException {
@@ -262,8 +285,7 @@ public class _3_Nhapdanhsach extends Dialog {
 		if (items.length > 0) {
 			DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) items[0].getData();
 			if (dsb != null) {
-				PHONGBAN dv = new PHONGBAN();
-				dv.setMA_PHONGBAN(dx.getMA_PHONGBAN());
+				PHONGBAN dv = ((PHONGBAN) combo.getData(combo.getText()));
 				viewData_DotSuachua_Baoduong(dsb, dv);
 			}
 		}
@@ -271,11 +293,9 @@ public class _3_Nhapdanhsach extends Dialog {
 
 	protected void viewAll() throws SQLException {
 		table.removeAll();
-		PHONGBAN dv = new PHONGBAN();
-		dv.setMA_PHONGBAN(dx.getMA_PHONGBAN());
+		PHONGBAN dv = ((PHONGBAN) combo.getData(combo.getText()));
 		ArrayList<PHUONGTIEN_GIAOTHONG> pl = controler.getControl_PHUONGTIEN_GIAOTHONG()
 				.get_PHUONGTIEN_GIAOTHONG(loaiPTGT, dv);
-
 		int i = 1;
 		for (PHUONGTIEN_GIAOTHONG e : pl) {
 			boolean flag = true;
@@ -326,15 +346,16 @@ public class _3_Nhapdanhsach extends Dialog {
 		}
 	}
 
-	private void fillLanbaoduong() throws SQLException {
+	private void fillLanbaoduong(PHONGBAN pb) throws SQLException {
 		table_Lanbaoduongganday.removeAll();
 		ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> ptl = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
-				.get_DOT_THUCHIEN_SUACHUA_BAODUONG_list(dx.getMA_PHONGBAN(), loaiPTGT);
+				.get_DOT_THUCHIEN_SUACHUA_BAODUONG_list(pb.getMA_PHONGBAN(), loaiPTGT);
 		for (DOT_THUCHIEN_SUACHUA_BAODUONG d : ptl) {
 			TableItem t = new TableItem(table_Lanbaoduongganday, SWT.NONE);
 			DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(d);
 			GIAI_DOAN_NGHIEM_THU gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(d);
-			t.setText(new String[] { dx.getSODEXUAT(), mdf.getViewStringDate(dx.getNGAYTHANG_VANBAN()),
+			t.setText(new String[] { dx == null ? "--" : dx.getSODEXUAT(),
+					dx == null ? "--" : mdf.getViewStringDate(dx.getNGAYTHANG_VANBAN()),
 					gdnt == null ? "--"
 							: gdnt.getTHOI_DIEM_CHUYEN_GIAO() == null ? "-"
 									: mdf.getViewStringDate(gdnt.getTHOI_DIEM_CHUYEN_GIAO()) });
