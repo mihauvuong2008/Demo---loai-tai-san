@@ -66,9 +66,9 @@ import DAO.user_congviec;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.Nhatky_Lamviec;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.ViewPartHoso;
-import View.AssetManagers.CongViec.Giamtaisan.XemDotGiam;
-import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
-import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
+import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
+import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.Taisan.XemTaiSan.View_Taisan;
@@ -261,8 +261,7 @@ public class GiaoViec {
 							vbd.open();
 							break;
 						case 2:
-							_2_Taodot_Suachua vsc = new _2_Taodot_Suachua(display, user, null, dx,
-									/* MODE_NEW_VIEW: */2);
+							Taodot_Suachua vsc = new Taodot_Suachua(shlQunLCng, SWT.DIALOG_TRIM, user, dsb);
 							vsc.open();
 							break;
 
@@ -363,7 +362,7 @@ public class GiaoViec {
 				try {
 					if (til.length > 0) {
 						DOT_THUCHIEN_TANG_TAISAN dt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-						XemDotTangtaisan xdt = new XemDotTangtaisan(display, user, dt);
+						TaoDotTangtaisan xdt = new TaoDotTangtaisan(shlQunLCng, SWT.DIALOG_TRIM, user, dt);
 						xdt.open();
 					}
 				} catch (SQLException e1) {
@@ -458,7 +457,7 @@ public class GiaoViec {
 					TreeItem til[] = tree_CongviecThanhly.getSelection();
 					if (til.length > 0) {
 						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-						XemDotGiam xdg = new XemDotGiam(display, user, dgt);
+						TaoDotGiam xdg = new TaoDotGiam(shlQunLCng, SWT.DIALOG_TRIM, user, dgt);
 						xdg.open();
 					}
 				} catch (SQLException e1) {
@@ -2887,6 +2886,8 @@ public class GiaoViec {
 	}
 
 	public static void FillTableThanhly() throws SQLException {
+		if (tree_CongviecThanhly == null)
+			return;
 		final Controler controler = new Controler(user);
 		if (tree_CongviecThanhly != null && !tree_CongviecThanhly.isDisposed()) {
 			tree_CongviecThanhly.removeAll();
@@ -2909,6 +2910,8 @@ public class GiaoViec {
 	}
 
 	static public void FillTableMuasam() throws SQLException {
+		if (tree_CongViecMuasam == null)
+			return;
 		final Controler controler = new Controler(user);
 		if (tree_CongViecMuasam != null && !tree_CongViecMuasam.isDisposed()) {
 			tree_CongViecMuasam.removeAll();
@@ -2928,6 +2931,8 @@ public class GiaoViec {
 	}
 
 	static public void FillTableSuachua() throws SQLException {
+		if (tree_CongviecSuachua == null)
+			return;
 		final Controler controler = new Controler(user);
 		if (tree_CongviecSuachua != null && !tree_CongviecSuachua.isDisposed()) {
 			tree_CongviecSuachua.removeAll();

@@ -90,7 +90,7 @@ public class NhapDanhsachGiam extends Dialog {
 		shlChnPhngTin = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX);
 		shlChnPhngTin.setImage(
 				SWTResourceManager.getImage(NhapDanhsachGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		shlChnPhngTin.setSize(809, 500);
+		shlChnPhngTin.setSize(750, 464);
 		new FormTemplate().setCenterScreen(shlChnPhngTin);
 		shlChnPhngTin.setText("Chọn Phương tiện tài sản");
 		shlChnPhngTin.setLayout(new GridLayout(2, false));
@@ -162,11 +162,10 @@ public class NhapDanhsachGiam extends Dialog {
 		TreeColumn trclmnSeri = new TreeColumn(tree, SWT.NONE);
 		trclmnSeri.setWidth(100);
 		trclmnSeri.setText("SERI");
-		sashForm.setWeights(new int[] { 618, 1000 });
+		sashForm.setWeights(new int[] { 196, 535 });
 
 		Button btnChn = new Button(shlChnPhngTin, SWT.NONE);
-		btnChn.setImage(
-				SWTResourceManager.getImage(NhapDanhsachGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnChn.setImage(SWTResourceManager.getImage(NhapDanhsachGiam.class, "/Actions-document-save-icon (1).png"));
 		btnChn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

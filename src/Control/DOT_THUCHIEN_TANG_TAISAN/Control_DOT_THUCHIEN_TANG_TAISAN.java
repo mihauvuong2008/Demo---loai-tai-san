@@ -123,8 +123,8 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 		return getSelecter().get_DOT_THUCHIEN_TANG_TAISAN_list(begin, end);
 	}
 
-	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(Date date, Date date2, String text)
-			throws SQLException {
+	public ArrayList<DOT_THUCHIEN_TANG_TAISAN> get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(Date date, Date date2,
+			String text) throws SQLException {
 		return getSelecter().get_All_DotTangTaisan(date, date2, text);
 	}
 
@@ -140,6 +140,11 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 			int mA_QUATRINH_NGHIEMTHU_QUYETTOAN) throws SQLException {
 		return getUpdater().update_DOT_TANG_TAISAN_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dtt,
 				mA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+	}
+
+	public boolean update_DOT_TANG_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(DOT_THUCHIEN_TANG_TAISAN dtt,
+			int ma_Quatrinh_Dexuat_thuchien) throws SQLException {
+		return getUpdater().update_DOT_TANG_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(dtt, ma_Quatrinh_Dexuat_thuchien);
 	}
 
 	public boolean update_DOT_TANG_TAISAN(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
@@ -574,7 +579,23 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 				int mA_QUATRINH_NGHIEMTHU_QUYETTOAN) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String query = (new query_Update_DOT_THUCHIEN_TANG_TAISAN())
-						.getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Quyettoan(dtt, mA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+						.getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Nghiemthu_Quyettoan(dtt,
+								mA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+				if (query == null)
+					return false;
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return true;
+			}
+			return false;
+		}
+
+		public boolean update_DOT_TANG_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(DOT_THUCHIEN_TANG_TAISAN dtt,
+				int ma_Quatrinh_Dexuat_thuchien) throws SQLException {
+			if (conn != null && isPrivilegeEDI()) {
+				String query = (new query_Update_DOT_THUCHIEN_TANG_TAISAN())
+						.getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Dexuat_Thuchien(dtt, ma_Quatrinh_Dexuat_thuchien);
 				if (query == null)
 					return false;
 				PreparedStatement prs = conn.prepareStatement(query);
@@ -620,4 +641,5 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 		}
 
 	}
+
 }

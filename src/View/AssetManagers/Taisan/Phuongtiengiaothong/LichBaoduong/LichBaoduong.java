@@ -102,8 +102,8 @@ public class LichBaoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlLchBoDng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlLchBoDng.setImage(
-				SWTResourceManager.getImage(LichBaoduong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlLchBoDng
+				.setImage(SWTResourceManager.getImage(LichBaoduong.class, "/folder-yellow-scheduled-tasks-icon.png"));
 		shlLchBoDng.setSize(728, 450);
 		shlLchBoDng.setText("L\u1ECBch B\u1EA3o d\u01B0\u1EE1ng Ph\u01B0\u01A1ng ti\u1EC7n giao th\u00F4ng");
 		shlLchBoDng.setLayout(new GridLayout(6, false));

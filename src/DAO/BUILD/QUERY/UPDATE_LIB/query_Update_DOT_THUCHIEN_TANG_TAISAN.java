@@ -4,11 +4,22 @@ import DAO.DOT_THUCHIEN_TANG_TAISAN;
 
 public class query_Update_DOT_THUCHIEN_TANG_TAISAN {
 
-	public String getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Quyettoan(DOT_THUCHIEN_TANG_TAISAN dtt,
+	public String getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Nghiemthu_Quyettoan(DOT_THUCHIEN_TANG_TAISAN dtt,
 			int mA_QUATRINH_NGHIEMTHU_QUYETTOAN) {
 		try {
 			String result = "UPDATE DOT_THUCHIEN_TANG_TAISAN  SET MA_QUATRINH_NGHIEMTHU_QUYETTOAN='"
 					+ mA_QUATRINH_NGHIEMTHU_QUYETTOAN + "' WHERE MA_DOT_TANG='" + dtt.getMA_DOT_TANG() + "';";
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Dexuat_Thuchien(DOT_THUCHIEN_TANG_TAISAN dtt,
+			int ma_Quatrinh_Dexuat_thuchien) {
+		try {
+			String result = "UPDATE DOT_THUCHIEN_TANG_TAISAN  SET MA_QUATRINH_DEXUAT_THUCHIEN='"
+					+ ma_Quatrinh_Dexuat_thuchien + "' WHERE MA_DOT_TANG='" + dtt.getMA_DOT_TANG() + "';";
 			return result;
 		} catch (Exception e) {
 			return null;

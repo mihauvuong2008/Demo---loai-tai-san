@@ -10,7 +10,8 @@ import org.eclipse.swt.widgets.Shell;
 import DAO.TAISAN;
 import DAO.DOT_THUCHIEN_TANG_TAISAN;
 import DAO.NGUOIDUNG;
-import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
+import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.EditPhuongtienGiaothong;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.Phuongtien_Giaothong;
 import View.AssetManagers.Taisan.SuaThongTinTaisan.Edit_TaiSan;
@@ -63,12 +64,17 @@ public class PopupMenu_MainView_TreeTaisan_Handler {
 	}
 
 	public void OpenForm_HosoMuasam(DOT_THUCHIEN_TANG_TAISAN dtt_last) throws SQLException {
-		XemDotTangtaisan xdt = new XemDotTangtaisan(shell.getDisplay(), user, dtt_last);
+		TaoDotTangtaisan xdt = new TaoDotTangtaisan(shell, SWT.DIALOG_TRIM, user, dtt_last);
 		xdt.open();
 	}
 
 	public void OpenForm_View_Hoso_Chuyengiao_TaiSan_Noibo(TAISAN t) {
 
+	}
+
+	public void OpenForm_Thanhly_TaiSan_list(ArrayList<TAISAN> taisan_list) throws SQLException {
+		TaoDotGiam xdg = new TaoDotGiam(shell, SWT.DIALOG_TRIM, user, taisan_list);
+		xdg.open();
 	}
 
 }

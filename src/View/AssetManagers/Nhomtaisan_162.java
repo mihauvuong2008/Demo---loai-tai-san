@@ -26,9 +26,9 @@ public class Nhomtaisan_162 {
 	private TreeItem tongItem_NhomtaisanCodinh_Vohinh;
 	private TreeItem tongItem_NhomtaisanCodinh_Dacthu;
 	private TreeItem tongItem_NhomtaisanCodinh_Dacbiet;
-	private Icondata icondata;
+	private Icondataset icondata;
 
-	public Nhomtaisan_162(Controler controler, Icondata icondata) {
+	public Nhomtaisan_162(Controler controler, Icondataset icondata) {
 		this.controler = controler;
 		this.icondata = icondata;
 	}
@@ -44,7 +44,7 @@ public class Nhomtaisan_162 {
 			tongItem_NhomtaisanCodinh_Dacbiet = buildNhomtaisanCodinh(tree_NhomTaisan_Codinh_dacbiet, icondata);
 	}
 
-	private TreeItem buildNhomtaisanCodinh(Tree tree_NHOMTaisan, Icondata icondata) {
+	private TreeItem buildNhomtaisanCodinh(Tree tree_NHOMTaisan, Icondataset icondata) {
 		TreeItem TongItem_NHOMTaisan = new TreeItem(tree_NHOMTaisan, SWT.NONE);
 		TongItem_NHOMTaisan.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		TongItem_NHOMTaisan.setImage(icondata.TongNhomtaisan);

@@ -34,7 +34,7 @@ import DAO.NHOMTAISAN_CAP_V;
 import DAO.NHOM_TAISANCODINH_DACBIET;
 import DAO.NHOM_TAISANCODINH_DACTHU;
 import DAO.NHOM_TAISANCODINH_VOHINH;
-import View.AssetManagers.Icondata;
+import View.AssetManagers.Icondataset;
 import View.AssetManagers.Nhomtaisan_162;
 import View.AssetManagers.excel_NhapDulieu.ImportExcel_NhomTaisan;
 import View.Template.FormTemplate;
@@ -659,7 +659,7 @@ public class QuanlyNhomtaisan extends Shell {
 
 	private void init() throws SQLException {
 		initNhomTaisan();
-		N162 = new Nhomtaisan_162(controler, new Icondata());
+		N162 = new Nhomtaisan_162(controler, new Icondataset());
 		N162.setTree_NHOMTaisan_Codinh(tree_NHOMTaisan_Codinh);
 		N162.setTree_NhomTaisan_Codinh_dacbiet(tree_NhomTaisan_Codinh_dacbiet);
 		N162.setTree_Nhomtaisan_Codinh_Dacthu(tree_Nhomtaisan_Codinh_Dacthu);

@@ -57,8 +57,8 @@ import DAO.TAISAN;
 import DAO.TAP_HO_SO;
 import DAO.VANBAN;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
-import View.AssetManagers.CongViec.Suachua._2_Taodot_Suachua;
-import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
+import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
@@ -328,7 +328,7 @@ public class CongViecCuaToi extends Shell {
 
 			}
 		});
-		tltmHSLu.setText("Cập nhật Hồ sơ Công việc");
+		tltmHSLu.setText("Cập nhật Hồ sơ");
 
 		ToolItem tltmBoCo = new ToolItem(toolBar, SWT.NONE);
 		tltmBoCo.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/distributor-report-icon (1).png"));
@@ -509,7 +509,7 @@ public class CongViecCuaToi extends Shell {
 			}
 		});
 		tltmNgunSaCha.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/phone-icon.png"));
-		tltmNgunSaCha.setText("Dịch vụ sử dụng");
+		tltmNgunSaCha.setText("Liên hệ");
 
 		ToolItem tltmDKin = new ToolItem(toolBar, SWT.NONE);
 		tltmDKin.addSelectionListener(new SelectionAdapter() {
@@ -1268,17 +1268,14 @@ public class CongViecCuaToi extends Shell {
 					if (e.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 						if (e.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
 							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) e.getCONGVIEC();
-							DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(dsb);
-
 							switch (dsb.getSUACHUA_BAODUONG()) {
 							case 1:
-								Taodot_Baoduong tdbd = new Taodot_Baoduong(getShell(), SWT.DIALOG_TRIM, user,
-										dsb);
+								Taodot_Baoduong tdbd = new Taodot_Baoduong(getShell(), SWT.DIALOG_TRIM, user, dsb);
 								tdbd.open();
 								break;
 
 							case 2:
-								_2_Taodot_Suachua tdsc = new _2_Taodot_Suachua(getDisplay(), user, getShell(), dx, 2);
+								Taodot_Suachua tdsc = new Taodot_Suachua(getShell(), SWT.DIALOG_TRIM, user, dsb);
 								tdsc.open();
 								break;
 
@@ -1287,7 +1284,7 @@ public class CongViecCuaToi extends Shell {
 							}
 						} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_TANG_TAISAN) {
 							DOT_THUCHIEN_TANG_TAISAN dt = (DOT_THUCHIEN_TANG_TAISAN) e.getCONGVIEC();
-							XemDotTangtaisan xdt = new XemDotTangtaisan(display, user, dt);
+							TaoDotTangtaisan xdt = new TaoDotTangtaisan(getShell(), SWT.DIALOG_TRIM, user, dt);
 							xdt.open();
 						} else if (e.getCONGVIEC() instanceof DOT_THUCHIEN_GIAM_TAISAN) {
 						}
@@ -1522,19 +1519,12 @@ public class CongViecCuaToi extends Shell {
 		sashForm_6.setWeights(new int[] { 1000, 618 });
 		sashForm_5.setWeights(new int[] { 1000, 618 });
 
-		TabItem tbtmNhtKThc = new TabItem(tabFolder, SWT.NONE);
-		tbtmNhtKThc.setText("Nhật ký Làm việc");
-
-		Label lblNewLabel = new Label(tabFolder, SWT.WRAP);
-		tbtmNhtKThc.setControl(lblNewLabel);
-		lblNewLabel.setText("Nh\u1EADt k\u00FD th\u1EF1c hi\u1EC7n");
-
 		TabItem tbtmBiuCng = new TabItem(tabFolder, SWT.NONE);
-		tbtmBiuCng.setText("Bi\u1EC3u \u0111\u1ED3 c\u00F4ng vi\u1EC7c");
+		tbtmBiuCng.setText("Nhật ký - Biểu đồ công việc");
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(6, false);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_composite = new GridLayout(5, false);
 		gl_composite.verticalSpacing = 0;
 		gl_composite.marginWidth = 0;
 		gl_composite.marginHeight = 0;
@@ -1605,7 +1595,6 @@ public class CongViecCuaToi extends Shell {
 			}
 		});
 		btnNgungChuyenGiao.setText("Ngừng chuyển giao");
-		new Label(composite, SWT.NONE);
 
 		Button btnng = new Button(composite, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {
@@ -1614,7 +1603,7 @@ public class CongViecCuaToi extends Shell {
 				dispose();
 			}
 		});
-		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 1, 1);
+		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");

@@ -14,4 +14,15 @@ public class query_Update_DOT_THUCHIEN_GIAM_TAISAN {
 			return null;
 		}
 	}
+
+	public String getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Dexuat_Thuchien(DOT_THUCHIEN_GIAM_TAISAN dgt,
+			int ma_Quatrinh_Dexuat_thuchien) {
+		try {
+			String result = "UPDATE DOT_THUCHIEN_GIAM_TAISAN  SET MA_QUATRINH_DEXUAT_THUCHIEN='"
+					+ ma_Quatrinh_Dexuat_thuchien + "' WHERE MA_DOT_GIAM='" + dgt.getMA_DOT_GIAM() + "';";
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

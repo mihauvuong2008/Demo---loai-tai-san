@@ -77,7 +77,7 @@ public class login {
 	 */
 	protected void createContents() {
 		shlDangNhap = new Shell(shlDangNhap, (SWT.SHELL_TRIM & (~SWT.RESIZE) & (SWT.TITLE | SWT.CLOSE | SWT.MIN)));
-		shlDangNhap.setImage(SWTResourceManager.getImage(login.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlDangNhap.setImage(SWTResourceManager.getImage(login.class, "/Key-icon.png"));
 		shlDangNhap.setSize(426, 210);
 		shlDangNhap.setText("\u0110\u0103ng nh\u1EADp");
 		shlDangNhap.setLayout(new GridLayout(3, false));

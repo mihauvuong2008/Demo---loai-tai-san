@@ -20,9 +20,9 @@ import View.AssetManagers.CongViec.Chart.Chart;
 import View.AssetManagers.CongViec.CongViecCuatoi.CongViecCuaToi;
 import View.AssetManagers.CongViec.CongviecDahoanthanh.QuanLyCongviec;
 import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
-import View.AssetManagers.CongViec.Giamtaisan._1_Dexuat;
-import View.AssetManagers.CongViec.Suachua._1_NhapDeXuat_Suachua;
-import View.AssetManagers.CongViec.TangTaiSan._1_TaoDeXuat;
+import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
+import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Hoso.HosoLuutru;
 import View.AssetManagers.LenhDieuXe.LenhDieuxe;
 import View.AssetManagers.LenhDieuXe.LichsuDieuXe.LichsuDieuXe;
@@ -47,9 +47,10 @@ public class Tool_Handler {
 	}
 
 	public void OpenForm_Tool_TangTaiSan() throws SQLException {
-		_1_TaoDeXuat td = new _1_TaoDeXuat(display, user);
-		td.open();
-
+		// _1_TaoDeXuat td = new _1_TaoDeXuat(display, user);
+		// td.open();
+		TaoDotTangtaisan xdt = new TaoDotTangtaisan(mainFormShell, SWT.DIALOG_TRIM, user);
+		xdt.open();
 	}
 
 	public void OpenForm_Tool_QuanlyHoso() throws SQLException {
@@ -58,13 +59,15 @@ public class Tool_Handler {
 	}
 
 	public void OpenForm_Tool_GiamTaiSan() throws SQLException {
-		_1_Dexuat dg = new _1_Dexuat(display, user);
-		dg.open();
+		// _1_Dexuat dg = new _1_Dexuat(display, user);
+		// dg.open();
+		TaoDotGiam xdg = new TaoDotGiam(mainFormShell, SWT.DIALOG_TRIM, user, new ArrayList<>());
+		xdg.open();
 	}
 
 	public void OpenForm_Tool_Suachua() throws SQLException {
-		_1_NhapDeXuat_Suachua td = new _1_NhapDeXuat_Suachua(display, user);
-		td.open();
+		Taodot_Suachua suachua = new Taodot_Suachua(mainFormShell, SWT.DIALOG_TRIM, user, new ArrayList<>());
+		suachua.open();
 	}
 
 	public void OpenForm_Tool_CongViecCuaToi() throws SQLException {
@@ -94,7 +97,7 @@ public class Tool_Handler {
 	}
 
 	public void OpenForm_Tool_LenhDieuXe() throws SQLException {
-		LenhDieuxe l = new LenhDieuxe(display, user, null);
+		LenhDieuxe l = new LenhDieuxe(mainFormShell, SWT.DIALOG_TRIM, user, null);
 		l.open();
 	}
 
@@ -157,7 +160,7 @@ public class Tool_Handler {
 	}
 
 	public void OpenForm_Tool_LenhDieuXe(PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
-		LenhDieuxe l = new LenhDieuxe(display, user, ptgt);
+		LenhDieuxe l = new LenhDieuxe(mainFormShell, SWT.DIALOG_TRIM, user, ptgt);
 		l.open();
 	}
 

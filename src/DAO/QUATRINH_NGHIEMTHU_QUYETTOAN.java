@@ -2,7 +2,7 @@ package DAO;
 
 public class QUATRINH_NGHIEMTHU_QUYETTOAN {
 	private int MA_QUATRINH_NGHIEMTHU_QUYETTOAN;
-	private String TEN_QUA_TRINH;
+	private int LOAI_CONGVIEC;
 
 	public int getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() {
 		return MA_QUATRINH_NGHIEMTHU_QUYETTOAN;
@@ -12,12 +12,12 @@ public class QUATRINH_NGHIEMTHU_QUYETTOAN {
 		MA_QUATRINH_NGHIEMTHU_QUYETTOAN = mA_QUATRINH_NGHIEMTHU_QUYETTOAN;
 	}
 
-	public String getTEN_QUA_TRINH() {
-		return TEN_QUA_TRINH;
+	public final int getLOAI_CONGVIEC() {
+		return LOAI_CONGVIEC;
 	}
 
-	public void setTEN_QUA_TRINH(String tEN_QUA_TRINH) {
-		TEN_QUA_TRINH = tEN_QUA_TRINH;
+	public final void setLOAI_CONGVIEC(int lOAI_CONGVIEC) {
+		LOAI_CONGVIEC = lOAI_CONGVIEC;
 	}
 
 }

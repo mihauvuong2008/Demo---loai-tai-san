@@ -91,8 +91,7 @@ public class Taodot_Baoduong extends Dialog {
 	 * @param args
 	 * @wbp.parser.constructor
 	 */
-	public Taodot_Baoduong(Shell parent, int Style, NGUOIDUNG user, ArrayList<TAISAN> dataCreate)
-			throws SQLException {
+	public Taodot_Baoduong(Shell parent, int Style, NGUOIDUNG user, ArrayList<TAISAN> dataCreate) throws SQLException {
 		super(parent, Style);
 		setText("SWT Dialog");
 		Taodot_Baoduong.user = user;
@@ -195,7 +194,7 @@ public class Taodot_Baoduong extends Dialog {
 
 		btnNgunSaCha = new Button(composite, SWT.NONE);
 		GridData gd_btnNgunSaCha = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnNgunSaCha.widthHint = 75;
+		gd_btnNgunSaCha.widthHint = 85;
 		btnNgunSaCha.setLayoutData(gd_btnNgunSaCha);
 		btnNgunSaCha.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -679,7 +678,7 @@ public class Taodot_Baoduong extends Dialog {
 		Insert_dx.setMA_DE_XUAT(key);
 		QUATRINH_DEXUAT_THUCHIEN qdt = new QUATRINH_DEXUAT_THUCHIEN();
 		qdt.setMA_DE_XUAT(key);
-		qdt.setTEN_QUA_TRINH("Đề xuất - thực hiện Sửa chữa theo công văn: " + Insert_dx.getSODEXUAT());
+		qdt.setLOAI_CONGVIEC(new Fill_ItemData().getInt_LoaiCongviec_Suachua_Baoduong());
 		return controler.getControl_QUATRINH_DEXUAT_THUCHIEN().insert_QUATRINH_DEXUAT_THUCHIEN(qdt);
 	}
 
@@ -690,13 +689,17 @@ public class Taodot_Baoduong extends Dialog {
 		for (TAISAN taisan : dataCreate) {
 			pgl.add(taisan.getPhuongtien_Giaothong());
 		}
+		if (pgl.size() <= 0)
+			return;
+		int Oto_Xemay = pgl.get(0).getLOAI_PHUONGTIEN_GIAOTHONG();
+		combo_Loaiphuongtien.setText(new Fill_ItemData().getStringLOAI_PHUONGTIEN_GIAOTHONG(Oto_Xemay));
 		ArrayList<Row_PTTSthamgia_Baoduong> data = danhsachPTGT_To_Row_PTTSthamgia(pgl);
 		fillTable_ROW(data);
 	}
 
 	protected void Them_PTGT() throws SQLException {
-		NhapdanhsachTaisan nds = new NhapdanhsachTaisan(shell, SWT.DIALOG_TRIM, user, getTreeData(), ViewAndEdit_MODE_dsb,
-				(int) combo_Loaiphuongtien.getData(combo_Loaiphuongtien.getText()));
+		NhapdanhsachTaisan nds = new NhapdanhsachTaisan(shell, SWT.DIALOG_TRIM, user, getTreeData(),
+				ViewAndEdit_MODE_dsb, (int) combo_Loaiphuongtien.getData(combo_Loaiphuongtien.getText()));
 		nds.open();
 		ArrayList<PHUONGTIEN_GIAOTHONG> tmp = new ArrayList<>();
 		if (getTreeData() != null)
@@ -794,8 +797,7 @@ public class Taodot_Baoduong extends Dialog {
 		if (ViewAndEdit_MODE_dsb != null) {
 			shell.setText("Đợt thực hiện bảo dưỡng phương tiện tài sản");
 			btnDong.setText("Hoàn tất");
-			btnLuu.setImage(
-					SWTResourceManager.getImage(Taodot_Baoduong.class, "/Actions-document-save-icon (1).png"));
+			btnLuu.setImage(SWTResourceManager.getImage(Taodot_Baoduong.class, "/Actions-document-save-icon (1).png"));
 			DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
 			if (dx != null)
 				btnThemDexuat.setText("Xem Đề xuất");

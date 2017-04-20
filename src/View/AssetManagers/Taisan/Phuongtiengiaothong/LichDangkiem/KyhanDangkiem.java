@@ -92,8 +92,7 @@ public class KyhanDangkiem extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlKHnng = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlKHnng.setImage(
-				SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlKHnng.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/Folder-Accept-icon.png"));
 		shlKHnng.setSize(728, 450);
 		new FormTemplate().setCenterScreen(shlKHnng);
 		shlKHnng.setText("K\u1EF3 h\u1EA1n \u0110\u0103ng ki\u1EC3m");
@@ -103,6 +102,7 @@ public class KyhanDangkiem extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		ToolItem tltmThmMi = new ToolItem(toolBar, SWT.NONE);
+		tltmThmMi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		tltmThmMi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -131,6 +131,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmThmMi.setText("Thêm mới");
 
 		ToolItem tltmThayi = new ToolItem(toolBar, SWT.NONE);
+		tltmThayi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		tltmThayi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -145,6 +146,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmThayi.setText("Thay đổi");
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
+		tltmXa.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		tltmXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -173,6 +175,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmXa.setText("Xóa");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
+		tltmLu.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

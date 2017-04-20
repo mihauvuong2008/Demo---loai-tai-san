@@ -17,12 +17,12 @@ public class Loaitaisan_19BCA {
 	Controler controler;
 	private TreeItem tong_Item;
 
-	public Loaitaisan_19BCA(Tree tree_LoaiTaisan, Controler controler, Icondata icondata) {
+	public Loaitaisan_19BCA(Tree tree_LoaiTaisan, Controler controler, Icondataset icondata) {
 		this.controler = controler;
 		tong_Item = initTongLoaiItem(tree_LoaiTaisan, icondata);
 	}
 
-	public TreeItem initTongLoaiItem(Tree tree_LoaiTaisan, Icondata icondata) {
+	public TreeItem initTongLoaiItem(Tree tree_LoaiTaisan, Icondataset icondata) {
 		TreeItem Tong_LOAIItem = new TreeItem(tree_LoaiTaisan, SWT.NONE);
 		Tong_LOAIItem.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		Tong_LOAIItem.setText("Tất cả Loại tài sản");

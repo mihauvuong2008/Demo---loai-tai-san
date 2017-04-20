@@ -2,7 +2,7 @@ package DAO;
 
 public class QUATRINH_DEXUAT_THUCHIEN {
 	private int MA_QUATRINH_DEXUAT_THUCHIEN;
-	private String TEN_QUA_TRINH;
+	private int LOAI_CONGVIEC;
 	private int MA_DE_XUAT;
 
 	public int getMA_QUATRINH_DEXUAT_THUCHIEN() {
@@ -13,12 +13,12 @@ public class QUATRINH_DEXUAT_THUCHIEN {
 		MA_QUATRINH_DEXUAT_THUCHIEN = mA_QUATRINH_DEXUAT_THUCHIEN;
 	}
 
-	public String getTEN_QUA_TRINH() {
-		return TEN_QUA_TRINH;
+	public final int getLOAI_CONGVIEC() {
+		return LOAI_CONGVIEC;
 	}
 
-	public void setTEN_QUA_TRINH(String tEN_QUA_TRINH) {
-		TEN_QUA_TRINH = tEN_QUA_TRINH;
+	public final void setLOAI_CONGVIEC(int lOAI_CONGVIEC) {
+		LOAI_CONGVIEC = lOAI_CONGVIEC;
 	}
 
 	public int getMA_DE_XUAT() {

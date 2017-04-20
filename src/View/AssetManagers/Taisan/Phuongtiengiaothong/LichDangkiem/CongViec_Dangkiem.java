@@ -102,8 +102,9 @@ public class CongViec_Dangkiem extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlngKimPhng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX);
-		shlngKimPhng.setSize(647, 400);
+		shlngKimPhng = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlngKimPhng.setImage(SWTResourceManager.getImage(CongViec_Dangkiem.class, "/application-side-list-icon.png"));
+		shlngKimPhng.setSize(750, 463);
 		shlngKimPhng.setText("Đăng kiểm Phương tiện giao thông: ");
 		shlngKimPhng.setLayout(new GridLayout(2, false));
 		new FormTemplate().setCenterScreen(shlngKimPhng);
@@ -115,13 +116,12 @@ public class CongViec_Dangkiem extends Dialog {
 		composite.setLayout(new GridLayout(2, false));
 
 		Label lblNgyThcng = new Label(composite, SWT.NONE);
-		lblNgyThcng.setText("Ngày thực Đăng kiểm:");
+		lblNgyThcng.setText("Ngày thực hiện:");
 
 		dateTime = new DateTime(composite, SWT.BORDER);
 		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblTnPhngTin = new Label(composite, SWT.NONE);
-		lblTnPhngTin.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblTnPhngTin.setText("Tên phương tiện: ");
 
 		text_TenPTGT = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
@@ -129,7 +129,6 @@ public class CongViec_Dangkiem extends Dialog {
 		text_TenPTGT.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblBinS = new Label(composite, SWT.NONE);
-		lblBinS.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblBinS.setText("Biển số: ");
 
 		text_Bienso = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
@@ -137,7 +136,7 @@ public class CongViec_Dangkiem extends Dialog {
 		text_Bienso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblGhiCh = new Label(composite, SWT.NONE);
-		lblGhiCh.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+		lblGhiCh.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		lblGhiCh.setText("Ghi chú: ");
 
 		text_Ghichu = new Text(composite, SWT.BORDER);

@@ -76,7 +76,7 @@ import DAO.TAISAN;
 import DAO.TAP_HO_SO;
 import View.AboutUs.AboutUs;
 import View.AssetManagers.AppMessage.DefaultBoxMessage;
-import View.AssetManagers.CongViec.TangTaiSan.XemDotTangtaisan;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Hoso.TapHoso_View;
 import View.AssetManagers.ThongBao.Library.Thongbao_Lib_Hoso;
 import View.AssetManagers.Wait.Wait;
@@ -148,7 +148,7 @@ public class MainForm {
 	private Text text_5;
 	private Fill_MainForm Mainformfiller;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private final Icondata icondata = new Icondata();
+	private final Icondataset icondata = new Icondataset();
 	private Table table_LichCongtac;
 	private int tableSelected = 0;
 	private Tree tree_NhomTaisan_Codinh_Vohinh;
@@ -225,7 +225,7 @@ public class MainForm {
 		shell.setMinimumSize(new Point(500, 300));
 		shell.setSize(938, 580);
 		shell.setText("Giao diện chính - Tài khoản hiện hành: [" + user.getTEN_TAI_KHOAN() + "]");
-		mh = new Menu_Handler(user);
+		mh = new Menu_Handler(user, shell);
 		th = new Tool_Handler(user, shell.getDisplay(), shell);
 		PopupMenu_MainView_TreeTaisan_Handler pmth = new PopupMenu_MainView_TreeTaisan_Handler(Display.getDefault(),
 				shell, user);
@@ -1659,9 +1659,6 @@ public class MainForm {
 		});
 		mntmSaCha.setText("Bảo dưỡng Phương tiện giao thông");
 
-		MenuItem mntmThanhL = new MenuItem(menu_15, SWT.NONE);
-		mntmThanhL.setText("Thanh lý");
-
 		new MenuItem(menu_15, SWT.SEPARATOR);
 
 		MenuItem mntmXutFileExcel = new MenuItem(menu_15, SWT.NONE);
@@ -1804,11 +1801,26 @@ public class MainForm {
 		MenuItem menuItem_2 = new MenuItem(menu_14, SWT.NONE);
 		menuItem_2.setText("Xem lịch đăng kiểm");
 
-		MenuItem menuItem_3 = new MenuItem(menu_14, SWT.NONE);
-		menuItem_3.setText("Sửa chữa - bảo dưỡng");
-
-		MenuItem menuItem_5 = new MenuItem(menu_14, SWT.NONE);
-		menuItem_5.setText("Thanh lý");
+		MenuItem mntmBoDngPhng = new MenuItem(menu_14, SWT.NONE);
+		mntmBoDngPhng.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_Xemay.getSelection();
+				if (ti.length <= 0)
+					return;
+				ArrayList<TAISAN> data = new ArrayList<>();
+				for (TableItem tableItem : ti) {
+					TAISAN t = (TAISAN) tableItem.getData();
+					data.add(t);
+				}
+				try {
+					th.OpenForm_Tool_Baoduong_Phuongtien_Giaothong(data);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmBoDngPhng.setText("Bảo dưỡng Phương tiện giao thông");
 
 		MenuItem menuItem_6 = new MenuItem(menu_14, SWT.SEPARATOR);
 
@@ -2339,19 +2351,24 @@ public class MainForm {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				TreeItem[] items = tree_DanhsachTaisan.getSelection();
-
-				if (items.length > 0) {
+				if (items.length <= 0)
+					return;
+				try {
 					ArrayList<TAISAN> taisan_list = new ArrayList<>();
 					for (TreeItem o : items) {
-						TAISAN t = (TAISAN) o.getData();
-						taisan_list.add(t);
+						if (o.getData() instanceof TAISAN) {
+							TAISAN t = controler.getControl_TAISAN().get_Taisan(((TAISAN) o.getData()).getMA_TAISAN());
+							taisan_list.add(t);
+						}
 					}
 					if (taisan_list != null) {
-						// pmth.OpenForm_Delete_TaiSan_list(shell.getDisplay(),
-						// taisan_list);
+						pmth.OpenForm_Thanhly_TaiSan_list(taisan_list);
 					}
-
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+
 			}
 		});
 		mntmChuynTiSn.setText("Thanh lý tài sản");

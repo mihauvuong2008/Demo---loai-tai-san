@@ -139,6 +139,13 @@ public class Control_DOT_THUCHIEN_GIAM_TAISAN {
 		return rs;
 	}
 
+	public boolean update_DOT_GIAM_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(DOT_THUCHIEN_GIAM_TAISAN dgt,
+			int ma_Quatrinh_Dexuat_thuchien) throws SQLException {
+		boolean rs = getUpdater().update_DOT_GIAM_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(dgt,
+				ma_Quatrinh_Dexuat_thuchien);
+		return rs;
+	}
+
 	abstract class ADDactivity {
 
 		public final boolean isPrivilegeADD() throws SQLException {
@@ -419,6 +426,21 @@ public class Control_DOT_THUCHIEN_GIAM_TAISAN {
 		public boolean update_DOT_GIAM_TAISAN(DOT_THUCHIEN_GIAM_TAISAN dgt) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String query = (new query_Update_DOT_THUCHIEN_GIAM_TAISAN()).getString_Capnhat_DotGiamTaisan(dgt);
+				if (query == null)
+					return false;
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.executeUpdate();
+				prs.close();
+				return true;
+			}
+			return false;
+		}
+
+		public boolean update_DOT_GIAM_TAISAN_Update_QUATRINH_DEXUAT_THUCHIEN(DOT_THUCHIEN_GIAM_TAISAN dgt,
+				int ma_Quatrinh_Dexuat_thuchien) throws SQLException {
+			if (conn != null && isPrivilegeEDI()) {
+				String query = (new query_Update_DOT_THUCHIEN_GIAM_TAISAN())
+						.getString_QuatrinhNghiemthu_Capnhat_Giaidoan_Dexuat_Thuchien(dgt, ma_Quatrinh_Dexuat_thuchien);
 				if (query == null)
 					return false;
 				PreparedStatement prs = conn.prepareStatement(query);

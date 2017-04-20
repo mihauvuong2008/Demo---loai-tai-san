@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -40,7 +41,7 @@ import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import net.sf.jasperreports.engine.JRException;
 
-public class LenhDieuxe extends Shell {
+public class LenhDieuxe extends Dialog {
 	private Text text_SoKmhientai;
 	private Text text_Quangduongdukien;
 	private Text text_Noidung;
@@ -64,38 +65,44 @@ public class LenhDieuxe extends Shell {
 	private static PHUONGTIEN_GIAOTHONG ptgt;
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(LenhDieuxe.class);
+	private Shell shell;
+	private Object result;
 
-	/**
-	 * Launch the application.
-	 * 
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			LenhDieuxe shell = new LenhDieuxe(display, user, ptgt);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public LenhDieuxe(Shell parent, int Style, NGUOIDUNG user, PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
+		super(parent, Style);
+		setText("SWT Dialog");
+		controler = new Controler(user);
+		LenhDieuxe.user = user;
+		LenhDieuxe.ptgt = ptgt;
+
 	}
 
 	/**
-	 * Create the shell.
+	 * Open the dialog.
 	 * 
-	 * @param display
-	 * @param l
+	 * @return the result
 	 * @throws SQLException
 	 */
-	public LenhDieuxe(Display display, NGUOIDUNG user, PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
-		super(display, SWT.CLOSE | SWT.RESIZE | SWT.TITLE);
-		addMouseListener(new MouseAdapter() {
+
+	public Object open() throws SQLException {
+		createContents();
+		shell.open();
+		shell.layout();
+		Display display = getParent().getDisplay();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+		return result;
+	}
+
+	public void createContents() throws SQLException {
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
+		shell.setText("\u0110i\u1EC1u xe");
+		shell.setSize(386, 530);
+		new FormTemplate().setCenterScreen(shell);
+		shell.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				if (cl != null)
@@ -108,16 +115,13 @@ public class LenhDieuxe extends Shell {
 					dx.shlChnNgiL.dispose();
 			}
 		});
-		setImage(SWTResourceManager.getImage(LenhDieuxe.class, "/car (1).png"));
-		setLayout(new GridLayout(7, false));
-		LenhDieuxe.user = user;
-		LenhDieuxe.ptgt = ptgt;
-		controler = new Controler(user);
+		shell.setImage(SWTResourceManager.getImage(LenhDieuxe.class, "/car (1).png"));
+		shell.setLayout(new GridLayout(7, false));
 
-		Label lblNewLabel_1 = new Label(this, SWT.NONE);
+		Label lblNewLabel_1 = new Label(shell, SWT.NONE);
 		lblNewLabel_1.setImage(SWTResourceManager.getImage(LenhDieuxe.class, "/train-icon.png"));
 
-		Label lblNewLabel = new Label(this, SWT.NONE);
+		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
 		GridData gd_lblNewLabel = new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1);
 		gd_lblNewLabel.horizontalIndent = 10;
@@ -126,31 +130,31 @@ public class LenhDieuxe extends Shell {
 		lblNewLabel.setFont(SWTResourceManager.getFont("Times New Roman", 18, SWT.BOLD));
 		lblNewLabel.setText("L\u1EC6NH \u0110I\u1EC0U XE");
 
-		Label lblMLnh = new Label(this, SWT.NONE);
+		Label lblMLnh = new Label(shell, SWT.NONE);
 		GridData gd_lblMLnh = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_lblMLnh.verticalIndent = 6;
 		lblMLnh.setLayoutData(gd_lblMLnh);
 		lblMLnh.setText("M\u00E3 l\u1EC7nh:");
 
-		text_Malenh = new Text(this, SWT.BORDER);
+		text_Malenh = new Text(shell, SWT.BORDER);
 		text_Malenh.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Malenh.setEditable(false);
 		GridData gd_text_Malenh = new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1);
 		gd_text_Malenh.verticalIndent = 6;
 		text_Malenh.setLayoutData(gd_text_Malenh);
 
-		Label lblXeT = new Label(this, SWT.NONE);
+		Label lblXeT = new Label(shell, SWT.NONE);
 		lblXeT.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblXeT.setText("Xe \u00F4 t\u00F4 bi\u1EC3n s\u1ED1:");
 
-		Button button_10 = new Button(this, SWT.NONE);
+		Button button_10 = new Button(shell, SWT.NONE);
 		button_10.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				try {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					if ((dx == null || dx.shlChnNgiL.isDisposed())) {
-						dx = new Ldx_chonxe(getShell(), SWT.DIALOG_TRIM, user, absolutePos);
+						dx = new Ldx_chonxe(shell, SWT.DIALOG_TRIM, user, absolutePos);
 						dx.open();
 					}
 					if (dx.result != null) {
@@ -168,7 +172,7 @@ public class LenhDieuxe extends Shell {
 		button_10.setLayoutData(gd_button_10);
 		button_10.setText("S");
 
-		combo_Bienso = new Combo(this, SWT.READ_ONLY);
+		combo_Bienso = new Combo(shell, SWT.READ_ONLY);
 		combo_Bienso.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				PHUONGTIEN_GIAOTHONG ptgt = (PHUONGTIEN_GIAOTHONG) combo_Bienso.getData(combo_Bienso.getText());
@@ -177,18 +181,18 @@ public class LenhDieuxe extends Shell {
 		});
 		combo_Bienso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblNgiLiXe = new Label(this, SWT.NONE);
+		Label lblNgiLiXe = new Label(shell, SWT.NONE);
 		lblNgiLiXe.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblNgiLiXe.setText("Ng\u01B0\u1EDDi l\u00E1i xe:");
 
-		Button btnS = new Button(this, SWT.NONE);
+		Button btnS = new Button(shell, SWT.NONE);
 		btnS.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				try {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					if ((nl == null || nl.shlChnNgiL.isDisposed())) {
-						nl = new ldx_Nguoilai(getShell(), SWT.DIALOG_TRIM, user, absolutePos);
+						nl = new ldx_Nguoilai(shell, SWT.DIALOG_TRIM, user, absolutePos);
 						nl.open();
 					}
 					if (nl.result != null) {
@@ -210,14 +214,14 @@ public class LenhDieuxe extends Shell {
 		btnS.setLayoutData(gd_btnS);
 		btnS.setText("U");
 
-		combo_canbo = new Combo(this, SWT.READ_ONLY);
+		combo_canbo = new Combo(shell, SWT.READ_ONLY);
 		combo_canbo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblXutPht = new Label(this, SWT.NONE);
+		Label lblXutPht = new Label(shell, SWT.NONE);
 		lblXutPht.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblXutPht.setText("N\u01A1i Xu\u1EA5t ph\u00E1t:");
 
-		Button btnR = new Button(this, SWT.NONE);
+		Button btnR = new Button(shell, SWT.NONE);
 		btnR.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -226,8 +230,7 @@ public class LenhDieuxe extends Shell {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					ArrayList<String> recent = controler.getControl_LENH_DIEU_XE().get_Recent_DiemXuatphat(20);
 					if ((rm == null || rm.shell.isDisposed()) && recent != null) {
-						rm = new Ldx_RecentMess(getShell(), SWT.DIALOG_TRIM, absolutePos, "Chọn Điểm xuất phát",
-								recent);
+						rm = new Ldx_RecentMess(shell, SWT.DIALOG_TRIM, absolutePos, "Chọn Điểm xuất phát", recent);
 						rm.open();
 					}
 					if (rm.result != null) {
@@ -245,14 +248,14 @@ public class LenhDieuxe extends Shell {
 		btnR.setLayoutData(gd_btnR);
 		btnR.setText("R");
 
-		text_xuatphat = new Text(this, SWT.BORDER);
+		text_xuatphat = new Text(shell, SWT.BORDER);
 		text_xuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblNin = new Label(this, SWT.NONE);
+		Label lblNin = new Label(shell, SWT.NONE);
 		lblNin.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblNin.setText("N\u01A1i \u0111\u1EBFn:");
 
-		Button button_9 = new Button(this, SWT.NONE);
+		Button button_9 = new Button(shell, SWT.NONE);
 		button_9.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
@@ -260,7 +263,7 @@ public class LenhDieuxe extends Shell {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					ArrayList<String> recent = controler.getControl_LENH_DIEU_XE().get_Recent_DiemDen(20);
 					if ((rm == null || rm.shell.isDisposed()) && recent != null) {
-						rm = new Ldx_RecentMess(getShell(), SWT.DIALOG_TRIM, absolutePos, "Chọn Điểm đến", recent);
+						rm = new Ldx_RecentMess(shell, SWT.DIALOG_TRIM, absolutePos, "Chọn Điểm đến", recent);
 						rm.open();
 					}
 					if (rm.result != null) {
@@ -278,21 +281,21 @@ public class LenhDieuxe extends Shell {
 		button_9.setLayoutData(gd_button_9);
 		button_9.setText("R");
 
-		text_Noiden = new Text(this, SWT.BORDER);
+		text_Noiden = new Text(shell, SWT.BORDER);
 		text_Noiden.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblNgyi = new Label(this, SWT.NONE);
+		Label lblNgyi = new Label(shell, SWT.NONE);
 		lblNgyi.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblNgyi.setText("Ng\u00E0y \u0111i:");
 
-		Button btnC = new Button(this, SWT.NONE);
+		Button btnC = new Button(shell, SWT.NONE);
 		btnC.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				if (event.widget instanceof Control) {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					if (cl == null || cl.shlChnNgy.isDisposed()) {
-						cl = new Ldx_Calendar(getShell(), SWT.NONE, absolutePos, "Chọn Ngày đi");
+						cl = new Ldx_Calendar(shell, SWT.NONE, absolutePos, "Chọn Ngày đi");
 						cl.open();
 					}
 					if (cl.result != null) {
@@ -307,22 +310,22 @@ public class LenhDieuxe extends Shell {
 		btnC.setLayoutData(gd_btnC);
 		btnC.setText("C");
 
-		dateTime_Ngaydi = new DateTime(this, SWT.BORDER);
+		dateTime_Ngaydi = new DateTime(shell, SWT.BORDER);
 		dateTime_Ngaydi.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		dateTime_Ngaydi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblNgyV = new Label(this, SWT.NONE);
+		Label lblNgyV = new Label(shell, SWT.NONE);
 		lblNgyV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblNgyV.setText("Ng\u00E0y v\u1EC1:");
 
-		Button button_8 = new Button(this, SWT.NONE);
+		Button button_8 = new Button(shell, SWT.NONE);
 		button_8.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				if (event.widget instanceof Control) {
 					Point absolutePos = ((Control) event.widget).toDisplay(event.x, event.y);
 					if (cl == null || cl.shlChnNgy.isDisposed()) {
-						cl = new Ldx_Calendar(getShell(), SWT.NONE, absolutePos, "Chọn Ngày về");
+						cl = new Ldx_Calendar(shell, SWT.NONE, absolutePos, "Chọn Ngày về");
 						cl.open();
 					}
 					if (cl.result != null) {
@@ -330,7 +333,7 @@ public class LenhDieuxe extends Shell {
 						Date Ngayve = mdf.date(arr[2], arr[1], arr[0]);
 						Date Ngaydi = mdf.getDate(dateTime_Ngaydi);
 						if (Ngayve.before(Ngaydi)) {
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
+							MessageBox m = new MessageBox(shell, SWT.ICON_WARNING);
 							m.setText("Lỗi");
 							m.setMessage("Xe về sau khi xuất phát!");
 							m.open();
@@ -346,15 +349,15 @@ public class LenhDieuxe extends Shell {
 		button_8.setLayoutData(gd_button_8);
 		button_8.setText("C");
 
-		dateTime_Ngayve = new DateTime(this, SWT.BORDER);
+		dateTime_Ngayve = new DateTime(shell, SWT.BORDER);
 		dateTime_Ngayve.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		dateTime_Ngayve.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblSKmXe = new Label(this, SWT.NONE);
+		Label lblSKmXe = new Label(shell, SWT.NONE);
 		lblSKmXe.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblSKmXe.setText("S\u1ED1 km xe hi\u1EC7n t\u1EA1i:");
 
-		Button button_2 = new Button(this, SWT.NONE);
+		Button button_2 = new Button(shell, SWT.NONE);
 		button_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -368,7 +371,7 @@ public class LenhDieuxe extends Shell {
 		button_2.setLayoutData(gd_button_2);
 		button_2.setText("+15");
 
-		Button button_3 = new Button(this, SWT.NONE);
+		Button button_3 = new Button(shell, SWT.NONE);
 		button_3.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -383,7 +386,7 @@ public class LenhDieuxe extends Shell {
 		button_3.setLayoutData(gd_button_3);
 		button_3.setText("-10");
 
-		Button btnA = new Button(this, SWT.NONE);
+		Button btnA = new Button(shell, SWT.NONE);
 		btnA.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -405,7 +408,7 @@ public class LenhDieuxe extends Shell {
 		btnA.setLayoutData(gd_btnA);
 		btnA.setText("A");
 
-		Button btnE = new Button(this, SWT.NONE);
+		Button btnE = new Button(shell, SWT.NONE);
 		btnE.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -418,7 +421,7 @@ public class LenhDieuxe extends Shell {
 		btnE.setLayoutData(gd_btnE);
 		btnE.setText("RS");
 
-		text_SoKmhientai = new Text(this, SWT.BORDER | SWT.RIGHT);
+		text_SoKmhientai = new Text(shell, SWT.BORDER | SWT.RIGHT);
 		text_SoKmhientai.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_SoKmhientai.addFocusListener(new FocusAdapter() {
 			@Override
@@ -445,11 +448,11 @@ public class LenhDieuxe extends Shell {
 		text_SoKmhientai.setText("0");
 		text_SoKmhientai.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblQungngD = new Label(this, SWT.NONE);
+		Label lblQungngD = new Label(shell, SWT.NONE);
 		lblQungngD.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblQungngD.setText("Qu\u00E3ng \u0111\u01B0\u1EDDng d\u1EF1 ki\u1EBFn:");
 
-		Button button = new Button(this, SWT.NONE);
+		Button button = new Button(shell, SWT.NONE);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -463,7 +466,7 @@ public class LenhDieuxe extends Shell {
 		button.setLayoutData(gd_button);
 		button.setText("+15");
 
-		Button button_1 = new Button(this, SWT.NONE);
+		Button button_1 = new Button(shell, SWT.NONE);
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -478,7 +481,7 @@ public class LenhDieuxe extends Shell {
 		button_1.setLayoutData(gd_button_1);
 		button_1.setText("-10");
 
-		text_Quangduongdukien = new Text(this, SWT.BORDER | SWT.RIGHT);
+		text_Quangduongdukien = new Text(shell, SWT.BORDER | SWT.RIGHT);
 		text_Quangduongdukien.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Quangduongdukien.addFocusListener(new FocusAdapter() {
 			@Override
@@ -505,11 +508,11 @@ public class LenhDieuxe extends Shell {
 		text_Quangduongdukien.setText("0");
 		text_Quangduongdukien.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
-		Label lblTnXngHin = new Label(this, SWT.NONE);
+		Label lblTnXngHin = new Label(shell, SWT.NONE);
 		lblTnXngHin.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblTnXngHin.setText("Tồn Nhiên liệu hiện tại: ");
 
-		Button button_12 = new Button(this, SWT.NONE);
+		Button button_12 = new Button(shell, SWT.NONE);
 		button_12.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -548,16 +551,16 @@ public class LenhDieuxe extends Shell {
 		button_12.setLayoutData(gd_button_12);
 		button_12.setText("A");
 
-		text_Tonxang_Hientai = new Text(this, SWT.BORDER | SWT.RIGHT);
+		text_Tonxang_Hientai = new Text(shell, SWT.BORDER | SWT.RIGHT);
 		text_Tonxang_Hientai.setText("0");
 		text_Tonxang_Hientai.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Tonxang_Hientai.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblPhiuXngc = new Label(this, SWT.NONE);
+		Label lblPhiuXngc = new Label(shell, SWT.NONE);
 		lblPhiuXngc.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		lblPhiuXngc.setText("Nhiên liệu được cấp (lít):");
 
-		Button button_4 = new Button(this, SWT.NONE);
+		Button button_4 = new Button(shell, SWT.NONE);
 		GridData gd_button_4 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_button_4.widthHint = 32;
 		button_4.setLayoutData(gd_button_4);
@@ -573,7 +576,7 @@ public class LenhDieuxe extends Shell {
 		});
 		button_4.setText("+50");
 
-		Button button_5 = new Button(this, SWT.NONE);
+		Button button_5 = new Button(shell, SWT.NONE);
 		GridData gd_button_5 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_button_5.widthHint = 32;
 		button_5.setLayoutData(gd_button_5);
@@ -591,7 +594,7 @@ public class LenhDieuxe extends Shell {
 		});
 		button_5.setText("-25");
 
-		text_PhieuNhienlieuduoccap = new Text(this, SWT.BORDER | SWT.RIGHT);
+		text_PhieuNhienlieuduoccap = new Text(shell, SWT.BORDER | SWT.RIGHT);
 		text_PhieuNhienlieuduoccap.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_PhieuNhienlieuduoccap.addFocusListener(new FocusAdapter() {
 			@Override
@@ -619,33 +622,33 @@ public class LenhDieuxe extends Shell {
 		text_PhieuNhienlieuduoccap.setText("0");
 		text_PhieuNhienlieuduoccap.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
-		Label lblaimGi = new Label(this, SWT.NONE);
+		Label lblaimGi = new Label(shell, SWT.NONE);
 		GridData gd_lblaimGi = new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1);
 		gd_lblaimGi.verticalIndent = 3;
 		lblaimGi.setLayoutData(gd_lblaimGi);
 		lblaimGi.setText("\u0110\u1ECBa \u0111i\u1EC3m, gi\u1EDD \u0111\u00F3n:");
 
-		text_Diadiemgiodon = new Text(this, SWT.BORDER);
+		text_Diadiemgiodon = new Text(shell, SWT.BORDER);
 		text_Diadiemgiodon.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Diadiemgiodon.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 5, 1));
 
-		Label lblNiDungChuyn = new Label(this, SWT.NONE);
+		Label lblNiDungChuyn = new Label(shell, SWT.NONE);
 		GridData gd_lblNiDungChuyn = new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1);
 		gd_lblNiDungChuyn.verticalIndent = 3;
 		lblNiDungChuyn.setLayoutData(gd_lblNiDungChuyn);
 		lblNiDungChuyn.setText("N\u1ED9i dung chuy\u1EBFn \u0111i:");
 
-		text_Noidung = new Text(this, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		text_Noidung = new Text(shell, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		text_Noidung.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		GridData gd_text_Noidung = new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1);
 		gd_text_Noidung.heightHint = 101;
 		text_Noidung.setLayoutData(gd_text_Noidung);
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
 
-		btnHonTt = new Button(this, SWT.NONE);
+		btnHonTt = new Button(shell, SWT.NONE);
 		btnHonTt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -667,7 +670,7 @@ public class LenhDieuxe extends Shell {
 								controler.getControl_PHUONGTIEN_GIAOTHONG().update_soKmXe(Maptgt,
 										Integer.valueOf(text_SoKmhientai.getText()));
 							}
-							dispose();
+							shell.dispose();
 
 						}
 					}
@@ -686,7 +689,7 @@ public class LenhDieuxe extends Shell {
 					return true;
 				}
 				int style = SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL;
-				MessageBox messageBox_Thongbao = new MessageBox(getShell(), style);
+				MessageBox messageBox_Thongbao = new MessageBox(shell, style);
 				messageBox_Thongbao.setText("Cảnh báo");
 				messageBox_Thongbao.setMessage("Xe đang trong giai đoạn thực hiện Lệnh điều xe, xem lệnh?");
 				int rc = messageBox_Thongbao.open();
@@ -712,7 +715,7 @@ public class LenhDieuxe extends Shell {
 
 			private void openLenhdieuXe_Gannhat(PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
 				LENH_DIEU_XE LenhGannhat = controler.getControl_LENH_DIEU_XE().get_LENHDIEUXE_Gannhat(ptgt);
-				QuanLy_Lenhdieuxe q = new QuanLy_Lenhdieuxe(getShell(), SWT.DIALOG_TRIM, user, LenhGannhat, false);
+				QuanLy_Lenhdieuxe q = new QuanLy_Lenhdieuxe(shell, SWT.DIALOG_TRIM, user, LenhGannhat, false);
 				q.open();
 			}
 
@@ -727,7 +730,7 @@ public class LenhDieuxe extends Shell {
 					if (QuangduongDukien * DinhmucXangDau / 100 > Tong_NhienLieu + 5) {
 						int NhienlieuCan = (int) (QuangduongDukien * DinhmucXangDau / 100);
 						int style = SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL;
-						MessageBox messageBox_Thongbao = new MessageBox(getShell(), style);
+						MessageBox messageBox_Thongbao = new MessageBox(shell, style);
 						messageBox_Thongbao.setText("Cảnh báo");
 						messageBox_Thongbao
 								.setMessage("- Nhiên liệu có thể sẽ không đủ cho chuyến đi! \n- cần khoảng: '"
@@ -762,7 +765,7 @@ public class LenhDieuxe extends Shell {
 				Date Ngayve = mdf.getDate(dateTime_Ngayve);
 				Date Ngaydi = mdf.getDate(dateTime_Ngaydi);
 				if (Ngayve.before(Ngaydi)) {
-					MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
+					MessageBox m = new MessageBox(shell, SWT.ICON_WARNING);
 					m.setText("Lỗi");
 					m.setMessage("Xe về sau khi xuất phát!");
 					m.open();
@@ -777,18 +780,17 @@ public class LenhDieuxe extends Shell {
 		btnHonTt.setLayoutData(gd_btnHonTt);
 		btnHonTt.setText("Ho\u00E0n t\u1EA5t");
 
-		Button btnNewButton = new Button(this, SWT.NONE);
+		Button btnNewButton = new Button(shell, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dispose();
+				shell.dispose();
 			}
 		});
 		GridData gd_btnNewButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnNewButton.widthHint = 75;
 		btnNewButton.setLayoutData(gd_btnNewButton);
 		btnNewButton.setText("\u0110\u00F3ng");
-		createContents();
 		init();
 	}
 
@@ -859,15 +861,6 @@ public class LenhDieuxe extends Shell {
 		if (ptgt != null) {
 			setCombo_PhuongtienGiaothong(ptgt);
 		}
-	}
-
-	/**
-	 * Create contents of the shell.
-	 */
-	protected void createContents() {
-		setText("\u0110i\u1EC1u xe");
-		setSize(386, 530);
-		new FormTemplate().setCenterScreen(getShell());
 	}
 
 	@Override

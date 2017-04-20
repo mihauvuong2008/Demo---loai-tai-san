@@ -34,10 +34,13 @@ import DAO.PHONGBAN;
 import DAO.TAISAN;
 import View.AssetManagers.MainForm;
 import View.DateTime.MyDateFormat;
+import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Combo;
 
-public class _3_Nhapdanhsach extends Dialog {
+public class Nhapdanhsach extends Dialog {
 
 	protected Object result;
 	protected Shell shlChnPhngTin;
@@ -50,9 +53,9 @@ public class _3_Nhapdanhsach extends Dialog {
 	protected LOAITAISAN_CAP_III p;
 	protected LOAITAISAN_CAP_II n;
 	protected LOAITAISAN_CAP_I l;
-	private final PHONGBAN dv;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private static Log log = LogFactory.getLog(_3_Nhapdanhsach.class);
+	private static Log log = LogFactory.getLog(Nhapdanhsach.class);
+	private Combo combo;
 
 	public ArrayList<TAISAN> getResult_danhsachPTTS() {
 		return Result_danhsachPTTS;
@@ -76,11 +79,10 @@ public class _3_Nhapdanhsach extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public _3_Nhapdanhsach(Shell parent, int style, NGUOIDUNG user, ArrayList<TAISAN> Selected, PHONGBAN dv) {
+	public Nhapdanhsach(Shell parent, int style, NGUOIDUNG user, ArrayList<TAISAN> Selected) {
 		super(parent, style);
 		controler = new Controler(user);
 		this.Data_From_Parent_list_Taisan = Selected;
-		this.dv = dv;
 	}
 
 	/**
@@ -109,15 +111,26 @@ public class _3_Nhapdanhsach extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnPhngTin = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlChnPhngTin.setImage(SWTResourceManager.getImage(_3_Nhapdanhsach.class, "/maintenance-icon (1).png"));
-		shlChnPhngTin.setSize(809, 500);
+		shlChnPhngTin.setImage(SWTResourceManager.getImage(Nhapdanhsach.class, "/maintenance-icon (1).png"));
+		shlChnPhngTin.setSize(728, 450);
 		shlChnPhngTin.setText("Chọn Phương tiện tài sản");
 		new FormTemplate().setCenterScreen(shlChnPhngTin);
 		TreeRowStyle tsl = new TreeRowStyle();
-		shlChnPhngTin.setLayout(new GridLayout(2, false));
+		shlChnPhngTin.setLayout(new GridLayout(4, false));
+
+		Label lblPhngBan = new Label(shlChnPhngTin, SWT.NONE);
+		lblPhngBan.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPhngBan.setText("Phòng ban: ");
+
+		combo = new Combo(shlChnPhngTin, SWT.READ_ONLY);
+		GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_combo.widthHint = 100;
+		combo.setLayoutData(gd_combo);
 
 		text = new Text(shlChnPhngTin, SWT.BORDER | SWT.RIGHT);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridData gd_text = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_text.widthHint = 250;
+		text.setLayoutData(gd_text);
 		text.setMessage("Tìm theo mã tài sản");
 
 		Button btnTm = new Button(shlChnPhngTin, SWT.NONE);
@@ -127,7 +140,7 @@ public class _3_Nhapdanhsach extends Dialog {
 		btnTm.setText("Tìm");
 
 		SashForm sashForm = new SashForm(shlChnPhngTin, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 
 		Tree tree_NhomTaisan = new Tree(sashForm, SWT.BORDER);
 		TreeItem Tong_Item = new TreeItem(tree_NhomTaisan, SWT.NONE);
@@ -150,6 +163,7 @@ public class _3_Nhapdanhsach extends Dialog {
 						l = (LOAITAISAN_CAP_I) items[0].getData("lts");
 						n = (LOAITAISAN_CAP_II) items[0].getData("nts");
 						p = (LOAITAISAN_CAP_III) items[0].getData("pnts");
+						PHONGBAN dv = (PHONGBAN) combo.getData(combo.getText());
 						ViewTaiSan(controler.getControl_TAISAN().Data_TaiSan_Mainform_LoaiTaisan(dv, p, n, l));
 					}
 				} catch (SQLException e) {
@@ -209,7 +223,7 @@ public class _3_Nhapdanhsach extends Dialog {
 				return result;
 			}
 		});
-		GridData gd_button = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		GridData gd_button = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 3, 1);
 		gd_button.widthHint = 75;
 		button.setLayoutData(gd_button);
 		button.setText("Xong");
@@ -226,13 +240,16 @@ public class _3_Nhapdanhsach extends Dialog {
 		gd_button_1.widthHint = 75;
 		button_1.setLayoutData(gd_button_1);
 		button_1.setText("Đóng");
-		init_Interface();
-		ViewTaiSan(controler.getControl_TAISAN().Data_TaiSan_Mainform_LoaiTaisan(dv, p, n, l));
+		init();
 	}
 
-	void init_Interface() {
+	void init() throws SQLException {
 		String tmpText = shlChnPhngTin.getText();
+		ArrayList<PHONGBAN> pbl = controler.getControl_PHONGBAN().getAllDonvi();
+		new Fill_ItemData().setComboBox_DONVI_NOIBO(combo, pbl);
+		PHONGBAN dv = (PHONGBAN) combo.getData(combo.getText());
 		shlChnPhngTin.setText(tmpText + " [" + dv.getTEN_PHONGBAN() + "]");
+		ViewTaiSan(controler.getControl_TAISAN().Data_TaiSan_Mainform_LoaiTaisan(dv, p, n, l));
 	};
 
 	protected void ViewTaiSan(ArrayList<TAISAN> row_taisan) {

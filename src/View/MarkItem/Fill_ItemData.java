@@ -241,6 +241,18 @@ public class Fill_ItemData {
 		}
 	}
 
+	public int getInt_LoaiCongviec_Suachua_Baoduong() {
+		return 1;
+	}
+
+	public int getInt_LoaiCongviec_Muasam() {
+		return 2;
+	}
+
+	public int getInt_LoaiCongviec_Thanhly() {
+		return 3;
+	}
+
 	public String getString_LOAI_PHANVIEC(int loai_PHANVIEC) {
 		switch (loai_PHANVIEC) {
 		case 1:

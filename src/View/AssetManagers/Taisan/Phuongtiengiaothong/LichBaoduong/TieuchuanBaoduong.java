@@ -93,8 +93,8 @@ public class TieuchuanBaoduong extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlTiuChunBo = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shlTiuChunBo.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/Process-Warning-icon.png"));
+		shlTiuChunBo = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlTiuChunBo.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/calendar-1-icon.png"));
 		shlTiuChunBo.setSize(728, 450);
 		shlTiuChunBo.setText("Ti\u00EAu chu\u1EA9n b\u1EA3o d\u01B0\u1EE1ng");
 		shlTiuChunBo.setLayout(new GridLayout(1, false));
@@ -344,7 +344,7 @@ public class TieuchuanBaoduong extends Dialog {
 
 		@SuppressWarnings("unused")
 		TableViewerColumn tblclmnKyHan = createTableViewerColumn("KỲ HẠN", 100, 1);
-		sashForm.setWeights(new int[] {420, 289});
+		sashForm.setWeights(new int[] { 420, 289 });
 
 		Button btnng = new Button(shlTiuChunBo, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {

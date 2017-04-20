@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -61,6 +60,8 @@ import View.Template.TreeRowStyle;
 import net.sf.jasperreports.engine.JRException;
 
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 
 public class HosoLuutru extends Shell {
 	private Text text_Sovanban;
@@ -529,51 +530,66 @@ public class HosoLuutru extends Shell {
 		SashForm sashForm_2 = new SashForm(composite_1, SWT.NONE);
 		sashForm_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Group grpThngTinVn = new Group(sashForm_2, SWT.NONE);
-		grpThngTinVn.setText("Th\u00F4ng tin v\u0103n b\u1EA3n");
-		grpThngTinVn.setLayout(new GridLayout(2, false));
+		ExpandBar expandBar = new ExpandBar(sashForm_2, SWT.V_SCROLL);
+		expandBar.setSpacing(8);
+		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
 
-		Label lblMVnBn = new Label(grpThngTinVn, SWT.NONE);
+		ExpandItem xpndtmThngTinVn = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmThngTinVn.setText("Thông tin văn bản");
+
+		Composite composite_2 = new Composite(expandBar, SWT.NONE);
+		xpndtmThngTinVn.setControl(composite_2);
+		composite_2.setLayout(new GridLayout(2, false));
+
+		Label lblMVnBn = new Label(composite_2, SWT.NONE);
 		lblMVnBn.setText("Mã văn bản:");
 
-		text_Mavanban = new Text(grpThngTinVn, SWT.RIGHT);
+		text_Mavanban = new Text(composite_2, SWT.RIGHT);
 		text_Mavanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_Mavanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Mavanban.setText("0");
 		text_Mavanban.setEditable(false);
 
-		Label lblTnVnBn = new Label(grpThngTinVn, SWT.NONE);
+		Label lblTnVnBn = new Label(composite_2, SWT.NONE);
 		lblTnVnBn.setText("S\u1ED1 v\u0103n b\u1EA3n:");
 
-		text_Sovanban = new Text(grpThngTinVn, SWT.NONE);
+		text_Sovanban = new Text(composite_2, SWT.NONE);
 		text_Sovanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblNgyBanHnh = new Label(grpThngTinVn, SWT.NONE);
+		Label lblNgyBanHnh = new Label(composite_2, SWT.NONE);
 		lblNgyBanHnh.setText("Ng\u00E0y ban h\u00E0nh:");
 
-		dateTime = new DateTime(grpThngTinVn, SWT.BORDER);
+		dateTime = new DateTime(composite_2, SWT.BORDER);
 		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblCQuanBan = new Label(grpThngTinVn, SWT.NONE);
-		lblCQuanBan.setText("C\u01A1 quan ban h\u00E0nh:");
+		Label lblCQuanBan = new Label(composite_2, SWT.NONE);
+		lblCQuanBan.setText("Đơn vị ban hành:");
 
-		text_Coqunbanhanh = new Text(grpThngTinVn, SWT.NONE);
+		text_Coqunbanhanh = new Text(composite_2, SWT.NONE);
 		text_Coqunbanhanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblTrchYu = new Label(grpThngTinVn, SWT.NONE);
-		lblTrchYu.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		Label lblTrchYu = new Label(composite_2, SWT.NONE);
 		lblTrchYu.setText("Tr\u00EDch y\u1EBFu:");
 
-		text_Trichyeu = new Text(grpThngTinVn, SWT.WRAP | SWT.MULTI);
+		text_Trichyeu = new Text(composite_2, SWT.WRAP | SWT.MULTI);
 		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		xpndtmThngTinVn.setHeight(150);
 
-		Label label_1 = new Label(grpThngTinVn, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		ExpandItem xpndtmFile = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmFile.setText("File");
 
-		Label lblMFile = new Label(grpThngTinVn, SWT.NONE);
+		Composite composite_3 = new Composite(expandBar, SWT.NONE);
+		xpndtmFile.setControl(composite_3);
+		xpndtmFile.setHeight(xpndtmFile.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+		composite_3.setLayout(new GridLayout(2, false));
+
+		Label lblMFile = new Label(composite_3, SWT.NONE);
+		GridData gd_lblMFile = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_lblMFile.widthHint = 78;
+		lblMFile.setLayoutData(gd_lblMFile);
 		lblMFile.setText("Mã File:");
 
-		text_MaFile = new Text(grpThngTinVn, SWT.RIGHT);
+		text_MaFile = new Text(composite_3, SWT.RIGHT);
 		text_MaFile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_MaFile.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_MaFile.addVerifyListener(new VerifyListener() {
@@ -595,18 +611,51 @@ public class HosoLuutru extends Shell {
 		text_MaFile.setText("0");
 		text_MaFile.setEditable(false);
 
-		Label lblTeenFile = new Label(grpThngTinVn, SWT.NONE);
+		Label lblTeenFile = new Label(composite_3, SWT.NONE);
+		lblTeenFile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblTeenFile.setText("Tên File:");
 
-		text_TenFile = new Text(grpThngTinVn, SWT.NONE);
+		text_TenFile = new Text(composite_3, SWT.NONE);
 		text_TenFile.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label lblSThT = new Label(grpThngTinVn, SWT.NONE);
+		Label lblSThT = new Label(composite_3, SWT.NONE);
+		lblSThT.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblSThT.setText("Số thứ tự:");
 
-		text_Stt = new Text(grpThngTinVn, SWT.RIGHT);
+		text_Stt = new Text(composite_3, SWT.RIGHT);
 		text_Stt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_Stt.setText("0");
+
+		ExpandItem xpndtmTpHS = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmTpHS.setText("Tập hồ sơ");
+
+		Composite composite_4 = new Composite(expandBar, SWT.NONE);
+		xpndtmTpHS.setControl(composite_4);
+		xpndtmTpHS.setHeight(75);
+		composite_4.setLayout(new GridLayout(2, false));
+
+		Label lblMTpH = new Label(composite_4, SWT.NONE);
+		lblMTpH.setText("Mã tập hồ sơ:");
+
+		text_Mataphoso = new Text(composite_4, SWT.NONE);
+		text_Mataphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_Mataphoso.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Mataphoso.setEditable(false);
+
+		Label lblTpHS = new Label(composite_4, SWT.NONE);
+		GridData gd_lblTpHS = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblTpHS.widthHint = 78;
+		lblTpHS.setLayoutData(gd_lblTpHS);
+		lblTpHS.setText("T\u00EAn T\u1EADp h\u1ED3 s\u01A1:");
+
+		text_Tentaphoso = new Text(composite_4, SWT.NONE);
+		text_Tentaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label lblMT = new Label(composite_4, SWT.NONE);
+		lblMT.setText("M\u00F4 t\u1EA3:");
+
+		text_Mota = new Text(composite_4, SWT.NONE);
+		text_Mota.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		text_Stt.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 				Text text = (Text) e.getSource();
@@ -623,30 +672,6 @@ public class HosoLuutru extends Shell {
 					e.doit = false;
 			}
 		});
-
-		Label label = new Label(grpThngTinVn, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-
-		Label lblMTpH = new Label(grpThngTinVn, SWT.NONE);
-		lblMTpH.setText("Mã tập hồ sơ:");
-
-		text_Mataphoso = new Text(grpThngTinVn, SWT.NONE);
-		text_Mataphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text_Mataphoso.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Mataphoso.setEditable(false);
-
-		Label lblTpHS = new Label(grpThngTinVn, SWT.NONE);
-		lblTpHS.setText("T\u00EAn T\u1EADp h\u1ED3 s\u01A1:");
-
-		text_Tentaphoso = new Text(grpThngTinVn, SWT.NONE);
-		text_Tentaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblMT = new Label(grpThngTinVn, SWT.NONE);
-		lblMT.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblMT.setText("M\u00F4 t\u1EA3:");
-
-		text_Mota = new Text(grpThngTinVn, SWT.NONE);
-		text_Mota.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		tree_IMG = new Tree(sashForm_2, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		tree_IMG.setLinesVisible(true);
@@ -719,7 +744,6 @@ public class HosoLuutru extends Shell {
 		TreeColumn trclmnStt_2 = new TreeColumn(tree_IMG, SWT.NONE);
 		trclmnStt_2.setWidth(100);
 		trclmnStt_2.setText("Stt");
-		sashForm_2.setWeights(new int[] { 618, 1000 });
 
 		Composite composite = new Composite(sashForm, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -763,6 +787,7 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		mntmnhSTrang.setText("Tự đánh số trang");
+		sashForm_2.setWeights(new int[] { 220, 268 });
 		sashForm_3.setWeights(new int[] { 618, 1000 });
 
 		Label lblTuNgay = new Label(this, SWT.NONE);

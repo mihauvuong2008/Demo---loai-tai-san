@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import DAO.NGUOIDUNG;
-import View.AssetManagers.CongViec.TangTaiSan._1_TaoDeXuat;
+import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.DanhMuc_LoaiTaisan.QuanlyLoaiTaisan;
 import View.AssetManagers.DanhMuc_LoaiTaisan.YesNoBox_ChuyenLoaiTaisan;
 import View.AssetManagers.DanhMuc_NhomTaisan.QuanlyNhomtaisan;
@@ -29,9 +29,11 @@ import View.AssetManagers.excel_NhapDulieu.ImportExcel_PTTS;
 
 public class Menu_Handler {
 	private final NGUOIDUNG user;
+	private Shell shell;
 
-	public Menu_Handler(NGUOIDUNG user) {
+	public Menu_Handler(NGUOIDUNG user, Shell shell) {
 		this.user = user;
+		this.shell = shell;
 	}
 
 	public void OpenForm_TinhHinhPhuongTienTaiSan() {
@@ -76,8 +78,8 @@ public class Menu_Handler {
 
 	public void OpenForm_TangTaiSan() throws SQLException {
 		// TODO Auto-generated method stub
-		_1_TaoDeXuat dx = new _1_TaoDeXuat(null, user);
-		dx.open();
+		TaoDotTangtaisan xdt = new TaoDotTangtaisan(shell, SWT.DIALOG_TRIM, user);
+		xdt.open();
 	}
 
 	public void OpenForm_GiamTaiSan() {
@@ -291,7 +293,7 @@ public class Menu_Handler {
 	}
 
 	public void OpenForm_Xuat_Dulieu_Tasaisan() {
-		
+
 	}
 
 }

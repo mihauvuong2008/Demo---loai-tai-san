@@ -10,8 +10,9 @@ public class query_Insert_DOT_THUCHIEN_DANGKIEM {
 			MyDateFormat mdf = new MyDateFormat();
 			String result = "INSERT INTO DOT_THUCHIEN_DANGKIEM "
 					+ "(NGAY_THUCHIEN, TEN_TAI_KHOAN, MA_TAPHOSO, MA_PHUONGTIEN_GIAOTHONG, GHI_CHU)VALUES( '"
-					+ mdf.getSQLStringDate(cd.getNGAY_THUCHIEN()) + "', '" + cd.getTEN_TAI_KHOAN() + "', '"
-					+ cd.getMA_TAPHOSO() + "', '" + cd.getMA_PHUONGTIEN_GIAOTHONG() + "', '" + cd.getGHI_CHU() + "');";
+					+ mdf.getSQLStringDate(cd.getNGAY_THUCHIEN()) + "', '" + cd.getTEN_TAI_KHOAN() + "',"
+					+ (cd.getMA_TAPHOSO() == 0 ? " null " : (" '" + cd.getMA_TAPHOSO() + "'")) + ", '"
+					+ cd.getMA_PHUONGTIEN_GIAOTHONG() + "', '" + cd.getGHI_CHU() + "');";
 			return result;
 		} catch (Exception e) {
 			return null;

@@ -95,10 +95,10 @@ public class NhapDeXuat extends Dialog {
 	 * @throws SQLException
 	 */
 	public void createContents() throws SQLException {
-		shell = new Shell(getParent(), SWT.CLOSE | SWT.TITLE);
+		shell = new Shell(getParent(), SWT.SHELL_TRIM);
 		shell.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/maintenance-icon (1).png"));
-		shell.setText("Nhận đề xuất Bảo dưỡng Phương tiện giao thông");
-		shell.setSize(615, 380);
+		shell.setText("Nhập Đề xuất - Hồ sơ chủ trương phê duyệt");
+		shell.setSize(720, 445);
 		shell.setLayout(new GridLayout(3, false));
 		new FormTemplate().setCenterScreen(shell);
 
@@ -186,11 +186,34 @@ public class NhapDeXuat extends Dialog {
 			}
 		});
 		mntmXemVnBn.setText("Xem Văn bản");
+
+		MenuItem mntmTpHS = new MenuItem(menu, SWT.NONE);
+		mntmTpHS.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					if (dx.getMA_TAPHOSO() <= 0) {
+						TAP_HO_SO t = new TAP_HO_SO();
+						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
+						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
+						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
+						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
+					}
+					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+					b.open();
+					fillTaphoso(ths);
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmTpHS.setText("Tập hồ sơ");
 		sashForm.setWeights(new int[] { 1000, 618 });
 
 		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.setImage(
-				SWTResourceManager.getImage(NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnNewButton.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/folder-documents-icon(1).png"));
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -212,46 +235,16 @@ public class NhapDeXuat extends Dialog {
 				}
 			}
 
-			private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
-				table.removeAll();
-				ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
-				int i = 1;
-				if (vbl != null)
-					for (VANBAN vanban : vbl) {
-						TableItem tableItem = new TableItem(table, SWT.NONE);
-						tableItem.setText(new String[] { (i++) + "", vanban.getSO_VANBAN(), vanban.getTRICH_YEU(),
-								vanban.getCO_QUAN_BAN_HANH(), ((vanban.getNGAY_BAN_HANH() == null) ? "-"
-										: mdf.getViewStringDate(vanban.getNGAY_BAN_HANH())) });
-						tableItem.setData(vanban);
-					}
-			}
 		});
 		btnNewButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		btnNewButton.setText("Hồ sơ - văn bản");
+		btnNewButton.setText("Hồ sơ - Đề xuất");
 
 		Button btnTip = new Button(shell, SWT.NONE);
-		btnTip.setImage(
-				SWTResourceManager.getImage(NhapDeXuat.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnTip.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/Actions-document-save-icon (1).png"));
 		btnTip.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					if (dx.getMA_TAPHOSO() <= 0) {
-						TAP_HO_SO t = new TAP_HO_SO();
-						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
-						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
-						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
-						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
-					}
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
-					b.open();
-					fillTaphoso(ths);
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
 				if (!checkTextNotNULL()) {
 					showMessage_FillText();
 					return;
@@ -266,20 +259,6 @@ public class NhapDeXuat extends Dialog {
 				dx.setTHOI_DIEM_CHUYEN_GIAO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
 				result = dx;
 				shell.dispose();
-			}
-
-			private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
-				table.removeAll();
-				ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
-				int i = 1;
-				if (vbl != null)
-					for (VANBAN vanban : vbl) {
-						TableItem tableItem = new TableItem(table, SWT.NONE);
-						tableItem.setText(new String[] { (i++) + "", vanban.getSO_VANBAN(), vanban.getTRICH_YEU(),
-								vanban.getCO_QUAN_BAN_HANH(), ((vanban.getNGAY_BAN_HANH() == null) ? "-"
-										: mdf.getViewStringDate(vanban.getNGAY_BAN_HANH())) });
-						tableItem.setData(vanban);
-					}
 			}
 		});
 		GridData gd_btnTip = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
@@ -299,6 +278,20 @@ public class NhapDeXuat extends Dialog {
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");
 		init();
+	}
+
+	private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
+		table.removeAll();
+		ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
+		int i = 1;
+		if (vbl != null)
+			for (VANBAN vanban : vbl) {
+				TableItem tableItem = new TableItem(table, SWT.NONE);
+				tableItem.setText(new String[] { (i++) + "", vanban.getSO_VANBAN(), vanban.getTRICH_YEU(),
+						vanban.getCO_QUAN_BAN_HANH(), ((vanban.getNGAY_BAN_HANH() == null) ? "-"
+								: mdf.getViewStringDate(vanban.getNGAY_BAN_HANH())) });
+				tableItem.setData(vanban);
+			}
 	}
 
 	private void init() throws SQLException {

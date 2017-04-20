@@ -116,12 +116,12 @@ public class NhapdanhsachTaisan extends Dialog {
 		shell.setSize(728, 450);
 		new FormTemplate().setCenterScreen(shell);
 		shell.setLayout(new GridLayout(5, false));
-		Button button_2 = new Button(shell, SWT.CHECK);
-		button_2.addSelectionListener(new SelectionAdapter() {
+		Button btnPhngBan = new Button(shell, SWT.CHECK);
+		btnPhngBan.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if (button_2.getSelection()) {
+					if (btnPhngBan.getSelection()) {
 						viewAll();
 					} else {
 						viewDsGanday();
@@ -132,7 +132,7 @@ public class NhapdanhsachTaisan extends Dialog {
 				}
 			}
 		});
-		button_2.setText("Toàn bộ");
+		btnPhngBan.setText("Phòng ban: ");
 
 		combo = new Combo(shell, SWT.READ_ONLY);
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -141,7 +141,7 @@ public class NhapdanhsachTaisan extends Dialog {
 				PHONGBAN pb = (PHONGBAN) combo.getData(combo.getText());
 				shell.setText("Chọn phương tiện cơ giới [" + pb.getTEN_PHONGBAN() + "]");
 				try {
-					if (button_2.getSelection()) {
+					if (btnPhngBan.getSelection()) {
 						viewAll();
 					} else {
 						viewDsGanday();

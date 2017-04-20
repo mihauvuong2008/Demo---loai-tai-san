@@ -114,9 +114,8 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 	 */
 
 	public Thongke_PhuongtienGiaothong(Display display, NGUOIDUNG user) throws SQLException {
-		super(display, SWT.CLOSE | SWT.MAX | SWT.TITLE);
-		setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class,
-				"/Actions-view-statistics-icon (1).png"));
+		super(display, SWT.SHELL_TRIM);
+		setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/report-icon.png"));
 		setLayout(new GridLayout(4, false));
 		Thongke_PhuongtienGiaothong.user = user;
 		controler = new Controler(user);
@@ -138,7 +137,7 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 				}
 			}
 		});
-		tltmToKHn.setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/view-preview.png"));
+		tltmToKHn.setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/layout-select-icon.png"));
 		tltmToKHn.setText("Quản lý Kỳ hạn Thống kê");
 
 		@SuppressWarnings("unused")
@@ -539,7 +538,7 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 			}
 		});
 		lblNhinLiuTiu = new Label(composite, SWT.NONE);
-		lblNhinLiuTiu.setText("Tổng tiêu thụ  tính theo Định mức (lít):");
+		lblNhinLiuTiu.setText("Tổng tiêu thụ - theo Định mức (lít):");
 
 		Text_Tongnhienlieutieuthu = new Text(composite, SWT.BORDER);
 		Text_Tongnhienlieutieuthu.setEditable(false);
@@ -1008,7 +1007,7 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 
 	protected void createContents() {
 		setText("Thống kê Chung Tình hình hoạt động của Phương tiện giao thông vận tải");
-		setSize(890, 550);
+		setSize(780, 482);
 		new FormTemplate().setCenterScreen(getShell());
 	}
 

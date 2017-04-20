@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,6 +39,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
@@ -54,6 +56,7 @@ public class LichDangkiem extends Dialog {
 	private final Controler controler;
 	protected NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(LichDangkiem.class);
+	MyDateFormat mdf = new MyDateFormat();
 
 	/**
 	 * Create the dialog.
@@ -95,9 +98,8 @@ public class LichDangkiem extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlngKim = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlngKim.setImage(
-				SWTResourceManager.getImage(LichDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		shlngKim.setSize(760, 450);
+		shlngKim.setImage(SWTResourceManager.getImage(LichDangkiem.class, "/application-side-list-icon.png"));
+		shlngKim.setSize(795, 491);
 		new FormTemplate().setCenterScreen(shlngKim);
 		shlngKim.setText("\u0110\u0103ng ki\u1EC3m \u00F4 t\u00F4");
 		shlngKim.setLayout(new GridLayout(5, false));
@@ -154,13 +156,9 @@ public class LichDangkiem extends Dialog {
 		tblclmnMPtgt.setWidth(100);
 		tblclmnMPtgt.setText("M\u00C3 PTGT");
 
-		TableColumn tblclmnLnGnNht = new TableColumn(table, SWT.NONE);
-		tblclmnLnGnNht.setWidth(120);
-		tblclmnLnGnNht.setText("LẦN GẦN NHẤT");
-
 		TableColumn tblclmnKHnng = new TableColumn(table, SWT.NONE);
-		tblclmnKHnng.setWidth(150);
-		tblclmnKHnng.setText("K\u1EF2 H\u1EA0N \u0110\u0102NG KI\u1EC2M");
+		tblclmnKHnng.setWidth(180);
+		tblclmnKHnng.setText("KỲ HẠN ĐĂNG KIỂM (NGÀY)");
 
 		Menu menu_1 = new Menu(table);
 		table.setMenu(menu_1);
@@ -369,11 +367,35 @@ public class LichDangkiem extends Dialog {
 			CHUKY_DANGKIEM cd = controler.getControl_CHUKY_DANGKIEM()
 					.get_CHUKY_DANGKIEM(phuongtien_GIAOTHONG.getMA_KYHAN_DANGKIEM());
 			LOAI_XE lx = controler.getControl_LOAI_XE().get_LOAI_XE(phuongtien_GIAOTHONG.getMA_LOAI_XE());
+
+			DOT_THUCHIEN_DANGKIEM dtdl = controler.getControl_DOT_THUCHIEN_DANGKIEM()
+					.get_DOT_THUCHIEN_DANGKIEM_GANNHAT(phuongtien_GIAOTHONG);
+			Color bg = null;
+			if (dtdl == null)
+				bg = new Color(table.getDisplay(), 179, 224, 255);
+			else {
+				double daybetween = mdf.daysBetween(mdf.addDate(new Date(), -1 * cd.getCHU_KY()),
+						dtdl.getNGAY_THUCHIEN());
+				double perce = (double) (daybetween / cd.getCHU_KY());
+				double anpha = 1 - Math.abs(perce);
+				if (anpha > 1)
+					anpha = 1;
+				if (anpha < 0)
+					anpha = 0;
+				if (daybetween > 0) {
+					bg = new Color(table.getDisplay(), (int) (anpha * 255), 255, (int) (anpha * 200) + 50);
+				} else {
+					bg = new Color(table.getDisplay(), 255, (int) (anpha * 255), (int) (anpha * 200) + 50);
+				}
+				System.out.println(bg.toString());
+			}
+
 			TableItem tbi = new TableItem(table, SWT.NONE);
 			tbi.setText(new String[] { (i++) + "", phuongtien_GIAOTHONG.getBIENSO(), lx.getTEN_DONG_XE(),
-					phuongtien_GIAOTHONG.getMA_PHUONGTIEN_GIAOTHONG() + "", "", cd == null ? "-" : cd.getTEN_KYHAN() });
+					phuongtien_GIAOTHONG.getMA_PHUONGTIEN_GIAOTHONG() + "", cd == null ? "-" : cd.getCHU_KY() + "" });
 			tbi.setData(phuongtien_GIAOTHONG);
 			tbi.setData("lx", lx);
+			tbi.setBackground(bg);
 		}
 	}
 }
