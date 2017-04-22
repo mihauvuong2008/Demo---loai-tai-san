@@ -1560,7 +1560,7 @@ public class MainForm {
 		gl_grpT.marginHeight = 0;
 		grpT.setLayout(gl_grpT);
 
-		table_Oto = new Table(grpT, SWT.FULL_SELECTION);
+		table_Oto = new Table(grpT, SWT.FULL_SELECTION | SWT.MULTI);
 		table_Oto.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1578,7 +1578,7 @@ public class MainForm {
 							fill_ldx(ldxl);
 						ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> dsbl = controler
 								.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG().get_DOT_THUCHIEN_SUACHUA_BAODUONG_list(
-										mdf.addDate(new Date(), -30), new Date(), t.getMA_TAISAN());
+										mdf.addDate(new Date(), -180), new Date(), t.getMA_TAISAN());
 						if (dsbl != null)
 							fill_dsb(dsbl);
 					} catch (SQLException e1) {
@@ -1787,7 +1787,7 @@ public class MainForm {
 		gl_grpXeMy.marginTop = 3;
 		grpXeMy.setLayout(gl_grpXeMy);
 
-		table_Xemay = new Table(grpXeMy, SWT.FULL_SELECTION);
+		table_Xemay = new Table(grpXeMy, SWT.FULL_SELECTION | SWT.MULTI);
 		table_Xemay.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

@@ -109,7 +109,7 @@ public class ThongbaoChuadoc extends Dialog {
 		// ts.setTreeItemHeight(tree, 44);
 		DieuXe = new TreeItem(tree, SWT.NONE);
 		DieuXe.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		DieuXe.setImage(SWTResourceManager.getImage(MainForm.class, "/Household-Garage-icon.png"));
+		DieuXe.setImage(SWTResourceManager.getImage(MainForm.class, "/license-management-icon (1).png"));
 		DieuXe.setText("Lệnh Điều xe");
 		Suachua_Baoduong = new TreeItem(tree, SWT.NONE);
 		Suachua_Baoduong.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));

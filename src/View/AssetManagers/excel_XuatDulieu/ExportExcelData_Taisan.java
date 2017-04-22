@@ -91,8 +91,7 @@ public class ExportExcelData_Taisan extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlDanhSachTai = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlDanhSachTai.setImage(SWTResourceManager.getImage(ExportExcelData_Taisan.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlDanhSachTai.setImage(SWTResourceManager.getImage(ExportExcelData_Taisan.class, "/Excel-icon.png"));
 		shlDanhSachTai.setSize(650, 400);
 		shlDanhSachTai.setText("Danh sách tài sản");
 		shlDanhSachTai.setLayout(new GridLayout(5, false));
@@ -224,6 +223,8 @@ public class ExportExcelData_Taisan extends Dialog {
 		int x = 0;
 		for (TAISAN taisan : MyData) {
 			Column_Collec cc = er.getRow(String.valueOf(taisan.getMA_TAISAN()));
+			if (cc == null)
+				return;
 			String[] ar = new String[cc.ColumnCount() + 1];
 			ar[0] = x + "";
 			int i = 1;

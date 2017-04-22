@@ -472,7 +472,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(), lichBaoduong_ROW.getHtbd().getThayNhot());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayNhot());
 					break;
 				case 2:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -483,8 +483,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayLocNhot());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayLocNhot());
 					break;
 				case 3:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -495,8 +494,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayLocgio());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayLocgio());
 					break;
 				case 4:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -508,8 +506,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayLocnhienlieu());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayLocnhienlieu());
 					break;
 				case 5:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -521,8 +518,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayDauphanh_Daulyhop());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayDauphanh_Daulyhop());
 					break;
 				case 6:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -534,8 +530,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayDauhopso());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayDauhopso());
 					break;
 				case 7:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -547,8 +542,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayDauVisai());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayDauVisai());
 					break;
 				case 8:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -560,8 +554,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayLocgioGianlanh());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayLocgioGianlanh());
 					break;
 				case 9:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -573,8 +566,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getThayDautroluclai());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getThayDautroluclai());
 					break;
 				case 10:
 					tbi.setText(new String[] { idx + "", lichBaoduong_ROW.getPhuongtienGiaothong().getBIENSO(),
@@ -586,8 +578,7 @@ public class LichBaoduong extends Dialog {
 							gnt == null ? "-" : mdf.getViewStringDate(gnt.getTHOI_DIEM_KET_THUC()),
 							lichBaoduong_ROW.getTaisan().getTEN_TAISAN(),
 							lichBaoduong_ROW.getPhuongtienGiaothong().getMA_PHUONGTIEN_GIAOTHONG() + "" });
-					bg = getbgc(tb.getDisplay(), gnt.getTHOI_DIEM_KET_THUC(),
-							lichBaoduong_ROW.getHtbd().getBaoduongkhac());
+					bg = getbgc(tb.getDisplay(), gnt, lichBaoduong_ROW.getHtbd().getBaoduongkhac());
 					break;
 
 				default:
@@ -601,13 +592,15 @@ public class LichBaoduong extends Dialog {
 
 	}
 
-	Color getbgc(Display getDisplay, Date ngaythuchien, int chuky) {
+	Color getbgc(Display getDisplay, GIAI_DOAN_NGHIEM_THU gnt, int chuky) {
 		Color bg = null;
-		if (ngaythuchien == null)
+		if (gnt == null)
+			return null;
+		if (gnt.getTHOI_DIEM_KET_THUC() == null)
 			return null;
 		if (chuky == 0)
 			return null;
-		double daybetween = mdf.daysBetween(mdf.addDate(new Date(), -1 * chuky), ngaythuchien);
+		double daybetween = mdf.daysBetween(mdf.addDate(new Date(), -1 * chuky), gnt.getTHOI_DIEM_KET_THUC());
 		double perce = (double) (daybetween / chuky);
 		double anpha = 1 - Math.abs(perce);
 		if (anpha > 1)

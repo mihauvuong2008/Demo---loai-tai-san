@@ -316,8 +316,7 @@ public class LichDangkiem extends Dialog {
 				}
 			}
 		});
-		btnTmKim.setImage(
-				SWTResourceManager.getImage(LichDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnTmKim.setImage(SWTResourceManager.getImage(LichDangkiem.class, "/search-icon.png"));
 		btnTmKim.setText("T\u00ECm ki\u1EBFm");
 
 		Button btnng = new Button(shlngKim, SWT.NONE);

@@ -24,6 +24,7 @@ import DAO.NGUOIDUNG;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Label;
 
 public class XemLichCongtac extends Dialog {
 
@@ -36,6 +37,7 @@ public class XemLichCongtac extends Dialog {
 	private Controler controler;
 	private LICH_CONG_TAC lct;
 	MyDateFormat mdf = new MyDateFormat();
+	private Button btnThemNhieu;
 
 	/**
 	 * Create the dialog.
@@ -75,13 +77,13 @@ public class XemLichCongtac extends Dialog {
 		shlLchCngTc = new Shell(getParent(), getStyle());
 		shlLchCngTc.setSize(498, 182);
 		shlLchCngTc.setText("Lịch Công tác");
-		shlLchCngTc.setLayout(new GridLayout(4, false));
+		shlLchCngTc.setLayout(new GridLayout(6, false));
 		new FormTemplate().setCenterScreen(shlLchCngTc);
 
 		text = new Text(shlLchCngTc, SWT.BORDER | SWT.READ_ONLY);
 		text.setEditable(true);
 		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 
 		dateTime_1 = new DateTime(shlLchCngTc, SWT.BORDER | SWT.TIME);
 
@@ -92,6 +94,11 @@ public class XemLichCongtac extends Dialog {
 				setDayOfWeek();
 			}
 		});
+		new Label(shlLchCngTc, SWT.NONE);
+
+		btnThemNhieu = new Button(shlLchCngTc, SWT.CHECK);
+		btnThemNhieu.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		btnThemNhieu.setText("Thêm nhiều");
 
 		btnLu = new Button(shlLchCngTc, SWT.NONE);
 		btnLu.addSelectionListener(new SelectionAdapter() {
@@ -104,7 +111,9 @@ public class XemLichCongtac extends Dialog {
 					} else {
 						controler.getControl_LICH_CONG_TAC().InsertLICH_CONG_TAC(lct);
 					}
-					shlLchCngTc.dispose();
+					text.setText("");
+					if (!btnThemNhieu.getSelection())
+						shlLchCngTc.dispose();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -132,7 +141,7 @@ public class XemLichCongtac extends Dialog {
 
 	protected LICH_CONG_TAC getLichCongtac() {
 		lct.setNOIDUNG(text.getText());
-		lct.setTHOIGIAN(mdf.getDate(dateTime, dateTime_1));
+		lct.setTHOIGIAN(mdf.getDate(dateTime_1, dateTime));
 		return lct;
 	}
 
@@ -147,6 +156,7 @@ public class XemLichCongtac extends Dialog {
 		if (lct == null)
 			return;
 		if (lct.getMA_LICH_CONG_TAC() > 0) {
+			btnThemNhieu.dispose();
 			text.setText(lct.getNOIDUNG());
 			Calendar c = mdf.getCalendar(lct.getTHOIGIAN());
 			dateTime.setTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), 0);

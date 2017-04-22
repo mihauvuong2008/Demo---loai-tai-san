@@ -258,6 +258,7 @@ public class QuanlyNhomtaisan extends Shell {
 		text_Name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
 		text_Namsudung = new Text(this, SWT.BORDER);
+		text_Namsudung.setText("0");
 		text_Namsudung.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 				Text text = (Text) e.getSource();
@@ -279,6 +280,7 @@ public class QuanlyNhomtaisan extends Shell {
 		text_Namsudung.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		text_Khauhao = new Text(this, SWT.BORDER);
+		text_Khauhao.setText("0");
 		text_Khauhao.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 				Text text = (Text) e.getSource();

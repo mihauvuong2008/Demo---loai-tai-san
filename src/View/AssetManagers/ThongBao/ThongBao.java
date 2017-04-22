@@ -107,7 +107,7 @@ public class ThongBao extends Shell {
 
 		TreeItem treeItem = new TreeItem(tree, 0);
 		treeItem.setText("Lệnh Điều xe");
-		treeItem.setImage(SWTResourceManager.getImage(ThongBao.class, "/Household-Garage-icon.png"));
+		treeItem.setImage(SWTResourceManager.getImage(ThongBao.class, "/license-management-icon (1).png"));
 		treeItem.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem.setData("LENHDIEUXE_MESSAGE");
 

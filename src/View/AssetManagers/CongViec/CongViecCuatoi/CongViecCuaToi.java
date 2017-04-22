@@ -620,7 +620,7 @@ public class CongViecCuaToi extends Shell {
 		TreeRowStyle ts = new TreeRowStyle();
 
 		TabItem tbtmTipNhnPhn_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmTipNhnPhn_1.setText("Phần việc chờ tiếp nhận ");
+		tbtmTipNhnPhn_1.setText("Phần việc chưa bắt đầu");
 
 		SashForm sashForm_7 = new SashForm(tabFolder, SWT.VERTICAL);
 		tbtmTipNhnPhn_1.setControl(sashForm_7);
@@ -910,7 +910,7 @@ public class CongViecCuaToi extends Shell {
 		sashForm_10.setWeights(new int[] { 300, 479 });
 		sashForm_7.setWeights(new int[] { 1000, 618 });
 		TabItem tbtmCngVicang = new TabItem(tabFolder, SWT.NONE);
-		tbtmCngVicang.setText("C\u00F4ng vi\u1EC7c \u0111ang th\u1EF1c hi\u1EC7n");
+		tbtmCngVicang.setText("Phần việc đang thực hiện");
 
 		SashForm sashForm = new SashForm(tabFolder, SWT.VERTICAL);
 		tbtmCngVicang.setControl(sashForm);
@@ -1360,7 +1360,7 @@ public class CongViecCuaToi extends Shell {
 		sashForm.setWeights(new int[] { 1000 });
 
 		TabItem tbtmCngVic_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmCngVic_1.setText("C\u00F4ng vi\u1EC7c \u0111\u00E3 th\u1EF1c hi\u1EC7n");
+		tbtmCngVic_1.setText("Đã thực hiện");
 
 		SashForm sashForm_5 = new SashForm(tabFolder, SWT.NONE);
 		tbtmCngVic_1.setControl(sashForm_5);

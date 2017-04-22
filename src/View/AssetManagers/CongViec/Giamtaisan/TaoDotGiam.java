@@ -119,7 +119,7 @@ public class TaoDotGiam extends Dialog {
 
 	public void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM);
-		shell.setImage(SWTResourceManager.getImage(TaoDotGiam.class, "/database_remove.png"));
+		shell.setImage(SWTResourceManager.getImage(TaoDotGiam.class, "/database-remove-icon.png"));
 		shell.setLayout(new GridLayout(4, false));
 		shell.setText("Tạo đợt giảm tài sản");
 		shell.setSize(777, 480);

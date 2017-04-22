@@ -23,7 +23,7 @@ public class Icondataset {
 			"/Actions-view-calendar-tasks-icon.png");
 	public final Image DanhthuchienIcon = SWTResourceManager.getImage(Icondataset.class, "/reunion (1).png");
 	public final Image QuanlycongviecIcon = SWTResourceManager.getImage(Icondataset.class,
-			"/Mimetype-schedule-icon.png");
+			"/Actions-view-list-details-icon.png");
 	public final Image BieudoIcon = SWTResourceManager.getImage(Icondataset.class, "/Actions-view-statistics-icon.png");
 	public final Image QuanlyHosoIcon = SWTResourceManager.getImage(Icondataset.class, "/folder-documents-icon.png");
 	public final Image HopthuluIcon = SWTResourceManager.getImage(Icondataset.class, "/Email-Reply-icon.png");
@@ -32,7 +32,7 @@ public class Icondataset {
 	public final Image TongLoaiitemIcon = SWTResourceManager.getImage(Icondataset.class, "/Books-icon.png");
 	public final Image LichbaoduongIcon = SWTResourceManager.getImage(Icondataset.class, "/calendar-2-icon.png");
 	public final Image ThongbaoChuadocIcon = SWTResourceManager.getImage(Icondataset.class,
-			"/Status-mail-unread-new-icon.png");
+			"/Status-mail-unread-new-icon (1).png");
 	public final Image ThongbaoIcon = SWTResourceManager.getImage(Icondataset.class, "/Places-mail-message-icon.png");
 	public final Image BangiaoTaisanIcon = SWTResourceManager.getImage(Icondataset.class, "/Import-export-icon.png");
 

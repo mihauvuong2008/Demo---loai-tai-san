@@ -216,7 +216,7 @@ public class ImportExcel_PTTS extends Shell {
 		Label lbliNhm = new Label(this, SWT.NONE);
 		lbliNhm.setText("Chọn nhóm tài sản:");
 
-		combo = new Combo(this, SWT.NONE/* | SWT.RIGHT_TO_LEFT */);
+		combo = new Combo(this, SWT.READ_ONLY/* | SWT.RIGHT_TO_LEFT */);
 		combo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -278,7 +278,7 @@ public class ImportExcel_PTTS extends Shell {
 		Label lblinV = new Label(this, SWT.NONE);
 		lblinV.setText("Chọn loại tài sản:");
 
-		combo_1 = new Combo(this, SWT.NONE /* | SWT.RIGHT_TO_LEFT */);
+		combo_1 = new Combo(this, SWT.READ_ONLY /* | SWT.RIGHT_TO_LEFT */);
 		combo_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

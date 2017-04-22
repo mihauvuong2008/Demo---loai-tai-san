@@ -60,9 +60,9 @@ public class query_Select_LENH_DIEU_XE {
 	public String getString_Lenhdieuxe_cua_Phuongtiengiaothong(PHUONGTIEN_GIAOTHONG pt, Date date_Batdau,
 			Date date_Ketthuc) {
 		try {
-			String result = "SELECT *  FROM LENH_DIEU_XE WHERE (NGAY_DI BETWEEN '" + mdf.getSQLStringDate(date_Batdau)
-					+ "' AND '" + mdf.getSQLStringDate(date_Ketthuc) + "') AND MA_PHUONGTIEN_GIAOTHONG='"
-					+ pt.getMA_PHUONGTIEN_GIAOTHONG() + "'  AND HUY_LENH='1';";
+			String result = "SELECT *  FROM LENH_DIEU_XE WHERE (DATE(NGAY_DI) >= '" + mdf.getSQLStringDate(date_Batdau)
+					+ "' AND DATE(NGAY_DI) <= '" + mdf.getSQLStringDate(date_Ketthuc)
+					+ "') AND MA_PHUONGTIEN_GIAOTHONG='" + pt.getMA_PHUONGTIEN_GIAOTHONG() + "'  AND HUY_LENH='1';";
 			return result;
 		} catch (Exception e) {
 			return null;
