@@ -28,4 +28,12 @@ public class query_Select_DOT_BANGIAO_TAISAN_NOIBO {
 				+ ma_TAISAN + "'";
 	}
 
+	public String getString_get_DOT_BANGIAO_TAISAN_NOIBO_Gannhat(int ma_TAISAN) {
+		return "SELECT * " + "FROM DOT_BANGIAO_TAISAN_NOIBO as dbtn "
+				+ " INNER JOIN TAISAN_DOT_BANGIAO_TAISAN_NOIBO as tdbtn "
+				+ " ON tdbtn.MA_DOT_BANGIAO_TAISAN_NOIBO = dbtn.MA_DOT_BANGIAO_TAISAN_NOIBO "
+				+ " INNER JOIN TAISAN as ts " + " ON ts.MA_TAISAN = tdbtn.MA_TAISAN " + " WHERE ts.MA_TAISAN = '"
+				+ ma_TAISAN + "' ORDER BY dbtn.NGAY_THUCHIEN DESC  LIMIT 1";
+	}
+
 }

@@ -100,8 +100,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlCpNhtPhng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlCpNhtPhng.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlCpNhtPhng.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class, "/car-icon.png"));
 		shlCpNhtPhng.setSize(350, 480);
 		new FormTemplate().setCenterScreen(shlCpNhtPhng);
 		shlCpNhtPhng.setText("Cập nhật Phương tiện giao thông");
@@ -217,8 +216,8 @@ public class EditPhuongtienGiaothong extends Dialog {
 		text_Sokm.setText("0");
 		text_Sokm.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Label label_10 = new Label(group_1, SWT.NONE);
-		label_10.setText("Loại nhiên liệu tiêu thụ:");
+		Label lblNhinLiuTiu = new Label(group_1, SWT.NONE);
+		lblNhinLiuTiu.setText("Nhiên liệu tiêu thụ:");
 
 		combo_LoainhienLieu = new Combo(group_1, SWT.READ_ONLY);
 		combo_LoainhienLieu.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -257,8 +256,8 @@ public class EditPhuongtienGiaothong extends Dialog {
 				return flag;
 			}
 		});
-		btnLu.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnLu.setImage(
+				SWTResourceManager.getImage(EditPhuongtienGiaothong.class, "/Actions-document-save-icon (1).png"));
 		GridData gd_btnLu = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnLu.widthHint = 75;
 		btnLu.setLayoutData(gd_btnLu);

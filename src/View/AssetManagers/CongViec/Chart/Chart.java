@@ -51,12 +51,11 @@ import org.eclipse.swt.widgets.MenuItem;
 public class Chart extends Dialog {
 
 	protected Object result;
-	protected Shell shlBi;
+	protected Shell shlBieudo;
 	private Composite composite_BieuDo_Grantt;
 	private static NGUOIDUNG user;
 	private Composite composite_PieChart;
 	private Composite composite_Xychart;
-	private SashForm sashForm_3;
 	private DateTime dateTime_Begin;
 	private DateTime dateTime_End;
 	private Composite composite_KhoiluongCongviec;
@@ -94,10 +93,10 @@ public class Chart extends Dialog {
 	 */
 	public Object open() {
 		createContents();
-		shlBi.open();
-		shlBi.layout();
+		shlBieudo.open();
+		shlBieudo.layout();
 		Display display = getParent().getDisplay();
-		while (!shlBi.isDisposed()) {
+		while (!shlBieudo.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -109,69 +108,25 @@ public class Chart extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlBi = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlBi.setImage(SWTResourceManager.getImage(Chart.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		shlBi.setSize(875, 540);
-		new FormTemplate().setCenterScreen(shlBi);
-		shlBi.setText("Biểu đồ");
-		shlBi.setLayout(new GridLayout(1, false));
+		shlBieudo = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlBieudo.setImage(SWTResourceManager.getImage(Chart.class, "/Actions-view-statistics-icon.png"));
+		shlBieudo.setSize(875, 540);
+		new FormTemplate().setCenterScreen(shlBieudo);
+		shlBieudo.setText("Biểu đồ");
+		shlBieudo.setLayout(new GridLayout(1, false));
 
-		TabFolder tabFolder = new TabFolder(shlBi, SWT.NONE);
+		TabFolder tabFolder = new TabFolder(shlBieudo, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		TabItem tbtmTinCng = new TabItem(tabFolder, SWT.NONE);
 		tbtmTinCng.setText("Tiến độ Công việc đang thực hiện");
 
-		SashForm sashForm = new SashForm(tabFolder, SWT.NONE);
-		tbtmTinCng.setControl(sashForm);
-
-		TabItem tbtmChiTitCng = new TabItem(tabFolder, SWT.NONE);
-		tbtmChiTitCng.setText("Khối lượng công việc");
-
-		sashForm_3 = new SashForm(tabFolder, SWT.NONE);
-		tbtmChiTitCng.setControl(sashForm_3);
-
-		composite_KhoiluongCongviec = new Composite(sashForm_3, SWT.NONE);
-		composite_KhoiluongCongviec.setLayout(new GridLayout(5, false));
-
-		composite_Xychart = new Composite(composite_KhoiluongCongviec, SWT.EMBEDDED);
-		composite_Xychart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
-
-		Label lblTNgy = new Label(composite_KhoiluongCongviec, SWT.NONE);
-		lblTNgy.setText("Từ ngày: ");
-
-		dateTime_Begin = new DateTime(composite_KhoiluongCongviec, SWT.BORDER);
-
-		Label lblnNgy = new Label(composite_KhoiluongCongviec, SWT.NONE);
-		lblnNgy.setText("Đến ngày:");
-
-		dateTime_End = new DateTime(composite_KhoiluongCongviec, SWT.BORDER);
-
-		Button btnXem = new Button(composite_KhoiluongCongviec, SWT.NONE);
-		btnXem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (xyLineChart == null)
-					xyLineChart = new XYLineChart(user);
-				try {
-					xyLineChart.Draw(composite_Xychart, mdf.getDate(dateTime_Begin), mdf.getDate(dateTime_End));
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-				composite_Xychart.redraw();
-			}
-		});
-		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnXem.widthHint = 75;
-		btnXem.setLayoutData(gd_btnXem);
-		btnXem.setText("Xem");
-
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		composite.setLayout(new GridLayout(5, false));
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tbtmTinCng.setControl(composite);
+		composite.setLayout(new GridLayout(6, false));
 
 		composite_BieuDo_Grantt = new Composite(composite, SWT.EMBEDDED);
-		composite_BieuDo_Grantt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
+		composite_BieuDo_Grantt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
 		composite_BieuDo_Grantt.setLayout(new GridLayout(1, false));
 
 		btnSuaChua = new Button(composite, SWT.CHECK);
@@ -220,21 +175,82 @@ public class Chart extends Dialog {
 		gd_btnXem_1.widthHint = 75;
 		btnXem_1.setLayoutData(gd_btnXem_1);
 		btnXem_1.setText("Xem");
-		sashForm.setWeights(new int[] { 528 });
+
+		Button btnng_2 = new Button(composite, SWT.NONE);
+		btnng_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlBieudo.dispose();
+			}
+		});
+		GridData gd_btnng_2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnng_2.widthHint = 75;
+		btnng_2.setLayoutData(gd_btnng_2);
+		btnng_2.setText("Đóng");
+
+		TabItem tbtmChiTitCng = new TabItem(tabFolder, SWT.NONE);
+		tbtmChiTitCng.setText("Khối lượng công việc");
+
+		composite_KhoiluongCongviec = new Composite(tabFolder, SWT.NONE);
+		tbtmChiTitCng.setControl(composite_KhoiluongCongviec);
+		composite_KhoiluongCongviec.setLayout(new GridLayout(6, false));
+
+		composite_Xychart = new Composite(composite_KhoiluongCongviec, SWT.EMBEDDED);
+		composite_Xychart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+
+		Label lblTNgy = new Label(composite_KhoiluongCongviec, SWT.NONE);
+		lblTNgy.setText("Từ ngày: ");
+
+		dateTime_Begin = new DateTime(composite_KhoiluongCongviec, SWT.BORDER);
+
+		Label lblnNgy = new Label(composite_KhoiluongCongviec, SWT.NONE);
+		lblnNgy.setText("Đến ngày:");
+
+		dateTime_End = new DateTime(composite_KhoiluongCongviec, SWT.BORDER);
+
+		Button btnXem = new Button(composite_KhoiluongCongviec, SWT.NONE);
+		btnXem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (xyLineChart == null)
+					xyLineChart = new XYLineChart(user);
+				try {
+					xyLineChart.Draw(composite_Xychart, mdf.getDate(dateTime_Begin), mdf.getDate(dateTime_End));
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+				composite_Xychart.redraw();
+			}
+		});
+		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnXem.widthHint = 75;
+		btnXem.setLayoutData(gd_btnXem);
+		btnXem.setText("Xem");
+
+		Button btnng_1 = new Button(composite_KhoiluongCongviec, SWT.NONE);
+		btnng_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlBieudo.dispose();
+			}
+		});
+		GridData gd_btnng_1 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnng_1.widthHint = 75;
+		btnng_1.setLayoutData(gd_btnng_1);
+		btnng_1.setText("Đóng");
 
 		TabItem tbtmChiTit = new TabItem(tabFolder, SWT.NONE);
 		tbtmChiTit.setText("Chi tiết công việc đã thực hiện");
 
 		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
 		tbtmChiTit.setControl(composite_1);
-		composite_1.setLayout(new GridLayout(6, false));
+		composite_1.setLayout(new GridLayout(8, false));
 
 		SashForm sashForm_1 = new SashForm(composite_1, SWT.NONE);
-		sashForm_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+		sashForm_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
-		SashForm sashForm_2 = new SashForm(sashForm_1, SWT.VERTICAL);
-
-		Tree tree_DanhsachCongviec_Pie = new Tree(sashForm_2, SWT.BORDER | SWT.FULL_SELECTION);
+		Tree tree_DanhsachCongviec_Pie = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_DanhsachCongviec_Pie.setLinesVisible(true);
 		tree_DanhsachCongviec_Pie.setHeaderVisible(true);
 		tree_DanhsachCongviec_Pie.addListener(SWT.Selection, new Listener() {
@@ -288,7 +304,7 @@ public class Chart extends Dialog {
 						Object o = til[0].getData();
 						if (o instanceof DOT_THUCHIEN_SUACHUA_BAODUONG || o instanceof DOT_THUCHIEN_TANG_TAISAN
 								|| o instanceof DOT_THUCHIEN_GIAM_TAISAN) {
-							Nhatky_Lamviec nk = new Nhatky_Lamviec(shlBi, SWT.DIALOG_TRIM, o, user);
+							Nhatky_Lamviec nk = new Nhatky_Lamviec(shlBieudo, SWT.DIALOG_TRIM, o, user);
 							nk.open();
 						}
 					}
@@ -299,9 +315,8 @@ public class Chart extends Dialog {
 			}
 		});
 		mntmXemNhtK.setText("Xem Nhật ký");
-		sashForm_2.setWeights(new int[] { 85 });
 		composite_PieChart = new Composite(sashForm_1, SWT.EMBEDDED);
-		sashForm_1.setWeights(new int[] { 320, 420 });
+		sashForm_1.setWeights(new int[] { 370, 420 });
 
 		Label lblTNgy_1 = new Label(composite_1, SWT.NONE);
 		lblTNgy_1.setText("Từ ngày: ");
@@ -332,9 +347,11 @@ public class Chart extends Dialog {
 					throws SQLException {
 				tree_DanhsachCongviec_Pie.removeAll();
 				ArrayList<DOT_THUCHIEN_TANG_TAISAN> dttl = controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
-						.get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
+						.get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(mdf.getDate(dateTime_Start_Pie),
+								mdf.getDate(dateTime_End_Pie), text);
 				ArrayList<DOT_THUCHIEN_GIAM_TAISAN> dgtl = controler.getControl_DOT_THUCHIEN_GIAM_TAISAN()
-						.get_AndFind_DOT_THUCHIEN_GIAM_TAISAN_list(mdf.getDate(dateTime_Start_Pie), mdf.getDate(dateTime_End_Pie), text);
+						.get_AndFind_DOT_THUCHIEN_GIAM_TAISAN_list(mdf.getDate(dateTime_Start_Pie),
+								mdf.getDate(dateTime_End_Pie), text);
 				ArrayList<DOT_THUCHIEN_SUACHUA_BAODUONG> dsbl = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
 						.get_AndFind_DOT_THUCHIEN_SUACHUA_BAODUONG_list(mdf.getDate(dateTime_Start_Pie),
 								mdf.getDate(dateTime_End_Pie), text);
@@ -390,6 +407,19 @@ public class Chart extends Dialog {
 		gd_btnXem_2.widthHint = 75;
 		btnXem_2.setLayoutData(gd_btnXem_2);
 		btnXem_2.setText("Xem");
+		new Label(composite_1, SWT.NONE);
+
+		Button btnng = new Button(composite_1, SWT.NONE);
+		btnng.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlBieudo.dispose();
+			}
+		});
+		GridData gd_btnng = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnng.widthHint = 75;
+		btnng.setLayoutData(gd_btnng);
+		btnng.setText("Đóng");
 		init();
 	}
 

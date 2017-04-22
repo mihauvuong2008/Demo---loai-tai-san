@@ -88,9 +88,9 @@ public class GiaoViec {
 	private static NGUOIDUNG user;
 	private final Controler controler;
 	private final int treeHeight = 21;
-	private static Tree tree_CongviecSuachua;
-	private static Tree tree_CongViecMuasam;
-	private static Tree tree_CongviecThanhly;
+	private Tree tree_CongviecSuachua;
+	private Tree tree_CongViecMuasam;
+	private Tree tree_CongviecThanhly;
 	private Tree tree_DanhsachCanbo;
 	private Tree tree_PhanViecDangThucHien;
 	private Tree tree_THUCHIEN;
@@ -117,7 +117,7 @@ public class GiaoViec {
 	private Tree tree_QUYETTOAN;
 	private Text text_Ngay_Hoantat_GiaoViec;
 	private Text text_TenCB;
-	private TabFolder tabFolder_2;
+	private TabFolder tabFolder_DanhsachCongviec;
 	private Text text_Ghichu_Thuchien;
 	private Text text_Ghichu_Nghiemthu;
 	private Text text_Ghichu_Quyettoan;
@@ -128,10 +128,18 @@ public class GiaoViec {
 	private static Log log = LogFactory.getLog(Nhatky_Lamviec.class);
 	private ExpandItem xpndtmNgunThamgia;
 	private Table table_VanbanDexuat;
+	private Object object;
+	private final static Fill_ItemData f = new Fill_ItemData();
 
 	public GiaoViec(NGUOIDUNG user) {
 		GiaoViec.user = user;
 		controler = new Controler(user);
+	}
+
+	public GiaoViec(NGUOIDUNG user, Object o) {
+		GiaoViec.user = user;
+		controler = new Controler(user);
+		this.object = o;
 	}
 
 	/**
@@ -167,11 +175,11 @@ public class GiaoViec {
 		sashForm_13.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		SashForm sashForm = new SashForm(sashForm_13, SWT.VERTICAL);
 
-		tabFolder_2 = new TabFolder(sashForm, SWT.NONE);
-		tabFolder_2.addSelectionListener(new SelectionAdapter() {
+		tabFolder_DanhsachCongviec = new TabFolder(sashForm, SWT.NONE);
+		tabFolder_DanhsachCongviec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				int i = tabFolder_2.getSelectionIndex();
+				int i = tabFolder_DanhsachCongviec.getSelectionIndex();
 				switch (i) {
 				case 0:
 					if (xpndtmNgunThamgia != null)
@@ -193,10 +201,10 @@ public class GiaoViec {
 			}
 		});
 
-		TabItem tbtmBoDng_1 = new TabItem(tabFolder_2, SWT.NONE);
+		TabItem tbtmBoDng_1 = new TabItem(tabFolder_DanhsachCongviec, SWT.NONE);
 		tbtmBoDng_1.setText("Bảo dưỡng - Sửa chữa PTTS");
 
-		tree_CongviecSuachua = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_CongviecSuachua = new Tree(tabFolder_DanhsachCongviec, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmBoDng_1.setControl(tree_CongviecSuachua);
 		tree_CongviecSuachua.setLinesVisible(true);
 		tree_CongviecSuachua.setHeaderVisible(true);
@@ -268,6 +276,7 @@ public class GiaoViec {
 						default:
 							break;
 						}
+						FillTableSuachua();
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -303,10 +312,10 @@ public class GiaoViec {
 		treeColumn_3.setWidth(250);
 		treeColumn_3.setText("MÔ TẢ");
 
-		TabItem tbtmMuaSm_1 = new TabItem(tabFolder_2, 0);
+		TabItem tbtmMuaSm_1 = new TabItem(tabFolder_DanhsachCongviec, 0);
 		tbtmMuaSm_1.setText("Mua sắm - Tiếp nhận PTTS");
 
-		tree_CongViecMuasam = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_CongViecMuasam = new Tree(tabFolder_DanhsachCongviec, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmMuaSm_1.setControl(tree_CongViecMuasam);
 		tree_CongViecMuasam.setLinesVisible(true);
 		tree_CongViecMuasam.setHeaderVisible(true);
@@ -364,6 +373,7 @@ public class GiaoViec {
 						DOT_THUCHIEN_TANG_TAISAN dt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
 						TaoDotTangtaisan xdt = new TaoDotTangtaisan(shlQunLCng, SWT.DIALOG_TRIM, user, dt);
 						xdt.open();
+						FillTableMuasam();
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -398,10 +408,10 @@ public class GiaoViec {
 		trclmnMT.setWidth(250);
 		trclmnMT.setText("MÔ TẢ");
 
-		TabItem tbtmThanhL_1 = new TabItem(tabFolder_2, 0);
+		TabItem tbtmThanhL_1 = new TabItem(tabFolder_DanhsachCongviec, 0);
 		tbtmThanhL_1.setText("Thanh lý - Bàn giao PTTS");
 
-		tree_CongviecThanhly = new Tree(tabFolder_2, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_CongviecThanhly = new Tree(tabFolder_DanhsachCongviec, SWT.BORDER | SWT.FULL_SELECTION);
 		tbtmThanhL_1.setControl(tree_CongviecThanhly);
 		tree_CongviecThanhly.setLinesVisible(true);
 		tree_CongviecThanhly.setHeaderVisible(true);
@@ -411,18 +421,17 @@ public class GiaoViec {
 				try {
 					/* get selection */
 					TreeItem[] items = tree_CongviecThanhly.getSelection();
-					if (items.length > 0) {
-						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) items[0].getData();
-						if (dgt != null) {
-							setField_ThongTin_DE_XUAT(dgt);
-
-							setField_ThongTin_NGUONGIAM(dgt);
-							setTree_Danhsach_TAISAN(dgt);
-							TinhTrang_Thuchien(dgt);
-							TinhTrang_Nghiemthu(dgt);
-							TinhTrang_Quyettoan(dgt);
-						}
-					}
+					if (items.length <= 0)
+						return;
+					DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) items[0].getData();
+					if (dgt == null)
+						return;
+					setField_ThongTin_DE_XUAT(dgt);
+					setField_ThongTin_NGUONGIAM(dgt);
+					setTree_Danhsach_TAISAN(dgt);
+					TinhTrang_Thuchien(dgt);
+					TinhTrang_Nghiemthu(dgt);
+					TinhTrang_Quyettoan(dgt);
 				} catch (SQLException e) {
 					log.error(e.getMessage());
 					e.printStackTrace();
@@ -455,11 +464,12 @@ public class GiaoViec {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					TreeItem til[] = tree_CongviecThanhly.getSelection();
-					if (til.length > 0) {
-						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-						TaoDotGiam xdg = new TaoDotGiam(shlQunLCng, SWT.DIALOG_TRIM, user, dgt);
-						xdg.open();
-					}
+					if (til.length <= 0)
+						return;
+					DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
+					TaoDotGiam xdg = new TaoDotGiam(shlQunLCng, SWT.DIALOG_TRIM, user, dgt);
+					xdg.open();
+					FillTableThanhly();
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -477,10 +487,10 @@ public class GiaoViec {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					TreeItem[] til = tree_CongviecThanhly.getSelection();
-					if (til.length > 0) {
-						controler.getControl_DOT_THUCHIEN_GIAM_TAISAN()
-								.delete_DOT_THUCHIEN_GIAM_TAISAN((DOT_THUCHIEN_GIAM_TAISAN) til[0].getData());
-					}
+					if (til.length <= 0)
+						return;
+					controler.getControl_DOT_THUCHIEN_GIAM_TAISAN()
+							.delete_DOT_THUCHIEN_GIAM_TAISAN((DOT_THUCHIEN_GIAM_TAISAN) til[0].getData());
 					FillTableThanhly();
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -506,14 +516,14 @@ public class GiaoViec {
 				try {
 					/* get selection */
 					TreeItem[] items = tree_DanhsachCanbo.getSelection();
-					if (items.length > 0) {
-						NGUOIDUNG nd = (NGUOIDUNG) items[0].getData();
-						if (nd != null) {
-							view_Congviec_Dang_Thuchien(nd);
-							view_Congviec_Da_Thuchien(nd);
-						}
-						// Show data on Cong viec}
+					if (items.length <= 0)
+						return;
+					NGUOIDUNG nd = (NGUOIDUNG) items[0].getData();
+					if (nd != null) {
+						view_Congviec_Dang_Thuchien(nd);
+						view_Congviec_Da_Thuchien(nd);
 					}
+					// Show data on Cong viec}
 				} catch (SQLException e) {
 					log.error(e.getMessage());
 					e.printStackTrace();
@@ -895,50 +905,31 @@ public class GiaoViec {
 				try {
 					TreeItem[] til;
 					Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-					switch (tabFolder_2.getSelectionIndex()) {
+					switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 					case 0:// sua chua
 						til = tree_CongviecSuachua.getSelection();
-						if (til.length > 0) {
-							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-							Fill_ItemData f = new Fill_ItemData();
-							GIAI_DOAN_THUC_HIEN dgth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-							if (dgth == null) {
-								int MAGDTH = controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dsb);
-								dgth = new GIAI_DOAN_THUC_HIEN();
-								dgth.setMA_GIAI_DOAN_THUC_HIEN(MAGDTH);
-							}
-							controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(user.getTEN_TAI_KHOAN(), dgth,
-									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Thuchien(dsb);
-						}
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
+						nhanviec_THUCHIEN_Suachua_baoduong(dsb, user.getTEN_TAI_KHOAN(),
+								f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						break;
 					case 1:// mua sam
 						til = tree_CongViecMuasam.getSelection();
-						if (til.length > 0) {
-							DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-							Fill_ItemData f = new Fill_ItemData();
-							if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt) == null) {
-								controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dtt);
-							}
-							controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(user.getTEN_TAI_KHOAN(),
-									controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt),
-									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Thuchien(dtt);
-						}
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
+
+						nhanviec_THUCHIEN_Muasam_Tiepnhan(dtt, user.getTEN_TAI_KHOAN(),
+								f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						break;
 					case 2:// thanh ly
 						til = tree_CongviecThanhly.getSelection();
-						if (til.length > 0) {
-							DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-							Fill_ItemData f = new Fill_ItemData();
-							if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt) == null) {
-								controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dgt);
-							}
-							controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(user.getTEN_TAI_KHOAN(),
-									controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt),
-									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Thuchien(dgt);
-						}
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
+						nhanviec_THUCHIEN_Thanhly(dgt, user.getTEN_TAI_KHOAN(),
+								f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						break;
 
 					default:
@@ -958,45 +949,44 @@ public class GiaoViec {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					TreeItem[] tmp = tree_THUCHIEN.getSelection();
-					if (tmp.length > 0) {
-						user_congviec uc = (user_congviec) tmp[0].getData();
-						if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(uc.getMA_GIAI_DOAN_CONG_VIEC())
-								.getTHOI_DIEM_BAT_DAU() == null) {
-							controler.getControl_THUCHIEN_CANBO().deleteNGUOIDUNG_GIAI_DOAN_THUC_HIEN(
-									uc.getTEN_TAI_KHOAN(), uc.getMA_GIAI_DOAN_CONG_VIEC());
-						} else {
-							MessageBox m = new MessageBox(shlQunLCng, SWT.ICON_WARNING);
-							m.setText("Thao tác sai");
-							m.setMessage(
-									"Không thể từ bỏ công việc sau khi đã bắt đầu thực hiện, hãy trả lại phần việc!");
-							m.open();
-						}
-						TreeItem[] til;
-						switch (tabFolder_2.getSelectionIndex()) {
-						case 0:
-							til = tree_CongviecSuachua.getSelection();
-							if (til.length > 0) {
-								DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-								TinhTrang_Thuchien(dsb);
-							}
-							break;
-						case 1:
-							til = tree_CongViecMuasam.getSelection();
-							if (til.length > 0) {
-								DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-								TinhTrang_Thuchien(dtt);
-							}
-							break;
-						case 2:
-							til = tree_CongviecThanhly.getSelection();
-							if (til.length > 0) {
-								DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-								TinhTrang_Thuchien(dgt);
-							}
-							break;
-						default:
-							break;
-						}
+					if (tmp.length <= 0)
+						return;
+					user_congviec uc = (user_congviec) tmp[0].getData();
+					if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(uc.getMA_GIAI_DOAN_CONG_VIEC())
+							.getTHOI_DIEM_BAT_DAU() == null) {
+						controler.getControl_THUCHIEN_CANBO().deleteNGUOIDUNG_GIAI_DOAN_THUC_HIEN(uc.getTEN_TAI_KHOAN(),
+								uc.getMA_GIAI_DOAN_CONG_VIEC());
+					} else {
+						MessageBox m = new MessageBox(shlQunLCng, SWT.ICON_WARNING);
+						m.setText("Thao tác sai");
+						m.setMessage("Không thể từ bỏ công việc sau khi đã bắt đầu thực hiện, hãy trả lại phần việc!");
+						m.open();
+					}
+					TreeItem[] til;
+					switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
+					case 0:
+						til = tree_CongviecSuachua.getSelection();
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
+						TinhTrang_Thuchien(dsb);
+						break;
+					case 1:
+						til = tree_CongViecMuasam.getSelection();
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
+						TinhTrang_Thuchien(dtt);
+						break;
+					case 2:
+						til = tree_CongviecThanhly.getSelection();
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
+						TinhTrang_Thuchien(dgt);
+						break;
+					default:
+						break;
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -1008,10 +998,11 @@ public class GiaoViec {
 
 		MenuItem mntmXemHS = new MenuItem(menu_3, SWT.NONE);
 		mntmXemHS.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					int s = tabFolder_2.getSelectionIndex();
+					int s = tabFolder_DanhsachCongviec.getSelectionIndex();
 					switch (s) {
 					case 0:
 						TreeItem[] ti = tree_CongviecSuachua.getSelection();
@@ -1126,61 +1117,31 @@ public class GiaoViec {
 				try {
 					if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
 						String TEN_TAI_KHOAN = event.data.toString();
-						System.out.println(TEN_TAI_KHOAN);
-						// System.out.println(((TreeItem)event.item).getText());
-						// if (event.item != null)
-						// a
 						TreeItem[] til;
 						Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-						switch (tabFolder_2.getSelectionIndex()) {
+						switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 						case 0:
 							til = tree_CongviecSuachua.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-								Fill_ItemData f = new Fill_ItemData();
-								GIAI_DOAN_THUC_HIEN dgth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-								if (dgth == null) {
-									int MAGDTH = controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dsb);
-									dgth = new GIAI_DOAN_THUC_HIEN();
-									dgth.setMA_GIAI_DOAN_THUC_HIEN(MAGDTH);
-								}
-								controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(TEN_TAI_KHOAN, dgth,
+								nhanviec_THUCHIEN_Suachua_baoduong(dsb, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-								TinhTrang_Thuchien(dsb);
 							}
 							break;
 						case 1:
 							til = tree_CongViecMuasam.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-								GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
-								Fill_ItemData f = new Fill_ItemData();
-								if (gdth == null) {
-									int MAGDTH = controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dtt);
-									gdth = new GIAI_DOAN_THUC_HIEN();
-									gdth.setMA_GIAI_DOAN_THUC_HIEN(MAGDTH);
-								}
-
-								controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(TEN_TAI_KHOAN, gdth,
+								nhanviec_THUCHIEN_Muasam_Tiepnhan(dtt, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-								TinhTrang_Thuchien(dtt);
 							}
 							break;
 						case 2:
 							til = tree_CongviecThanhly.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-								GIAI_DOAN_THUC_HIEN gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt);
-								Fill_ItemData f = new Fill_ItemData();
-								if (gdth == null) {
-									int MAGDTH = controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dgt);
-									gdth = new GIAI_DOAN_THUC_HIEN();
-									gdth.setMA_GIAI_DOAN_THUC_HIEN(MAGDTH);
-								}
-
-								controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(TEN_TAI_KHOAN, gdth,
+								nhanviec_THUCHIEN_Thanhly(dgt, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-								TinhTrang_Thuchien(dgt);
 							}
 							break;
 
@@ -1273,66 +1234,21 @@ public class GiaoViec {
 				try {
 					TreeItem[] til;
 					Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-					switch (tabFolder_2.getSelectionIndex()) {
+					switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 					case 0:
 						til = tree_CongviecSuachua.getSelection();
 						if (til.length > 0) {
 							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-							GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-							Fill_ItemData f = new Fill_ItemData();
-							if (gdngth == null) {
-								// tạo dot nghiemthu - quyet toan truoc
-								int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN();
-								// kiem tra xem qua trinh ntqt co hay chua:
-								if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN == 0) {
-									MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
-											.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
-											.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-									controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
-											.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-													dsb, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-								}
-								int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dsb);
-								gdngth = new GIAI_DOAN_NGHIEM_THU();
-								gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
-
-							}
-							controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(user.getTEN_TAI_KHOAN(),
-									controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb),
+							nhanviec_NGHIEMTHU_Suachua_baoduong(dsb, user.getTEN_TAI_KHOAN(),
 									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-
-							TinhTrang_Nghiemthu(dsb);
 						}
 						break;
 					case 1:
 						til = tree_CongViecMuasam.getSelection();
 						if (til.length > 0) {
 							DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-							GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
-							Fill_ItemData f = new Fill_ItemData();
-							if (gdngth == null) {
-								// tạo dot nghiemthu - quyet toan truoc
-								int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dtt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN();
-								// kiem tra xem qua trinh ntqt co hay chua:
-								if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN == 0) {
-									MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
-											.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
-											.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-
-									controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
-											.update_DOT_TANG_TAISAN_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dtt,
-													MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-
-									dtt.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-								}
-								int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dtt);
-								gdngth = new GIAI_DOAN_NGHIEM_THU();
-								gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
-
-							}
-							controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(user.getTEN_TAI_KHOAN(),
-									gdngth, f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Nghiemthu(dtt);
+							nhanviec_NGHIEMTHU_Muasam_Tiepnhan(dtt, user.getTEN_TAI_KHOAN(),
+									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						}
 						break;
 					case 2:
@@ -1374,7 +1290,7 @@ public class GiaoViec {
 							m.open();
 						}
 						TreeItem[] til;
-						switch (tabFolder_2.getSelectionIndex()) {
+						switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 						case 0:
 							til = tree_CongviecSuachua.getSelection();
 							if (til.length > 0) {
@@ -1414,7 +1330,7 @@ public class GiaoViec {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					int s = tabFolder_2.getSelectionIndex();
+					int s = tabFolder_DanhsachCongviec.getSelectionIndex();
 					switch (s) {
 					case 0:
 						TreeItem[] ti = tree_CongviecSuachua.getSelection();
@@ -1523,74 +1439,23 @@ public class GiaoViec {
 				try {
 					if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
 						String TEN_TAI_KHOAN = event.data.toString();
-						System.out.println(TEN_TAI_KHOAN);
-						// System.out.println(((TreeItem)event.item).getText());
-						// if (event.item != null)
-						// a
 						TreeItem[] til;
 						Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-						switch (tabFolder_2.getSelectionIndex()) {
+						switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 						case 0:
 							til = tree_CongviecSuachua.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-								GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU()
-										.get_GIAIDOAN_NGHIEMTHU(dsb);
-								Fill_ItemData f = new Fill_ItemData();
-								if (gdngth == null) {
-									// tạo dot nghiemthu - quyet toan truoc
-									int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN();
-									// kiem tra xem qua trinh ntqt co hay chua:
-									if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN == 0) {
-										MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
-												.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
-												.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-										controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
-												.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(
-														dsb, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-									}
-									int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dsb);
-									gdngth = new GIAI_DOAN_NGHIEM_THU();
-									gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
-
-								}
-								controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(TEN_TAI_KHOAN,
-										controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb),
+								nhanviec_NGHIEMTHU_Suachua_baoduong(dsb, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-
-								TinhTrang_Nghiemthu(dsb);
 							}
 							break;
 						case 1:
 							til = tree_CongViecMuasam.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-								GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU()
-										.get_GIAIDOAN_NGHIEMTHU(dtt);
-								Fill_ItemData f = new Fill_ItemData();
-								if (gdngth == null) {
-									// tạo dot nghiemthu - quyet toan truoc
-									int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dtt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN();
-									// kiem tra xem qua trinh ntqt co hay chua:
-									if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN == 0) {
-										MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler
-												.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
-												.create_QUATRINH_NGHIEMTHU_QUYETTOAN("ĐỢT NGHIỆM THU - QUYẾT TOÁN");
-
-										controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
-												.update_DOT_TANG_TAISAN_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dtt,
-														MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-
-										dtt.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
-									}
-									int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dtt);
-									gdngth = new GIAI_DOAN_NGHIEM_THU();
-									gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
-
-								}
-								controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(TEN_TAI_KHOAN, gdngth,
+								nhanviec_NGHIEMTHU_Muasam_Tiepnhan(dtt, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-								TinhTrang_Nghiemthu(dtt);
 							}
 							break;
 						case 2:
@@ -1679,48 +1544,28 @@ public class GiaoViec {
 				try {
 					TreeItem[] til;
 					Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-					switch (tabFolder_2.getSelectionIndex()) {
+					switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 					case 0:
 						til = tree_CongviecSuachua.getSelection();
-						if (til.length > 0) {
-							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-							GIAI_DOAN_QUYET_TOAN gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-							Fill_ItemData f = new Fill_ItemData();
-							if (gdqt == null) {
-								int MAGDNGTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dsb);
-								gdqt = new GIAI_DOAN_QUYET_TOAN();
-								gdqt.setMA_GIAI_DOAN_QUYET_TOAN(MAGDNGTH);
-							}
-							controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(user.getTEN_TAI_KHOAN(), gdqt,
-									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Quyettoan(dsb);
-						}
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
+						nhanviec_QUYETTOAN_Suachua_Baoduong(dsb, user.getTEN_TAI_KHOAN(),
+								f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						break;
 					case 1:
 						til = tree_CongViecMuasam.getSelection();
-						if (til.length > 0) {
-							DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-							GIAI_DOAN_QUYET_TOAN gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);
-							Fill_ItemData f = new Fill_ItemData();
-							if (gdqt == null) {
-								int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dtt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN();
-								if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN > 0) {
-									int MAGDTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dtt);
-									gdqt = new GIAI_DOAN_QUYET_TOAN();
-									gdqt.setMA_GIAI_DOAN_QUYET_TOAN(MAGDTH);
-								}
-							}
-							controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(user.getTEN_TAI_KHOAN(),
-									controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt),
-									f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
-							TinhTrang_Quyettoan(dtt);
-						}
+						if (til.length <= 0)
+							return;
+						DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
+						nhanviec_QUYETTOAN_Muasam_Tiepnhan(dtt, user.getTEN_TAI_KHOAN(),
+								f.getInt_HinhThucNhanCongviec_NguoiDungNhanViec(), THISDAY);
 						break;
 					case 2:
 						til = tree_CongviecThanhly.getSelection();
 						if (til.length > 0) {
-							DOT_THUCHIEN_GIAM_TAISAN dsb = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
-							TinhTrang_Quyettoan(dsb);
+							DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) til[0].getData();
+							TinhTrang_Quyettoan(dgt);
 						}
 						break;
 					default:
@@ -1737,6 +1582,7 @@ public class GiaoViec {
 
 		MenuItem mntmTubo2 = new MenuItem(menu_5, SWT.NONE);
 		mntmTubo2.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
@@ -1759,7 +1605,7 @@ public class GiaoViec {
 						}
 
 						TreeItem[] til;
-						switch (tabFolder_2.getSelectionIndex()) {
+						switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 						case 0:
 							til = tree_CongviecSuachua.getSelection();
 							if (til.length > 0) {
@@ -1799,7 +1645,7 @@ public class GiaoViec {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					int s = tabFolder_2.getSelectionIndex();
+					int s = tabFolder_DanhsachCongviec.getSelectionIndex();
 					switch (s) {
 					case 0:
 						TreeItem[] ti = tree_CongviecSuachua.getSelection();
@@ -1908,48 +1754,23 @@ public class GiaoViec {
 				try {
 					if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
 						String TEN_TAI_KHOAN = event.data.toString();
-						System.out.println(TEN_TAI_KHOAN);
-						// System.out.println(((TreeItem)event.item).getText());
-						// if (event.item != null)
-						// a
 						TreeItem[] til;
 						Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-						switch (tabFolder_2.getSelectionIndex()) {
+						switch (tabFolder_DanhsachCongviec.getSelectionIndex()) {
 						case 0:
 							til = tree_CongviecSuachua.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) til[0].getData();
-								GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN()
-										.get_GIAIDOAN_QUYETTOAN(dsb);
-								if (gdth == null) {
-									int MAGDTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dsb);
-									gdth = new GIAI_DOAN_QUYET_TOAN();
-									gdth.setMA_GIAI_DOAN_QUYET_TOAN(MAGDTH);
-								}
-								Fill_ItemData f = new Fill_ItemData();
-								controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(TEN_TAI_KHOAN, gdth,
+								nhanviec_QUYETTOAN_Suachua_Baoduong(dsb, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-
-								TinhTrang_Quyettoan(dsb);
 							}
 							break;
 						case 1:
 							til = tree_CongViecMuasam.getSelection();
 							if (til.length > 0) {
 								DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) til[0].getData();
-								GIAI_DOAN_QUYET_TOAN gdth = controler.getControl_QUYETTOAN()
-										.get_GIAIDOAN_QUYETTOAN(dtt);
-								Fill_ItemData f = new Fill_ItemData();
-								if (gdth == null) {
-									int MAGDTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dtt);
-									gdth = new GIAI_DOAN_QUYET_TOAN();
-									gdth.setMA_GIAI_DOAN_QUYET_TOAN(MAGDTH);
-
-								}
-								controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(TEN_TAI_KHOAN, gdth,
+								nhanviec_QUYETTOAN_Muasam_Tiepnhan(dtt, TEN_TAI_KHOAN,
 										f.getInt_HinhThucNhanCongviec_GiaoviecChoNguoiDung(), THISDAY);
-
-								TinhTrang_Quyettoan(dtt);
 							}
 							break;
 						case 2:
@@ -2083,10 +1904,7 @@ public class GiaoViec {
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("Đóng");
 
-		fill_DanhsachCanbo();
-		FillTableSuachua();
-		FillTableMuasam();
-		FillTableThanhly();
+		init();
 
 		shlQunLCng.open();
 		shlQunLCng.layout();
@@ -2095,6 +1913,211 @@ public class GiaoViec {
 				display.sleep();
 			}
 		}
+	}
+
+	private void init() throws SQLException {
+		fill_DanhsachCanbo();
+		FillTableSuachua();
+		FillTableMuasam();
+		FillTableThanhly();
+		viewTab();
+	}
+
+	private void viewTab() {
+		if (object == null)
+			return;
+		if (object instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
+			DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) object;
+			tabFolder_DanhsachCongviec.setSelection(0);
+			TreeItem tildsb[] = tree_CongviecSuachua.getItems();
+			for (TreeItem treeItem : tildsb) {
+				DOT_THUCHIEN_SUACHUA_BAODUONG tmp = (DOT_THUCHIEN_SUACHUA_BAODUONG) treeItem.getData();
+				if (tmp.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() == dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG())
+					tree_CongviecSuachua.select(treeItem);
+			}
+		} else if (object instanceof DOT_THUCHIEN_TANG_TAISAN) {
+			DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) object;
+			tabFolder_DanhsachCongviec.setSelection(1);
+			TreeItem tildtt[] = tree_CongViecMuasam.getItems();
+			for (TreeItem treeItem : tildtt) {
+				DOT_THUCHIEN_TANG_TAISAN tmp = (DOT_THUCHIEN_TANG_TAISAN) treeItem.getData();
+				System.out.println(tmp.getMA_DOT_TANG() + " - " + dtt.getMA_DOT_TANG());
+				if (tmp.getMA_DOT_TANG() == dtt.getMA_DOT_TANG())
+					tree_CongviecSuachua.select(treeItem);
+			}
+		} else if (object instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+			DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) object;
+			tabFolder_DanhsachCongviec.setSelection(2);
+			TreeItem tildgt[] = tree_CongviecThanhly.getItems();
+			for (TreeItem treeItem : tildgt) {
+				DOT_THUCHIEN_GIAM_TAISAN tmp = (DOT_THUCHIEN_GIAM_TAISAN) treeItem.getData();
+				if (tmp.getMA_DOT_GIAM() == dgt.getMA_DOT_GIAM())
+					tree_CongviecSuachua.select(treeItem);
+			}
+		}
+	}
+
+	protected void nhanviec_QUYETTOAN_Muasam_Tiepnhan(DOT_THUCHIEN_TANG_TAISAN dtt, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		if (dtt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() <= 0) {
+			int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
+					.create_QUATRINH_NGHIEMTHU_QUYETTOAN(f.getInt_LoaiCongviec_Muasam());
+			controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
+					.update_DOT_TANG_TAISAN_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dtt, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+			if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN <= 0)
+				return;
+			dtt.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+		}
+		GIAI_DOAN_QUYET_TOAN gdqt;
+		gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);
+		if (gdqt == null) {
+			int MAGDTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dtt);
+			gdqt = new GIAI_DOAN_QUYET_TOAN();
+			gdqt.setMA_GIAI_DOAN_QUYET_TOAN(MAGDTH);
+			if (MAGDTH <= 0)
+				return;
+		}
+		controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(ten_TAI_KHOAN,
+				controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt), int_HinhThucNhanCongviec, tHISDAY);
+		TinhTrang_Quyettoan(dtt);
+	}
+
+	protected void nhanviec_QUYETTOAN_Suachua_Baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		if (dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() <= 0) {
+			int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
+					.create_QUATRINH_NGHIEMTHU_QUYETTOAN(f.getInt_LoaiCongviec_Muasam());
+			controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
+					.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dsb,
+							MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+			if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN <= 0)
+				return;
+			dsb.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+		}
+		GIAI_DOAN_QUYET_TOAN gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
+		if (gdqt == null) {
+			int MAGDTH = controler.getControl_QUYETTOAN().create_GIAI_DOAN_QUYETTOAN(dsb);
+			gdqt = new GIAI_DOAN_QUYET_TOAN();
+			gdqt.setMA_GIAI_DOAN_QUYET_TOAN(MAGDTH);
+			if (MAGDTH <= 0)
+				return;
+		}
+		controler.getControl_QUYETTOAN_CANBO().setNGUOIDUNG_QUYETTOAN(ten_TAI_KHOAN, gdqt, int_HinhThucNhanCongviec,
+				tHISDAY);
+		TinhTrang_Quyettoan(dsb);
+	}
+
+	protected void nhanviec_NGHIEMTHU_Muasam_Tiepnhan(DOT_THUCHIEN_TANG_TAISAN dtt, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		// kiem tra xem qua trinh ntqt co hay chua:
+		if (dtt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() <= 0) {
+			int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
+					.create_QUATRINH_NGHIEMTHU_QUYETTOAN(f.getInt_LoaiCongviec_Muasam());
+			controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
+					.update_DOT_TANG_TAISAN_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dtt, MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+			if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN <= 0)
+				return;
+			dtt.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+		}
+		GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
+		if (gdngth == null) {
+			// tạo dot nghiemthu - quyet toan truoc
+			int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dtt);
+			gdngth = new GIAI_DOAN_NGHIEM_THU();
+			gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
+		}
+		controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(ten_TAI_KHOAN, gdngth, int_HinhThucNhanCongviec,
+				tHISDAY);
+		TinhTrang_Nghiemthu(dtt);
+	}
+
+	protected void nhanviec_NGHIEMTHU_Suachua_baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		// tạo dot nghiemthu - quyet toan truoc
+		if (dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN() <= 0) {
+			int MA_QUATRINH_NGHIEMTHU_QUYETTOAN = controler.getControl_QUATRINH_NGHIEMTHU_QUYETTOAN()
+					.create_QUATRINH_NGHIEMTHU_QUYETTOAN(f.getInt_LoaiCongviec_Suachua_Baoduong());
+
+			controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
+					.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_NGHIEMTHU_QUYETTOAN(dsb,
+							MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+			if (MA_QUATRINH_NGHIEMTHU_QUYETTOAN <= 0)
+				return;
+			dsb.setMA_QUATRINH_NGHIEMTHU_QUYETTOAN(MA_QUATRINH_NGHIEMTHU_QUYETTOAN);
+		}
+		GIAI_DOAN_NGHIEM_THU gdngth = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
+		if (gdngth == null) {
+			// kiem tra xem qua trinh ntqt co hay chua:
+			int MAGDNGTH = controler.getControl_NGHIEMTHU().create_GIAI_DOAN_NGHIEMTHU(dsb);
+			gdngth = new GIAI_DOAN_NGHIEM_THU();
+			gdngth.setMA_GIAI_DOAN_NGHIEM_THU(MAGDNGTH);
+
+		}
+		controler.getControl_NGHIEMTHU_CANBO().setNGUOIDUNG_NGHIEMTHU(ten_TAI_KHOAN,
+				controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb), int_HinhThucNhanCongviec, tHISDAY);
+
+		TinhTrang_Nghiemthu(dsb);
+	}
+
+	protected void nhanviec_THUCHIEN_Thanhly(DOT_THUCHIEN_GIAM_TAISAN dgt, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		if (dgt.getMA_QUATRINH_DEXUAT_THUCHIEN() <= 0) {
+			MessageBox m = new MessageBox(shlQunLCng, SWT.DIALOG_TRIM);
+			m.setText("Thất bại");
+			m.setMessage("Tạo Giai đoạn thực hiện Không thành công, kiểm tra lại đề xuất");
+			m.open();
+			return;
+		}
+		if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt) == null) {
+			controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dgt);
+		}
+		controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(ten_TAI_KHOAN,
+				controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt), int_HinhThucNhanCongviec, tHISDAY);
+		TinhTrang_Thuchien(dgt);
+	}
+
+	protected void nhanviec_THUCHIEN_Muasam_Tiepnhan(DOT_THUCHIEN_TANG_TAISAN dtt, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date tHISDAY) throws SQLException {
+		if (dtt.getMA_QUATRINH_DEXUAT_THUCHIEN() <= 0) {
+			MessageBox m = new MessageBox(shlQunLCng, SWT.DIALOG_TRIM);
+			m.setText("Thất bại");
+			m.setMessage("Tạo Giai đoạn thực hiện Không thành công, kiểm tra lại đề xuất");
+			m.open();
+			return;
+		}
+		if (controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt) == null) {
+			controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dtt);
+		}
+		controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(ten_TAI_KHOAN,
+				controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt), int_HinhThucNhanCongviec, tHISDAY);
+		TinhTrang_Thuchien(dtt);
+	}
+
+	protected void nhanviec_THUCHIEN_Suachua_baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG dsb, String ten_TAI_KHOAN,
+			int int_HinhThucNhanCongviec, Date THISDAY) throws SQLException {
+		if (dsb.getMA_QUATRINH_DEXUAT_THUCHIEN() <= 0) {
+			MessageBox m = new MessageBox(shlQunLCng, SWT.DIALOG_TRIM);
+			m.setText("Thất bại");
+			m.setMessage("Tạo Giai đoạn thực hiện Không thành công, kiểm tra lại đề xuất");
+			m.open();
+			return;
+		}
+		GIAI_DOAN_THUC_HIEN dgth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+		if (dgth == null) {
+			int MAGDTH = controler.getControl_THUCHIEN().create_GIAI_DOAN_THUCHIEN(dsb);
+			if (MAGDTH <= 0) {
+				MessageBox m = new MessageBox(shlQunLCng, SWT.ICON_WARNING);
+				m.setText("Thất bại");
+				m.setMessage("Tạo giai đoạn thực hiện thất bại, kiểm tra lại Đề xuất");
+				m.open();
+				return;
+			}
+			dgth = new GIAI_DOAN_THUC_HIEN();
+			dgth.setMA_GIAI_DOAN_THUC_HIEN(MAGDTH);
+		}
+		controler.getControl_THUCHIEN_CANBO().setNGUOIDUNG_THUCHIEN(ten_TAI_KHOAN, dgth, int_HinhThucNhanCongviec,
+				THISDAY);
+		TinhTrang_Thuchien(dsb);
 	}
 
 	private void fill_DanhsachCanbo() throws SQLException {
@@ -2132,7 +2155,7 @@ public class GiaoViec {
 		data.addAll(qt_MUASAM_l);
 		int i = 1;
 		for (CONGVIEC_PHANVIEC e : data) {
-			Fill_ItemData f = new Fill_ItemData();
+
 			TreeItem ti = new TreeItem(tree_PhanViecDaThucHien, SWT.NONE);
 			Date begin = e.getTHOI_DIEM_BAT_DAU();
 			Date end = e.getTHOI_DIEM_HOAN_THANH();
@@ -2172,7 +2195,7 @@ public class GiaoViec {
 		data.addAll(qt_MUASAM_l);
 		int i = 1;
 		for (CONGVIEC_PHANVIEC e : data) {
-			Fill_ItemData f = new Fill_ItemData();
+
 			TreeItem ti = new TreeItem(tree_PhanViecDangThucHien, SWT.NONE);
 			ti.setText(new String[] { "" + i, f.getString_LoaiCongviec(e.getLOAI_CONGVIEC()),
 					f.getString_LOAI_PHANVIEC(e.getLOAI_PHANVIEC()), e.getTEN_CONGVIEC(),
@@ -2269,7 +2292,7 @@ public class GiaoViec {
 				TreeItem t = new TreeItem(tree_THUCHIEN, SWT.NONE);
 				t.setText(0, "" + nd.getTEN_CAN_BO());
 				t.setText(1, "" + nd.getTEN_TAI_KHOAN());
-				Fill_ItemData f = new Fill_ItemData();
+
 				NGUOIDUNG_THUCHIEN ndth = controler.getControl_THUCHIEN_CANBO()
 						.getNGUOIDUNG_THUCHIEN(nd.getTEN_TAI_KHOAN(), th);
 				if (ndth != null) {
@@ -2358,7 +2381,7 @@ public class GiaoViec {
 				NGUOIDUNG_QUYETTOAN ndqt = controler.getControl_QUYETTOAN_CANBO()
 						.getNGUOIDUNG_QUYETTOAN(nd.getTEN_TAI_KHOAN(), qt);
 				if (ndqt != null) {
-					Fill_ItemData f = new Fill_ItemData();
+
 					t.setText(2, "" + f.getString_GIAO_NHANVIEC(ndqt));
 					t.setText(3, "" + mdf.getViewStringDate(ndqt.getNGAY_THAM_GIA()));
 					user_congviec uc = new user_congviec();
@@ -2407,7 +2430,7 @@ public class GiaoViec {
 				TreeItem t = new TreeItem(tree_NGHIEMTHU, SWT.NONE);
 				t.setText(0, "" + nd.getTEN_CAN_BO());
 				t.setText(1, "" + nd.getTEN_TAI_KHOAN());
-				Fill_ItemData f = new Fill_ItemData();
+
 				NGUOIDUNG_NGHIEMTHU ndngth = controler.getControl_NGHIEMTHU_CANBO()
 						.getNGUOIDUNG_NGHIEMTHU(nd.getTEN_TAI_KHOAN(), ngth);
 				if (ndngth != null) {
@@ -2468,7 +2491,7 @@ public class GiaoViec {
 				TreeItem t = new TreeItem(tree_THUCHIEN, SWT.NONE);
 				t.setText(0, "" + nd.getTEN_CAN_BO());
 				t.setText(1, "" + nd.getTEN_TAI_KHOAN());
-				Fill_ItemData f = new Fill_ItemData();
+
 				NGUOIDUNG_THUCHIEN ndth = controler.getControl_THUCHIEN_CANBO()
 						.getNGUOIDUNG_THUCHIEN(nd.getTEN_TAI_KHOAN(), th);
 				if (ndth != null) {
@@ -2629,7 +2652,7 @@ public class GiaoViec {
 				NGUOIDUNG_QUYETTOAN ndqt = controler.getControl_QUYETTOAN_CANBO()
 						.getNGUOIDUNG_QUYETTOAN(nd.getTEN_TAI_KHOAN(), qt);
 				if (ndqt != null) {
-					Fill_ItemData f = new Fill_ItemData();
+
 					t.setText(2, "" + f.getString_GIAO_NHANVIEC(ndqt));
 					t.setText(3, "" + mdf.getViewStringDate(ndqt.getNGAY_THAM_GIA()));
 					user_congviec uc = new user_congviec();
@@ -2678,7 +2701,7 @@ public class GiaoViec {
 				TreeItem t = new TreeItem(tree_NGHIEMTHU, SWT.NONE);
 				t.setText(0, "" + nd.getTEN_CAN_BO());
 				t.setText(1, "" + nd.getTEN_TAI_KHOAN());
-				Fill_ItemData f = new Fill_ItemData();
+
 				NGUOIDUNG_NGHIEMTHU ndngth = controler.getControl_NGHIEMTHU_CANBO()
 						.getNGUOIDUNG_NGHIEMTHU(nd.getTEN_TAI_KHOAN(), ngth);
 				if (ndngth != null) {
@@ -2739,7 +2762,7 @@ public class GiaoViec {
 				TreeItem t = new TreeItem(tree_THUCHIEN, SWT.NONE);
 				t.setText(0, "" + nd.getTEN_CAN_BO());
 				t.setText(1, "" + nd.getTEN_TAI_KHOAN());
-				Fill_ItemData f = new Fill_ItemData();
+
 				NGUOIDUNG_THUCHIEN ndth = controler.getControl_THUCHIEN_CANBO()
 						.getNGUOIDUNG_THUCHIEN(nd.getTEN_TAI_KHOAN(), th);
 				if (ndth != null) {
@@ -2885,7 +2908,7 @@ public class GiaoViec {
 
 	}
 
-	public static void FillTableThanhly() throws SQLException {
+	public void FillTableThanhly() throws SQLException {
 		if (tree_CongviecThanhly == null)
 			return;
 		final Controler controler = new Controler(user);
@@ -2909,7 +2932,7 @@ public class GiaoViec {
 		}
 	}
 
-	static public void FillTableMuasam() throws SQLException {
+	public void FillTableMuasam() throws SQLException {
 		if (tree_CongViecMuasam == null)
 			return;
 		final Controler controler = new Controler(user);
@@ -2930,7 +2953,7 @@ public class GiaoViec {
 		}
 	}
 
-	static public void FillTableSuachua() throws SQLException {
+	public void FillTableSuachua() throws SQLException {
 		if (tree_CongviecSuachua == null)
 			return;
 		final Controler controler = new Controler(user);
@@ -2941,7 +2964,7 @@ public class GiaoViec {
 			int x = 1;
 			if (nt != null)
 				for (DOT_THUCHIEN_SUACHUA_BAODUONG n : nt) {
-					Fill_ItemData f = new Fill_ItemData();
+
 					DE_XUAT d = new DE_XUAT();
 					d = controler.getControl_DEXUAT().get_DEXUAT(n);
 					TreeItem Item = new TreeItem(tree_CongviecSuachua, SWT.NONE);
@@ -2959,7 +2982,7 @@ public class GiaoViec {
 		}
 	}
 
-	static void treePack(Tree tree) {
+	void treePack(Tree tree) {
 		for (TreeColumn tc : tree.getColumns()) {
 			tc.pack();
 		}

@@ -43,6 +43,8 @@ import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.ExpandItem;
 
 public class Taodot_Suachua extends Dialog {
 	private final Controler controler;
@@ -68,6 +70,10 @@ public class Taodot_Suachua extends Dialog {
 	protected DOT_THUCHIEN_SUACHUA_BAODUONG ViewAndEdit_MODE_dsb;
 	protected DE_XUAT Insert_dx;
 	private Button button;
+	private Text text_Tenlienhe;
+	private Text text_Gioithieu;
+	private Text text_Lienhe;
+	private Fill_ItemData f = new Fill_ItemData();
 
 	/**
 	 * Launch the application.
@@ -125,10 +131,10 @@ public class Taodot_Suachua extends Dialog {
 		@SuppressWarnings("unused")
 		Fill_ItemData fi = new Fill_ItemData();
 
-		SashForm sashForm = new SashForm(shell, SWT.VERTICAL);
+		SashForm sashForm = new SashForm(shell, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
-		SashForm sashForm_1 = new SashForm(sashForm, SWT.NONE);
+		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
 		Composite composite = new Composite(sashForm_1, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 
@@ -166,6 +172,28 @@ public class Taodot_Suachua extends Dialog {
 					ChonNguonSuachua_Baoduong cnsb = new ChonNguonSuachua_Baoduong(shell, SWT.DIALOG_TRIM, user);
 					cnsb.open();
 					nsbd = cnsb.getResult();
+					if (ViewAndEdit_MODE_dsb == null)
+						return;
+					if (nsbd == null) {
+						MessageBox m = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
+						m.setText("Xóa dữ liệu cũ?");
+						m.setMessage("Bạn muốn xóa dữ liệu cũ?");
+						int rc = m.open();
+						switch (rc) {
+						case SWT.CANCEL:
+							break;
+						case SWT.YES:
+							ViewAndEdit_MODE_dsb.setMA_NGUONSUACHUA_BAODUONG(-1);
+							break;
+						case SWT.NO:
+							break;
+						}
+					} else {
+						ViewAndEdit_MODE_dsb.setMA_NGUONSUACHUA_BAODUONG(nsbd.getMA_NGUONSUACHUA_BAODUONG());
+					}
+					controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
+							.update_DOT_THUCHIEN_SUACHUA_BAODUONG(ViewAndEdit_MODE_dsb);
+					fillNguonSuachuaBaoduong(ViewAndEdit_MODE_dsb);
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -176,98 +204,7 @@ public class Taodot_Suachua extends Dialog {
 		btnNgunSaCha.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/phone-icon.png"));
 		btnNgunSaCha.setText("Liên hệ");
 
-		Composite composite_2 = new Composite(sashForm_1, SWT.NONE);
-		composite_2.setLayout(new GridLayout(2, false));
-
-		Label label = new Label(composite_2, SWT.NONE);
-		label.setText("Số đề xuất: ");
-
-		text_Sodexuat = new Text(composite_2, SWT.NONE);
-		text_Sodexuat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_2 = new Label(composite_2, SWT.NONE);
-		label_2.setText("Ngày tháng: ");
-
-		text_NgaythangVanban = new Text(composite_2, SWT.NONE);
-		text_NgaythangVanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_3 = new Label(composite_2, SWT.NONE);
-		label_3.setText("Đơn vị: ");
-
-		text_Donvi = new Text(composite_2, SWT.NONE);
-		text_Donvi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_5 = new Label(composite_2, SWT.NONE);
-		label_5.setText("Ngày xử lý:");
-
-		text_Ngaytiepnhan = new Text(composite_2, SWT.NONE);
-		text_Ngaytiepnhan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_6 = new Label(composite_2, SWT.NONE);
-		label_6.setText("Ngày giao:");
-
-		text_Ngaygiao = new Text(composite_2, SWT.NONE);
-		text_Ngaygiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label label_7 = new Label(composite_2, SWT.NONE);
-		GridData gd_label_7 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_label_7.verticalIndent = 3;
-		label_7.setLayoutData(gd_label_7);
-		label_7.setText("Ghi chú: ");
-
-		text_Trichyeu = new Text(composite_2, SWT.NONE);
-		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		new Label(composite_2, SWT.NONE);
-
-		button = new Button(composite_2, SWT.NONE);
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					Insert_dx = null;
-					if (ViewAndEdit_MODE_dsb != null
-							&& ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() > 0) {
-						Insert_dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
-					}
-					if (Insert_dx != null) {
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
-						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
-						thsv.open();
-					} else {
-						NhapDeXuat ndx = new NhapDeXuat(shell, SWT.DIALOG_TRIM, user);
-						ndx.open();
-						Insert_dx = ndx.result;
-						if (Insert_dx == null)
-							return;
-						if (ViewAndEdit_MODE_dsb == null)
-							return;
-						if (ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() <= 0)
-							return;
-						int Ma_Quatrinh_Dexuat_thuchien = getMaQuantrinhDexuatThuchien(Insert_dx);
-						if (Ma_Quatrinh_Dexuat_thuchien <= 0)
-							return;
-						boolean ict = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
-								.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_DEXUAT_THUCHIEN(
-										ViewAndEdit_MODE_dsb, Ma_Quatrinh_Dexuat_thuchien);
-						if (ict) {
-							MessageBox m = new MessageBox(shell, SWT.ICON_WORKING);
-							m.setText("Hoàn tất");
-							m.setMessage("Thêm Đề xuất Hoàn tất");
-							m.open();
-						}
-					}
-				} catch (NullPointerException | SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		button.setText("Thêm Hồ sơ");
-		button.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/Mimes-ooo-writer-icon.png"));
-		sashForm_1.setWeights(new int[] { 1000, 618 });
-
-		tree_PTTS = new Tree(sashForm, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+		tree_PTTS = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		tree_PTTS.setLinesVisible(true);
 		tree_PTTS.setHeaderVisible(true);
 		TreeColumn trclmnStt = new TreeColumn(tree_PTTS, SWT.NONE);
@@ -327,7 +264,152 @@ public class Taodot_Suachua extends Dialog {
 		});
 		mntmXoa.setText("Xóa");
 		ts.setTreeItemHeight(tree_PTTS, itemHeight);
-		sashForm.setWeights(new int[] { 195, 232 });
+		sashForm_1.setWeights(new int[] { 618, 1000 });
+
+		ExpandBar expandBar = new ExpandBar(sashForm, SWT.NONE);
+		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
+
+		ExpandItem xpndtmXut = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmXut.setExpanded(true);
+		xpndtmXut.setText("Đề xuất");
+
+		Composite composite_2 = new Composite(expandBar, SWT.NONE);
+		xpndtmXut.setControl(composite_2);
+		composite_2.setLayout(new GridLayout(2, false));
+
+		Label label = new Label(composite_2, SWT.NONE);
+		label.setText("Số đề xuất: ");
+
+		text_Sodexuat = new Text(composite_2, SWT.NONE);
+		text_Sodexuat.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Sodexuat.setEditable(false);
+		text_Sodexuat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_2 = new Label(composite_2, SWT.NONE);
+		label_2.setText("Ngày tháng: ");
+
+		text_NgaythangVanban = new Text(composite_2, SWT.NONE);
+		text_NgaythangVanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_NgaythangVanban.setEditable(false);
+		text_NgaythangVanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_3 = new Label(composite_2, SWT.NONE);
+		label_3.setText("Đơn vị: ");
+
+		text_Donvi = new Text(composite_2, SWT.NONE);
+		text_Donvi.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Donvi.setEditable(false);
+		text_Donvi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_5 = new Label(composite_2, SWT.NONE);
+		label_5.setText("Ngày xử lý:");
+
+		text_Ngaytiepnhan = new Text(composite_2, SWT.NONE);
+		text_Ngaytiepnhan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Ngaytiepnhan.setEditable(false);
+		text_Ngaytiepnhan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_6 = new Label(composite_2, SWT.NONE);
+		label_6.setText("Ngày giao:");
+
+		text_Ngaygiao = new Text(composite_2, SWT.NONE);
+		text_Ngaygiao.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Ngaygiao.setEditable(false);
+		text_Ngaygiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_7 = new Label(composite_2, SWT.NONE);
+		GridData gd_label_7 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_label_7.verticalIndent = 3;
+		label_7.setLayoutData(gd_label_7);
+		label_7.setText("Ghi chú: ");
+
+		text_Trichyeu = new Text(composite_2, SWT.NONE);
+		text_Trichyeu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+		text_Trichyeu.setEditable(false);
+		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		new Label(composite_2, SWT.NONE);
+
+		button = new Button(composite_2, SWT.NONE);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					Insert_dx = null;
+					if (ViewAndEdit_MODE_dsb != null
+							&& ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() > 0) {
+						Insert_dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
+					}
+					if (Insert_dx != null) {
+						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
+						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+						thsv.open();
+					} else {
+						NhapDeXuat ndx = new NhapDeXuat(shell, SWT.DIALOG_TRIM, user);
+						ndx.open();
+						Insert_dx = ndx.result;
+						if (Insert_dx == null)
+							return;
+						if (ViewAndEdit_MODE_dsb == null)
+							return;
+						if (ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() <= 0)
+							return;
+						int Ma_Quatrinh_Dexuat_thuchien = getMaQuantrinhDexuatThuchien(Insert_dx);
+						if (Ma_Quatrinh_Dexuat_thuchien <= 0)
+							return;
+						boolean ict = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
+								.update_DOT_THUCHIEN_SUACHUA_BAODUONG_Update_QUATRINH_DEXUAT_THUCHIEN(
+										ViewAndEdit_MODE_dsb, Ma_Quatrinh_Dexuat_thuchien);
+						if (ict) {
+							MessageBox m = new MessageBox(shell, SWT.ICON_WORKING);
+							m.setText("Hoàn tất");
+							m.setMessage("Thêm Đề xuất Hoàn tất");
+							m.open();
+							fillDexuat(Insert_dx);
+						}
+					}
+				} catch (NullPointerException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		button.setText("Thêm Hồ sơ");
+		button.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/Mimes-ooo-writer-icon.png"));
+		xpndtmXut.setHeight(180);
+
+		ExpandItem xpndtmLinH = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmLinH.setText("Liên hệ");
+
+		Composite composite_1 = new Composite(expandBar, SWT.NONE);
+		xpndtmLinH.setControl(composite_1);
+		xpndtmLinH.setHeight(120);
+		composite_1.setLayout(new GridLayout(2, false));
+
+		Label label_8 = new Label(composite_1, SWT.NONE);
+		label_8.setText("Tên liên hệ: ");
+
+		text_Tenlienhe = new Text(composite_1, SWT.BORDER);
+		text_Tenlienhe.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_9 = new Label(composite_1, SWT.NONE);
+		GridData gd_label_9 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_label_9.verticalIndent = 3;
+		label_9.setLayoutData(gd_label_9);
+		label_9.setText("Giới thiệu: ");
+
+		text_Gioithieu = new Text(composite_1, SWT.BORDER);
+		text_Gioithieu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		Label label_10 = new Label(composite_1, SWT.NONE);
+		GridData gd_label_10 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_label_10.verticalIndent = 3;
+		label_10.setLayoutData(gd_label_10);
+		label_10.setText("Liên hệ: ");
+
+		text_Lienhe = new Text(composite_1, SWT.BORDER);
+		text_Lienhe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		sashForm.setWeights(new int[] { 1000, 500 });
 		new Label(shell, SWT.NONE);
 
 		Button btnXong = new Button(shell, SWT.NONE);
@@ -337,7 +419,6 @@ public class Taodot_Suachua extends Dialog {
 				try {
 					if (dataCreate == null) {
 						doUpdate();
-						GiaoViec.FillTableSuachua();
 					} else {
 						TaoMoidotSuachua();
 					}
@@ -367,6 +448,21 @@ public class Taodot_Suachua extends Dialog {
 		init_loadMODE();
 	}
 
+	protected void fillNguonSuachuaBaoduong(DOT_THUCHIEN_SUACHUA_BAODUONG viewAndEdit_MODE_dsb2) throws SQLException {
+		text_Tenlienhe.setText("");
+		text_Gioithieu.setText("");
+		text_Lienhe.setText("");
+		if (viewAndEdit_MODE_dsb2 == null)
+			return;
+		NGUONSUACHUA_BAODUONG nsb = controler.getControl_NGUONSUACHUA_BAODUONG()
+				.get_NguonSuachua_Baoduong(viewAndEdit_MODE_dsb2);
+		if (nsb == null)
+			return;
+		text_Tenlienhe.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());
+		text_Gioithieu.setText(nsb.getGIOI_THIEU());
+		text_Lienhe.setText(nsb.getLIEN_HE());
+	}
+
 	protected int getMaQuantrinhDexuatThuchien(DE_XUAT insert_dx2) throws NullPointerException, SQLException {
 		int key = controler.getControl_DEXUAT().insert_DEXUAT(Insert_dx);
 		if (key <= 0)
@@ -386,7 +482,7 @@ public class Taodot_Suachua extends Dialog {
 			}
 			DOT_THUCHIEN_SUACHUA_BAODUONG dsb = new DOT_THUCHIEN_SUACHUA_BAODUONG();
 			dsb.setTEN_DOT_THUCHIEN_SUACHUA_BAODUONG(text_Tendot_Suachua.getText());
-			dsb.setSUACHUA_BAODUONG(2);
+			dsb.setSUACHUA_BAODUONG(f.getInt_Suachua());
 			dsb.setMO_TA(text_Mota.getText());
 
 			int ict = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG().InsertDOT_THUCHIEN_SUACHUA_BAODUONG(dsb,
@@ -516,6 +612,9 @@ public class Taodot_Suachua extends Dialog {
 				text_DonviDexuat.setText(p.getTEN_PHONGBAN());
 				fillDexuat(dx);
 			}
+
+		} else if (dataCreate != null) {
+			fillTable(dataCreate);
 		}
 	}
 

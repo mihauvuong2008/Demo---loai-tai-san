@@ -10,10 +10,14 @@ import org.eclipse.swt.widgets.Shell;
 import DAO.TAISAN;
 import DAO.DOT_THUCHIEN_TANG_TAISAN;
 import DAO.NGUOIDUNG;
+import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
+import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.EditPhuongtienGiaothong;
 import View.AssetManagers.Taisan.Phuongtiengiaothong.Phuongtien_Giaothong;
+import View.AssetManagers.Taisan.Phuongtiengiaothong.LichBaoduong.LichBaoduong;
+import View.AssetManagers.Taisan.Phuongtiengiaothong.LichDangkiem.LichDangkiem;
 import View.AssetManagers.Taisan.SuaThongTinTaisan.Edit_TaiSan;
 import View.AssetManagers.Taisan.XemTaiSan.View_Taisan;
 import View.AssetManagers.excel_XuatDulieu.ExportExcelData_Phuongtiengiaothong;
@@ -75,6 +79,28 @@ public class PopupMenu_MainView_TreeTaisan_Handler {
 	public void OpenForm_Thanhly_TaiSan_list(ArrayList<TAISAN> taisan_list) throws SQLException {
 		TaoDotGiam xdg = new TaoDotGiam(shell, SWT.DIALOG_TRIM, user, taisan_list);
 		xdg.open();
+	}
+
+	public void OpenForm_Tool_Baoduong_Phuongtien_Giaothong(ArrayList<TAISAN> data) throws SQLException {
+		Taodot_Baoduong sb = new Taodot_Baoduong(shell, SWT.DIALOG_TRIM, user, data);
+		sb.open();
+	}
+
+	public void OpenForm_Tool_Suachua_Taisan(ArrayList<TAISAN> data) throws SQLException {
+		Taodot_Suachua suachua = new Taodot_Suachua(shell, SWT.DIALOG_TRIM, user, data);
+		suachua.open();
+		// TODO Auto-generated method stub
+
+	}
+
+	public void OpenForm_LichBaoduong_PHUONGTIEN_GIAOTHONG(int Oto_xemay) throws SQLException {
+		LichBaoduong lbd = new LichBaoduong(shell, SWT.DIALOG_TRIM, user);
+		lbd.open();
+	}
+
+	public void OpenForm_LichDangKiem_PhuongtienGiaothong(int Oto_Xemay) throws SQLException {
+		LichDangkiem ldk = new LichDangkiem(shell, SWT.DIALOG_TRIM, user);
+		ldk.open();
 	}
 
 }

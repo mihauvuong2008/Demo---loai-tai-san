@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
@@ -125,7 +124,7 @@ public class Vanban_View extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlVanBan = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
+		shlVanBan = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlVanBan.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Actions-document-edit-icon (1).png"));
 		shlVanBan.setSize(730, 450);
 		new FormTemplate().setCenterScreen(shlVanBan);
@@ -421,20 +420,19 @@ public class Vanban_View extends Dialog {
 
 		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
 
-		Group grpThngTinVn = new Group(sashForm_1, SWT.NONE);
-		grpThngTinVn.setText("Th\u00F4ng tin v\u0103n b\u1EA3n");
+		Composite grpThngTinVn = new Composite(sashForm_1, SWT.NONE);
 		grpThngTinVn.setLayout(new GridLayout(2, false));
 
 		Label lblSVnBn = new Label(grpThngTinVn, SWT.NONE);
 		lblSVnBn.setText("S\u1ED1 v\u0103n b\u1EA3n:");
 
-		text_Sovanban = new Text(grpThngTinVn, SWT.BORDER);
+		text_Sovanban = new Text(grpThngTinVn, SWT.NONE);
 		text_Sovanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblCQuanBan = new Label(grpThngTinVn, SWT.NONE);
 		lblCQuanBan.setText("C\u01A1 quan ban h\u00E0nh:");
 
-		text_Coquanbanhanh = new Text(grpThngTinVn, SWT.BORDER);
+		text_Coquanbanhanh = new Text(grpThngTinVn, SWT.NONE);
 		text_Coquanbanhanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyBanHnh = new Label(grpThngTinVn, SWT.NONE);
@@ -443,7 +441,7 @@ public class Vanban_View extends Dialog {
 		lblNgyBanHnh.setLayoutData(gd_lblNgyBanHnh);
 		lblNgyBanHnh.setText("Ng\u00E0y ban h\u00E0nh:");
 
-		dateTime = new DateTime(grpThngTinVn, SWT.BORDER);
+		dateTime = new DateTime(grpThngTinVn, SWT.NONE);
 		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
 		Label lblTrchYu = new Label(grpThngTinVn, SWT.NONE);
@@ -452,7 +450,7 @@ public class Vanban_View extends Dialog {
 		lblTrchYu.setLayoutData(gd_lblTrchYu);
 		lblTrchYu.setText("Tr\u00EDch y\u1EBFu:");
 
-		text_Trichyeu = new Text(grpThngTinVn, SWT.BORDER);
+		text_Trichyeu = new Text(grpThngTinVn, SWT.NONE);
 		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		table = new Table(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
@@ -551,28 +549,9 @@ public class Vanban_View extends Dialog {
 		mntmMHnh.setText("Mở hình");
 		sashForm_1.setWeights(new int[] { 618, 1000 });
 
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(2, false);
-		gl_composite.verticalSpacing = 0;
-		gl_composite.marginWidth = 0;
-		gl_composite.marginHeight = 0;
-		gl_composite.horizontalSpacing = 0;
-		composite.setLayout(gl_composite);
-
-		Composite composite_1 = new Composite(composite, SWT.BORDER);
-		composite_1.setLayout(new GridLayout(1, false));
-		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
-
-		scrolledComposite = new ScrolledComposite(composite_1, SWT.H_SCROLL | SWT.V_SCROLL | SWT.CENTER);
+		scrolledComposite = new ScrolledComposite(sashForm, SWT.H_SCROLL | SWT.V_SCROLL | SWT.CENTER);
 		scrolledComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
-		layoutData.grabExcessVerticalSpace = true;
-		layoutData.verticalAlignment = SWT.FILL;
-		layoutData.verticalSpan = 2;
-		layoutData.horizontalSpan = 2;
-		layoutData.heightHint = 400;
-		scrolledComposite.setLayoutData(layoutData);
 
 		lbl_Image = new Label(scrolledComposite, SWT.BORDER | SWT.SHADOW_IN | SWT.CENTER);
 		lbl_Image.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));

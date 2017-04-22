@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import View.Template.FormTemplate;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class SelectColumn extends Dialog {
 
@@ -63,6 +64,7 @@ public class SelectColumn extends Dialog {
 	 */
 	private void createContents() {
 		shlChnDLiu = new Shell(getParent(), getStyle());
+		shlChnDLiu.setImage(SWTResourceManager.getImage(SelectColumn.class, "/Excel-icon.png"));
 		shlChnDLiu.setSize(433, 389);
 		shlChnDLiu.setText("Chọn dữ liệu xuất");
 		shlChnDLiu.setLayout(new GridLayout(4, false));

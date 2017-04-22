@@ -77,18 +77,18 @@ public class Fill_MainForm {
 						TableItem parent = (TableItem) event.item;
 						int index = event.index;
 						c = cviec_list.get(index);
-						parent.setText(0, "" + (index + 1));
-						parent.setText(1, ((c == null) ? "-" : c.getTEN_DOT_THUCHIEN_SUACHUA_BAODUONG()));
 						DE_XUAT dx;
 						dx = controler.getControl_DEXUAT().get_DEXUAT(c);
-
-						parent.setText(2, dx == null ? "-" : mdf.getViewStringDate(dx.getTHOI_DIEM_BAT_DAU()));
 						GIAI_DOAN_QUYET_TOAN q = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(c);
+						parent.setText(0, "" + (index + 1));
+						parent.setText(1, ((c == null) ? "-" : c.getTEN_DOT_THUCHIEN_SUACHUA_BAODUONG()));
+						parent.setText(2, dx == null ? "-" : mdf.getViewStringDate(dx.getTHOI_DIEM_BAT_DAU()));
 						if (q != null)
 							parent.setText(3, q.getTHOI_GIAN_KET_THUC() == null ? "chưa hoàn thành"
 									: mdf.getViewStringDate(q.getTHOI_GIAN_KET_THUC()));
 						else
 							parent.setText(3, "-");
+						parent.setData(c);
 					} catch (SQLException e) {
 						log.error(e.getMessage());
 						e.printStackTrace();

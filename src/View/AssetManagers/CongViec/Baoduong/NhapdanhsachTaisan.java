@@ -111,9 +111,10 @@ public class NhapdanhsachTaisan extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shell.setImage(SWTResourceManager.getImage(NhapdanhsachTaisan.class, "/maintenance-icon (1).png"));
+		shell = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shell.setImage(SWTResourceManager.getImage(NhapdanhsachTaisan.class, "/page-white-wrench-icon.png"));
 		shell.setSize(728, 450);
+		shell.setText("Thêm Danh sách Phương tiện giao thông bảo dưỡng");
 		new FormTemplate().setCenterScreen(shell);
 		shell.setLayout(new GridLayout(5, false));
 		Button btnPhngBan = new Button(shell, SWT.CHECK);

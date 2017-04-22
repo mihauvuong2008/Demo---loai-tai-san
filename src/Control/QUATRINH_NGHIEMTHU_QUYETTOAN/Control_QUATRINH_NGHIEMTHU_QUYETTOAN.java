@@ -26,18 +26,18 @@ public class Control_QUATRINH_NGHIEMTHU_QUYETTOAN {
 		return -1;
 	}
 
-	public int create_QUATRINH_NGHIEMTHU_QUYETTOAN(String string) throws SQLException {
-		return new Select().create_QUATRINH_NGHIEMTHU_QUYETTOAN(string);
+	public int create_QUATRINH_NGHIEMTHU_QUYETTOAN(int i) throws SQLException {
+		return new Select().create_QUATRINH_NGHIEMTHU_QUYETTOAN(i);
 	}
 
 	class Insert {
 	}
 
 	class Select {
-		public int create_QUATRINH_NGHIEMTHU_QUYETTOAN(String string) throws SQLException {
+		public int create_QUATRINH_NGHIEMTHU_QUYETTOAN(int loaicongviec) throws SQLException {
 			if (conn != null) {
 				String query = (new query_Insert_QUATRINH_NGHIEMTHU_QUYETTOAN())
-						.getString_ThemQuatrinhNghiemthuQuyettoan(string);
+						.getString_ThemQuatrinhNghiemthuQuyettoan(loaicongviec);
 				if (query == null)
 					return -1;
 				int getNextKey = getNextKey();

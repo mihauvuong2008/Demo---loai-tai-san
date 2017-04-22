@@ -458,7 +458,8 @@ public class Control_DOT_THUCHIEN_GIAM_TAISAN {
 				if (dgt == null)
 					return false;
 				DE_XUAT d = cdx.get_DEXUAT(dgt);
-				cdx.delete_DEXUAT(d);
+				if (d != null)
+					cdx.delete_DEXUAT(d);
 				cqdt.delete_QUATRINH_DEXUAT_THUCHIEN(dgt.getMA_QUATRINH_DEXUAT_THUCHIEN());
 				String query = (new query_Delete_DOT_THUCHIEN_GIAM_TAISAN()).getString_Delete_Dot_GiamTaisan(dgt);
 				if (query == null)

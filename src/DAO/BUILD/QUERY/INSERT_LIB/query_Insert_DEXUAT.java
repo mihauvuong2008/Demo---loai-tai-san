@@ -8,8 +8,8 @@ public class query_Insert_DEXUAT {
 	private final MyDateFormat mdf = new MyDateFormat();
 
 	public String get_String_InsertDexuat(DE_XUAT dx) throws NullPointerException {
-
 		try {
+			String Mataphoso = dx.getMA_TAPHOSO() <= 0 ? ", null " : ", '" + dx.getMA_TAPHOSO() + "' ";
 			String result = "INSERT INTO DE_XUAT " + "(SODEXUAT, NGAYTHANG_VANBAN, MA_PHONGBAN , THOI_DIEM_BAT_DAU, "
 					+ "THOI_DIEM_CHUYEN_GIAO, THOI_DIEM_HOAN_THANH," + "GHI_CHU,TEN_TAI_KHOAN, MA_TAPHOSO)VALUES( '"
 					+ dx.getSODEXUAT() + "', "
@@ -21,7 +21,7 @@ public class query_Insert_DEXUAT {
 					+ ","
 					+ (dx.getTHOI_DIEM_CHUYEN_GIAO() == null ? "null"
 							: ("'" + mdf.getSQLStringDate(dx.getTHOI_DIEM_CHUYEN_GIAO()) + "'"))
-					+ ",null,'" + dx.getGHI_CHU() + "','" + dx.getTEN_TAI_KHOAN() + "', '" + dx.getMA_TAPHOSO() + "');";
+					+ ",null,'" + dx.getGHI_CHU() + "','" + dx.getTEN_TAI_KHOAN() + "' " + Mataphoso + ");";
 			return result;
 		} catch (Exception e) {
 			return null;

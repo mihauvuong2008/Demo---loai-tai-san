@@ -490,9 +490,10 @@ public class Control_NGHIEMTHU {
 		} else if (o instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
 			rs = get_GIAIDOAN_NGHIEMTHU((DOT_THUCHIEN_SUACHUA_BAODUONG) o);
 		} else if (o instanceof DOT_THUCHIEN_GIAM_TAISAN) {
-			rs = get_GIAIDOAN_NGHIEMTHU((DOT_THUCHIEN_GIAM_TAISAN) o);
+			return null;
 		} else {
 			System.out.println("////");
+			return null;
 		}
 		return rs;
 	}

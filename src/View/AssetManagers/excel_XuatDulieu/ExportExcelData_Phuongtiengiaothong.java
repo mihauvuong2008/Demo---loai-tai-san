@@ -32,6 +32,7 @@ import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ExportExcelData_Phuongtiengiaothong extends Dialog {
 
@@ -84,6 +85,7 @@ public class ExportExcelData_Phuongtiengiaothong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlXutDLiu = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlXutDLiu.setImage(SWTResourceManager.getImage(ExportExcelData_Phuongtiengiaothong.class, "/Excel-icon.png"));
 		shlXutDLiu.setSize(650, 400);
 		shlXutDLiu.setText("Xuất dữ liệu Phương tiện giao thông");
 		shlXutDLiu.setLayout(new GridLayout(2, false));

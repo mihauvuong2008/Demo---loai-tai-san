@@ -463,4 +463,12 @@ public class Fill_ItemData {
 		return "";
 	}
 
+	public int getInt_Baoduong() {
+		return 1;
+	}
+
+	public int getInt_Suachua() {
+		return 2;
+	}
+
 }

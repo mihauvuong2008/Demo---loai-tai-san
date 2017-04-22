@@ -23,6 +23,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import Controler.Controler;
 import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
+import View.AssetManagers.excel_NhapDulieu.Import_LOAIXE;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 
@@ -94,14 +95,13 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 	 */
 	public Loaixe_DinhmucNhienlieu(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		setLayout(new GridLayout(4, false));
+		setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/fuel-icon (1).png"));
+		setLayout(new GridLayout(5, false));
 		Loaixe_DinhmucNhienlieu.user = user;
 		controler = new Controler(user);
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		ToolItem tltmThm = new ToolItem(toolBar, SWT.NONE);
 		tltmThm.addSelectionListener(new SelectionAdapter() {
@@ -303,7 +303,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 		btnXeMay.setText("Xe máy");
 
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		final TableCursor cursor = new TableCursor(table, SWT.NONE);
@@ -404,6 +404,18 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 		tblclmnnhMcNhin.setText("\u0110\u1ECANH M\u1EE8C NHI\u00CAN LI\u1EC6U");
 		editor.grabHorizontal = true;
 		editor.grabVertical = true;
+
+		Button btnNhpFileExcel = new Button(this, SWT.NONE);
+		btnNhpFileExcel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnNhpFileExcel.setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/Excel-icon.png"));
+		btnNhpFileExcel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Import_LOAIXE il = new Import_LOAIXE(getShell(), SWT.DIALOG_TRIM, user);
+				il.open();
+			}
+		});
+		btnNhpFileExcel.setText("Nhập File Excel");
 
 		Button btnng = new Button(this, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {

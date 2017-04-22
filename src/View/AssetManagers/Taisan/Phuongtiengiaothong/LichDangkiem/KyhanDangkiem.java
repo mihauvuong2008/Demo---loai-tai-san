@@ -102,7 +102,7 @@ public class KyhanDangkiem extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
 		ToolItem tltmThmMi = new ToolItem(toolBar, SWT.NONE);
-		tltmThmMi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmThmMi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/add-1-icon (1).png"));
 		tltmThmMi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -131,7 +131,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmThmMi.setText("Thêm mới");
 
 		ToolItem tltmThayi = new ToolItem(toolBar, SWT.NONE);
-		tltmThayi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmThayi.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/edit-validated-icon (1).png"));
 		tltmThayi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -146,7 +146,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmThayi.setText("Thay đổi");
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
-		tltmXa.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmXa.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/delete-1-icon (1).png"));
 		tltmXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -175,7 +175,7 @@ public class KyhanDangkiem extends Dialog {
 		tltmXa.setText("Xóa");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmLu.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/Actions-document-save-icon (1).png"));
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -324,6 +324,7 @@ public class KyhanDangkiem extends Dialog {
 		mntmXa.setText("Xóa");
 
 		Button btnNhpTExcel = new Button(shlKHnng, SWT.NONE);
+		btnNhpTExcel.setImage(SWTResourceManager.getImage(KyhanDangkiem.class, "/Excel-icon.png"));
 		btnNhpTExcel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -364,7 +365,7 @@ public class KyhanDangkiem extends Dialog {
 				}
 			}
 		});
-		btnNhpTExcel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		btnNhpTExcel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 		btnNhpTExcel.setText("Nhập từ Excel");
 
 		Button btnng = new Button(shlKHnng, SWT.NONE);

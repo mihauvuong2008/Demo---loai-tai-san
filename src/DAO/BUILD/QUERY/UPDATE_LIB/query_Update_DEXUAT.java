@@ -43,8 +43,9 @@ public class query_Update_DEXUAT {
 					+ ", THOI_DIEM_HOAN_THANH="
 					+ ((dx.getTHOI_DIEM_HOAN_THANH() == null) ? "null"
 							: ("'" + mdf.getSQLStringDate(dx.getTHOI_DIEM_HOAN_THANH()) + "'"))
-					+ ", GHI_CHU='" + dx.getGHI_CHU() + "', TEN_TAI_KHOAN='" + dx.getTEN_TAI_KHOAN() + "', MA_TAPHOSO='"
-					+ dx.getMA_TAPHOSO() + "' WHERE MA_DE_XUAT='" + dx.getMA_DE_XUAT() + "';";
+					+ ", GHI_CHU='" + dx.getGHI_CHU() + "', TEN_TAI_KHOAN='" + dx.getTEN_TAI_KHOAN() + "', MA_TAPHOSO= "
+					+ ((dx.getMA_TAPHOSO() == 0) ? " null " : " '" + dx.getMA_TAPHOSO() + "'") + " WHERE MA_DE_XUAT='"
+					+ dx.getMA_DE_XUAT() + "';";
 		} catch (Exception e) {
 			return null;
 		}

@@ -80,9 +80,8 @@ public class DanhmucLienhe extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlLinHDch = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlLinHDch.setImage(
-				SWTResourceManager.getImage(DanhmucLienhe.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlLinHDch = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlLinHDch.setImage(SWTResourceManager.getImage(DanhmucLienhe.class, "/phone-icon.png"));
 		shlLinHDch.setSize(728, 450);
 		shlLinHDch.setText("Li\u00EAn h\u1EC7 d\u1ECBch v\u1EE5");
 		shlLinHDch.setLayout(new GridLayout(2, false));

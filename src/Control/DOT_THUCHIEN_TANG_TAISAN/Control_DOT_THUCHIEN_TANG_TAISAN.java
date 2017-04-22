@@ -626,7 +626,8 @@ public class Control_DOT_THUCHIEN_TANG_TAISAN {
 				if (dt == null)
 					return false;
 				DE_XUAT d = cdx.get_DEXUAT(dt);
-				cdx.delete_DEXUAT(d);
+				if (d != null)
+					cdx.delete_DEXUAT(d);
 				cqdt.delete_QUATRINH_DEXUAT_THUCHIEN(dt.getMA_QUATRINH_DEXUAT_THUCHIEN());
 				cnqt.delete_QUATRINH_NGHIEMTHU_QUYETTOAN(dt.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN());
 				String query = (new query_Delete_DOT_THUCHIEN_TANG_TAISAN()).getString_Delete_DotTangTaisan(dt);

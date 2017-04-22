@@ -374,20 +374,7 @@ public class LichDangkiem extends Dialog {
 			if (dtdl == null)
 				bg = new Color(table.getDisplay(), 179, 224, 255);
 			else {
-				double daybetween = mdf.daysBetween(mdf.addDate(new Date(), -1 * cd.getCHU_KY()),
-						dtdl.getNGAY_THUCHIEN());
-				double perce = (double) (daybetween / cd.getCHU_KY());
-				double anpha = 1 - Math.abs(perce);
-				if (anpha > 1)
-					anpha = 1;
-				if (anpha < 0)
-					anpha = 0;
-				if (daybetween > 0) {
-					bg = new Color(table.getDisplay(), (int) (anpha * 255), 255, (int) (anpha * 200) + 50);
-				} else {
-					bg = new Color(table.getDisplay(), 255, (int) (anpha * 255), (int) (anpha * 200) + 50);
-				}
-				System.out.println(bg.toString());
+				bg = getbgc(dtdl.getNGAY_THUCHIEN(), cd.getCHU_KY());
 			}
 
 			TableItem tbi = new TableItem(table, SWT.NONE);
@@ -397,5 +384,22 @@ public class LichDangkiem extends Dialog {
 			tbi.setData("lx", lx);
 			tbi.setBackground(bg);
 		}
+	}
+
+	Color getbgc(Date ngaythuchien, int chuky) {
+		Color bg = null;
+		double daybetween = mdf.daysBetween(mdf.addDate(new Date(), -1 * chuky), ngaythuchien);
+		double perce = (double) (daybetween / chuky);
+		double anpha = 1 - Math.abs(perce);
+		if (anpha > 1)
+			anpha = 1;
+		if (anpha < 0)
+			anpha = 0;
+		if (daybetween > 0) {
+			bg = new Color(table.getDisplay(), (int) (anpha * 255), 255, (int) (anpha * 200) + 50);
+		} else {
+			bg = new Color(table.getDisplay(), 255, (int) (anpha * 255), (int) (anpha * 200) + 50);
+		}
+		return bg;
 	}
 }

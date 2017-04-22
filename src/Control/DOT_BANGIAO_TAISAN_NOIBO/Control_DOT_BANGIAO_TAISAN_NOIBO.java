@@ -165,6 +165,27 @@ public class Control_DOT_BANGIAO_TAISAN_NOIBO {
 			return null;
 		}
 
+		public DOT_BANGIAO_TAISAN_NOIBO get_DOT_BANGIAO_TAISAN_NOIBO_Gannhat(int ma_TAISAN) throws SQLException {
+			if (conn != null && isPrivilegeREA()) {
+				String query = (new query_Select_DOT_BANGIAO_TAISAN_NOIBO())
+						.getString_get_DOT_BANGIAO_TAISAN_NOIBO_Gannhat(ma_TAISAN);
+				if (query == null)
+					return null;
+				Statement st;
+				ResultSet rs;
+				st = conn.createStatement();
+				rs = st.executeQuery(query);
+				DOT_BANGIAO_TAISAN_NOIBO dgt = null;
+				while (rs.next()) {
+					dgt = (new Control_DAO_Build()).get_DOT_BANGIAO_TAISAN_NOIBO(rs);
+				}
+				rs.close();
+				st.close();
+				return dgt;
+			}
+			return null;
+		}
+
 		public ArrayList<DOT_BANGIAO_TAISAN_NOIBO> get_DOT_BANGIAO_TAISAN_NOIBO_list(Date begin, Date end,
 				String string) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
@@ -313,6 +334,11 @@ public class Control_DOT_BANGIAO_TAISAN_NOIBO {
 
 	public ArrayList<DOT_BANGIAO_TAISAN_NOIBO> get_DOT_BANGIAO_TAISAN_NOIBO_list(int ma_TAISAN) throws SQLException {
 		ArrayList<DOT_BANGIAO_TAISAN_NOIBO> rs = getSelecter().get_DOT_BANGIAO_TAISAN_NOIBO_list(ma_TAISAN);
+		return rs;
+	}
+
+	public DOT_BANGIAO_TAISAN_NOIBO get_DOT_BANGIAO_TAISAN_NOIBO_Gannhat(int ma_TAISAN) throws SQLException {
+		DOT_BANGIAO_TAISAN_NOIBO rs = getSelecter().get_DOT_BANGIAO_TAISAN_NOIBO_Gannhat(ma_TAISAN);
 		return rs;
 	}
 

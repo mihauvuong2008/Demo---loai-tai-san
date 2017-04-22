@@ -462,8 +462,9 @@ public class Control_QUYETTOAN {
 		} else if (o instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
 			rs = get_GIAIDOAN_QUYETTOAN((DOT_THUCHIEN_SUACHUA_BAODUONG) o);
 		} else if (o instanceof DOT_THUCHIEN_GIAM_TAISAN) {
-			rs = get_GIAIDOAN_QUYETTOAN((DOT_THUCHIEN_GIAM_TAISAN) o);
+			return null;
 		} else {
+			return null;
 		}
 		return rs;
 	}

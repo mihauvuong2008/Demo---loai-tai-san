@@ -986,29 +986,33 @@ public class Nhatky_Lamviec extends Dialog {
 
 	private void LoadData() throws SQLException {
 		buildPhongbanList();
-		switch (LOAI_CONGVIEC) {
-		case 1:
-			dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) Congviec;
-			dx = controler.getControl_DEXUAT().get_DEXUAT(dsb);
-			gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-			gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-			gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
-			break;
-		case 2:
-			dtt = (DOT_THUCHIEN_TANG_TAISAN) Congviec;
-			dx = controler.getControl_DEXUAT().get_DEXUAT(dtt);
-			gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
-			gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
-			gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);
-			break;
-		case 3:
-			dgt = (DOT_THUCHIEN_GIAM_TAISAN) Congviec;
-			dx = controler.getControl_DEXUAT().get_DEXUAT(dgt);
-			gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt);
-			break;
-		default:
-			break;
-		}
+		// switch (LOAI_CONGVIEC) {
+		// case 1:
+		// dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) Congviec;
+		// dx = controler.getControl_DEXUAT().get_DEXUAT(dsb);
+		// gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+		// gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
+		// gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dsb);
+		// break;
+		// case 2:
+		// dtt = (DOT_THUCHIEN_TANG_TAISAN) Congviec;
+		// dx = controler.getControl_DEXUAT().get_DEXUAT(dtt);
+		// gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
+		// gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
+		// gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);
+		// break;
+		// case 3:
+		// dgt = (DOT_THUCHIEN_GIAM_TAISAN) Congviec;
+		// dx = controler.getControl_DEXUAT().get_DEXUAT(dgt);
+		// gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dgt);
+		// break;
+		// default:
+		// break;
+		// }
+		dx = controler.getControl_DEXUAT().get_DEXUAT(Congviec);
+		gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(Congviec);
+		gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(Congviec);
+		gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(Congviec);
 		fillCongviec(dx, gdth, gdnt, gdqt);
 		fillPhanviec(dx, gdth, gdnt, gdqt);
 	}

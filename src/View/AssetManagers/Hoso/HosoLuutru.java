@@ -120,7 +120,7 @@ public class HosoLuutru extends Shell {
 	 */
 	public HosoLuutru(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(HosoLuutru.class, "/archive-icon.png"));
+		setImage(SWTResourceManager.getImage(HosoLuutru.class, "/folder-documents-icon.png"));
 		setLayout(new GridLayout(8, false));
 		HosoLuutru.user = user;
 		TreeRowStyle ts = new TreeRowStyle();
@@ -251,6 +251,7 @@ public class HosoLuutru extends Shell {
 		tltmCpNht.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				dateTime.setEnabled(true);
 			}
 		});
 		tltmCpNht.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/edit-validated-icon (1).png"));
@@ -282,7 +283,6 @@ public class HosoLuutru extends Shell {
 							for (TreeItem item : items) {
 								FILESCAN fcs = (FILESCAN) item.getData();
 								controler.getControl_FILESCAN().delete_FILESCAN(fcs);
-
 							}
 						}
 						VANBAN vb = controler.getControl_VANBAN()
@@ -321,6 +321,11 @@ public class HosoLuutru extends Shell {
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmTmKim = new ToolItem(toolBar, SWT.NONE);
+		tltmTmKim.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		tltmTmKim.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/search-icon.png"));
 		tltmTmKim.setText("Tìm kiếm");
 
@@ -434,42 +439,26 @@ public class HosoLuutru extends Shell {
 			@Override
 			public void handleEvent(Event arg0) {
 				try {
-					/* get selection */
 					clearText();
 					TreeItem[] items = tree_TuHoso.getSelection();
-					if (items.length > 0) {
-						Object ob = items[0].getData();
-						if (ob instanceof VANBAN) {
-							VANBAN vb = (VANBAN) ob;
-							text_Mavanban.setText(String.valueOf(vb.getMA_VANBAN()));
-							text_Sovanban.setText(vb.getSO_VANBAN());
-							if (vb.getNGAY_BAN_HANH() == null) {
-								// text_Ngaybanhanh.setEnabled(false);
-							} else {
-								dateTime.setDay(mdf.getDay(vb.getNGAY_BAN_HANH()));
-								dateTime.setMonth(mdf.getMonth(vb.getNGAY_BAN_HANH()));
-								dateTime.setYear(mdf.getYear(vb.getNGAY_BAN_HANH()));
-							}
-							text_Coqunbanhanh.setText(vb.getCO_QUAN_BAN_HANH());
-							text_Trichyeu.setText(vb.getTRICH_YEU());
-							TAP_HO_SO ths = new TAP_HO_SO();
-							ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
-							if (ths != null) {
-								text_Mataphoso.setText(String.valueOf(ths.getMA_TAPHOSO()));
-								text_Tentaphoso.setText(ths.getTEN_TAPHOSO());
-								text_Mota.setText(ths.getGIOITHIEU_TAPHOSO());
-							}
-							loadIMG(vb);
-
-						} else {
-							clearText();
-							HOSO_ROW hrs = (HOSO_ROW) ob;
-							TAP_HO_SO ths = new TAP_HO_SO();
-							ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hrs.getMA_TAPHOSO());
-							if (ths != null) {
-								text_Mataphoso.setText(String.valueOf(ths.getMA_TAPHOSO()));
-								text_Tentaphoso.setText(ths.getTEN_TAPHOSO());
-								text_Mota.setText(ths.getGIOITHIEU_TAPHOSO());
+					if (items.length <= 0)
+						return;
+					Object ob = items[0].getData();
+					if (ob instanceof VANBAN) {
+						VANBAN vb = (VANBAN) ob;
+						fillVanban(vb);
+						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						fillTaphoso(ths);
+						loadIMG(vb);
+					} else {
+						clearText();
+						HOSO_ROW hrs = (HOSO_ROW) ob;
+						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hrs.getMA_TAPHOSO());
+						fillTaphoso(ths);
+						ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
+						if (vbl != null) {
+							for (VANBAN vb : vbl) {
+								loadIMG(vb);
 							}
 						}
 					}
@@ -524,17 +513,49 @@ public class HosoLuutru extends Shell {
 		trclmnMS.setText("M\u00E3 s\u1ED1");
 		ts.setTreeItemHeight(tree_TuHoso, treeItemHeight);
 
-		Composite composite_1 = new Composite(sashForm_3, SWT.NONE);
-		composite_1.setLayout(new GridLayout(1, false));
+		Menu menu_1 = new Menu(tree_TuHoso);
+		tree_TuHoso.setMenu(menu_1);
 
-		SashForm sashForm_2 = new SashForm(composite_1, SWT.NONE);
-		sashForm_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		MenuItem mntmXemTpH = new MenuItem(menu_1, SWT.NONE);
+		mntmXemTpH.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					TreeItem[] items = tree_TuHoso.getSelection();
+					if (items.length <= 0)
+						return;
+					Object o = items[0].getData();
+					if (o instanceof HOSO_ROW) {
+						HOSO_ROW hsr = (HOSO_ROW) o;
+						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hsr.getMA_TAPHOSO());
+						if (ths == null)
+							return;
+						TapHoso_View thsv = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+						thsv.open();
+					} else {
+						VANBAN vb = (VANBAN) o;
+						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						if (ths == null)
+							return;
+						TapHoso_View thsv = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+						thsv.open();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXemTpH.setText("Xem tập hồ sơ");
+
+		SashForm sashForm_2 = new SashForm(sashForm_3, SWT.NONE);
 
 		ExpandBar expandBar = new ExpandBar(sashForm_2, SWT.V_SCROLL);
 		expandBar.setSpacing(8);
 		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
 
 		ExpandItem xpndtmThngTinVn = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmThngTinVn.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-document-edit-icon (1).png"));
 		xpndtmThngTinVn.setText("Thông tin văn bản");
 
 		Composite composite_2 = new Composite(expandBar, SWT.NONE);
@@ -576,6 +597,7 @@ public class HosoLuutru extends Shell {
 		xpndtmThngTinVn.setHeight(150);
 
 		ExpandItem xpndtmFile = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmFile.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-insert-image-icon (1).png"));
 		xpndtmFile.setText("File");
 
 		Composite composite_3 = new Composite(expandBar, SWT.NONE);
@@ -627,11 +649,12 @@ public class HosoLuutru extends Shell {
 		text_Stt.setText("0");
 
 		ExpandItem xpndtmTpHS = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmTpHS.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Documents-Folder-Graphite-icon.png"));
 		xpndtmTpHS.setText("Tập hồ sơ");
 
 		Composite composite_4 = new Composite(expandBar, SWT.NONE);
 		xpndtmTpHS.setControl(composite_4);
-		xpndtmTpHS.setHeight(75);
+		xpndtmTpHS.setHeight(120);
 		composite_4.setLayout(new GridLayout(2, false));
 
 		Label lblMTpH = new Label(composite_4, SWT.NONE);
@@ -745,18 +768,6 @@ public class HosoLuutru extends Shell {
 		trclmnStt_2.setWidth(100);
 		trclmnStt_2.setText("Stt");
 
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
-
-		scrolledComposite = new ScrolledComposite(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		lbl_Image = new Label(scrolledComposite, SWT.NONE);
-		scrolledComposite.setContent(lbl_Image);
-		scrolledComposite.setMinSize(lbl_Image.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-		sashForm.setWeights(new int[] { 1000, 618 });
 		ts.setTreeItemHeight(tree_IMG, treeItemHeight);
 
 		Menu menu = new Menu(tree_IMG);
@@ -787,8 +798,16 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		mntmnhSTrang.setText("Tự đánh số trang");
-		sashForm_2.setWeights(new int[] { 220, 268 });
-		sashForm_3.setWeights(new int[] { 618, 1000 });
+		sashForm_2.setWeights(new int[] { 166, 239 });
+		sashForm_3.setWeights(new int[] { 618, 809 });
+
+		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+
+		lbl_Image = new Label(scrolledComposite, SWT.NONE);
+		scrolledComposite.setContent(lbl_Image);
+		scrolledComposite.setMinSize(lbl_Image.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		sashForm.setWeights(new int[] { 419, 392 });
 
 		Label lblTuNgay = new Label(this, SWT.NONE);
 		lblTuNgay.setText("Từ ngày: ");
@@ -839,6 +858,28 @@ public class HosoLuutru extends Shell {
 		btnng.setText("\u0110\u00F3ng");
 		createContents();
 		init();
+	}
+
+	protected void fillVanban(VANBAN vb) {
+		text_Mavanban.setText(String.valueOf(vb.getMA_VANBAN()));
+		text_Sovanban.setText(vb.getSO_VANBAN());
+		if (vb.getNGAY_BAN_HANH() == null) {
+			dateTime.setEnabled(false);
+		} else {
+			dateTime.setDay(mdf.getDay(vb.getNGAY_BAN_HANH()));
+			dateTime.setMonth(mdf.getMonth(vb.getNGAY_BAN_HANH()));
+			dateTime.setYear(mdf.getYear(vb.getNGAY_BAN_HANH()));
+		}
+		text_Coqunbanhanh.setText(vb.getCO_QUAN_BAN_HANH());
+		text_Trichyeu.setText(vb.getTRICH_YEU());
+	}
+
+	protected void fillTaphoso(TAP_HO_SO ths) {
+		if (ths == null)
+			return;
+		text_Mataphoso.setText(String.valueOf(ths.getMA_TAPHOSO()));
+		text_Tentaphoso.setText(ths.getTEN_TAPHOSO());
+		text_Mota.setText(ths.getGIOITHIEU_TAPHOSO());
 	}
 
 	private void init() throws SQLException {

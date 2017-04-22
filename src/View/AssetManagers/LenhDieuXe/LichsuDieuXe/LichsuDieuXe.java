@@ -111,7 +111,7 @@ public class LichsuDieuXe extends Shell {
 				}
 			}
 		});
-		tltmXemLnhiu.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/car (1).png"));
+		tltmXemLnhiu.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/license-management-icon.png"));
 		tltmXemLnhiu.setText("Xem Lệnh điều xe");
 
 		ToolItem tltmThayiThng = new ToolItem(toolBar, SWT.NONE);
@@ -185,7 +185,11 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		Composite composite = new Composite(sashForm_1, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
+		GridLayout gl_composite = new GridLayout(1, false);
+		gl_composite.marginWidth = 0;
+		gl_composite.marginHeight = 0;
+		gl_composite.horizontalSpacing = 0;
+		composite.setLayout(gl_composite);
 
 		btnLnhHy = new Button(composite, SWT.CHECK);
 		btnLnhHy.addSelectionListener(new SelectionAdapter() {
@@ -198,7 +202,10 @@ public class LichsuDieuXe extends Shell {
 				}
 			}
 		});
-		btnLnhHy.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		GridData gd_btnLnhHy = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+		gd_btnLnhHy.verticalIndent = 5;
+		gd_btnLnhHy.horizontalIndent = 5;
+		btnLnhHy.setLayoutData(gd_btnLnhHy);
 		btnLnhHy.setText("Xem Lệnh đã hủy");
 
 		tree_Quy = new Tree(composite, SWT.BORDER | SWT.FULL_SELECTION);
@@ -368,7 +375,7 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		btnXem.setText("Xem");
-		
+
 		Button btnChaHin = new Button(this, SWT.CHECK);
 		btnChaHin.setText("- chưa hiện thực - Xe chuẩn bị điều");
 		Button btnNewButton = new Button(this, SWT.NONE);

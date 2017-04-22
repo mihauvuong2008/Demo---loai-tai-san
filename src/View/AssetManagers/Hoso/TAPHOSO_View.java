@@ -281,19 +281,22 @@ public class TapHoso_View extends Dialog {
 		Label lblTnTpH = new Label(composite, SWT.NONE);
 		lblTnTpH.setText("T\u00EAn t\u1EADp h\u1ED3 s\u01A1:");
 
-		text_Tentaphoso = new Text(composite, SWT.BORDER);
+		text_Tentaphoso = new Text(composite, SWT.NONE);
 		text_Tentaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblGiiThiuTp = new Label(composite, SWT.NONE);
+		GridData gd_lblGiiThiuTp = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_lblGiiThiuTp.verticalIndent = 3;
+		lblGiiThiuTp.setLayoutData(gd_lblGiiThiuTp);
 		lblGiiThiuTp.setText("Gi\u1EDBi thi\u1EC7u t\u1EADp h\u1ED3 s\u01A1:");
 
-		text_GioithieuTaphoso = new Text(composite, SWT.BORDER | SWT.WRAP);
-		text_GioithieuTaphoso.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		text_GioithieuTaphoso = new Text(composite, SWT.WRAP);
+		text_GioithieuTaphoso.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Label lblSLngVn = new Label(composite, SWT.NONE);
 		lblSLngVn.setText("S\u1ED1 l\u01B0\u1EE3ng v\u0103n b\u1EA3n:");
 
-		text_Soluongvanban = new Text(composite, SWT.BORDER);
+		text_Soluongvanban = new Text(composite, SWT.NONE);
 		text_Soluongvanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_Soluongvanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Soluongvanban.setEditable(false);
@@ -304,14 +307,14 @@ public class TapHoso_View extends Dialog {
 		Label lblMVnBn = new Label(composite, SWT.NONE);
 		lblMVnBn.setText("M\u00E3 v\u0103n b\u1EA3n:");
 
-		text_Mavanban = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
+		text_Mavanban = new Text(composite, SWT.READ_ONLY);
 		text_Mavanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		text_Mavanban.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 
 		Label lblSVnBn = new Label(composite, SWT.NONE);
 		lblSVnBn.setText("S\u1ED1 v\u0103n b\u1EA3n:");
 
-		text_Sovanban = new Text(composite, SWT.BORDER);
+		text_Sovanban = new Text(composite, SWT.NONE);
 		text_Sovanban.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblNgyBanHnh = new Label(composite, SWT.NONE);
@@ -323,7 +326,7 @@ public class TapHoso_View extends Dialog {
 		Label lblnVBan = new Label(composite, SWT.NONE);
 		lblnVBan.setText("\u0110\u01A1n v\u1ECB ban h\u00E0nh:");
 
-		text_Donvibanhanh = new Text(composite, SWT.BORDER);
+		text_Donvibanhanh = new Text(composite, SWT.NONE);
 		text_Donvibanhanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblTrchYu = new Label(composite, SWT.NONE);
@@ -332,7 +335,7 @@ public class TapHoso_View extends Dialog {
 		lblTrchYu.setLayoutData(gd_lblTrchYu);
 		lblTrchYu.setText("Tr\u00EDch y\u1EBFu:");
 
-		text_Trichyeu = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		text_Trichyeu = new Text(composite, SWT.WRAP | SWT.V_SCROLL);
 		text_Trichyeu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		sashForm.setWeights(new int[] { 1000, 618 });
 

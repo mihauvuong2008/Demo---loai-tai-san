@@ -96,7 +96,7 @@ public class NhapDeXuat extends Dialog {
 	 */
 	public void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM);
-		shell.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/maintenance-icon (1).png"));
+		shell.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/Mimes-ooo-writer-icon.png"));
 		shell.setText("Nhập Đề xuất - Hồ sơ chủ trương phê duyệt");
 		shell.setSize(720, 445);
 		shell.setLayout(new GridLayout(3, false));

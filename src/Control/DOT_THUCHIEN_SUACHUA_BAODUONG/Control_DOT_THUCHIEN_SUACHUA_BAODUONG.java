@@ -802,7 +802,8 @@ public class Control_DOT_THUCHIEN_SUACHUA_BAODUONG {
 				if (dsb == null)
 					return false;
 				DE_XUAT d = cdx.get_DEXUAT(dsb);
-				cdx.delete_DEXUAT(d);
+				if (d != null)
+					cdx.delete_DEXUAT(d);
 				cqdt.delete_QUATRINH_DEXUAT_THUCHIEN(dsb.getMA_QUATRINH_DEXUAT_THUCHIEN());
 				cqnq.delete_QUATRINH_NGHIEMTHU_QUYETTOAN(dsb.getMA_QUATRINH_NGHIEMTHU_QUYETTOAN());
 				String query = (new query_Delete_DOT_THUCHIEN_SUACHUA_BAODUONG())

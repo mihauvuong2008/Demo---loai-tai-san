@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -103,7 +102,7 @@ public class CongViecCuaToi extends Shell {
 	private Tree tree_HosoPhanviec;
 	private Tree tree_Hoso_PhanviecTuoc;
 	private Text text_DukienThuchien;
-	private Group grpNgunThamGia;
+	private Composite grpNgunThamGia;
 	private Tree tree_Hoso_Dathuchien;
 	private TabFolder tabFolder;
 	private Button btnTiepNhan;
@@ -153,7 +152,7 @@ public class CongViecCuaToi extends Shell {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmHSLu = new ToolItem(toolBar, SWT.NONE);
-		tltmHSLu.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Places-folder-documents-icon (1).png"));
+		tltmHSLu.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/folder-documents-icon(1).png"));
 		tltmHSLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -331,7 +330,7 @@ public class CongViecCuaToi extends Shell {
 		tltmHSLu.setText("Cập nhật Hồ sơ");
 
 		ToolItem tltmBoCo = new ToolItem(toolBar, SWT.NONE);
-		tltmBoCo.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/distributor-report-icon (1).png"));
+		tltmBoCo.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/page-white-text-icon.png"));
 		tltmBoCo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1088,13 +1087,8 @@ public class CongViecCuaToi extends Shell {
 		text_Ghichu_Phanviec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		text_Ghichu_Phanviec.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
 
-		Group grpHSnh = new Group(composite_5, SWT.NONE);
-		grpHSnh.setLayout(new GridLayout(1, false));
-		grpHSnh.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		grpHSnh.setText("Hồ sơ đính kèm");
-
-		tree_HosoPhanviec = new Tree(grpHSnh, SWT.BORDER | SWT.FULL_SELECTION);
-		tree_HosoPhanviec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tree_HosoPhanviec = new Tree(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_HosoPhanviec.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 2, 1));
 		tree_HosoPhanviec.setLinesVisible(true);
 		tree_HosoPhanviec.setHeaderVisible(true);
 
@@ -1482,16 +1476,11 @@ public class CongViecCuaToi extends Shell {
 		trclmnNewColumn_1.setWidth(100);
 		trclmnNewColumn_1.setText("NGƯỜI TẠO");
 
-		Composite composite_1 = new Composite(sashForm_6, SWT.NONE);
-		composite_1.setLayout(new GridLayout(1, false));
-
-		grpNgunThamGia = new Group(composite_1, SWT.NONE);
-		grpNgunThamGia.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpNgunThamGia.setText("Ngu\u1ED3n tham gia");
+		grpNgunThamGia = new Composite(sashForm_6, SWT.NONE);
 		grpNgunThamGia.setLayout(new GridLayout(2, false));
 
 		Label lblTnNgun = new Label(grpNgunThamGia, SWT.NONE);
-		lblTnNgun.setText("T\u00EAn Ngu\u1ED3n:");
+		lblTnNgun.setText("Tên Liên hệ:");
 
 		text_Nguon_Dathuchien = new Text(grpNgunThamGia, SWT.NONE);
 		text_Nguon_Dathuchien.setEditable(false);
@@ -1672,7 +1661,6 @@ public class CongViecCuaToi extends Shell {
 	}
 
 	protected void setField_ThongTin_NGUON_GIAM_Dathuchien(DOT_THUCHIEN_GIAM_TAISAN dgt) throws SQLException {
-		grpNgunThamGia.setText("Nguồn giảm PTTS");
 		NGUONGIAM nt = controler.getControl_NGUONGIAM().get_NguonGiam(dgt);
 		if (nt != null) {
 			text_Nguon_Dathuchien.setText(nt.getTEN_NGUONGIAM());
@@ -1684,7 +1672,6 @@ public class CongViecCuaToi extends Shell {
 	}
 
 	protected void setField_ThongTin_NGUON_TANG_Dathuchien(DOT_THUCHIEN_TANG_TAISAN dtt) throws SQLException {
-		grpNgunThamGia.setText("Nguồn tăng PTTS");
 		NGUONTANG nt = controler.getControl_NGUONTANG().get_NguonTang(dtt);
 		if (nt != null) {
 			text_Nguon_Dathuchien.setText(nt.getTEN_NGUONTANG());
@@ -1697,7 +1684,6 @@ public class CongViecCuaToi extends Shell {
 
 	protected void setField_ThongTin_NGUONSUACHUA_BAODUONG_Dathuchien(DOT_THUCHIEN_SUACHUA_BAODUONG dsb)
 			throws SQLException {
-		grpNgunThamGia.setText("Nguồn Sửa chữa - Bảo dưỡng");
 		NGUONSUACHUA_BAODUONG nsb = controler.getControl_NGUONSUACHUA_BAODUONG().get_NguonSuachua_Baoduong(dsb);
 		if (nsb != null) {
 			text_Nguon_Dathuchien.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());
