@@ -34,7 +34,6 @@ import DAO.NHOMTAISAN_CAP_V;
 import DAO.NHOM_TAISANCODINH_DACBIET;
 import DAO.NHOM_TAISANCODINH_DACTHU;
 import DAO.NHOM_TAISANCODINH_VOHINH;
-import View.AssetManagers.Icondataset;
 import View.AssetManagers.Nhomtaisan_162;
 import View.AssetManagers.excel_NhapDulieu.ImportExcel_NhomTaisan;
 import View.Template.FormTemplate;
@@ -90,7 +89,7 @@ public class QuanlyNhomtaisan extends Shell {
 	 */
 	public QuanlyNhomtaisan(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/Books-2-icon.png"));
+		setImage(user.getIcondata().TongNhomtaisan);
 		setLayout(new GridLayout(8, false));
 		QuanlyNhomtaisan.user = user;
 		controler = new Controler(user);
@@ -319,7 +318,7 @@ public class QuanlyNhomtaisan extends Shell {
 
 		Button btnThm = new Button(this, SWT.NONE);
 		btnThm.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		btnThm.setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/add-1-icon (1).png"));
+		btnThm.setImage(user.getIcondata().addIcon);
 		btnThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -329,7 +328,7 @@ public class QuanlyNhomtaisan extends Shell {
 		btnThm.setText("Thêm");
 
 		Button btnSa = new Button(this, SWT.NONE);
-		btnSa.setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/edit-validated-icon (1).png"));
+		btnSa.setImage(user.getIcondata().editIcon);
 		btnSa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -339,7 +338,7 @@ public class QuanlyNhomtaisan extends Shell {
 		btnSa.setText("Sửa");
 
 		Button btnXa = new Button(this, SWT.NONE);
-		btnXa.setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/delete-1-icon (1).png"));
+		btnXa.setImage(user.getIcondata().deleteIcon);
 		btnXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -404,7 +403,7 @@ public class QuanlyNhomtaisan extends Shell {
 		btnXa.setText("Xóa");
 
 		Button btnLu = new Button(this, SWT.NONE);
-		btnLu.setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 		btnLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -577,7 +576,7 @@ public class QuanlyNhomtaisan extends Shell {
 		btnLu.setText("Hoàn tất");
 
 		Button btnToMiT = new Button(this, SWT.NONE);
-		btnToMiT.setImage(SWTResourceManager.getImage(QuanlyNhomtaisan.class, "/import-icon.png"));
+		btnToMiT.setImage(user.getIcondata().importIcon);
 		btnToMiT.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -661,7 +660,7 @@ public class QuanlyNhomtaisan extends Shell {
 
 	private void init() throws SQLException {
 		initNhomTaisan();
-		N162 = new Nhomtaisan_162(controler, new Icondataset());
+		N162 = new Nhomtaisan_162(controler, user.getIcondata());
 		N162.setTree_NHOMTaisan_Codinh(tree_NHOMTaisan_Codinh);
 		N162.setTree_NhomTaisan_Codinh_dacbiet(tree_NhomTaisan_Codinh_dacbiet);
 		N162.setTree_Nhomtaisan_Codinh_Dacthu(tree_Nhomtaisan_Codinh_Dacthu);

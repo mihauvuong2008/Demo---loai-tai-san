@@ -16,6 +16,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import DAO.PHUKIEN;
 import DAO.TAISAN;
+import View.AssetManagers.Icondataset;
 import View.Template.FormTemplate;
 
 import org.eclipse.swt.events.SelectionAdapter;
@@ -36,6 +37,7 @@ public class InsertPhukien extends Dialog {
 	private Text text_Nguyengia;
 	private TAISAN taisan;
 	private PHUKIEN phukien;
+	private final Icondataset icondata = new Icondataset();
 
 	public Object getResult() {
 		return result;
@@ -81,7 +83,7 @@ public class InsertPhukien extends Dialog {
 	 */
 	private void createContents() {
 		shlThngTinPh = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MIN);
-		shlThngTinPh.setImage(SWTResourceManager.getImage(InsertPhukien.class, "/plugin-add-icon.png"));
+		shlThngTinPh.setImage(icondata.phukienIcon);
 		shlThngTinPh.setSize(453, 280);
 		new FormTemplate().setCenterScreen(shlThngTinPh);
 		shlThngTinPh.setText("Th\u00F4ng tin ph\u1EE5 ki\u1EC7n");
@@ -170,7 +172,7 @@ public class InsertPhukien extends Dialog {
 		sashForm.setWeights(new int[] { 88, 120 });
 
 		Button btnHonTt = new Button(shlThngTinPh, SWT.NONE);
-		btnHonTt.setImage(SWTResourceManager.getImage(InsertPhukien.class, "/success-icon.png"));
+		btnHonTt.setImage(icondata.successIcon);
 		btnHonTt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

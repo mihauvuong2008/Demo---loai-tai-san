@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -71,7 +70,7 @@ public class QuanlyTaikhoan extends Shell {
 	 */
 	public QuanlyTaikhoan(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/Folder-Group-icon.png"));
+		setImage(user.getIcondata().quanlytaikhoanIcon);
 		setLayout(new GridLayout(1, false));
 		QuanlyTaikhoan.user = user;
 		controler = new Controler(user);
@@ -107,7 +106,7 @@ public class QuanlyTaikhoan extends Shell {
 				}
 			}
 		});
-		tltmThmNgiDng.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/Users-Add-User-icon.png"));
+		tltmThmNgiDng.setImage(user.getIcondata().addUserIcon);
 		tltmThmNgiDng.setText("Th\u00EAm ng\u01B0\u1EDDi d\u00F9ng");
 
 		ToolItem tltmThayiThng = new ToolItem(toolBar, SWT.NONE);
@@ -122,7 +121,7 @@ public class QuanlyTaikhoan extends Shell {
 				}
 			}
 		});
-		tltmThayiThng.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/Edit-Male-User-icon.png"));
+		tltmThayiThng.setImage(user.getIcondata().editUserIcon);
 		tltmThayiThng.setText("Thay \u0111\u1ED5i th\u00F4ng tin");
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
@@ -150,7 +149,7 @@ public class QuanlyTaikhoan extends Shell {
 				table_danhsachNguoidung.remove(table_danhsachNguoidung.indexOf(til[0]));
 			}
 		});
-		tltmXa.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/Actions-user-group-delete-icon.png"));
+		tltmXa.setImage(user.getIcondata().deleteUserIcon);
 		tltmXa.setText("X\u00F3a");
 
 		ToolItem tltmLwu = new ToolItem(toolBar, SWT.NONE);
@@ -208,13 +207,13 @@ public class QuanlyTaikhoan extends Shell {
 			}
 		});
 		tltmLwu.setText("Lưu");
-		tltmLwu.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/Actions-document-save-icon (1).png"));
+		tltmLwu.setImage(user.getIcondata().saveIcon);
 
 		@SuppressWarnings("unused")
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmCpQuyn = new ToolItem(toolBar, SWT.NONE);
-		tltmCpQuyn.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/folder-check-icon.png"));
+		tltmCpQuyn.setImage(user.getIcondata().capquyenIcon);
 		tltmCpQuyn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -261,7 +260,7 @@ public class QuanlyTaikhoan extends Shell {
 				}
 			}
 		});
-		tltmThuHiQuyn.setImage(SWTResourceManager.getImage(QuanlyTaikhoan.class, "/block-icon.png"));
+		tltmThuHiQuyn.setImage(user.getIcondata().thuhoiquyenIcon);
 		tltmThuHiQuyn.setText("Thu hồi quyền hạn");
 
 		SashForm sashForm = new SashForm(this, SWT.NONE);

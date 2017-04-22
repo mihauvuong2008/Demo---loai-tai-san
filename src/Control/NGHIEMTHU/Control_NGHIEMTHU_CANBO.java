@@ -12,7 +12,7 @@ import Control.ROLE.PrivilegeChecker;
 import DAO.GIAI_DOAN_NGHIEM_THU;
 import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_NGHIEMTHU;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.BUILD.OUT.Control_DAO_Build;
 import DAO.BUILD.QUERY.DELETE_LIB.query_Delete_NGUOIDUNG_NGHIEMTHU;
 import DAO.BUILD.QUERY.INSERT_LIB.query_Insert_NGUOIDUNG_NGHIEMTHU;
@@ -75,7 +75,7 @@ public class Control_NGHIEMTHU_CANBO {
 		return getSelecter().get_AllNGUOIDUNG_NGHIEMTHU(gdnt);
 	}
 
-	public int update_TAPHOSO(NGUOIDUNG_NGHIEMTHU ndnt, TAP_HO_SO ths) throws SQLException {
+	public int update_TAPHOSO(NGUOIDUNG_NGHIEMTHU ndnt, TAPHOSO ths) throws SQLException {
 		return getUpdater().update_TAPHOSO(ndnt, ths);
 	}
 
@@ -195,7 +195,7 @@ public class Control_NGHIEMTHU_CANBO {
 	}
 
 	private class Update extends EDIactivity {
-		public int update_TAPHOSO(NGUOIDUNG_NGHIEMTHU ndnt, TAP_HO_SO ths) throws SQLException {
+		public int update_TAPHOSO(NGUOIDUNG_NGHIEMTHU ndnt, TAPHOSO ths) throws SQLException {
 			if (conn != null & isPrivilegeEDI()) {
 				String query = (new query_Update_NGUOIDUNG_NGHIEMTHU()).getString_CapnhatHoso(ndnt, ths);
 				if (query == null)

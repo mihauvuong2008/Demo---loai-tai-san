@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import Control.ControlTool.Control_Tool;
 import Control.ROLE.PrivilegeChecker;
 import DAO.NGUOIDUNG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 
 public class Control_VANBAN {
@@ -51,7 +51,7 @@ public class Control_VANBAN {
 		pvc = user.getPrivilegeChecker();
 	}
 
-	public ArrayList<VANBAN> get_AllVanban(TAP_HO_SO ths) throws SQLException {
+	public ArrayList<VANBAN> get_AllVanban(TAPHOSO ths) throws SQLException {
 		return getSelecter().get_AllVanban(ths);
 	}
 
@@ -125,7 +125,7 @@ public class Control_VANBAN {
 	}
 
 	private class Select extends REAactivity {
-		public ArrayList<VANBAN> get_AllVanban(TAP_HO_SO ths) throws SQLException {
+		public ArrayList<VANBAN> get_AllVanban(TAPHOSO ths) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
 				ArrayList<VANBAN> vbl = new ArrayList<>();
 				String query = "SELECT * FROM VANBAN  WHERE MA_TAPHOSO = '" + ths.getMA_TAPHOSO() + "'; ";

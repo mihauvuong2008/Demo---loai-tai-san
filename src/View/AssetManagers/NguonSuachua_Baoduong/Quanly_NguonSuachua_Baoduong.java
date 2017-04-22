@@ -44,6 +44,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	private Text text_Gioithieu;
 	private int mode;
 	private final Controler controler;
+	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(Quanly_NguonSuachua_Baoduong.class);
 
 	/**
@@ -57,6 +58,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlQunLNgun = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlQunLNgun.setImage(SWTResourceManager.getImage(Quanly_NguonSuachua_Baoduong.class, "/phone-icon.png"));
+		shlQunLNgun.setImage(user.getIcondata().PhoneIcon);
 		shlQunLNgun.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlQunLNgun);
 		shlQunLNgun.setText("Quản lý nguồn Sửa chữa - Bảo dưỡng");
@@ -178,8 +180,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnThm = new Button(shlQunLNgun, SWT.NONE);
-		btnThm.setImage(SWTResourceManager.getImage(Quanly_NguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnThm.setImage(user.getIcondata().addIcon);
 		btnThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -190,8 +191,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		btnThm.setText("Thêm");
 
 		Button button_1 = new Button(shlQunLNgun, SWT.NONE);
-		button_1.setImage(SWTResourceManager.getImage(Quanly_NguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_1.setImage(user.getIcondata().editIcon);
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -231,16 +231,14 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 				}
 			}
 		});
-		button_2.setImage(SWTResourceManager.getImage(Quanly_NguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_2.setImage(user.getIcondata().deleteIcon);
 		GridData gd_button_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_button_2.widthHint = 75;
 		button_2.setLayoutData(gd_button_2);
 		button_2.setText("Xóa");
 
 		Button button_3 = new Button(shlQunLNgun, SWT.NONE);
-		button_3.setImage(SWTResourceManager.getImage(Quanly_NguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_3.setImage(user.getIcondata().saveIcon);
 		button_3.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

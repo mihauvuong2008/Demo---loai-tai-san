@@ -12,8 +12,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
+import View.AssetManagers.Icondataset;
 import View.Template.FormTemplate;
 
 public class Report extends Dialog {
@@ -22,6 +22,7 @@ public class Report extends Dialog {
 	protected Shell shlReport;
 	private Text text;
 	private String oldString;
+	private final Icondataset icondata = new Icondataset();
 
 	/**
 	 * Create the dialog.
@@ -59,7 +60,7 @@ public class Report extends Dialog {
 	 */
 	private void createContents() {
 		shlReport = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE);
-		shlReport.setImage(SWTResourceManager.getImage(Report.class, "/Distributor-report-icon.png"));
+		shlReport.setImage(icondata.reportIcon);
 		shlReport.setSize(485, 300);
 		new FormTemplate().setCenterScreen(shlReport);
 		shlReport.setText("Vi\u1EBFt ghi ch\u00FA");

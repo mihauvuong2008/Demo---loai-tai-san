@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class Taikhoan extends Dialog {
 
@@ -38,6 +37,7 @@ public class Taikhoan extends Dialog {
 	private Label lblTnNgiDng;
 	private Label lblMatKhau;
 	private final Controler controler;
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -50,6 +50,7 @@ public class Taikhoan extends Dialog {
 		setText("SWT Dialog");
 		this.nd = nd;
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class Taikhoan extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlTiKhon = new Shell(getParent(), getStyle());
-		shlTiKhon.setImage(SWTResourceManager.getImage(Taikhoan.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlTiKhon.setImage(user.getIcondata().taikhoan);
 		shlTiKhon.setSize(321, 397);
 		shlTiKhon.setText("T\u00E0i kho\u1EA3n");
 		shlTiKhon.setLayout(new GridLayout(3, false));

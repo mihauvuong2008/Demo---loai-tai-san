@@ -10,9 +10,9 @@ import Controler.Controler;
 import DAO.DE_XUAT;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -115,7 +115,7 @@ public class ThuvienDexuat extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlThVin = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlThVin.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/library-icon_2.png"));
+		shlThVin.setImage(user.getIcondata().ThuvienDexuatIcon);
 		shlThVin.setSize(810, 500);
 		new FormTemplate().setCenterScreen(shlThVin);
 		shlThVin.setText("Th\u01B0 vi\u1EC7n \u0110\u1EC1 xu\u1EA5t");
@@ -132,7 +132,7 @@ public class ThuvienDexuat extends Dialog {
 					TableItem[] tbil = table_Taphoso.getSelection();
 					if (tbil.length > 0) {
 						VANBAN vb = (VANBAN) tbil[0].getData();
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
 						Vanban_View vbv = new Vanban_View(shlThVin, SWT.DIALOG_TRIM, user, ths, vb, true);
 						vbv.open();
 					}
@@ -143,7 +143,7 @@ public class ThuvienDexuat extends Dialog {
 			}
 		});
 		tltmXemVnBn.setText("Xem văn bản");
-		tltmXemVnBn.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/document-icon.png"));
+		tltmXemVnBn.setImage(user.getIcondata().whiteTextIcon);
 
 		ToolItem tltmCpNhpH = new ToolItem(toolBar, SWT.NONE);
 		tltmCpNhpH.addSelectionListener(new SelectionAdapter() {
@@ -157,7 +157,7 @@ public class ThuvienDexuat extends Dialog {
 				}
 			}
 		});
-		tltmCpNhpH.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/Actions-document-edit-icon (1).png"));
+		tltmCpNhpH.setImage(user.getIcondata().editIcon);
 		tltmCpNhpH.setText("C\u1EADp nh\u1EADp H\u1ED3 s\u01A1");
 
 		ToolItem tltmXaXut = new ToolItem(toolBar, SWT.NONE);
@@ -173,7 +173,7 @@ public class ThuvienDexuat extends Dialog {
 			}
 		});
 		tltmXaXut.setText("X\u00F3a H\u1ED3 s\u01A1");
-		tltmXaXut.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/Document-Delete-icon (1).png"));
+		tltmXaXut.setImage(user.getIcondata().deleteIcon);
 
 		@SuppressWarnings("unused")
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -210,7 +210,7 @@ public class ThuvienDexuat extends Dialog {
 			}
 		});
 		tltmLuThayi.setText("L\u01B0u \u0110\u1EC1 xu\u1EA5t");
-		tltmLuThayi.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/Actions-document-save-icon (1).png"));
+		tltmLuThayi.setImage(user.getIcondata().saveIcon);
 
 		SashForm sashForm = new SashForm(shlThVin, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
@@ -413,7 +413,7 @@ public class ThuvienDexuat extends Dialog {
 					TableItem[] tbil = table_Taphoso.getSelection();
 					if (tbil.length > 0) {
 						VANBAN vb = (VANBAN) tbil[0].getData();
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
 						Vanban_View vbv = new Vanban_View(shlThVin, SWT.DIALOG_TRIM, user, ths, vb, true);
 						vbv.open();
 					}
@@ -454,7 +454,7 @@ public class ThuvienDexuat extends Dialog {
 				}
 			}
 		});
-		btnTm.setImage(SWTResourceManager.getImage(ThuvienDexuat.class, "/Accept-icon (1).png"));
+		btnTm.setImage(user.getIcondata().acceptIcon);
 		GridData gd_btnTm = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_btnTm.widthHint = 75;
 		btnTm.setLayoutData(gd_btnTm);
@@ -476,16 +476,16 @@ public class ThuvienDexuat extends Dialog {
 
 	protected void CapnhatHoso() throws SQLException {
 		if (Selected != null) {
-			TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Selected.getMA_TAPHOSO()));
+			TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Selected.getMA_TAPHOSO()));
 			if (ths == null) {
-				int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(new TAP_HO_SO());
+				int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(new TAPHOSO());
 				if (Ma_NewTapHoso > 0) {
 					controler.getControl_DEXUAT().update_TapHoso(Selected, Ma_NewTapHoso);
 					Selected.setMA_TAPHOSO(Ma_NewTapHoso);
 				}
 				ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 			}
-			TapHoso_View thsV = new TapHoso_View(shlThVin, SWT.DIALOG_TRIM, user, ths, false);
+			Taphoso_View thsV = new Taphoso_View(shlThVin, SWT.DIALOG_TRIM, user, ths, false);
 			thsV.open();
 			LoadData(mdf.getDate(dateTime_Begin), mdf.getDate(dateTime_End), text_pattern.getText());
 		}
@@ -493,7 +493,7 @@ public class ThuvienDexuat extends Dialog {
 
 	protected void XoaHoso() throws SQLException {
 		if (Selected != null) {
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Selected.getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Selected.getMA_TAPHOSO());
 			if (ths != null) {
 				controler.getControl_TAPHOSO().delete_TAPHOSO(ths);
 				fillTapHoso(ths.getMA_TAPHOSO());
@@ -519,7 +519,7 @@ public class ThuvienDexuat extends Dialog {
 
 	protected void fillTapHoso(int ma_TAPHOSO) throws SQLException {
 		table_Taphoso.removeAll();
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ma_TAPHOSO);
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ma_TAPHOSO);
 		if (ths != null) {
 			ArrayList<VANBAN> vbl = (controler.getControl_VANBAN()).get_AllVanban(ths);
 			int i = 1;

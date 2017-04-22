@@ -27,6 +27,7 @@ import DAO.NHOM_TAISANCODINH_DACBIET;
 import DAO.NHOM_TAISANCODINH_DACTHU;
 import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.TAISAN;
+import View.AssetManagers.Icondataset;
 import View.AssetManagers.excel_XuatDulieu.ColumnKeyCollector.TAISAN_keyColumn;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -36,7 +37,6 @@ import jxl.write.WriteException;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ExportExcelData_Taisan extends Dialog {
 
@@ -48,6 +48,7 @@ public class ExportExcelData_Taisan extends Dialog {
 	private ColumnKeyCollector ckc;
 	private Table table;
 	private excel_row er;
+	private final Icondataset icondata = new Icondataset();
 
 	/**
 	 * Create the dialog.
@@ -91,7 +92,7 @@ public class ExportExcelData_Taisan extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlDanhSachTai = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlDanhSachTai.setImage(SWTResourceManager.getImage(ExportExcelData_Taisan.class, "/Excel-icon.png"));
+		shlDanhSachTai.setImage(icondata.excelIcon);
 		shlDanhSachTai.setSize(650, 400);
 		shlDanhSachTai.setText("Danh sách tài sản");
 		shlDanhSachTai.setLayout(new GridLayout(5, false));

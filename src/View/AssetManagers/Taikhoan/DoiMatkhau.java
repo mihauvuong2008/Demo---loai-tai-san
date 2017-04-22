@@ -15,7 +15,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -76,7 +75,7 @@ public class DoiMatkhau extends Dialog {
 	 */
 	private void createContents() {
 		shlThayiMt = new Shell(getParent(), getStyle());
-		shlThayiMt.setImage(SWTResourceManager.getImage(DoiMatkhau.class, "/Login-icon.png"));
+		shlThayiMt.setImage(user.getIcondata().logIcon);
 		shlThayiMt.setSize(400, 207);
 		new FormTemplate().setCenterScreen(shlThayiMt);
 		shlThayiMt.setText("Thay \u0111\u1ED5i M\u1EADt kh\u1EA9u");
@@ -86,7 +85,7 @@ public class DoiMatkhau extends Dialog {
 		GridData gd_lblPic = new GridData(SWT.CENTER, SWT.CENTER, false, true, 1, 1);
 		gd_lblPic.widthHint = 80;
 		lblPic.setLayoutData(gd_lblPic);
-		lblPic.setImage(SWTResourceManager.getImage(DoiMatkhau.class, "/secrecy-icon.png"));
+		lblPic.setImage(user.getIcondata().lockIcon);
 
 		grpTnNgiDng = new Group(shlThayiMt, SWT.NONE);
 		grpTnNgiDng.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -124,7 +123,7 @@ public class DoiMatkhau extends Dialog {
 			}
 		});
 		button.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		button.setImage(SWTResourceManager.getImage(DoiMatkhau.class, "/find-icon.png"));
+		button.setImage(user.getIcondata().findIcon);
 
 		Button btnHonTt = new Button(shlThayiMt, SWT.NONE);
 		btnHonTt.addSelectionListener(new SelectionAdapter() {

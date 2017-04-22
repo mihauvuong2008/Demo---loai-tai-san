@@ -84,8 +84,7 @@ public class Phuongtien_Giaothong extends Shell {
 	 */
 	public Phuongtien_Giaothong(Display display, NGUOIDUNG user, TAISAN t) throws SQLException {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.RESIZE | SWT.TITLE);
-		setImage(
-				SWTResourceManager.getImage(Phuongtien_Giaothong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		setImage(user.getIcondata().carIcon);
 		setLayout(new GridLayout(3, false));
 		Phuongtien_Giaothong.t = t;
 		Phuongtien_Giaothong.user = user;
@@ -229,8 +228,7 @@ public class Phuongtien_Giaothong extends Shell {
 		new Label(this, SWT.NONE);
 
 		Button btnNhp = new Button(this, SWT.NONE);
-		btnNhp.setImage(
-				SWTResourceManager.getImage(Phuongtien_Giaothong.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnNhp.setImage(user.getIcondata().successIcon);
 		btnNhp.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

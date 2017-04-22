@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -88,16 +87,17 @@ public class QuanlyQuyenhan extends Shell {
 	 */
 	public QuanlyQuyenhan(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanlyQuyenhan.class, "/rules-icon.png"));
+		setImage(user.getIcondata().quanlyquyenhanIcon);
 		setLayout(new GridLayout(1, false));
 		QuanlyQuyenhan.user = user;
 		controler = new Controler(user);
+		QuanlyQuyenhan.user = user;
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmThm = new ToolItem(toolBar, SWT.NONE);
-		tltmThm.setImage(SWTResourceManager.getImage(QuanlyQuyenhan.class, "/add-1-icon (1).png"));
+		tltmThm.setImage(user.getIcondata().addIcon);
 		tltmThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -124,7 +124,7 @@ public class QuanlyQuyenhan extends Shell {
 		tltmThm.setText("Th\u00EAm");
 
 		ToolItem tltmThayi = new ToolItem(toolBar, SWT.NONE);
-		tltmThayi.setImage(SWTResourceManager.getImage(QuanlyQuyenhan.class, "/edit-validated-icon (1).png"));
+		tltmThayi.setImage(user.getIcondata().editIcon);
 		tltmThayi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -166,11 +166,11 @@ public class QuanlyQuyenhan extends Shell {
 
 			}
 		});
-		tltmXa.setImage(SWTResourceManager.getImage(QuanlyQuyenhan.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 		tltmXa.setText("X\u00F3a");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(QuanlyQuyenhan.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

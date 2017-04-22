@@ -20,8 +20,8 @@ import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_NGHIEMTHU;
 import DAO.NGUOIDUNG_QUYETTOAN;
 import DAO.NGUOIDUNG_THUCHIEN;
-import DAO.TAP_HO_SO;
-import View.AssetManagers.Hoso.TapHoso_View;
+import DAO.TAPHOSO;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -137,12 +137,12 @@ public class ViewPartHoso extends Dialog {
 				TableItem ti[] = table.getSelection();
 				if (ti.length <= 0)
 					return;
-				TAP_HO_SO ths = (TAP_HO_SO) ti[0].getData();
+				TAPHOSO ths = (TAPHOSO) ti[0].getData();
 				NGUOIDUNG nd = (NGUOIDUNG) ti[0].getData("nguoidung");
 				boolean view_mode = true;
 				if (nd.getTEN_TAI_KHOAN().equals(user.getTEN_TAI_KHOAN()))
 					view_mode = false;
-				TapHoso_View thsv = new TapHoso_View(shlHSThc, SWT.DIALOG_TRIM, user, ths, view_mode);
+				Taphoso_View thsv = new Taphoso_View(shlHSThc, SWT.DIALOG_TRIM, user, ths, view_mode);
 				try {
 					thsv.open();
 				} catch (SQLException e1) {
@@ -177,7 +177,7 @@ public class ViewPartHoso extends Dialog {
 			GIAI_DOAN_THUC_HIEN gdth = (GIAI_DOAN_THUC_HIEN) phanviec;
 			ArrayList<NGUOIDUNG_THUCHIEN> ndthl = controler.getControl_THUCHIEN_CANBO().get_AllNGUOIDUNG_THUCHIEN(gdth);
 			for (NGUOIDUNG_THUCHIEN ndth : ndthl) {
-				TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
+				TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
 				if (ths == null)
 					return;
@@ -198,7 +198,7 @@ public class ViewPartHoso extends Dialog {
 			ArrayList<NGUOIDUNG_NGHIEMTHU> ndthl = controler.getControl_NGHIEMTHU_CANBO()
 					.get_AllNGUOIDUNG_NGHIEMTHU(gdth);
 			for (NGUOIDUNG_NGHIEMTHU ndth : ndthl) {
-				TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
+				TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
 				if (ths == null)
 					return;
@@ -219,7 +219,7 @@ public class ViewPartHoso extends Dialog {
 			ArrayList<NGUOIDUNG_QUYETTOAN> ndthl = controler.getControl_QUYETTOAN_CANBO()
 					.get_AllNGUOIDUNG_QUYETTOAN(gdth);
 			for (NGUOIDUNG_QUYETTOAN ndth : ndthl) {
-				TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
+				TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
 				if (ths == null)
 					return;

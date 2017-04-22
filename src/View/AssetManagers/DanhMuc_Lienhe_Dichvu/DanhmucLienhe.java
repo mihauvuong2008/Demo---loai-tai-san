@@ -3,7 +3,6 @@ package View.AssetManagers.DanhMuc_Lienhe_Dichvu;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -44,6 +43,7 @@ public class DanhmucLienhe extends Dialog {
 	private Label lblKtQu;
 	private Button btnTmKim;
 	private final Controler controler;
+	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(DanhmucLienhe.class);
 
 	/**
@@ -56,6 +56,7 @@ public class DanhmucLienhe extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -81,7 +82,7 @@ public class DanhmucLienhe extends Dialog {
 	 */
 	private void createContents() {
 		shlLinHDch = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlLinHDch.setImage(SWTResourceManager.getImage(DanhmucLienhe.class, "/phone-icon.png"));
+		shlLinHDch.setImage(user.getIcondata().PhoneIcon);
 		shlLinHDch.setSize(728, 450);
 		shlLinHDch.setText("Li\u00EAn h\u1EC7 d\u1ECBch v\u1EE5");
 		shlLinHDch.setLayout(new GridLayout(2, false));

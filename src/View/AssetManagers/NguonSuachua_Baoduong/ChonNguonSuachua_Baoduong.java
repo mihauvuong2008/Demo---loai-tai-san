@@ -80,7 +80,7 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnNgunSa = new Shell(getParent(), getStyle());
-		shlChnNgunSa.setImage(SWTResourceManager.getImage(ChonNguonSuachua_Baoduong.class, "/phone-icon.png"));
+		shlChnNgunSa.setImage(user.getIcondata().PhoneIcon);
 		shlChnNgunSa.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlChnNgunSa);
 		shlChnNgunSa.setText("Chọn Nguồn Sửa chữa - bảo dưỡng");
@@ -165,8 +165,7 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button button = new Button(shlChnNgunSa, SWT.NONE);
-		button.setImage(SWTResourceManager.getImage(ChonNguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button.setImage(user.getIcondata().successIcon);
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -185,8 +184,7 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 		button.setText("Chọn");
 
 		Button button_1 = new Button(shlChnNgunSa, SWT.NONE);
-		button_1.setImage(SWTResourceManager.getImage(ChonNguonSuachua_Baoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_1.setImage(user.getIcondata().addIcon);
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

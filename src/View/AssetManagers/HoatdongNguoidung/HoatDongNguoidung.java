@@ -4,7 +4,6 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -46,6 +45,7 @@ public class HoatDongNguoidung extends Dialog {
 	private Label label_2;
 	private final Controler controler;
 	private final MyDateFormat mdf = new MyDateFormat();
+	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(HoatDongNguoidung.class);
 
 	/**
@@ -58,6 +58,7 @@ public class HoatDongNguoidung extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class HoatDongNguoidung extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlHotngNgi = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlHotngNgi.setImage(SWTResourceManager.getImage(HoatDongNguoidung.class, "/log-icon.png"));
+		shlHotngNgi.setImage(user.getIcondata().logIcon);
 		shlHotngNgi.setSize(728, 450);
 		shlHotngNgi.setText("Ho\u1EA1t \u0111\u1ED9ng Ng\u01B0\u1EDDi d\u00F9ng");
 		new FormTemplate().setCenterScreen(shlHotngNgi);
@@ -140,7 +141,7 @@ public class HoatDongNguoidung extends Dialog {
 		init(getDate(dateTime_Begin), getDate(dateTime_End));
 
 		btnXem = new Button(shlHotngNgi, SWT.NONE);
-		btnXem.setImage(SWTResourceManager.getImage(HoatDongNguoidung.class, "/Accept-icon (1).png"));
+		btnXem.setImage(user.getIcondata().acceptIcon);
 		btnXem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

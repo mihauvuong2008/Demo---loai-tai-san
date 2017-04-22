@@ -12,7 +12,7 @@ import Control.ROLE.PrivilegeChecker;
 import DAO.GIAI_DOAN_QUYET_TOAN;
 import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_QUYETTOAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.BUILD.OUT.Control_DAO_Build;
 import DAO.BUILD.QUERY.DELETE_LIB.query_Delete_GIAI_DOAN_QUYET_TOAN;
 import DAO.BUILD.QUERY.INSERT_LIB.query_Insert_NGUOIDUNG_QUYETTOAN;
@@ -71,7 +71,7 @@ public class Control_QUYETTOAN_CANBO {
 		return getSelecter().get_NGUOIDUNG_Thamgia_Phanviec(gdth);
 	}
 
-	public int update_TAPHOSO(NGUOIDUNG_QUYETTOAN ndqt, TAP_HO_SO ths) throws SQLException {
+	public int update_TAPHOSO(NGUOIDUNG_QUYETTOAN ndqt, TAPHOSO ths) throws SQLException {
 		return getUpdater().update_TAPHOSO(ndqt, ths);
 	}
 
@@ -195,7 +195,7 @@ public class Control_QUYETTOAN_CANBO {
 			return false;
 		}
 
-		public int update_TAPHOSO(NGUOIDUNG_QUYETTOAN ndqt, TAP_HO_SO ths) throws SQLException {
+		public int update_TAPHOSO(NGUOIDUNG_QUYETTOAN ndqt, TAPHOSO ths) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String query = (new query_Update_NGUOIDUNG_QUYETTOAN()).getString_Capnhat_Taphoso(ndqt, ths);
 				if (query == null)

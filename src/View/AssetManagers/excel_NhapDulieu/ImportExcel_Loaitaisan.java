@@ -68,6 +68,7 @@ public class ImportExcel_Loaitaisan extends Shell {
 	 */
 	public ImportExcel_Loaitaisan(Display display, NGUOIDUNG user) {
 		super(display, SWT.SHELL_TRIM);
+		setImage(user.getIcondata().importIcon);
 		setLayout(new GridLayout(3, false));
 		ImportExcel_Loaitaisan.user = user;
 		controler = new Controler(user);

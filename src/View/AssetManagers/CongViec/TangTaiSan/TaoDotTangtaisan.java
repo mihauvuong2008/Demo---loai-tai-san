@@ -34,10 +34,10 @@ import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.QUATRINH_DEXUAT_THUCHIEN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.AssetManagers.CongViec.Baoduong.NhapDeXuat;
 import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.NguonTang.ChonNguontang;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -130,7 +130,7 @@ public class TaoDotTangtaisan extends Dialog {
 
 	public void createContents() throws SQLException {
 		shltMuaSm = new Shell(getParent(), SWT.SHELL_TRIM);
-		shltMuaSm.setImage(SWTResourceManager.getImage(TaoDotTangtaisan.class, "/add-icon (1).png"));
+		shltMuaSm.setImage(user.getIcondata().MuasamIcon);
 		shltMuaSm.setLayout(new GridLayout(2, false));
 		shltMuaSm.setText("Đợt Mua sắm - Tiếp nhận tài sản");
 		shltMuaSm.setSize(777, 480);
@@ -207,7 +207,7 @@ public class TaoDotTangtaisan extends Dialog {
 			}
 		});
 		btnNgunMuaSm.setText("Liên hệ");
-		btnNgunMuaSm.setImage(SWTResourceManager.getImage(TaoDotTangtaisan.class, "/phone-icon.png"));
+		btnNgunMuaSm.setImage(user.getIcondata().phukienIcon);
 		sashForm_2.setWeights(new int[] { 1 });
 
 		tree = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
@@ -343,8 +343,8 @@ public class TaoDotTangtaisan extends Dialog {
 						dexuat = controler.getControl_DEXUAT().get_DEXUAT(dtt);
 					}
 					if (dexuat != null) {
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dexuat.getMA_TAPHOSO());
-						TapHoso_View thsv = new TapHoso_View(shltMuaSm, SWT.DIALOG_TRIM, user, ths, false);
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dexuat.getMA_TAPHOSO());
+						Taphoso_View thsv = new Taphoso_View(shltMuaSm, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} else {
 						NhapDeXuat ndx = new NhapDeXuat(shltMuaSm, SWT.DIALOG_TRIM, user);
@@ -378,7 +378,7 @@ public class TaoDotTangtaisan extends Dialog {
 		});
 		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		button.setText("Thêm Hồ sơ");
-		button.setImage(SWTResourceManager.getImage(TaoDotTangtaisan.class, "/Mimes-ooo-writer-icon.png"));
+		button.setImage(user.getIcondata().DexuatIcon);
 
 		ExpandItem xpndtmChiTit = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmChiTit.setText("Chi tiết");
@@ -667,7 +667,7 @@ public class TaoDotTangtaisan extends Dialog {
 				}
 			}
 		});
-		btnLu.setImage(SWTResourceManager.getImage(TaoDotTangtaisan.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 		GridData gd_btnLu = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnLu.widthHint = 80;
 		btnLu.setLayoutData(gd_btnLu);

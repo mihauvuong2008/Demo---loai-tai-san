@@ -60,7 +60,7 @@ import DAO.NGUONTANG;
 import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import DAO.user_congviec;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
@@ -69,7 +69,7 @@ import View.AssetManagers.CongViec.CongviecDahoanthanh.ViewPartHoso;
 import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.Taisan.XemTaiSan.View_Taisan;
 import View.DateTime.MyDateFormat;
@@ -672,7 +672,7 @@ public class GiaoViec {
 		expandBar.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 
 		ExpandItem xpndtmThngTin = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmThngTin.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Mimes-ooo-writer-icon.png"));
+		xpndtmThngTin.setImage(user.getIcondata().DexuatIcon);
 		xpndtmThngTin.setExpanded(true);
 		xpndtmThngTin.setText("Thông tin đề xuất");
 
@@ -768,13 +768,13 @@ public class GiaoViec {
 				if (dx == null)
 					return;
 				try {
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
 					if (ths == null)
 						return;
 					boolean view = true;
 					if (user.getTEN_TAI_KHOAN().equals(dx.getTEN_TAI_KHOAN()))
 						view = false;
-					TapHoso_View thsv = new TapHoso_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, view);
+					Taphoso_View thsv = new Taphoso_View(shlQunLCng, SWT.DIALOG_TRIM, user, ths, view);
 					thsv.open();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -828,7 +828,7 @@ public class GiaoViec {
 		xpndtmThngTin.setHeight(280);
 
 		ExpandItem xpndtmTChcThc = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmTChcThc.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmTChcThc.setImage(user.getIcondata().greyFolder);
 		xpndtmTChcThc.setText("Tổ chức thực hiện");
 
 		Composite grpTChcThc = new Composite(expandBar, SWT.NONE);
@@ -1158,7 +1158,7 @@ public class GiaoViec {
 		xpndtmTChcThc.setHeight(xpndtmTChcThc.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
 		ExpandItem xpndtmNghimThu = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmNghimThu.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmNghimThu.setImage(user.getIcondata().greyFolder);
 		xpndtmNghimThu.setText("Nghiệm thu - bàn giao");
 
 		Composite grpNghimThu = new Composite(expandBar, SWT.NONE);
@@ -1475,7 +1475,7 @@ public class GiaoViec {
 		xpndtmNghimThu.setHeight(xpndtmNghimThu.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
 		ExpandItem xpndtmQuytTon = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmQuytTon.setImage(SWTResourceManager.getImage(GiaoViec.class, "/Places-folder-grey-icon.png"));
+		xpndtmQuytTon.setImage(user.getIcondata().greyFolder);
 		xpndtmQuytTon.setText("Quyết toán - thanh toán hợp đồng");
 
 		Composite grpQuytTon = new Composite(expandBar, SWT.NONE);
@@ -2627,7 +2627,7 @@ public class GiaoViec {
 
 	private void fillHosoDexuat(DE_XUAT dx) throws SQLException {
 		table_VanbanDexuat.removeAll();
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
 		if (ths == null)
 			return;
 		ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
@@ -2993,7 +2993,7 @@ public class GiaoViec {
 	 */
 	protected void createContents() {
 		shlQunLCng = new Shell();
-		shlQunLCng.setImage(SWTResourceManager.getImage(GiaoViec.class, "/reunion.png"));
+		shlQunLCng.setImage(user.getIcondata().DanhthuchienIcon);
 		shlQunLCng.setSize(875, 540);
 		shlQunLCng.setText("Công việc đang thực hiện");
 

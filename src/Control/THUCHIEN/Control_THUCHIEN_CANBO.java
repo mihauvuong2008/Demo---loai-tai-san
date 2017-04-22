@@ -12,7 +12,7 @@ import Control.ROLE.PrivilegeChecker;
 import DAO.GIAI_DOAN_THUC_HIEN;
 import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_THUCHIEN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.BUILD.OUT.Control_DAO_Build;
 import DAO.BUILD.QUERY.DELETE_LIB.query_Delete_GIAI_DOAN_THUC_HIEN;
 import DAO.BUILD.QUERY.INSERT_LIB.query_Insert_NGUOIDUNG_THUCHIEN;
@@ -74,7 +74,7 @@ public class Control_THUCHIEN_CANBO {
 		return getSelecter().get_NGUOIDUNG_Thamgia_Phanviec(gdth);
 	}
 
-	public int update_TAPHOSO(NGUOIDUNG_THUCHIEN ndth, TAP_HO_SO ths) throws SQLException {
+	public int update_TAPHOSO(NGUOIDUNG_THUCHIEN ndth, TAPHOSO ths) throws SQLException {
 		return getUpdater().update_TAPHOSO(ndth, ths);
 	}
 
@@ -190,7 +190,7 @@ public class Control_THUCHIEN_CANBO {
 
 	private class Update extends EDIactivity {
 
-		public int update_TAPHOSO(NGUOIDUNG_THUCHIEN ndth, TAP_HO_SO ths) throws SQLException {
+		public int update_TAPHOSO(NGUOIDUNG_THUCHIEN ndth, TAPHOSO ths) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String query = (new query_Update_NGUOIDUNG_THUCHIEN()).getString_Capnhat_TapHoso(ndth, ths);
 				if (query == null)

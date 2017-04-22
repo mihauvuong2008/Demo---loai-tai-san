@@ -15,7 +15,7 @@ import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_NGHIEMTHU;
 import DAO.NGUOIDUNG_QUYETTOAN;
 import DAO.NGUOIDUNG_THUCHIEN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.DateTime.MyDateFormat;
 
 public class Control_TAPHOSO {
@@ -87,7 +87,7 @@ public class Control_TAPHOSO {
 			return -1;
 		}
 
-		public int Create_TAP_HO_SO(TAP_HO_SO t) throws SQLException {
+		public int Create_TAP_HO_SO(TAPHOSO t) throws SQLException {
 			if (conn != null && isPrivilegeADD()) {
 				String query = "INSERT INTO TAPHOSO (TEN_TAPHOSO, GIOITHIEU_TAPHOSO, NGAY_TAO_TAPHOSO) VALUES('"
 						+ t.getTEN_TAPHOSO() + "', '" + t.getGIOITHIEU_TAPHOSO() + "', "
@@ -105,16 +105,16 @@ public class Control_TAPHOSO {
 	}
 
 	private class Select extends REAactivity {
-		public TAP_HO_SO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
+		public TAPHOSO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				TAP_HO_SO ths = null;
+				TAPHOSO ths = null;
 				String query = "SELECT * FROM TAPHOSO WHERE MA_TAPHOSO ='" + MA_TAPHOSO + "' ";
 				Statement st;
 				ResultSet rs;
 				st = conn.createStatement();
 				rs = st.executeQuery(query);
 				while (rs.next()) {
-					ths = new TAP_HO_SO();
+					ths = new TAPHOSO();
 					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
 					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
@@ -127,9 +127,9 @@ public class Control_TAPHOSO {
 			return null;
 		}
 
-		public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
+		public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				TAP_HO_SO ths = null;
+				TAPHOSO ths = null;
 				String query = "SELECT * FROM TAPHOSO INNER JOIN GIAI_DOAN_THUC_HIEN_CAN_BO ON (MA_GIAI_DOAN_THUC_HIEN='"
 						+ ndth.getMA_GIAI_DOAN_THUC_HIEN() + "' AND TEN_TAI_KHOAN='" + ndth.getTEN_TAI_KHOAN()
 						+ "' AND TAPHOSO.MA_TAPHOSO = GIAI_DOAN_THUC_HIEN_CAN_BO.MA_TAPHOSO ) ";
@@ -138,7 +138,7 @@ public class Control_TAPHOSO {
 				st = conn.createStatement();
 				rs = st.executeQuery(query);
 				while (rs.next()) {
-					ths = new TAP_HO_SO();
+					ths = new TAPHOSO();
 					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
 					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
@@ -151,9 +151,9 @@ public class Control_TAPHOSO {
 			return null;
 		}
 
-		public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
+		public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				TAP_HO_SO ths = null;
+				TAPHOSO ths = null;
 				String query = "SELECT * FROM TAPHOSO INNER JOIN GIAI_DOAN_NGHIEM_THU_CAN_BO ON (MA_GIAI_DOAN_NGHIEM_THU='"
 						+ ndnt.getMA_GIAI_DOAN_NGHIEM_THU() + "' AND TEN_TAI_KHOAN='" + ndnt.getTEN_TAI_KHOAN()
 						+ "' AND TAPHOSO.MA_TAPHOSO = GIAI_DOAN_NGHIEM_THU_CAN_BO.MA_TAPHOSO ) ";
@@ -162,7 +162,7 @@ public class Control_TAPHOSO {
 				st = conn.createStatement();
 				rs = st.executeQuery(query);
 				while (rs.next()) {
-					ths = new TAP_HO_SO();
+					ths = new TAPHOSO();
 					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
 					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
@@ -175,16 +175,16 @@ public class Control_TAPHOSO {
 			return null;
 		}
 
-		public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
+		public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				TAP_HO_SO ths = null;
+				TAPHOSO ths = null;
 				String query = "SELECT * FROM TAPHOSO INNER JOIN GIAI_DOAN_QUYET_TOAN_CAN_BO ON (MA_GIAI_DOAN_QUYET_TOAN='"
 						+ ndqt.getMA_GIAI_DOAN_QUYET_TOAN() + "' AND TEN_TAI_KHOAN='" + ndqt.getTEN_TAI_KHOAN()
 						+ "' AND TAPHOSO.MA_TAPHOSO = GIAI_DOAN_QUYET_TOAN_CAN_BO.MA_TAPHOSO ) ";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
 				while (rs.next()) {
-					ths = new TAP_HO_SO();
+					ths = new TAPHOSO();
 					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
 					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
@@ -197,9 +197,9 @@ public class Control_TAPHOSO {
 			return null;
 		}
 
-		public ArrayList<TAP_HO_SO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
+		public ArrayList<TAPHOSO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
-				ArrayList<TAP_HO_SO> thsl = null;
+				ArrayList<TAPHOSO> thsl = null;
 				String query = "SELECT * FROM TAPHOSO  WHERE  NGAY_TAO_TAPHOSO>='" + mdf.getSQLStringDate(last)
 						+ "' AND NGAY_TAO_TAPHOSO <='" + mdf.getSQLStringDate(thiss) + "' AND TEN_TAPHOSO LIKE '%"
 						+ string + "%'  ";
@@ -207,8 +207,8 @@ public class Control_TAPHOSO {
 				ResultSet rs = st.executeQuery(query);
 				thsl = new ArrayList<>();
 				while (rs.next()) {
-					TAP_HO_SO ths = new TAP_HO_SO();
-					ths = new TAP_HO_SO();
+					TAPHOSO ths = new TAPHOSO();
+					ths = new TAPHOSO();
 					ths.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 					ths.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
 					ths.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
@@ -225,7 +225,7 @@ public class Control_TAPHOSO {
 	}
 
 	private class Update extends EDIactivity {
-		public int update_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+		public int update_TAPHOSO(TAPHOSO ths) throws SQLException {
 			if (conn != null && isPrivilegeEDI()) {
 				String date = ths.getNGAY_TAO_TAPHOSO() == null ? new SimpleDateFormat("yyyy-MM-dd").format(new Date())
 						: new SimpleDateFormat("yyyy-MM-dd").format(ths.getNGAY_TAO_TAPHOSO());
@@ -243,7 +243,7 @@ public class Control_TAPHOSO {
 	}
 
 	private class Delete extends DELactivity {
-		public boolean delete_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+		public boolean delete_TAPHOSO(TAPHOSO ths) throws SQLException {
 			if (conn != null && isPrivilegeDEL()) {
 				PreparedStatement prs;
 				String query = "DELETE FROM TAPHOSO WHERE MA_TAPHOSO = '" + ths.getMA_TAPHOSO() + "' ;";
@@ -261,35 +261,35 @@ public class Control_TAPHOSO {
 		pvc = user.getPrivilegeChecker();
 	}
 
-	public TAP_HO_SO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
+	public TAPHOSO get_TAP_HO_SO(int MA_TAPHOSO) throws SQLException {
 		return getSelecter().get_TAP_HO_SO(MA_TAPHOSO);
 	}
 
-	public int Create_TAP_HO_SO(TAP_HO_SO t) throws SQLException {
+	public int Create_TAP_HO_SO(TAPHOSO t) throws SQLException {
 		return getInserter().Create_TAP_HO_SO(t);
 	}
 
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
+	public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_THUCHIEN ndth) throws SQLException {
 		return getSelecter().get_TAP_HO_SO(ndth);
 	}
 
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
+	public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_NGHIEMTHU ndnt) throws SQLException {
 		return getSelecter().get_TAP_HO_SO(ndnt);
 	}
 
-	public TAP_HO_SO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
+	public TAPHOSO get_TAP_HO_SO(NGUOIDUNG_QUYETTOAN ndqt) throws SQLException {
 		return getSelecter().get_TAP_HO_SO(ndqt);
 	}
 
-	public ArrayList<TAP_HO_SO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
+	public ArrayList<TAPHOSO> get_All_TAPHOSO(Date last, Date thiss, String string) throws SQLException {
 		return getSelecter().get_All_TAPHOSO(last, thiss, string);
 	}
 
-	public int update_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+	public int update_TAPHOSO(TAPHOSO ths) throws SQLException {
 		return getUpdater().update_TAPHOSO(ths);
 	}
 
-	public boolean delete_TAPHOSO(TAP_HO_SO ths) throws SQLException {
+	public boolean delete_TAPHOSO(TAPHOSO ths) throws SQLException {
 		return getDeleter().delete_TAPHOSO(ths);
 	}
 

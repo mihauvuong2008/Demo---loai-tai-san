@@ -11,7 +11,6 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.CHUKY_DANGKIEM;
@@ -20,9 +19,9 @@ import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.PHUONGTIEN_GIAOTHONG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -98,7 +97,7 @@ public class LichDangkiem extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlngKim = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlngKim.setImage(SWTResourceManager.getImage(LichDangkiem.class, "/application-side-list-icon.png"));
+		shlngKim.setImage(user.getIcondata().LichDangkiemIcon);
 		shlngKim.setSize(795, 491);
 		new FormTemplate().setCenterScreen(shlngKim);
 		shlngKim.setText("\u0110\u0103ng ki\u1EC3m \u00F4 t\u00F4");
@@ -269,11 +268,11 @@ public class LichDangkiem extends Dialog {
 				TableItem til[] = table_DotthuchienDangkiem.getSelection();
 				if (til.length > 0) {
 					DOT_THUCHIEN_DANGKIEM dtd = (DOT_THUCHIEN_DANGKIEM) til[0].getData();
-					TAP_HO_SO ths = null;
+					TAPHOSO ths = null;
 					try {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 						if (ths != null) {
-							TapHoso_View thsv = new TapHoso_View(shlngKim, SWT.DIALOG_TRIM, user, ths, true);
+							Taphoso_View thsv = new Taphoso_View(shlngKim, SWT.DIALOG_TRIM, user, ths, true);
 							thsv.open();
 						} else {
 							MessageBox m = new MessageBox(shlngKim, SWT.ICON_WARNING);
@@ -316,7 +315,7 @@ public class LichDangkiem extends Dialog {
 				}
 			}
 		});
-		btnTmKim.setImage(SWTResourceManager.getImage(LichDangkiem.class, "/search-icon.png"));
+		btnTmKim.setImage(user.getIcondata().searchIcon);
 		btnTmKim.setText("T\u00ECm ki\u1EBFm");
 
 		Button btnng = new Button(shlngKim, SWT.NONE);
@@ -337,7 +336,7 @@ public class LichDangkiem extends Dialog {
 		if (dtd == null)
 			return true;
 		boolean hoanthanh = true;
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 		if (ths == null)
 			hoanthanh = false;
 		else {

@@ -32,7 +32,6 @@ import DAO.LOAITAISAN_CAP_III;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAISAN;
-import View.AssetManagers.MainForm;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -56,6 +55,7 @@ public class Nhapdanhsach extends Dialog {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(Nhapdanhsach.class);
 	private Combo combo;
+	private NGUOIDUNG user;
 
 	public ArrayList<TAISAN> getResult_danhsachPTTS() {
 		return Result_danhsachPTTS;
@@ -83,6 +83,7 @@ public class Nhapdanhsach extends Dialog {
 		super(parent, style);
 		controler = new Controler(user);
 		this.Data_From_Parent_list_Taisan = Selected;
+		this.user = user;
 	}
 
 	/**
@@ -111,7 +112,7 @@ public class Nhapdanhsach extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnPhngTin = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlChnPhngTin.setImage(SWTResourceManager.getImage(Nhapdanhsach.class, "/maintenance-icon (1).png"));
+		shlChnPhngTin.setImage(user.getIcondata().SuachuaIcon);
 		shlChnPhngTin.setSize(728, 450);
 		shlChnPhngTin.setText("Chọn Phương tiện tài sản");
 		new FormTemplate().setCenterScreen(shlChnPhngTin);
@@ -145,7 +146,7 @@ public class Nhapdanhsach extends Dialog {
 		Tree tree_NhomTaisan = new Tree(sashForm, SWT.BORDER);
 		TreeItem Tong_Item = new TreeItem(tree_NhomTaisan, SWT.NONE);
 		Tong_Item.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		Tong_Item.setImage(SWTResourceManager.getImage(MainForm.class, "/Books-2-icon.png"));
+		Tong_Item.setImage(user.getIcondata().TongNhomtaisan);
 		Tong_Item.setText("Tất cả tài sản");
 		setItem_LoaiTaisan(tree_NhomTaisan, Tong_Item);
 		Tong_Item.setExpanded(true);

@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.Kyhan_Baoduong;
@@ -53,6 +52,7 @@ public class TieuchuanBaoduong extends Dialog {
 	private TableViewer viewer;
 	private final Controler controler;
 	private boolean EditMode = false;
+	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(TieuchuanBaoduong.class);
 
 	/**
@@ -66,6 +66,7 @@ public class TieuchuanBaoduong extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class TieuchuanBaoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlTiuChunBo = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlTiuChunBo.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/calendar-1-icon.png"));
+		shlTiuChunBo.setImage(user.getIcondata().BaoduongIcon);
 		shlTiuChunBo.setSize(728, 450);
 		shlTiuChunBo.setText("Ti\u00EAu chu\u1EA9n b\u1EA3o d\u01B0\u1EE1ng");
 		shlTiuChunBo.setLayout(new GridLayout(1, false));
@@ -110,7 +111,7 @@ public class TieuchuanBaoduong extends Dialog {
 			}
 		});
 		tltmSaiK.setText("Sửa đổi kỳ hạn");
-		tltmSaiK.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/edit-validated-icon (1).png"));
+		tltmSaiK.setImage(user.getIcondata().editIcon);
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
@@ -197,11 +198,7 @@ public class TieuchuanBaoduong extends Dialog {
 			}
 		});
 		tltmLu.setText("Lưu");
-		tltmLu.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/Actions-document-save-icon (1).png"));
-
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.NONE);
-		toolItem_2.setText("X\u00F3a");
-		toolItem_2.setImage(SWTResourceManager.getImage(TieuchuanBaoduong.class, "/delete-1-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 
 		SashForm sashForm = new SashForm(shlTiuChunBo, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

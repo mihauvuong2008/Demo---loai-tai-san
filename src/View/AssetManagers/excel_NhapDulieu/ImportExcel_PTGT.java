@@ -30,8 +30,6 @@ import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import jxl.read.biff.BiffException;
 
-import org.eclipse.wb.swt.SWTResourceManager;
-
 import Controler.Controler;
 import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
@@ -82,7 +80,7 @@ public class ImportExcel_PTGT extends Shell {
 
 	public ImportExcel_PTGT(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(ImportExcel_PTGT.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		setImage(user.getIcondata().importIcon);
 		setLayout(new GridLayout(6, false));
 		ImportExcel_PTGT.user = user;
 		controler = new Controler(user);

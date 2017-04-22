@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -31,7 +31,7 @@ import Controler.Controler;
 import DAO.DOT_THUCHIEN_DANGKIEM;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 
 import org.eclipse.swt.widgets.Menu;
@@ -103,7 +103,7 @@ public class CongViec_Dangkiem extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlngKimPhng = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlngKimPhng.setImage(SWTResourceManager.getImage(CongViec_Dangkiem.class, "/application-side-list-icon.png"));
+		shlngKimPhng.setImage(user.getIcondata().KyhanDangkiem);
 		shlngKimPhng.setSize(750, 463);
 		shlngKimPhng.setText("Đăng kiểm Phương tiện giao thông: ");
 		shlngKimPhng.setLayout(new GridLayout(2, false));
@@ -163,7 +163,7 @@ public class CongViec_Dangkiem extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem til[] = table.getSelection();
 				if (til.length > 0) {
-					TAP_HO_SO ths = null;
+					TAPHOSO ths = null;
 					try {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 						if (ths != null) {
@@ -184,7 +184,7 @@ public class CongViec_Dangkiem extends Dialog {
 		mntmThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TAP_HO_SO ths;
+				TAPHOSO ths;
 				try {
 					if (dtd != null) {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
@@ -198,7 +198,7 @@ public class CongViec_Dangkiem extends Dialog {
 										.get_PHUONGTIEN_GIAOTHONG(dtd.getMA_PHUONGTIEN_GIAOTHONG());
 							}
 							if (pg != null) {
-								ths = new TAP_HO_SO();
+								ths = new TAPHOSO();
 								ths.setTEN_TAPHOSO("Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
 										+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()));
 								ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
@@ -208,7 +208,7 @@ public class CongViec_Dangkiem extends Dialog {
 									dtd.setMA_TAPHOSO(key);
 									controler.getControl_DOT_THUCHIEN_DANGKIEM().update_DOT_THUCHIEN_DANGKIEM(dtd);
 									ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(key);
-									TapHoso_View tv = new TapHoso_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
+									Taphoso_View tv = new Taphoso_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
 									tv.open();
 									loadVanban();
 								}
@@ -315,7 +315,7 @@ public class CongViec_Dangkiem extends Dialog {
 	protected void loadVanban() throws SQLException {
 		table.removeAll();
 		if (dtd != null) {
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 			if (ths != null) {
 				ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 				int i = 1;
@@ -352,7 +352,7 @@ public class CongViec_Dangkiem extends Dialog {
 
 	private void fillTable() throws SQLException {
 		table.removeAll();
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dtd.getMA_TAPHOSO());
 		if (ths != null) {
 			ArrayList<VANBAN> data = controler.getControl_VANBAN().get_AllVanban(ths);
 			int i = 0;

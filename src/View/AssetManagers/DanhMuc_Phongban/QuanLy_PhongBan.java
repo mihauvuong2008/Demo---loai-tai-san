@@ -70,7 +70,7 @@ public class QuanLy_PhongBan extends Shell {
 	 */
 	public QuanLy_PhongBan(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/city-icon.png"));
+		setImage(user.getIcondata().cityIcon);
 		setLayout(new GridLayout(5, false));
 		QuanLy_PhongBan.user = user;
 		controler = new Controler(user);
@@ -130,7 +130,7 @@ public class QuanLy_PhongBan extends Shell {
 		sashForm.setWeights(new int[] { 1, 1 });
 
 		Button btnThm = new Button(this, SWT.NONE);
-		btnThm.setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/add-1-icon (1).png"));
+		btnThm.setImage(user.getIcondata().addIcon);
 		btnThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -141,7 +141,7 @@ public class QuanLy_PhongBan extends Shell {
 		btnThm.setText("Th\u00EAm");
 
 		Button btnSa = new Button(this, SWT.NONE);
-		btnSa.setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/edit-validated-icon (1).png"));
+		btnSa.setImage(user.getIcondata().saveIcon);
 		btnSa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -151,7 +151,7 @@ public class QuanLy_PhongBan extends Shell {
 		btnSa.setText("S\u1EEDa");
 
 		Button btnXa = new Button(this, SWT.NONE);
-		btnXa.setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/delete-1-icon (1).png"));
+		btnXa.setImage(user.getIcondata().deleteIcon);
 		btnXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -171,7 +171,7 @@ public class QuanLy_PhongBan extends Shell {
 		btnXa.setText("X\u00F3a");
 
 		Button btnLu = new Button(this, SWT.NONE);
-		btnLu.setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 		btnLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

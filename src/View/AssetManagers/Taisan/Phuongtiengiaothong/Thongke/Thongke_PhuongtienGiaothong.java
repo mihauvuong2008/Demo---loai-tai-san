@@ -115,7 +115,7 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 
 	public Thongke_PhuongtienGiaothong(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/report-icon.png"));
+		setImage(user.getIcondata().reportIcon);
 		setLayout(new GridLayout(4, false));
 		Thongke_PhuongtienGiaothong.user = user;
 		controler = new Controler(user);
@@ -137,7 +137,7 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 				}
 			}
 		});
-		tltmToKHn.setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/layout-select-icon.png"));
+		tltmToKHn.setImage(user.getIcondata().kyhanthongke);
 		tltmToKHn.setText("Quản lý Kỳ hạn Thống kê");
 
 		@SuppressWarnings("unused")
@@ -154,11 +154,10 @@ public class Thongke_PhuongtienGiaothong extends Shell {
 			}
 		});
 		tltmCpNhtD.setText("Dung sai nhiên liệu");
-		tltmCpNhtD.setImage(SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/Dungsai.png"));
+		tltmCpNhtD.setImage(user.getIcondata().dungsaiIcon);
 
 		ToolItem tltmLuKtQu = new ToolItem(toolBar, SWT.NONE);
-		tltmLuKtQu.setImage(
-				SWTResourceManager.getImage(Thongke_PhuongtienGiaothong.class, "/Actions-document-save-icon (1).png"));
+		tltmLuKtQu.setImage(user.getIcondata().saveIcon);
 		tltmLuKtQu.setText("Lưu kết quả");
 
 		SashForm sashForm = new SashForm(this, SWT.VERTICAL);

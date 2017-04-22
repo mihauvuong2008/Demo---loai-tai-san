@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.DE_XUAT;
@@ -53,6 +52,7 @@ public class NhapdanhsachTaisan extends Dialog {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(NhapdanhsachTaisan.class);
 	private Combo combo;
+	private NGUOIDUNG user;
 
 	public ArrayList<PHUONGTIEN_GIAOTHONG> getResult_danhsachPTTS() {
 		return Result_danhsachPTTS;
@@ -84,6 +84,7 @@ public class NhapdanhsachTaisan extends Dialog {
 		this.Data_from_Parent_list_PTGT = Data_from_Parent_list_PTGT;
 		this.loaiPTGT = loaiPTGT;
 		Result_danhsachPTTS = new ArrayList<>();
+		this.user = user;
 	}
 
 	/**
@@ -112,7 +113,7 @@ public class NhapdanhsachTaisan extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shell.setImage(SWTResourceManager.getImage(NhapdanhsachTaisan.class, "/page-white-wrench-icon.png"));
+		shell.setImage(user.getIcondata().BaoduongIcon);
 		shell.setSize(728, 450);
 		shell.setText("Thêm Danh sách Phương tiện giao thông bảo dưỡng");
 		new FormTemplate().setCenterScreen(shell);

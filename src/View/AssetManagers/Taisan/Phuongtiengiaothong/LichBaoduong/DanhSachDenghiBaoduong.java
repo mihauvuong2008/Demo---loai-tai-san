@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.GIAI_DOAN_NGHIEM_THU;
@@ -40,6 +39,7 @@ public class DanhSachDenghiBaoduong extends Dialog {
 	private Text text;
 	private TableItem[] tableItems;
 	private final Controler controler;
+	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(DanhSachDenghiBaoduong.class);
 
 	/**
@@ -56,6 +56,7 @@ public class DanhSachDenghiBaoduong extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		this.tableItems = tableItems;
+		this.user = user;
 		controler = new Controler(user);
 	}
 
@@ -85,8 +86,7 @@ public class DanhSachDenghiBaoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlDanhSch = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shlDanhSch.setImage(SWTResourceManager.getImage(DanhSachDenghiBaoduong.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlDanhSch.setImage(user.getIcondata().BaoduongIcon);
 		shlDanhSch.setSize(647, 400);
 		new FormTemplate().setCenterScreen(shlDanhSch);
 		shlDanhSch.setText(

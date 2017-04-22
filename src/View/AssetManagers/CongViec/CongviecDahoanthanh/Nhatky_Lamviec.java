@@ -48,8 +48,8 @@ import DAO.NGUONSUACHUA_BAODUONG;
 import DAO.NGUONTANG;
 import DAO.PHONGBAN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
-import View.AssetManagers.Hoso.TapHoso_View;
+import DAO.TAPHOSO;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.NguonGiam.ChonNguonGiam;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.AssetManagers.NguonTang.ChonNguontang;
@@ -174,7 +174,7 @@ public class Nhatky_Lamviec extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlNhtKCng = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlNhtKCng.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/timeline-marker-icon.png"));
+		shlNhtKCng.setImage(user.getIcondata().nhatkyLamviec);
 		shlNhtKCng.setSize(850, 525);
 		shlNhtKCng.setText("Nh\u1EADt k\u00FD c\u00F4ng vi\u1EC7c");
 		shlNhtKCng.setLayout(new GridLayout(2, false));
@@ -361,7 +361,7 @@ public class Nhatky_Lamviec extends Dialog {
 
 		ExpandItem xpndtmXut = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmXut.setExpanded(true);
-		xpndtmXut.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/Mimes-ooo-writer-icon.png"));
+		xpndtmXut.setImage(user.getIcondata().DexuatIcon);
 		xpndtmXut.setText("Đề xuất");
 
 		SashForm sashForm_4 = new SashForm(expandBar, SWT.VERTICAL);
@@ -438,11 +438,11 @@ public class Nhatky_Lamviec extends Dialog {
 					dx = controler.getControl_DEXUAT().get_DEXUAT(Congviec);
 					String Nguoidung = dx.getTEN_TAI_KHOAN();
 					if (Nguoidung.equals(TEN_TAI_KHOAN)) {
-						TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO()));
+						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAP_HO_SO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung Hồ sơ Đề xuất");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung Đề xuất");
+							ths = new TAPHOSO();
+							ths.setTEN_TAPHOSO("Tập hồ sơ Đề xuất");
+							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Đề xuất");
 							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
 							if (Ma_NewTapHoso > 0) {
 								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
@@ -450,7 +450,7 @@ public class Nhatky_Lamviec extends Dialog {
 							}
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
 						thsV.open();
 					} else {
 						MessageBox m = new MessageBox(shlNhtKCng);
@@ -474,12 +474,12 @@ public class Nhatky_Lamviec extends Dialog {
 				try {
 					dx = controler.getControl_DEXUAT().get_DEXUAT(Congviec);
 					String Nguoidung = dx.getTEN_TAI_KHOAN();
-					TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO()));
+					TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO()));
 					if (Nguoidung.equals(TEN_TAI_KHOAN)) {
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
 						thsV.open();
 					} else {
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, true);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, true);
 						thsV.open();
 					}
 				} catch (SQLException e1) {
@@ -493,7 +493,7 @@ public class Nhatky_Lamviec extends Dialog {
 		xpndtmXut.setHeight(300);
 
 		ExpandItem xpndtmTChc = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmTChc.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/Places-folder-grey-icon.png"));
+		xpndtmTChc.setImage(user.getIcondata().greyFolder);
 		xpndtmTChc.setText("Tổ chức - Thực hiện");
 
 		SashForm sashForm_5 = new SashForm(expandBar, SWT.VERTICAL);
@@ -570,11 +570,11 @@ public class Nhatky_Lamviec extends Dialog {
 							thamgiaCongviec = nguoidung_THUCHIEN;
 					}
 					if (thamgiaCongviec != null) {
-						TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
+						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAP_HO_SO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung Hồ sơ Triển khai - Thực hiện");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung Triển khai - Thực hiện");
+							ths = new TAPHOSO();
+							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Thực hiện");
+							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Thực hiện");
 							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
 							if (Ma_NewTapHoso > 0) {
 								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
@@ -582,7 +582,7 @@ public class Nhatky_Lamviec extends Dialog {
 							}
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
 						thsV.open();
 					} else {
 						MessageBox m = new MessageBox(shlNhtKCng, SWT.ICON_WARNING);
@@ -618,7 +618,7 @@ public class Nhatky_Lamviec extends Dialog {
 		xpndtmTChc.setHeight(280);
 
 		ExpandItem xpndtmNghimThu = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmNghimThu.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/Places-folder-grey-icon.png"));
+		xpndtmNghimThu.setImage(user.getIcondata().greyFolder);
 		xpndtmNghimThu.setText("Nghiệm thu - Bàn giao");
 
 		SashForm sashForm_6 = new SashForm(expandBar, SWT.VERTICAL);
@@ -696,11 +696,11 @@ public class Nhatky_Lamviec extends Dialog {
 							thamgiaCongviec = nguoidung_THUCHIEN;
 					}
 					if (thamgiaCongviec != null) {
-						TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
+						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAP_HO_SO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung Hồ sơ Triển khai - Nghiệm thu");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung Triển khai - Nghiệm thu");
+							ths = new TAPHOSO();
+							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Nghiệm thu");
+							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Nghiệm thu");
 							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
 							if (Ma_NewTapHoso > 0) {
 								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
@@ -708,7 +708,7 @@ public class Nhatky_Lamviec extends Dialog {
 							}
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
 						thsV.open();
 					} else {
 						MessageBox m = new MessageBox(shlNhtKCng, SWT.ICON_WARNING);
@@ -745,7 +745,7 @@ public class Nhatky_Lamviec extends Dialog {
 		xpndtmNghimThu.setHeight(280);
 
 		ExpandItem xpndtmQuytTon = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmQuytTon.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/Places-folder-grey-icon.png"));
+		xpndtmQuytTon.setImage(user.getIcondata().greyFolder);
 		xpndtmQuytTon.setText("Quyết toán - Thanh lý hợp đồng");
 
 		SashForm sashForm_7 = new SashForm(expandBar, SWT.VERTICAL);
@@ -816,11 +816,11 @@ public class Nhatky_Lamviec extends Dialog {
 							thamgiaCongviec = nguoidung_THUCHIEN;
 					}
 					if (thamgiaCongviec != null) {
-						TAP_HO_SO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
+						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAP_HO_SO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung Hồ sơ Triển khai - Quyết toán");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung Triển khai - Quyết toán");
+							ths = new TAPHOSO();
+							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Quyết toán");
+							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Quyết toán");
 							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
 							if (Ma_NewTapHoso > 0) {
 								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
@@ -828,7 +828,7 @@ public class Nhatky_Lamviec extends Dialog {
 							}
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
-						TapHoso_View thsV = new TapHoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
 						thsV.open();
 					} else {
 						MessageBox m = new MessageBox(shlNhtKCng, SWT.ICON_WARNING);
@@ -878,7 +878,7 @@ public class Nhatky_Lamviec extends Dialog {
 				shlNhtKCng.dispose();
 			}
 		});
-		btnng.setImage(SWTResourceManager.getImage(Nhatky_Lamviec.class, "/Actions-document-save-icon (1).png"));
+		btnng.setImage(user.getIcondata().saveIcon);
 		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);

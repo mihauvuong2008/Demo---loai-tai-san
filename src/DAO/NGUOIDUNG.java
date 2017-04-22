@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import Control.ROLE.PrivilegeChecker;
+import View.AssetManagers.Icondataset;
 
 public class NGUOIDUNG {
 	private String TEN_TAI_KHOAN;
@@ -13,6 +14,7 @@ public class NGUOIDUNG {
 	private int MA_PHONGBAN;
 	PrivilegeChecker privilegeChecker;
 	private ArrayList<ROLE> rolelist;
+	private final Icondataset icondata = new Icondataset();
 	Connection conn;
 
 	public Connection getConn() {
@@ -77,6 +79,10 @@ public class NGUOIDUNG {
 
 	public final void setPrivilegeChecker(PrivilegeChecker privilegeChecker) {
 		this.privilegeChecker = privilegeChecker;
+	}
+
+	public final Icondataset getIcondata() {
+		return icondata;
 	}
 
 }

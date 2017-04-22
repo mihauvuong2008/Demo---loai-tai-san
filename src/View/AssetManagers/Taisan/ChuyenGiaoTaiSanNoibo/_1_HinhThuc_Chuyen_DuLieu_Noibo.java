@@ -11,7 +11,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Control.TAISAN.Control_TAISAN;
 import DAO.NGUOIDUNG;
@@ -60,7 +59,7 @@ public class _1_HinhThuc_Chuyen_DuLieu_Noibo extends Shell {
 	 */
 	public _1_HinhThuc_Chuyen_DuLieu_Noibo(Display display, NGUOIDUNG user, Integer mAPHONGBAN, String[] dS_MA_TAISAN) {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.RESIZE | SWT.TITLE);
-		setImage(SWTResourceManager.getImage(_1_HinhThuc_Chuyen_DuLieu_Noibo.class, "/Import-export-icon.png"));
+		setImage(user.getIcondata().export_importIcon);
 		_1_HinhThuc_Chuyen_DuLieu_Noibo.user = user;
 		_1_HinhThuc_Chuyen_DuLieu_Noibo.dS_MA_TAISAN = dS_MA_TAISAN;
 		_1_HinhThuc_Chuyen_DuLieu_Noibo.dS_MA_TAISAN = dS_MA_TAISAN;
@@ -82,8 +81,7 @@ public class _1_HinhThuc_Chuyen_DuLieu_Noibo extends Shell {
 		btnTaotDotBanGiao.setLayoutData(gd_btnTaotDotBanGiao);
 		btnTaotDotBanGiao.addSelectionListener(selectionListener);
 
-		btnTaotDotBanGiao
-				.setImage(SWTResourceManager.getImage(_1_HinhThuc_Chuyen_DuLieu_Noibo.class, "/Transfer-icon.png"));
+		btnTaotDotBanGiao.setImage(user.getIcondata().chuyengiaoIcon32);
 		btnTaotDotBanGiao.setText("T\u1EA1o \u0111\u1EE3t B\u00E0n giao t\u00E0i s\u1EA3n");
 
 		btnChiChuyenDuLieu = new Button(this, SWT.RADIO);
@@ -91,8 +89,7 @@ public class _1_HinhThuc_Chuyen_DuLieu_Noibo extends Shell {
 		gd_btnChiChuyenDuLieu.horizontalIndent = 150;
 		btnChiChuyenDuLieu.setLayoutData(gd_btnChiChuyenDuLieu);
 
-		btnChiChuyenDuLieu
-				.setImage(SWTResourceManager.getImage(_1_HinhThuc_Chuyen_DuLieu_Noibo.class, "/TransferData.png"));
+		btnChiChuyenDuLieu.setImage(user.getIcondata().chuyendulieu32);
 		btnChiChuyenDuLieu.setText("Ch\u1EC9 chuy\u1EC3n d\u1EEF li\u1EC7u");
 		new Label(this, SWT.NONE);
 

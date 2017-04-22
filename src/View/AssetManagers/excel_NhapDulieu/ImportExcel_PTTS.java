@@ -34,7 +34,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 
@@ -80,7 +79,7 @@ public class ImportExcel_PTTS extends Shell {
 	 */
 	public ImportExcel_PTTS(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(ImportExcel_PTTS.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		setImage(user.getIcondata().importIcon);
 		setLayout(new GridLayout(5, false));
 		ImportExcel_PTTS.user = user;
 		controler = new Controler(user);
@@ -392,7 +391,8 @@ public class ImportExcel_PTTS extends Shell {
 				if (getResult() != null)
 					try {
 						PHONGBAN dvql = (PHONGBAN) combo_2.getData(combo_2.getText());
-						// PHONGBAN dvsd = (PHONGBAN) combo_Phongban.getData(combo_Phongban.getText());
+						// PHONGBAN dvsd = (PHONGBAN)
+						// combo_Phongban.getData(combo_Phongban.getText());
 						for (TAISAN t : getResult()) {
 							if (t.getMA_DON_VI_SU_DUNG() == 0)
 								t.setMA_DON_VI_SU_DUNG(dvql.getMA_PHONGBAN());

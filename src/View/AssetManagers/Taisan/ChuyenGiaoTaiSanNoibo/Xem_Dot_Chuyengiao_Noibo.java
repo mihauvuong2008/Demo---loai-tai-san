@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.ibm.icu.util.Calendar;
 
@@ -17,7 +16,7 @@ import DAO.DOT_BANGIAO_TAISAN_NOIBO;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -95,7 +94,7 @@ public class Xem_Dot_Chuyengiao_Noibo extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlXemCct = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlXemCct.setImage(SWTResourceManager.getImage(Xem_Dot_Chuyengiao_Noibo.class, "/Import-export-icon.png"));
+		shlXemCct.setImage(user.getIcondata().export_importIcon);
 		shlXemCct.setSize(734, 454);
 		shlXemCct.setText("Xem Các Đợt bàn giao Tài sản");
 		shlXemCct.setLayout(new GridLayout(7, false));
@@ -122,7 +121,7 @@ public class Xem_Dot_Chuyengiao_Noibo extends Dialog {
 						PHONGBAN bennhan = controler.getControl_PHONGBAN().get_PHONGBAN(dbtn.getBEN_NHAN());
 						text_Bengiao.setText(bengiao.getTEN_PHONGBAN());
 						text_Bennhan.setText(bennhan.getTEN_PHONGBAN());
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dbtn.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dbtn.getMA_TAPHOSO());
 						ArrayList<VANBAN> dataVB = controler.getControl_VANBAN().get_AllVanban(ths);
 						fillVanban(dataVB);
 						ArrayList<TAISAN> dataTS = controler.getControl_TAISAN()
@@ -370,7 +369,7 @@ public class Xem_Dot_Chuyengiao_Noibo extends Dialog {
 		for (DOT_BANGIAO_TAISAN_NOIBO dot_BANGIAO_TAISAN_NOIBO : data) {
 			PHONGBAN Bengiao = controler.getControl_PHONGBAN().get_PHONGBAN(dot_BANGIAO_TAISAN_NOIBO.getBEN_GIAO());
 			PHONGBAN Bennhan = controler.getControl_PHONGBAN().get_PHONGBAN(dot_BANGIAO_TAISAN_NOIBO.getBEN_NHAN());
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dot_BANGIAO_TAISAN_NOIBO.getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dot_BANGIAO_TAISAN_NOIBO.getMA_TAPHOSO());
 			TableItem ti = new TableItem(table, SWT.NONE);
 			ti.setText(new String[] { (i++) + "", dot_BANGIAO_TAISAN_NOIBO.getTEN_DOT_BANGIAO_TAISAN_NOIBO(),
 					new MyDateFormat().getViewStringDate(dot_BANGIAO_TAISAN_NOIBO.getNGAY_THUCHIEN()),

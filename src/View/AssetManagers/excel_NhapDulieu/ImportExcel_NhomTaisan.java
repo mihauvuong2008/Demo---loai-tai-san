@@ -34,7 +34,6 @@ import jxl.read.biff.BiffException;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ImportExcel_NhomTaisan extends Shell {
 	private Text text;
@@ -73,8 +72,7 @@ public class ImportExcel_NhomTaisan extends Shell {
 	 */
 	public ImportExcel_NhomTaisan(Display display, NGUOIDUNG user) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(ImportExcel_NhomTaisan.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		setImage(user.getIcondata().importIcon);
 		setLayout(new GridLayout(4, false));
 		ImportExcel_NhomTaisan.user = user;
 		controler = new Controler(user);

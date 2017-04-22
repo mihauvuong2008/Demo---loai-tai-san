@@ -41,9 +41,9 @@ import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.QUATRINH_DEXUAT_THUCHIEN;
 import DAO.Row_PTTSthamgia_Baoduong;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -139,7 +139,7 @@ public class Taodot_Baoduong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM);
-		shell.setImage(SWTResourceManager.getImage(Taodot_Baoduong.class, "/page-white-wrench-icon.png"));
+		shell.setImage(user.getIcondata().BaoduongIcon);
 		shell.setLayout(new GridLayout(2, false));
 		setText("Tạo Công việc (Đợt Bảo dưỡng)");
 		shell.setSize(777, 480);
@@ -237,7 +237,7 @@ public class Taodot_Baoduong extends Dialog {
 			}
 		});
 		btnNgunSaCha.setText("Liên hệ");
-		btnNgunSaCha.setImage(SWTResourceManager.getImage(Taodot_Baoduong.class, "/phone-icon.png"));
+		btnNgunSaCha.setImage(user.getIcondata().PhoneIcon);
 
 		Composite composite_1 = new Composite(sashForm_2, SWT.NONE);
 		composite_1.setLayout(new GridLayout(2, false));
@@ -307,8 +307,8 @@ public class Taodot_Baoduong extends Dialog {
 						Insert_dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
 					}
 					if (Insert_dx != null) {
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
-						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
+						Taphoso_View thsv = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} else {
 						NhapDeXuat ndx = new NhapDeXuat(shell, SWT.DIALOG_TRIM, user);
@@ -340,7 +340,7 @@ public class Taodot_Baoduong extends Dialog {
 				}
 			}
 		});
-		btnThemDexuat.setImage(SWTResourceManager.getImage(Taodot_Baoduong.class, "/Mimes-ooo-writer-icon.png"));
+		btnThemDexuat.setImage(user.getIcondata().DexuatIcon);
 		btnThemDexuat.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 		btnThemDexuat.setText("Thêm Hồ sơ");
 		sashForm_2.setWeights(new int[] { 1000, 618 });
@@ -891,7 +891,7 @@ public class Taodot_Baoduong extends Dialog {
 		if (ViewAndEdit_MODE_dsb != null) {
 			shell.setText("Đợt thực hiện bảo dưỡng phương tiện tài sản");
 			btnDong.setText("Hoàn tất");
-			btnLuu.setImage(SWTResourceManager.getImage(Taodot_Baoduong.class, "/Actions-document-save-icon (1).png"));
+			btnLuu.setImage(user.getIcondata().saveIcon);
 			DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
 			if (dx != null)
 				btnThemDexuat.setText("Xem Đề xuất");

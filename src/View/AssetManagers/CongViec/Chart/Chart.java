@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.DE_XUAT;
@@ -109,7 +108,7 @@ public class Chart extends Dialog {
 	 */
 	private void createContents() {
 		shlBieudo = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlBieudo.setImage(SWTResourceManager.getImage(Chart.class, "/Actions-view-statistics-icon.png"));
+		shlBieudo.setImage(user.getIcondata().chartIcon);
 		shlBieudo.setSize(875, 540);
 		new FormTemplate().setCenterScreen(shlBieudo);
 		shlBieudo.setText("Biểu đồ");

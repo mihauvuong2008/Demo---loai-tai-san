@@ -41,8 +41,8 @@ import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_NGHIEMTHU;
 import DAO.NGUOIDUNG_QUYETTOAN;
 import DAO.NGUOIDUNG_THUCHIEN;
-import DAO.TAP_HO_SO;
-import View.AssetManagers.Hoso.TapHoso_View;
+import DAO.TAPHOSO;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
@@ -96,7 +96,7 @@ public class QuanLyCongviec extends Shell {
 	 */
 	public QuanLyCongviec(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanLyCongviec.class, "/Actions-view-list-details-icon.png"));
+		setImage(user.getIcondata().QuanlycongviecIcon);
 		setLayout(new GridLayout(9, false));
 		QuanLyCongviec.user = user;
 		controler = new Controler(user);
@@ -309,8 +309,8 @@ public class QuanLyCongviec extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				TreeItem[] tbi = tree_Hoso.getSelection();
 				if (tbi.length > 0) {
-					TAP_HO_SO ths = (TAP_HO_SO) tbi[0].getData();
-					TapHoso_View ths_V = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+					TAPHOSO ths = (TAPHOSO) tbi[0].getData();
+					Taphoso_View ths_V = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 					try {
 						ths_V.open();
 					} catch (SQLException e1) {
@@ -343,7 +343,7 @@ public class QuanLyCongviec extends Shell {
 		text_Timkiems.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnXem = new Button(this, SWT.NONE);
-		btnXem.setImage(SWTResourceManager.getImage(QuanLyCongviec.class, "/Accept-icon (1).png"));
+		btnXem.setImage(user.getIcondata().acceptIcon);
 		btnXem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -440,7 +440,7 @@ public class QuanLyCongviec extends Shell {
 	private Integer Hoso_Phanviec(TreeItem treeItem, Integer i) throws SQLException {
 		Object o = treeItem.getData();
 		if (o instanceof DE_XUAT) {
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(((DE_XUAT) o).getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(((DE_XUAT) o).getMA_TAPHOSO());
 			NGUOIDUNG nd_Dexuat = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(((DE_XUAT) o).getTEN_TAI_KHOAN());
 			if (ths != null) {
 				TreeItem titem = new TreeItem(tree_Hoso, SWT.NONE);
@@ -455,7 +455,7 @@ public class QuanLyCongviec extends Shell {
 			ArrayList<NGUOIDUNG_THUCHIEN> ndthl = controler.getControl_THUCHIEN_CANBO().get_AllNGUOIDUNG_THUCHIEN(th);
 			if (ndthl != null)
 				for (NGUOIDUNG_THUCHIEN ndth : ndthl) {
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
 					if (ths != null) {
 						TreeItem titem = new TreeItem(tree_Hoso, SWT.NONE);
 						NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
@@ -471,7 +471,7 @@ public class QuanLyCongviec extends Shell {
 					.get_AllNGUOIDUNG_NGHIEMTHU(th);
 			if (ndthl != null)
 				for (NGUOIDUNG_NGHIEMTHU ndth : ndthl) {
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
 					if (ths != null) {
 						TreeItem titem = new TreeItem(tree_Hoso, SWT.NONE);
 						NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
@@ -487,7 +487,7 @@ public class QuanLyCongviec extends Shell {
 					.get_AllNGUOIDUNG_QUYETTOAN(th);
 			if (ndthl != null)
 				for (NGUOIDUNG_QUYETTOAN ndth : ndthl) {
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
 					if (ths != null) {
 						TreeItem titem = new TreeItem(tree_Hoso, SWT.NONE);
 						NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());

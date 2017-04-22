@@ -88,7 +88,7 @@ public class Chon_Phongban extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnPhngBan = new Shell(getParent(), getStyle());
-		shlChnPhngBan.setImage(SWTResourceManager.getImage(QuanLy_PhongBan.class, "/city-icon.png"));
+		shlChnPhngBan.setImage(user.getIcondata().cityIcon);
 		shlChnPhngBan.setSize(450, 300);
 		shlChnPhngBan.setText("Chọn Phòng ban");
 		shlChnPhngBan.setLayout(new GridLayout(2, false));
@@ -161,7 +161,7 @@ public class Chon_Phongban extends Dialog {
 				shlChnPhngBan.dispose();
 			}
 		});
-		btnLu.setImage(SWTResourceManager.getImage(Chon_Phongban.class, "/Select-icon.png"));
+		btnLu.setImage(user.getIcondata().successIcon);
 		GridData gd_btnLu = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnLu.widthHint = 75;
 		btnLu.setLayoutData(gd_btnLu);

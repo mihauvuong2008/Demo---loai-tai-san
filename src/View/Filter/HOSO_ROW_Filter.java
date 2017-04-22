@@ -21,11 +21,11 @@ public class HOSO_ROW_Filter {
 	public HOSO_ROW_Filter(HOSO_ROW t, String Pattern) throws SQLException {
 		this.t = t;
 		if (t != null) {
-			TEN_TAPHOSO = t.getTEN_TAPHOSO();
-			GIOITHIEU_TAPHOSO = t.getGIOITHIEU_TAPHOSO();
-			NGAY_TAO_TAPHOSO = new MyDateFormat().getViewStringDate(t.getNGAY_TAO_TAPHOSO());
-			if (t.getVbl() != null) {
-				for (VANBAN vb : t.getVbl()) {
+			TEN_TAPHOSO = t.getTaphoso().getTEN_TAPHOSO();
+			GIOITHIEU_TAPHOSO = t.getTaphoso().getGIOITHIEU_TAPHOSO();
+			NGAY_TAO_TAPHOSO = new MyDateFormat().getViewStringDate(t.getTaphoso().getNGAY_TAO_TAPHOSO());
+			if (t.getVanbanList() != null) {
+				for (VANBAN vb : t.getVanbanList()) {
 					SO_VANBAN = SO_VANBAN + " " + vb.getSO_VANBAN();
 					NGAY_BAN_HANH = NGAY_BAN_HANH + " " + vb.getNGAY_BAN_HANH();
 					CO_QUAN_BAN_HANH = CO_QUAN_BAN_HANH + " " + vb.getCO_QUAN_BAN_HANH();

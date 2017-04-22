@@ -114,7 +114,7 @@ public class QuanLy_Lenhdieuxe extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlQunLLnh = new Shell(getParent(), getStyle());
-		shlQunLLnh.setImage(SWTResourceManager.getImage(QuanLy_Lenhdieuxe.class, "/Files-Clipboard-icon.png"));
+		shlQunLLnh.setImage(user.getIcondata().LenhDieuxeIcon);
 		shlQunLLnh.setSize(386, 530);
 		new FormTemplate().setCenterScreen(shlQunLLnh);
 		shlQunLLnh.setText("Quản lý lệnh điều xe");
@@ -149,7 +149,7 @@ public class QuanLy_Lenhdieuxe extends Dialog {
 				}
 			}
 		});
-		tltmLu.setImage(SWTResourceManager.getImage(QuanLy_Lenhdieuxe.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 		tltmLu.setText("Lưu");
 
 		tltmHyLnh = new ToolItem(toolBar, SWT.NONE);
@@ -174,7 +174,7 @@ public class QuanLy_Lenhdieuxe extends Dialog {
 			}
 		});
 		tltmHyLnh.setText("Hủy - Lập lại lệnh");
-		tltmHyLnh.setImage(SWTResourceManager.getImage(QuanLy_Lenhdieuxe.class, "/Button-warning-icon.png"));
+		tltmHyLnh.setImage(user.getIcondata().warmningIcon);
 
 		ToolItem tltmXemVIn = new ToolItem(toolBar, SWT.NONE);
 		tltmXemVIn.addSelectionListener(new SelectionAdapter() {
@@ -192,8 +192,7 @@ public class QuanLy_Lenhdieuxe extends Dialog {
 			}
 		});
 		tltmXemVIn.setText("Xem và in");
-		tltmXemVIn
-				.setImage(SWTResourceManager.getImage(QuanLy_Lenhdieuxe.class, "/Actions-document-print-icon (1).png"));
+		tltmXemVIn.setImage(user.getIcondata().printIcon);
 
 		Label label_1 = new Label(shlQunLLnh, SWT.NONE);
 		label_1.setText("Mã lệnh:");

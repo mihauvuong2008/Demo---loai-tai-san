@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -41,6 +40,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 	protected ArrayList<NHOM_DONVI_THAMGIA_THONGKE> insert;
 	protected ArrayList<NHOM_DONVI_THAMGIA_THONGKE> delete;
 	private final Controler controler;
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -53,6 +53,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 		setText("SWT Dialog");
 		this.Ma_Kyhan = Ma_Kyhan;
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -113,7 +114,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 				Mode = 1;
 			}
 		});
-		tltmThm.setImage(SWTResourceManager.getImage(NhomDonviThamgiaThongke.class, "/add-1-icon (1).png"));
+		tltmThm.setImage(user.getIcondata().addIcon);
 		tltmThm.setText("Th\u00EAm Nh\u00F3m");
 
 		ToolItem tltmSaTn = new ToolItem(toolBar, SWT.NONE);
@@ -129,7 +130,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 
 		});
 		tltmSaTn.setText("S\u1EEDa t\u00EAn");
-		tltmSaTn.setImage(SWTResourceManager.getImage(NhomDonviThamgiaThongke.class, "/edit-validated-icon (1).png"));
+		tltmSaTn.setImage(user.getIcondata().editIcon);
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
@@ -158,7 +159,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 			}
 		});
 		tltmXa.setText("X\u00F3a");
-		tltmXa.setImage(SWTResourceManager.getImage(NhomDonviThamgiaThongke.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
@@ -210,8 +211,7 @@ public class NhomDonviThamgiaThongke extends Dialog {
 			}
 		});
 		tltmLu.setText("L\u01B0u");
-		tltmLu.setImage(SWTResourceManager.getImage(NhomDonviThamgiaThongke.class,
-				"/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 
 		table = new Table(shlQunLNhm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

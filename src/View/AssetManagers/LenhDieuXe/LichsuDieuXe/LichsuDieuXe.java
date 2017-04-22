@@ -91,7 +91,7 @@ public class LichsuDieuXe extends Shell {
 	 */
 	public LichsuDieuXe(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.CLOSE | SWT.MAX | SWT.TITLE);
-		setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/History.png"));
+		setImage(user.getIcondata().lichsudieuxeIcon);
 		setLayout(new GridLayout(7, false));
 		LichsuDieuXe.user = user;
 		controler = new Controler(user);
@@ -111,7 +111,7 @@ public class LichsuDieuXe extends Shell {
 				}
 			}
 		});
-		tltmXemLnhiu.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/license-management-icon.png"));
+		tltmXemLnhiu.setImage(user.getIcondata().LenhDieuxeIcon);
 		tltmXemLnhiu.setText("Xem Lệnh điều xe");
 
 		ToolItem tltmThayiThng = new ToolItem(toolBar, SWT.NONE);
@@ -127,7 +127,7 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		tltmThayiThng.setText("Thay đổi thông tin ");
-		tltmThayiThng.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/edit-validated-icon (1).png"));
+		tltmThayiThng.setImage(user.getIcondata().editIcon);
 
 		ToolItem tltmHyLnh = new ToolItem(toolBar, SWT.NONE);
 		tltmHyLnh.addSelectionListener(new SelectionAdapter() {
@@ -142,7 +142,7 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		tltmHyLnh.setText("Hủy lệnh");
-		tltmHyLnh.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/Button-warning-icon.png"));
+		tltmHyLnh.setImage(user.getIcondata().warmningIcon);
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
@@ -157,7 +157,7 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		tltmXa.setText("Xóa");
-		tltmXa.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
@@ -356,7 +356,7 @@ public class LichsuDieuXe extends Shell {
 		dateTime_1 = new DateTime(this, SWT.BORDER);
 
 		Button btnXem = new Button(this, SWT.NONE);
-		btnXem.setImage(SWTResourceManager.getImage(LichsuDieuXe.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnXem.setImage(user.getIcondata().successIcon);
 		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnXem.widthHint = 75;
 		btnXem.setLayoutData(gd_btnXem);

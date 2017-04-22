@@ -19,7 +19,6 @@ import DAO.LOAITAISAN_CAP_I;
 import DAO.LOAITAISAN_CAP_II;
 import DAO.LOAITAISAN_CAP_III;
 import DAO.NGUOIDUNG;
-import View.AssetManagers.MainForm;
 import View.AssetManagers.excel_NhapDulieu.ImportExcel_Loaitaisan;
 import View.Template.FormTemplate;
 
@@ -70,7 +69,7 @@ public class QuanlyLoaiTaisan extends Shell {
 	 */
 	public QuanlyLoaiTaisan(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(QuanlyLoaiTaisan.class, "/Books-icon.png"));
+		setImage(user.getIcondata().TongLoaiitemIcon);
 		setLayout(new GridLayout(7, false));
 		QuanlyLoaiTaisan.user = user;
 		controler = new Controler(user);
@@ -79,7 +78,7 @@ public class QuanlyLoaiTaisan extends Shell {
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
 		Tong_Item = new TreeItem(tree, SWT.NONE);
 		Tong_Item.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		Tong_Item.setImage(SWTResourceManager.getImage(MainForm.class, "/Books-icon.png"));
+		Tong_Item.setImage(user.getIcondata().TongLoaiitemIcon);
 		Tong_Item.setText("Tất cả Loại tài sản");
 		setItem_LoaiTaisan(Tong_Item);
 		Tong_Item.setExpanded(true);

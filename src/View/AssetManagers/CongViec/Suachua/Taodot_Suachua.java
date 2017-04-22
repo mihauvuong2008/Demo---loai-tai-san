@@ -34,10 +34,10 @@ import DAO.NGUONSUACHUA_BAODUONG;
 import DAO.PHONGBAN;
 import DAO.QUATRINH_DEXUAT_THUCHIEN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.AssetManagers.CongViec.Baoduong.NhapDeXuat;
 import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -120,7 +120,7 @@ public class Taodot_Suachua extends Dialog {
 
 	public void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM);
-		shell.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/maintenance-icon (1).png"));
+		shell.setImage(user.getIcondata().SuachuaIcon);
 		shell.setText("Tạo Đợt Sửa chữa Phương tiện Tài sản");
 		shell.setSize(777, 480);
 		new FormTemplate().setCenterScreen(shell);
@@ -201,7 +201,7 @@ public class Taodot_Suachua extends Dialog {
 			}
 
 		});
-		btnNgunSaCha.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/phone-icon.png"));
+		btnNgunSaCha.setImage(user.getIcondata().PhoneIcon);
 		btnNgunSaCha.setText("Liên hệ");
 
 		tree_PTTS = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
@@ -340,8 +340,8 @@ public class Taodot_Suachua extends Dialog {
 						Insert_dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
 					}
 					if (Insert_dx != null) {
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
-						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(Insert_dx.getMA_TAPHOSO());
+						Taphoso_View thsv = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} else {
 						NhapDeXuat ndx = new NhapDeXuat(shell, SWT.DIALOG_TRIM, user);
@@ -375,7 +375,7 @@ public class Taodot_Suachua extends Dialog {
 		});
 		button.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		button.setText("Thêm Hồ sơ");
-		button.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/Mimes-ooo-writer-icon.png"));
+		button.setImage(user.getIcondata().DexuatIcon);
 		xpndtmXut.setHeight(180);
 
 		ExpandItem xpndtmLinH = new ExpandItem(expandBar, SWT.NONE);
@@ -432,7 +432,7 @@ public class Taodot_Suachua extends Dialog {
 		gd_btnXong.widthHint = 75;
 		btnXong.setLayoutData(gd_btnXong);
 		btnXong.setText("Lưu");
-		btnXong.setImage(SWTResourceManager.getImage(Taodot_Suachua.class, "/Actions-document-save-icon (1).png"));
+		btnXong.setImage(user.getIcondata().saveIcon);
 
 		btnDong = new Button(shell, SWT.NONE);
 		btnDong.addSelectionListener(new SelectionAdapter() {

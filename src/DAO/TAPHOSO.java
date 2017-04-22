@@ -2,7 +2,7 @@ package DAO;
 
 import java.util.Date;
 
-public class TAP_HO_SO {
+public class TAPHOSO {
 	private int MA_TAPHOSO;
 	private String TEN_TAPHOSO;
 	private String GIOITHIEU_TAPHOSO;

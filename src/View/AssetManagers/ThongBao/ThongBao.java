@@ -74,7 +74,7 @@ public class ThongBao extends Shell {
 	 */
 	public ThongBao(Display display, NGUOIDUNG user) {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(ThongBao.class, "/Actions-help-about-icon (1).png"));
+		setImage(user.getIcondata().ThongbaoChuadocIcon);
 		setLayout(new GridLayout(6, false));
 		ThongBao.user = user;
 		controler = new Controler(user);
@@ -107,31 +107,31 @@ public class ThongBao extends Shell {
 
 		TreeItem treeItem = new TreeItem(tree, 0);
 		treeItem.setText("Lệnh Điều xe");
-		treeItem.setImage(SWTResourceManager.getImage(ThongBao.class, "/license-management-icon (1).png"));
+		treeItem.setImage(user.getIcondata().LenhdieuxeIcon32);
 		treeItem.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem.setData("LENHDIEUXE_MESSAGE");
 
 		TreeItem treeItem_1 = new TreeItem(tree, 0);
 		treeItem_1.setText("Sửa chữa - Bảo dưỡng");
-		treeItem_1.setImage(SWTResourceManager.getImage(ThongBao.class, "/maintenance-icon.png"));
+		treeItem_1.setImage(user.getIcondata().SuachuaIcon32);
 		treeItem_1.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_1.setData("SUACHUA_BAODUONG_MESSAGE");
 
 		TreeItem treeItem_2 = new TreeItem(tree, 0);
 		treeItem_2.setText("Mua sắm - Thanh lý");
-		treeItem_2.setImage(SWTResourceManager.getImage(ThongBao.class, "/add-icon.png"));
+		treeItem_2.setImage(user.getIcondata().MuasamIcon32);
 		treeItem_2.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_2.setData("MUASAM_THANHLY_MESSAGE");
 
 		TreeItem treeItem_3 = new TreeItem(tree, 0);
 		treeItem_3.setText("Tài khoản người dùng");
-		treeItem_3.setImage(SWTResourceManager.getImage(ThongBao.class, "/Office-Customer-Male-Light-icon (1).png"));
+		treeItem_3.setImage(user.getIcondata().taikhoan32);
 		treeItem_3.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_3.setData("TAIKHOANNGUOIDUNG_MESSAGE");
 
 		TreeItem treeItem_4 = new TreeItem(tree, 0);
 		treeItem_4.setText("Thông báo khác");
-		treeItem_4.setImage(SWTResourceManager.getImage(ThongBao.class, "/table-relationship-icon.png"));
+		treeItem_4.setImage(user.getIcondata().thongbaokhacIcon);
 		treeItem_4.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_4.setData("THONGBAOKHAC_MESSAGE");
 

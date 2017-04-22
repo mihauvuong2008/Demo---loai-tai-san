@@ -45,6 +45,7 @@ public class QuanlyNguonGiam extends Dialog {
 	private int mode;
 	private final Controler controler;
 	private static Log log = LogFactory.getLog(QuanlyNguonGiam.class);
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -57,6 +58,7 @@ public class QuanlyNguonGiam extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -85,8 +87,7 @@ public class QuanlyNguonGiam extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlQunLNgun = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlQunLNgun.setImage(
-				SWTResourceManager.getImage(QuanlyNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlQunLNgun.setImage(user.getIcondata().ThanhlyIcon);
 		shlQunLNgun.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlQunLNgun);
 		shlQunLNgun.setText("Quản lý Nguồn giảm");
@@ -185,8 +186,7 @@ public class QuanlyNguonGiam extends Dialog {
 		gd_button.widthHint = 75;
 		button.setLayoutData(gd_button);
 		button.setText("Thêm");
-		button.setImage(
-				SWTResourceManager.getImage(QuanlyNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button.setImage(user.getIcondata().addIcon);
 
 		Button button_1 = new Button(shlQunLNgun, SWT.NONE);
 		button_1.addSelectionListener(new SelectionAdapter() {
@@ -199,8 +199,7 @@ public class QuanlyNguonGiam extends Dialog {
 		gd_button_1.widthHint = 75;
 		button_1.setLayoutData(gd_button_1);
 		button_1.setText("Sửa");
-		button_1.setImage(
-				SWTResourceManager.getImage(QuanlyNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_1.setImage(user.getIcondata().editIcon);
 
 		Button button_3 = new Button(shlQunLNgun, SWT.NONE);
 		button_3.addSelectionListener(new SelectionAdapter() {
@@ -249,8 +248,7 @@ public class QuanlyNguonGiam extends Dialog {
 		gd_button_3.widthHint = 75;
 		button_3.setLayoutData(gd_button_3);
 		button_3.setText("Lưu");
-		button_3.setImage(
-				SWTResourceManager.getImage(QuanlyNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_3.setImage(user.getIcondata().saveIcon);
 
 		Button button_2 = new Button(shlQunLNgun, SWT.NONE);
 		button_2.addSelectionListener(new SelectionAdapter() {
@@ -284,8 +282,7 @@ public class QuanlyNguonGiam extends Dialog {
 		gd_button_2.widthHint = 75;
 		button_2.setLayoutData(gd_button_2);
 		button_2.setText("Xóa");
-		button_2.setImage(
-				SWTResourceManager.getImage(QuanlyNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		button_2.setImage(user.getIcondata().deleteIcon);
 
 		Button button_4 = new Button(shlQunLNgun, SWT.NONE);
 		button_4.addSelectionListener(new SelectionAdapter() {

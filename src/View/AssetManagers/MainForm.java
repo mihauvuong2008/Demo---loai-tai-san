@@ -73,7 +73,7 @@ import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.AboutUs.AboutUs;
 import View.AssetManagers.AppMessage.DefaultBoxMessage;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
@@ -83,7 +83,7 @@ import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
 import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Taisan.ChuyenGiaoTaiSanNoibo.TaoDot_ChuyenGiao_Taisan_Noibo;
 import View.AssetManagers.Wait.Wait;
 import View.Box.ErorrBox;
@@ -151,7 +151,6 @@ public class MainForm {
 	private Text text_5;
 	private Fill_MainForm Mainformfiller;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private final Icondataset icondata = new Icondataset();
 	private Table table_LichCongtac;
 	private int tableSelected = 0;
 	private Tree tree_NhomTaisan_Codinh_Vohinh;
@@ -225,7 +224,7 @@ public class MainForm {
 	protected void createContents() throws SQLException {
 
 		shell = new Shell();
-		shell.setImages(icondata.MainIcon);
+		shell.setImages(user.getIcondata().MainIcon);
 		shell.setMinimumSize(new Point(500, 300));
 		shell.setSize(938, 580);
 		shell.setText("Giao diện chính - Tài khoản hiện hành: [" + user.getTEN_TAI_KHOAN() + "]");
@@ -961,7 +960,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmiuXe.setImage(icondata.LenhDieuxeIcon);
+		tltmiuXe.setImage(user.getIcondata().LenhDieuxeIcon);
 		tltmiuXe.setText("Thông tin điều xe");
 
 		ToolItem tltmLichdieuxe = new ToolItem(toolBar, SWT.NONE);
@@ -976,7 +975,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmLichdieuxe.setImage(icondata.NhatkyDieuxeIcon);
+		tltmLichdieuxe.setImage(user.getIcondata().NhatkyDieuxeIcon);
 		tltmLichdieuxe.setText("Nhật ký điều xe");
 
 		ToolItem tltmPhngTinC = new ToolItem(toolBar, SWT.NONE);
@@ -991,7 +990,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmPhngTinC.setImage(icondata.ThongkeLichtrinhIcon);
+		tltmPhngTinC.setImage(user.getIcondata().ThongkeLichtrinhIcon);
 		tltmPhngTinC.setText("Thống kê lịch trình");
 
 		ToolItem tltmLchBoDng = new ToolItem(toolBar, SWT.NONE);
@@ -1006,7 +1005,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmLchBoDng.setImage(icondata.LichbaoduongIcon);
+		tltmLchBoDng.setImage(user.getIcondata().LichbaoduongIcon);
 		tltmLchBoDng.setText("Lịch bảo dưỡng");
 
 		ToolItem tltmLichDangKiem = new ToolItem(toolBar, SWT.NONE);
@@ -1021,7 +1020,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmLichDangKiem.setImage(icondata.LichDangkiemIcon);
+		tltmLichDangKiem.setImage(user.getIcondata().LichDangkiemIcon);
 		tltmLichDangKiem.setText("Lịch Đăng kiểm");
 
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -1038,7 +1037,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmTiuChunBo.setImage(icondata.TieuChuanBaoduongIcon);
+		tltmTiuChunBo.setImage(user.getIcondata().TieuChuanBaoduongIcon);
 		tltmTiuChunBo.setText("Tiêu chuẩn bảo dưỡng");
 
 		ToolItem tltmKHnng = new ToolItem(toolBar, SWT.NONE);
@@ -1053,7 +1052,7 @@ public class MainForm {
 			}
 		});
 		tltmKHnng.setText("Kỳ hạn Đăng kiểm");
-		tltmKHnng.setImage(icondata.KyhanDangkiem);
+		tltmKHnng.setImage(user.getIcondata().KyhanDangkiem);
 
 		ToolItem tltmnhMcXng = new ToolItem(toolBar, SWT.NONE);
 		tltmnhMcXng.addSelectionListener(new SelectionAdapter() {
@@ -1067,7 +1066,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmnhMcXng.setImage(icondata.DinhmucNhienlieu);
+		tltmnhMcXng.setImage(user.getIcondata().DinhmucNhienlieu);
 		tltmnhMcXng.setText("Định mức Nhiên liệu");
 
 		toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -1084,7 +1083,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmBoDng.setImage(icondata.BaoduongIcon);
+		tltmBoDng.setImage(user.getIcondata().BaoduongIcon);
 		tltmBoDng.setText("Bảo dưỡng");
 
 		ToolItem tltmTangtaisan = new ToolItem(toolBar, SWT.NONE);
@@ -1099,7 +1098,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmTangtaisan.setImage(icondata.MuasamIcon);
+		tltmTangtaisan.setImage(user.getIcondata().MuasamIcon);
 		tltmTangtaisan.setText("Mua sắm");
 
 		ToolItem tltmTaoMoiCongViec = new ToolItem(toolBar, SWT.NONE);
@@ -1114,7 +1113,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmTaoMoiCongViec.setImage(icondata.SuachuaIcon);
+		tltmTaoMoiCongViec.setImage(user.getIcondata().SuachuaIcon);
 		tltmTaoMoiCongViec.setText("Sửa chữa");
 
 		ToolItem tltmGiamTaiSan = new ToolItem(toolBar, SWT.NONE);
@@ -1129,7 +1128,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmGiamTaiSan.setImage(icondata.ThanhlyIcon);
+		tltmGiamTaiSan.setImage(user.getIcondata().ThanhlyIcon);
 		tltmGiamTaiSan.setText("Thanh lý");
 
 		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -1146,7 +1145,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmBnGiaoNi.setImage(icondata.BangiaoTaisanIcon);
+		tltmBnGiaoNi.setImage(user.getIcondata().BangiaoTaisanIcon);
 		tltmBnGiaoNi.setText("Bàn giao Nội bộ");
 
 		ToolItem tltmThVin = new ToolItem(toolBar, SWT.NONE);
@@ -1161,7 +1160,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmThVin.setImage(icondata.ThuvienDexuatIcon);
+		tltmThVin.setImage(user.getIcondata().ThuvienDexuatIcon);
 		tltmThVin.setText("Thư viện đề xuất");
 
 		ToolItem tltmTiuChunKhu = new ToolItem(toolBar, SWT.NONE);
@@ -1171,7 +1170,7 @@ public class MainForm {
 				th.OpenForm_Tool_Danhmuc_Lienhe();
 			}
 		});
-		tltmTiuChunKhu.setImage(icondata.LienheDichvuIcon);
+		tltmTiuChunKhu.setImage(user.getIcondata().LienheDichvuIcon);
 		tltmTiuChunKhu.setText("Liên hệ");
 
 		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
@@ -1188,7 +1187,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmCongViecCuaToi.setImage(icondata.CongviecCuatoiIcon);
+		tltmCongViecCuaToi.setImage(user.getIcondata().CongviecCuatoiIcon);
 		tltmCongViecCuaToi.setText("Công việc của tôi");
 
 		ToolItem tltmangThcHin_1 = new ToolItem(toolBar, SWT.NONE);
@@ -1203,7 +1202,7 @@ public class MainForm {
 			}
 		});
 		tltmangThcHin_1.setText("Đang thực hiện");
-		tltmangThcHin_1.setImage(icondata.DanhthuchienIcon);
+		tltmangThcHin_1.setImage(user.getIcondata().DanhthuchienIcon);
 
 		ToolItem tltmDanhSachCongViec = new ToolItem(toolBar, SWT.NONE);
 		tltmDanhSachCongViec.addSelectionListener(new SelectionAdapter() {
@@ -1217,7 +1216,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmDanhSachCongViec.setImage(icondata.QuanlycongviecIcon);
+		tltmDanhSachCongViec.setImage(user.getIcondata().QuanlycongviecIcon);
 		tltmDanhSachCongViec.setText("Quản lý công việc");
 
 		ToolItem tltmBiu = new ToolItem(toolBar, SWT.NONE);
@@ -1228,7 +1227,7 @@ public class MainForm {
 			}
 		});
 		tltmBiu.setText("Biểu đồ");
-		tltmBiu.setImage(icondata.BieudoIcon);
+		tltmBiu.setImage(user.getIcondata().BieudoIcon);
 
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
 
@@ -1244,7 +1243,7 @@ public class MainForm {
 				}
 			}
 		});
-		tltmCapNhatThongTin.setImage(icondata.QuanlyHosoIcon);
+		tltmCapNhatThongTin.setImage(user.getIcondata().QuanlyHosoIcon);
 		tltmCapNhatThongTin.setText("Quản lý hồ sơ");
 
 		ToolItem tltmNghNhim = new ToolItem(toolBar, SWT.NONE);
@@ -1271,7 +1270,7 @@ public class MainForm {
 				th.OpenForm_Tool_HopthuLuu();
 			}
 		});
-		tltmHoatDongNguoidung.setImage(icondata.HopthuluIcon);
+		tltmHoatDongNguoidung.setImage(user.getIcondata().HopthuluIcon);
 		tltmHoatDongNguoidung.setText("Hộp thư lưu");
 
 		ToolItem tltmTimKiem = new ToolItem(toolBar, SWT.NONE);
@@ -1281,7 +1280,7 @@ public class MainForm {
 				th.OpenForm_Tool_TimKiem();
 			}
 		});
-		tltmTimKiem.setImage(icondata.TimkiemIcon);
+		tltmTimKiem.setImage(user.getIcondata().TimkiemIcon);
 		tltmTimKiem.setText("T\u00ECm ki\u1EBFm");
 
 		SashForm sashForm_1 = new SashForm(shell, SWT.NONE);
@@ -2668,12 +2667,12 @@ public class MainForm {
 					DOT_BANGIAO_TAISAN_NOIBO dbtn = (DOT_BANGIAO_TAISAN_NOIBO) ti[0].getData();
 					if (dbtn == null)
 						return;
-					TAP_HO_SO ths = null;
+					TAPHOSO ths = null;
 					try {
 						ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dbtn.getMA_TAPHOSO());
 						if (ths == null)
 							return;
-						TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsv = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
@@ -3129,10 +3128,10 @@ public class MainForm {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem[] ti = table_HosoGanday.getSelection();
 				if (ti.length > 0) {
-					TAP_HO_SO tap_HO_SO = (TAP_HO_SO) ti[0].getData();
+					TAPHOSO tap_HO_SO = (TAPHOSO) ti[0].getData();
 					if (tap_HO_SO == null)
 						return;
-					TapHoso_View thsv = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, tap_HO_SO, true);
+					Taphoso_View thsv = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, tap_HO_SO, true);
 					try {
 						thsv.open();
 					} catch (SQLException e1) {
@@ -3359,7 +3358,7 @@ public class MainForm {
 
 	private void init(Wait w) throws SQLException {
 		new TreeTemplate(user).getTreePHONGBAN(Tree_DonViSuDung);
-		N162 = new Nhomtaisan_162(controler, icondata);
+		N162 = new Nhomtaisan_162(controler, user.getIcondata());
 		N162.setTree_NHOMTaisan_Codinh(tree_NHOMTaisan_Codinh_huuhinh);
 		N162.setTree_NhomTaisan_Codinh_dacbiet(tree_NhomTaisan_Codinh_dacbiet);
 		N162.setTree_Nhomtaisan_Codinh_Dacthu(tree_Nhomtaisan_Codinh_Dacthu);
@@ -3369,7 +3368,7 @@ public class MainForm {
 		N162.setItem_NhomTaisan_Codinh_Vohinh();
 		N162.setItem_NhomTaisan_Codinh_Dacthu();
 		N162.setItem_NhomTaisan_Codinh_Dacbiet();
-		L_19BCA = new Loaitaisan_19BCA(tree_LoaiTaisan, controler, icondata);
+		L_19BCA = new Loaitaisan_19BCA(tree_LoaiTaisan, controler, user.getIcondata());
 		L_19BCA.setItem_LoaiTaisan();
 		Mainformfiller = new Fill_MainForm(user, shell);
 		Mainformfiller.fillDataXemay(table_Xemay, getdata_Xemay());
@@ -3430,9 +3429,9 @@ public class MainForm {
 
 	private void setIconThongbaomoi(ToolItem tltmNghNhim) throws SQLException {
 		if (getThongbaomoi()) {
-			tltmNghNhim.setImage(icondata.ThongbaoChuadocIcon);
+			tltmNghNhim.setImage(user.getIcondata().ThongbaoChuadocIcon);
 		} else {
-			tltmNghNhim.setImage(icondata.ThongbaoIcon);
+			tltmNghNhim.setImage(user.getIcondata().ThongbaoIcon);
 		}
 	}
 

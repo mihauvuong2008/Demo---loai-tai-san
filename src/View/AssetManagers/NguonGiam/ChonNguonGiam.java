@@ -40,6 +40,7 @@ public class ChonNguonGiam extends Dialog {
 	private final Controler controler;
 	private Text text_Search;
 	private Text text_Ma;
+	private NGUOIDUNG user;
 
 	public NGUONGIAM getResult() {
 		return (NGUONGIAM) result;
@@ -60,6 +61,7 @@ public class ChonNguonGiam extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -88,8 +90,7 @@ public class ChonNguonGiam extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnNgunTthanh = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shlChnNgunTthanh.setImage(
-				SWTResourceManager.getImage(ChonNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlChnNgunTthanh.setImage(user.getIcondata().ThanhlyIcon);
 		shlChnNgunTthanh.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlChnNgunTthanh);
 		shlChnNgunTthanh.setText("Ch\u1ECDn ngu\u1ED3n Tthanh l\u00FD - B\u00E0n giao T\u00E0i s\u1EA3n");
@@ -177,8 +178,7 @@ public class ChonNguonGiam extends Dialog {
 		text_Search.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnChn = new Button(shlChnNgunTthanh, SWT.NONE);
-		btnChn.setImage(
-				SWTResourceManager.getImage(ChonNguonGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnChn.setImage(user.getIcondata().successIcon);
 		btnChn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

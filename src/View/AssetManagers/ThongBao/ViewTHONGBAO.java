@@ -83,7 +83,7 @@ public class ViewTHONGBAO extends Dialog {
 	 */
 	private void createContents() {
 		shlThngBo = new Shell(getParent(), getStyle());
-		shlThngBo.setImage(SWTResourceManager.getImage(ViewTHONGBAO.class, "/messages-icon.png"));
+		shlThngBo.setImage(user.getIcondata().messageIcon16);
 		shlThngBo.setSize(565, 350);
 		new FormTemplate().setCenterScreen(shlThngBo);
 		shlThngBo.setText("Th\u00F4ng b\u00E1o");

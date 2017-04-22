@@ -92,7 +92,7 @@ public class ChonNguontang extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnNgunTng = new Shell(getParent(), SWT.DIALOG_TRIM);
-		shlChnNgunTng.setImage(SWTResourceManager.getImage(ChonNguontang.class, "/phone-icon.png"));
+		shlChnNgunTng.setImage(user.getIcondata().PhoneIcon);
 		shlChnNgunTng.setSize(650, 400);
 		// center position
 		new FormTemplate().setCenterScreen(shlChnNgunTng);
@@ -176,8 +176,7 @@ public class ChonNguontang extends Dialog {
 		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnChn = new Button(shlChnNgunTng, SWT.NONE);
-		btnChn.setImage(
-				SWTResourceManager.getImage(ChonNguontang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnChn.setImage(user.getIcondata().successIcon);
 		GridData gd_btnChn = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnChn.widthHint = 75;
 		btnChn.setLayoutData(gd_btnChn);
@@ -196,8 +195,7 @@ public class ChonNguontang extends Dialog {
 		btnChn.setText("Chọn");
 
 		Button btnMRng = new Button(shlChnNgunTng, SWT.NONE);
-		btnMRng.setImage(
-				SWTResourceManager.getImage(ChonNguontang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnMRng.setImage(user.getIcondata().addIcon);
 		btnMRng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

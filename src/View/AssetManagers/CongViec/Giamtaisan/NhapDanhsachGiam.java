@@ -17,7 +17,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -88,8 +87,7 @@ public class NhapDanhsachGiam extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChnPhngTin = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MIN | SWT.MAX);
-		shlChnPhngTin.setImage(
-				SWTResourceManager.getImage(NhapDanhsachGiam.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlChnPhngTin.setImage(user.getIcondata().ThanhlyIcon);
 		shlChnPhngTin.setSize(750, 464);
 		new FormTemplate().setCenterScreen(shlChnPhngTin);
 		shlChnPhngTin.setText("Chọn Phương tiện tài sản");
@@ -165,7 +163,7 @@ public class NhapDanhsachGiam extends Dialog {
 		sashForm.setWeights(new int[] { 196, 535 });
 
 		Button btnChn = new Button(shlChnPhngTin, SWT.NONE);
-		btnChn.setImage(SWTResourceManager.getImage(NhapDanhsachGiam.class, "/Actions-document-save-icon (1).png"));
+		btnChn.setImage(user.getIcondata().saveIcon);
 		btnChn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

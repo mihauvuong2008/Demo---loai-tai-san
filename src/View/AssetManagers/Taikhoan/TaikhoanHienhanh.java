@@ -70,7 +70,7 @@ public class TaikhoanHienhanh extends Shell {
 		super(display, SWT.SHELL_TRIM);
 		controler = new Controler(user_);
 
-		setImage(SWTResourceManager.getImage(TaikhoanHienhanh.class, "/Office-Customer-Male-Light-icon.png"));
+		setImage(user.getIcondata().taikhoan);
 		setLayout(new GridLayout(1, false));
 		refreshUser(user_);
 
@@ -226,7 +226,7 @@ public class TaikhoanHienhanh extends Shell {
 		composite.setLayout(gl_composite);
 
 		Button btndoiMatKhau = new Button(composite, SWT.NONE);
-		btndoiMatKhau.setImage(SWTResourceManager.getImage(TaikhoanHienhanh.class, "/secrecy-icon (1).png"));
+		btndoiMatKhau.setImage(user.getIcondata().lock16Icon);
 		btndoiMatKhau.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -238,7 +238,7 @@ public class TaikhoanHienhanh extends Shell {
 		btndoiMatKhau.setText("Đổi mật khẩu");
 
 		Button btnThaydoi = new Button(composite, SWT.NONE);
-		btnThaydoi.setImage(SWTResourceManager.getImage(TaikhoanHienhanh.class, "/edit-validated-icon (1).png"));
+		btnThaydoi.setImage(user.getIcondata().editIcon);
 		btnThaydoi.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -261,7 +261,7 @@ public class TaikhoanHienhanh extends Shell {
 		GridData gd_btnLu = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnLu.widthHint = 75;
 		btnLu.setLayoutData(gd_btnLu);
-		btnLu.setImage(SWTResourceManager.getImage(TaikhoanHienhanh.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 		btnLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

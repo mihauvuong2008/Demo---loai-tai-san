@@ -67,6 +67,7 @@ public class InsertTaisan extends Dialog {
 	private Text text_MaPhanmemKetoan;
 	private final MyDateFormat mdf = new MyDateFormat();
 	private final Controler controler;
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -82,6 +83,7 @@ public class InsertTaisan extends Dialog {
 		this.rowl = rowl;
 		this.selectIndex = selectIndex;
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -110,7 +112,7 @@ public class InsertTaisan extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlNhpPtts = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlNhpPtts.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/add-icon (1).png"));
+		shlNhpPtts.setImage(user.getIcondata().MuasamIcon);
 		shlNhpPtts.setSize(809, 500);
 		new FormTemplate().setCenterScreen(shlNhpPtts);
 		shlNhpPtts.setText("Nhập Thông tin Phương tiện tài sản");
@@ -139,12 +141,12 @@ public class InsertTaisan extends Dialog {
 
 		combo_MODEL = new Combo(group, SWT.NONE);
 		combo_MODEL.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-				Label label_2 = new Label(group, SWT.NONE);
-				label_2.setText("Seri*:");
-		
-				text_Seri = new Text(group, SWT.BORDER);
-				text_Seri.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label label_2 = new Label(group, SWT.NONE);
+		label_2.setText("Seri*:");
+
+		text_Seri = new Text(group, SWT.BORDER);
+		text_Seri.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label label_4 = new Label(group, SWT.NONE);
 		label_4.setText("Nguyên giá:");
@@ -214,69 +216,69 @@ public class InsertTaisan extends Dialog {
 
 		text_MaPhanmemKetoan = new Text(group, SWT.BORDER);
 		text_MaPhanmemKetoan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				
-						Label label_15 = new Label(group, SWT.NONE);
-						label_15.setText("Tình trạng:");
-				
-						combo_Tinhtrang = new Combo(group, SWT.READ_ONLY);
-						combo_Tinhtrang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-						f.setComboBox_TINHTRANH_TAISAN(combo_Tinhtrang);
-						combo_Tinhtrang.select(0);
-				
-						Label label_17 = new Label(group, SWT.NONE);
-						label_17.setText("Bảo hành:");
-				
-						text_Baohanh = new Text(group, SWT.BORDER);
-						text_Baohanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-				Group grpNhmTiSn = new Group(sashForm_1, SWT.NONE);
-				grpNhmTiSn.setSize(425, 74);
-				grpNhmTiSn.setText("Phân loại - Ghi chú");
-				grpNhmTiSn.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD | SWT.ITALIC));
-				grpNhmTiSn.setLayout(new GridLayout(2, false));
-				
-				Button btnCnhHu = new Button(grpNhmTiSn, SWT.RADIO);
-				btnCnhHu.setSelection(true);
-				btnCnhHu.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-				btnCnhHu.setText("Tài sản Cố định Hữu hình");
-				
-				Button btnCnhV = new Button(grpNhmTiSn, SWT.RADIO);
-				btnCnhV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-				btnCnhV.setText("Tài sản Cố định Vô hình");
-				
-				Button btnCnhc = new Button(grpNhmTiSn, SWT.RADIO);
-				btnCnhc.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-				btnCnhc.setText("Tài sản Cố định Đặc biệt");
-				
-				Button btnTiSnC = new Button(grpNhmTiSn, SWT.RADIO);
-				btnTiSnC.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-				btnTiSnC.setText("Tài sản Cố định Đặc thù");
-				
-						Label label = new Label(grpNhmTiSn, SWT.NONE);
-						label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-						label.setText("Nhóm tài sản*:");
-						
-								combo_NhomTaisan = new Combo(grpNhmTiSn, SWT.READ_ONLY);
-								combo_NhomTaisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-								combo_NhomTaisan.select(0);
-								
-										Label lblLaiTiSn = new Label(grpNhmTiSn, SWT.NONE);
-										lblLaiTiSn.setText("Loại tài sản*:");
-										
-												combo_LoaiTaisan = new Combo(grpNhmTiSn, SWT.READ_ONLY);
-												combo_LoaiTaisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-												combo_LoaiTaisan.select(0);
-														
-																Label lblGhiChu = new Label(grpNhmTiSn, SWT.NONE);
-																GridData gd_lblGhiChu = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-																gd_lblGhiChu.verticalIndent = 3;
-																lblGhiChu.setLayoutData(gd_lblGhiChu);
-																lblGhiChu.setText("Ghi chú:");
-														
-																text_Ghichu = new Text(grpNhmTiSn, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-																text_Ghichu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-																text_Ghichu.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-												sashForm_1.setWeights(new int[] {501, 279});
+
+		Label label_15 = new Label(group, SWT.NONE);
+		label_15.setText("Tình trạng:");
+
+		combo_Tinhtrang = new Combo(group, SWT.READ_ONLY);
+		combo_Tinhtrang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		f.setComboBox_TINHTRANH_TAISAN(combo_Tinhtrang);
+		combo_Tinhtrang.select(0);
+
+		Label label_17 = new Label(group, SWT.NONE);
+		label_17.setText("Bảo hành:");
+
+		text_Baohanh = new Text(group, SWT.BORDER);
+		text_Baohanh.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Group grpNhmTiSn = new Group(sashForm_1, SWT.NONE);
+		grpNhmTiSn.setSize(425, 74);
+		grpNhmTiSn.setText("Phân loại - Ghi chú");
+		grpNhmTiSn.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD | SWT.ITALIC));
+		grpNhmTiSn.setLayout(new GridLayout(2, false));
+
+		Button btnCnhHu = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCnhHu.setSelection(true);
+		btnCnhHu.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCnhHu.setText("Tài sản Cố định Hữu hình");
+
+		Button btnCnhV = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCnhV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCnhV.setText("Tài sản Cố định Vô hình");
+
+		Button btnCnhc = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCnhc.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCnhc.setText("Tài sản Cố định Đặc biệt");
+
+		Button btnTiSnC = new Button(grpNhmTiSn, SWT.RADIO);
+		btnTiSnC.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnTiSnC.setText("Tài sản Cố định Đặc thù");
+
+		Label label = new Label(grpNhmTiSn, SWT.NONE);
+		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		label.setText("Nhóm tài sản*:");
+
+		combo_NhomTaisan = new Combo(grpNhmTiSn, SWT.READ_ONLY);
+		combo_NhomTaisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		combo_NhomTaisan.select(0);
+
+		Label lblLaiTiSn = new Label(grpNhmTiSn, SWT.NONE);
+		lblLaiTiSn.setText("Loại tài sản*:");
+
+		combo_LoaiTaisan = new Combo(grpNhmTiSn, SWT.READ_ONLY);
+		combo_LoaiTaisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		combo_LoaiTaisan.select(0);
+
+		Label lblGhiChu = new Label(grpNhmTiSn, SWT.NONE);
+		GridData gd_lblGhiChu = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_lblGhiChu.verticalIndent = 3;
+		lblGhiChu.setLayoutData(gd_lblGhiChu);
+		lblGhiChu.setText("Ghi chú:");
+
+		text_Ghichu = new Text(grpNhmTiSn, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		text_Ghichu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		text_Ghichu.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
+		sashForm_1.setWeights(new int[] { 501, 279 });
 
 		SashForm sashForm = new SashForm(sashForm_2, SWT.VERTICAL);
 		sashForm.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
@@ -333,7 +335,7 @@ public class InsertTaisan extends Dialog {
 		trclmnNguynGi.setWidth(100);
 		trclmnNguynGi.setText("Nguyên giá");
 		sashForm.setWeights(new int[] { 618 });
-		sashForm_2.setWeights(new int[] {248, 169});
+		sashForm_2.setWeights(new int[] { 248, 169 });
 
 		Button btnNhp = new Button(shlNhpPtts, SWT.NONE);
 		btnNhp.addSelectionListener(new SelectionAdapter() {
@@ -355,7 +357,7 @@ public class InsertTaisan extends Dialog {
 		gd_btnNhp.widthHint = 95;
 		btnNhp.setLayoutData(gd_btnNhp);
 		btnNhp.setText("Ghi xuống");
-		btnNhp.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/add-1-icon (1).png"));
+		btnNhp.setImage(user.getIcondata().addIcon);
 
 		Button btnSa = new Button(shlNhpPtts, SWT.NONE);
 		btnSa.addSelectionListener(new SelectionAdapter() {
@@ -411,7 +413,7 @@ public class InsertTaisan extends Dialog {
 		gd_btnSa.widthHint = 95;
 		btnSa.setLayoutData(gd_btnSa);
 		btnSa.setText("Phụ kiện");
-		btnSa.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/plugin-add-icon.png"));
+		btnSa.setImage(user.getIcondata().phukienIcon);
 
 		Button btnLu = new Button(shlNhpPtts, SWT.NONE);
 		btnLu.addSelectionListener(new SelectionAdapter() {
@@ -424,7 +426,7 @@ public class InsertTaisan extends Dialog {
 		gd_btnLu.widthHint = 95;
 		btnLu.setLayoutData(gd_btnLu);
 		btnLu.setText("Cập nhật");
-		btnLu.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 
 		Button btnXa = new Button(shlNhpPtts, SWT.NONE);
 		btnXa.addSelectionListener(new SelectionAdapter() {
@@ -459,10 +461,10 @@ public class InsertTaisan extends Dialog {
 		gd_btnXa.widthHint = 95;
 		btnXa.setLayoutData(gd_btnXa);
 		btnXa.setText("Xóa");
-		btnXa.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/delete-1-icon (1).png"));
+		btnXa.setImage(user.getIcondata().deleteIcon);
 
 		Button button_8 = new Button(shlNhpPtts, SWT.NONE);
-		button_8.setImage(SWTResourceManager.getImage(InsertTaisan.class, "/success-icon.png"));
+		button_8.setImage(user.getIcondata().successIcon);
 		GridData gd_button_8 = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_button_8.widthHint = 80;
 		button_8.setLayoutData(gd_button_8);

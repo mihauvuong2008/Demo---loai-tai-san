@@ -15,7 +15,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.ibm.icu.util.Calendar;
 
@@ -24,7 +23,7 @@ import DAO.DOT_BANGIAO_TAISAN_NOIBO;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
@@ -55,7 +54,7 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 	private String[] dS_MA_TAISAN;
 	private Combo combo_Phongban1;
 	private Combo combo_Phongban2;
-	private TAP_HO_SO ths;
+	private TAPHOSO ths;
 	private DOT_BANGIAO_TAISAN_NOIBO data;
 	private Table table_1;
 	private DateTime dateTime;
@@ -115,8 +114,7 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlChuynGiaoTi = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlChuynGiaoTi
-				.setImage(SWTResourceManager.getImage(TaoDot_ChuyenGiao_Taisan_Noibo.class, "/Import-export-icon.png"));
+		shlChuynGiaoTi.setImage(user.getIcondata().export_importIcon);
 		shlChuynGiaoTi.setSize(679, 420);
 		shlChuynGiaoTi.setText("Chuyển giao tài sản nội bộ");
 		shlChuynGiaoTi.setLayout(new GridLayout(2, false));
@@ -529,7 +527,7 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 
 	private void creatTaphoso() throws SQLException {
 		if (ths == null)
-			ths = new TAP_HO_SO();
+			ths = new TAPHOSO();
 		if (ths.getMA_TAPHOSO() <= 0) {
 			ths.setTEN_TAPHOSO(
 					"Hồ sơ bàn giao tài sản giữa " + combo_Phongban1.getText() + " và " + combo_Phongban2.getText());

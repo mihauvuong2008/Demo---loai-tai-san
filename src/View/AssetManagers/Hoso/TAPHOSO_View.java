@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridData;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -39,10 +39,10 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Composite;
 
-public class TapHoso_View extends Dialog {
+public class Taphoso_View extends Dialog {
 	protected Object result;
 	protected Shell shlTaphosoShow;
-	private TAP_HO_SO ths;
+	private TAPHOSO ths;
 	private static NGUOIDUNG user;
 	private Text text_Tentaphoso;
 	private Text text_GioithieuTaphoso;
@@ -57,16 +57,16 @@ public class TapHoso_View extends Dialog {
 	private boolean view_mode = false;// false: EditModenew
 	private final Controler controler;
 	private final MyDateFormat mdf = new MyDateFormat();
-	private static Log log = LogFactory.getLog(TapHoso_View.class);
+	private static Log log = LogFactory.getLog(Taphoso_View.class);
 
 	/**
 	 * Launch the application.
 	 * 
 	 * @param args
 	 */
-	public TapHoso_View(Shell parent, int style, NGUOIDUNG user, TAP_HO_SO ths, boolean view_mode) {
+	public Taphoso_View(Shell parent, int style, NGUOIDUNG user, TAPHOSO ths, boolean view_mode) {
 		super(parent, style);
-		TapHoso_View.user = user;
+		Taphoso_View.user = user;
 		this.ths = ths;
 		this.view_mode = view_mode;
 		controler = new Controler(user);
@@ -98,7 +98,7 @@ public class TapHoso_View extends Dialog {
 
 	private void createContents() throws SQLException {
 		shlTaphosoShow = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlTaphosoShow.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Documents-Folder-Graphite-icon.png"));
+		shlTaphosoShow.setImage(user.getIcondata().greyDocumentIcon);
 		shlTaphosoShow.setSize(780, 480);
 		new FormTemplate().setCenterScreen(shlTaphosoShow);
 		if (view_mode) {
@@ -112,7 +112,7 @@ public class TapHoso_View extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmThmVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmThmVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/document-add-icon (1).png"));
+		tltmThmVnBn.setImage(user.getIcondata().addIcon);
 		tltmThmVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -132,7 +132,7 @@ public class TapHoso_View extends Dialog {
 		tltmThmVnBn.setText("Th\u00EAm v\u0103n b\u1EA3n");
 
 		ToolItem tltmNhiuVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmNhiuVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Document-Add-icon-Mul.png"));
+		tltmNhiuVnBn.setImage(user.getIcondata().addMulIcon);
 		tltmNhiuVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -143,7 +143,7 @@ public class TapHoso_View extends Dialog {
 		tltmNhiuVnBn.setText("Nhi\u1EC1u v\u0103n b\u1EA3n");
 
 		ToolItem tltmXemVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmXemVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Mimetypes-Blank-Document-icon.png"));
+		tltmXemVnBn.setImage(user.getIcondata().xemVanbanIcon);
 		tltmXemVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -160,7 +160,7 @@ public class TapHoso_View extends Dialog {
 		tltmXemVnBn.setText("Xem v\u0103n b\u1EA3n");
 
 		ToolItem tltmXaVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmXaVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Document-Delete-icon (1).png"));
+		tltmXaVnBn.setImage(user.getIcondata().deleteIcon);
 		tltmXaVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -185,7 +185,7 @@ public class TapHoso_View extends Dialog {
 		tltmXaVnBn.setText("X\u00F3a v\u0103n b\u1EA3n");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -211,7 +211,7 @@ public class TapHoso_View extends Dialog {
 		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmInVnBn = new ToolItem(toolBar, SWT.NONE);
-		tltmInVnBn.setImage(SWTResourceManager.getImage(TapHoso_View.class, "/Actions-document-print-icon (1).png"));
+		tltmInVnBn.setImage(user.getIcondata().printIcon);
 		tltmInVnBn.setText("Xem và In văn bản");
 
 		SashForm sashForm = new SashForm(shlTaphosoShow, SWT.NONE);

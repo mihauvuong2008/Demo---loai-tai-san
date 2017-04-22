@@ -19,7 +19,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.THONGBAO;
-import View.AssetManagers.MainForm;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
 
@@ -85,8 +84,7 @@ public class ThongbaoChuadoc extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlThongbaoChuadoc = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlThongbaoChuadoc
-				.setImage(SWTResourceManager.getImage(ThongbaoChuadoc.class, "/Places-mail-message-icon (1).png"));
+		shlThongbaoChuadoc.setImage(user.getIcondata().ThongbaoIcon);
 		shlThongbaoChuadoc.setSize(330, 534);
 		new FormTemplate().setRightScreen(shlThongbaoChuadoc);
 		shlThongbaoChuadoc.setLayout(new GridLayout(1, false));
@@ -109,23 +107,23 @@ public class ThongbaoChuadoc extends Dialog {
 		// ts.setTreeItemHeight(tree, 44);
 		DieuXe = new TreeItem(tree, SWT.NONE);
 		DieuXe.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		DieuXe.setImage(SWTResourceManager.getImage(MainForm.class, "/license-management-icon (1).png"));
+		DieuXe.setImage(user.getIcondata().LenhdieuxeIcon32);
 		DieuXe.setText("Lệnh Điều xe");
 		Suachua_Baoduong = new TreeItem(tree, SWT.NONE);
 		Suachua_Baoduong.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		Suachua_Baoduong.setImage(SWTResourceManager.getImage(MainForm.class, "/maintenance-icon.png"));
+		Suachua_Baoduong.setImage(user.getIcondata().SuachuaIcon32);
 		Suachua_Baoduong.setText("Sửa chữa - Bảo dưỡng");
 		Muasam_Thanhly = new TreeItem(tree, SWT.NONE);
 		Muasam_Thanhly.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		Muasam_Thanhly.setImage(SWTResourceManager.getImage(MainForm.class, "/add-icon.png"));
+		Muasam_Thanhly.setImage(user.getIcondata().MuasamIcon32);
 		Muasam_Thanhly.setText("Mua sắm - Thanh lý");
 		NguoiDung = new TreeItem(tree, SWT.NONE);
 		NguoiDung.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		NguoiDung.setImage(SWTResourceManager.getImage(MainForm.class, "/Office-Customer-Male-Light-icon (1).png"));
+		NguoiDung.setImage(user.getIcondata().taikhoan32);
 		NguoiDung.setText("Tài khoản người dùng");
 		ThongbaoKhac = new TreeItem(tree, SWT.NONE);
 		ThongbaoKhac.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		ThongbaoKhac.setImage(SWTResourceManager.getImage(MainForm.class, "/table-relationship-icon.png"));
+		ThongbaoKhac.setImage(user.getIcondata().thongbaokhacIcon);
 		ThongbaoKhac.setText("Thông báo khác");
 
 		trclmnNewColumn = new TreeColumn(tree, SWT.LEFT);
@@ -196,7 +194,7 @@ public class ThongbaoChuadoc extends Dialog {
 					: "[" + mdf.getViewStringDateTime_hma_dmy(tb.getNGAY_THONGBAO()) + "] "
 							+ tb.getNOIDUNG_THONGBAO().substring(0, tb.getNOIDUNG_THONGBAO().length() > 25 ? 25
 									: tb.getNOIDUNG_THONGBAO().length() - 1) });
-			t.setImage(SWTResourceManager.getImage(MainForm.class, "/messages-icon (1).png"));
+			t.setImage(user.getIcondata().messageIcon32);
 			t.setData(tb);
 		}
 	}
@@ -210,7 +208,7 @@ public class ThongbaoChuadoc extends Dialog {
 					: mdf.getViewStringDateTime_hma_dmy(tb.getNGAY_THONGBAO()) + "] "
 							+ tb.getNOIDUNG_THONGBAO().substring(0, tb.getNOIDUNG_THONGBAO().length() > 25 ? 25
 									: tb.getNOIDUNG_THONGBAO().length() - 1) });
-			t.setImage(SWTResourceManager.getImage(MainForm.class, "/messages-icon (1).png"));
+			t.setImage(user.getIcondata().messageIcon32);
 			t.setData(tb);
 		}
 	}
@@ -224,7 +222,7 @@ public class ThongbaoChuadoc extends Dialog {
 					: "[" + mdf.getViewStringDateTime_hma_dmy(tb.getNGAY_THONGBAO()) + "] "
 							+ tb.getNOIDUNG_THONGBAO().substring(0, tb.getNOIDUNG_THONGBAO().length() > 25 ? 25
 									: tb.getNOIDUNG_THONGBAO().length() - 1) });
-			t.setImage(SWTResourceManager.getImage(MainForm.class, "/messages-icon (1).png"));
+			t.setImage(user.getIcondata().messageIcon32);
 			t.setData(tb);
 		}
 	}
@@ -238,7 +236,7 @@ public class ThongbaoChuadoc extends Dialog {
 					: "[" + mdf.getViewStringDateTime_hma_dmy(tb.getNGAY_THONGBAO()) + "] "
 							+ tb.getNOIDUNG_THONGBAO().substring(0, tb.getNOIDUNG_THONGBAO().length() > 25 ? 25
 									: tb.getNOIDUNG_THONGBAO().length() - 1) });
-			t.setImage(SWTResourceManager.getImage(MainForm.class, "/messages-icon (1).png"));
+			t.setImage(user.getIcondata().messageIcon32);
 			t.setData(tb);
 		}
 	}
@@ -253,7 +251,7 @@ public class ThongbaoChuadoc extends Dialog {
 							+ new String[] {
 									tb.getNOIDUNG_THONGBAO().substring(0, tb.getNOIDUNG_THONGBAO().length() > 25 ? 25
 											: tb.getNOIDUNG_THONGBAO().length() - 1) });
-			t.setImage(SWTResourceManager.getImage(MainForm.class, "/messages-icon (1).png"));
+			t.setImage(user.getIcondata().messageIcon32);
 			t.setData(tb);
 		}
 	}

@@ -50,7 +50,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import Controler.Controler;
 import DAO.FILESCAN;
 import DAO.NGUOIDUNG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.AssetManagers.Wait.Wait;
 import View.DateTime.MyDateFormat;
@@ -72,7 +72,7 @@ public class Vanban_View extends Dialog {
 	private ScrolledComposite scrolledComposite;
 	private ArrayList<FILESCAN> fcl;
 	private ArrayList<FILESCAN> fcl_save;
-	private TAP_HO_SO ths;
+	private TAPHOSO ths;
 	private DateTime dateTime;
 	private VANBAN vb;
 	private boolean view_mode;
@@ -89,7 +89,7 @@ public class Vanban_View extends Dialog {
 	 * @param vb
 	 * @param view_mode
 	 */
-	public Vanban_View(Shell parent, int style, NGUOIDUNG user, TAP_HO_SO ths, VANBAN vb, boolean view_mode) {
+	public Vanban_View(Shell parent, int style, NGUOIDUNG user, TAPHOSO ths, VANBAN vb, boolean view_mode) {
 		super(parent, style);
 		this.ths = ths;
 		this.vb = vb;
@@ -125,7 +125,7 @@ public class Vanban_View extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlVanBan = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlVanBan.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Actions-document-edit-icon (1).png"));
+		shlVanBan.setImage(user.getIcondata().xemVanbanIcon);
 		shlVanBan.setSize(730, 450);
 		new FormTemplate().setCenterScreen(shlVanBan);
 		setText("C\u00F4ng vi\u1EC7c c\u1EE7a t\u00F4i");
@@ -142,7 +142,7 @@ public class Vanban_View extends Dialog {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmThmFile = new ToolItem(toolBar, SWT.NONE);
-		tltmThmFile.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Actions-insert-image-icon (1).png"));
+		tltmThmFile.setImage(user.getIcondata().insertImageIcon);
 		tltmThmFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -233,7 +233,7 @@ public class Vanban_View extends Dialog {
 		tltmThmFile.setText("Thêm ảnh");
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
-		tltmXa.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Document-Delete-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().documentDeleteIcon);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -260,7 +260,7 @@ public class Vanban_View extends Dialog {
 		tltmXa.setText("Xóa ảnh");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Actions-document-save-as-icon.png"));
+		tltmLu.setImage(user.getIcondata().documentSaveIcon);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -345,12 +345,12 @@ public class Vanban_View extends Dialog {
 				}
 			}
 		});
-		tltmIn.setImage(SWTResourceManager.getImage(Vanban_View.class, "/Actions-document-print-icon.png"));
+		tltmIn.setImage(user.getIcondata().printIcon);
 		tltmIn.setText("Xem và In văn bản");
 
 		ToolItem tltmZoomIn = new ToolItem(toolBar, SWT.NONE);
 		tltmZoomIn.setText("Phóng ảnh");
-		tltmZoomIn.setImage(SWTResourceManager.getImage(Vanban_View.class, "/math-add-icon.png"));
+		tltmZoomIn.setImage(user.getIcondata().buleAddIcon);
 		tltmZoomIn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -384,7 +384,7 @@ public class Vanban_View extends Dialog {
 
 		ToolItem tltmZoomOut = new ToolItem(toolBar, SWT.NONE);
 		tltmZoomOut.setText("Thu ảnh");
-		tltmZoomOut.setImage(SWTResourceManager.getImage(Vanban_View.class, "/math-minus-icon.png"));
+		tltmZoomOut.setImage(user.getIcondata().blueMinusIcon);
 		tltmZoomOut.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

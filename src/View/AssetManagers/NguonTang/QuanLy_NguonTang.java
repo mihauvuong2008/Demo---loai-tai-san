@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
@@ -75,7 +74,7 @@ public class QuanLy_NguonTang extends Shell {
 	 */
 	public QuanLy_NguonTang(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM | SWT.BORDER);
-		setImage(SWTResourceManager.getImage(QuanLy_NguonTang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		setImage(user.getIcondata().phukienIcon);
 		setLayout(new GridLayout(6, false));
 		QuanLy_NguonTang.user = user;
 		controler = new Controler(user);
@@ -162,8 +161,7 @@ public class QuanLy_NguonTang extends Shell {
 		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		btnThmNgunTng = new Button(this, SWT.NONE);
-		btnThmNgunTng.setImage(
-				SWTResourceManager.getImage(QuanLy_NguonTang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnThmNgunTng.setImage(user.getIcondata().addIcon);
 		btnThmNgunTng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -174,8 +172,7 @@ public class QuanLy_NguonTang extends Shell {
 		btnThmNgunTng.setText("Thêm mới");
 
 		Button btnSa_1 = new Button(this, SWT.NONE);
-		btnSa_1.setImage(
-				SWTResourceManager.getImage(QuanLy_NguonTang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnSa_1.setImage(user.getIcondata().editIcon);
 		btnSa_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -188,8 +185,7 @@ public class QuanLy_NguonTang extends Shell {
 		btnSa_1.setText("Sửa");
 
 		Button btnXoa = new Button(this, SWT.NONE);
-		btnXoa.setImage(
-				SWTResourceManager.getImage(QuanLy_NguonTang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnXoa.setImage(user.getIcondata().deleteIcon);
 		btnXoa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -223,8 +219,7 @@ public class QuanLy_NguonTang extends Shell {
 		btnXoa.setText("Xóa");
 
 		Button btnSa = new Button(this, SWT.NONE);
-		btnSa.setImage(
-				SWTResourceManager.getImage(QuanLy_NguonTang.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		btnSa.setImage(user.getIcondata().saveIcon);
 		btnSa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

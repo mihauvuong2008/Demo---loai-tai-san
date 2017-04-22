@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.KY_HAN_THONGKE_XANG_DAU;
@@ -47,6 +46,7 @@ public class Kyhan_Thongke extends Dialog {
 	protected ArrayList<KY_HAN_THONGKE_XANG_DAU> delete;
 	private final MyDateFormat mdf = new MyDateFormat();
 	private final Controler controler;
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -58,6 +58,7 @@ public class Kyhan_Thongke extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		controler = new Controler(user);
+		this.user = user;
 	}
 
 	/**
@@ -86,8 +87,7 @@ public class Kyhan_Thongke extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlKHnThng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX);
-		shlKHnThng.setImage(
-				SWTResourceManager.getImage(Kyhan_Thongke.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
+		shlKHnThng.setImage(user.getIcondata().ThongkeLichtrinhIcon);
 		shlKHnThng.setSize(665, 410);
 		new FormTemplate().setCenterScreen(shlKHnThng);
 		shlKHnThng.setText("K\u1EF3 h\u1EA1n th\u1ED1ng k\u00EA ph\u01B0\u01A1ng ti\u1EC7n t\u00E0i s\u1EA3n");
@@ -124,7 +124,7 @@ public class Kyhan_Thongke extends Dialog {
 				}
 			}
 		});
-		tltmThmKHn.setImage(SWTResourceManager.getImage(Kyhan_Thongke.class, "/add-1-icon (1).png"));
+		tltmThmKHn.setImage(user.getIcondata().addIcon);
 		tltmThmKHn.setText("Th\u00EAm k\u1EF3 h\u1EA1n");
 
 		ToolItem tltmThayiThng = new ToolItem(toolBar, SWT.NONE);
@@ -135,7 +135,7 @@ public class Kyhan_Thongke extends Dialog {
 			}
 		});
 		tltmThayiThng.setText("Thay \u0111\u1ED5i th\u00F4ng tin");
-		tltmThayiThng.setImage(SWTResourceManager.getImage(Kyhan_Thongke.class, "/edit-validated-icon (1).png"));
+		tltmThayiThng.setImage(user.getIcondata().editIcon);
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
@@ -163,7 +163,7 @@ public class Kyhan_Thongke extends Dialog {
 			}
 		});
 		tltmXa.setText("X\u00F3a");
-		tltmXa.setImage(SWTResourceManager.getImage(Kyhan_Thongke.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
@@ -215,7 +215,7 @@ public class Kyhan_Thongke extends Dialog {
 			}
 		});
 		tltmLu.setText("L\u01B0u");
-		tltmLu.setImage(SWTResourceManager.getImage(Kyhan_Thongke.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 
 		table = new Table(shlKHnThng, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

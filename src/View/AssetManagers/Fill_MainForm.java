@@ -40,7 +40,7 @@ import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.PHONGBAN;
 import DAO.PHUKIEN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import View.AssetManagers.Wait.Wait;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -290,9 +290,9 @@ public class Fill_MainForm {
 		table_Hoatdongganday.removeAll();
 		Date thiss = new Date();
 		Date last = new MyDateFormat().addDate(thiss, -60);
-		ArrayList<TAP_HO_SO> thss = controler.getControl_TAPHOSO().get_All_TAPHOSO(last, thiss, "");
+		ArrayList<TAPHOSO> thss = controler.getControl_TAPHOSO().get_All_TAPHOSO(last, thiss, "");
 		int i = 0;
-		for (TAP_HO_SO tap_HO_SO : thss) {
+		for (TAPHOSO tap_HO_SO : thss) {
 			TableItem ti = new TableItem(table_Hoatdongganday, SWT.NONE);
 			ti.setText(new String[] { i + "", mdf.getViewStringDate(tap_HO_SO.getNGAY_TAO_TAPHOSO()),
 					tap_HO_SO.getTEN_TAPHOSO(), tap_HO_SO.getGIOITHIEU_TAPHOSO() });

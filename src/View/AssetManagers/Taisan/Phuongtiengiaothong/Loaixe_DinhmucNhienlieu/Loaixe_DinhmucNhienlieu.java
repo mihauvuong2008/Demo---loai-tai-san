@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.LOAI_XE;
@@ -95,7 +94,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 	 */
 	public Loaixe_DinhmucNhienlieu(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/fuel-icon (1).png"));
+		setImage(user.getIcondata().DinhmucNhienlieu);
 		setLayout(new GridLayout(5, false));
 		Loaixe_DinhmucNhienlieu.user = user;
 		controler = new Controler(user);
@@ -137,7 +136,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 				Mode = 1;
 			}
 		});
-		tltmThm.setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/add-1-icon (1).png"));
+		tltmThm.setImage(user.getIcondata().addIcon);
 		tltmThm.setText("Th\u00EAm");
 
 		ToolItem tltmSa = new ToolItem(toolBar, SWT.NONE);
@@ -152,7 +151,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 			}
 		});
 		tltmSa.setText("S\u1EEDa");
-		tltmSa.setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/edit-validated-icon (1).png"));
+		tltmSa.setImage(user.getIcondata().editIcon);
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
@@ -181,7 +180,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 			}
 		});
 		tltmXa.setText("X\u00F3a");
-		tltmXa.setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
@@ -235,8 +234,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 			}
 		});
 		tltmLu.setText("L\u01B0u");
-		tltmLu.setImage(
-				SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 
 		Label label = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
 		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -407,7 +405,7 @@ public class Loaixe_DinhmucNhienlieu extends Shell {
 
 		Button btnNhpFileExcel = new Button(this, SWT.NONE);
 		btnNhpFileExcel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnNhpFileExcel.setImage(SWTResourceManager.getImage(Loaixe_DinhmucNhienlieu.class, "/Excel-icon.png"));
+		btnNhpFileExcel.setImage(user.getIcondata().excelIcon);
 		btnNhpFileExcel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

@@ -56,6 +56,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(EditPhuongtienGiaothong.class);
 	Fill_ItemData f = new Fill_ItemData();
+	private NGUOIDUNG user;
 
 	/**
 	 * Create the dialog.
@@ -69,6 +70,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 		super(parent, style);
 		setText("SWT Dialog");
 		this.t = t;
+		this.user = user;
 		controler = new Controler(user);
 		ptgt = controler.getControl_PHUONGTIEN_GIAOTHONG().get_PHUONGTIEN_GIAOTHONG_FromTaisan(t.getMA_TAISAN());
 		t.setPhuongtien_Giaothong(ptgt);
@@ -100,7 +102,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 	 */
 	private void createContents() throws SQLException {
 		shlCpNhtPhng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
-		shlCpNhtPhng.setImage(SWTResourceManager.getImage(EditPhuongtienGiaothong.class, "/car-icon.png"));
+		shlCpNhtPhng.setImage(user.getIcondata().carIcon);
 		shlCpNhtPhng.setSize(350, 480);
 		new FormTemplate().setCenterScreen(shlCpNhtPhng);
 		shlCpNhtPhng.setText("Cập nhật Phương tiện giao thông");
@@ -256,8 +258,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 				return flag;
 			}
 		});
-		btnLu.setImage(
-				SWTResourceManager.getImage(EditPhuongtienGiaothong.class, "/Actions-document-save-icon (1).png"));
+		btnLu.setImage(user.getIcondata().saveIcon);
 		GridData gd_btnLu = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnLu.widthHint = 75;
 		btnLu.setLayoutData(gd_btnLu);

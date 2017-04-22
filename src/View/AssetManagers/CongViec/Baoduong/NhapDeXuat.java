@@ -17,9 +17,9 @@ import Controler.Controler;
 import DAO.DE_XUAT;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Table;
@@ -96,7 +95,7 @@ public class NhapDeXuat extends Dialog {
 	 */
 	public void createContents() throws SQLException {
 		shell = new Shell(getParent(), SWT.SHELL_TRIM);
-		shell.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/Mimes-ooo-writer-icon.png"));
+		shell.setImage(user.getIcondata().DexuatIcon);
 		shell.setText("Nhập Đề xuất - Hồ sơ chủ trương phê duyệt");
 		shell.setSize(720, 445);
 		shell.setLayout(new GridLayout(3, false));
@@ -193,14 +192,14 @@ public class NhapDeXuat extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (dx.getMA_TAPHOSO() <= 0) {
-						TAP_HO_SO t = new TAP_HO_SO();
-						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
-						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
+						TAPHOSO t = new TAPHOSO();
+						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất");
+						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất, phê duyệt chủ trương");
 						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+					Taphoso_View b = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
@@ -213,20 +212,20 @@ public class NhapDeXuat extends Dialog {
 		sashForm.setWeights(new int[] { 1000, 618 });
 
 		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/folder-documents-icon(1).png"));
+		btnNewButton.setImage(user.getIcondata().buleFolderIcon);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
 					if (dx.getMA_TAPHOSO() <= 0) {
-						TAP_HO_SO t = new TAP_HO_SO();
-						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
-						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất Bảo dưỡng");
+						TAPHOSO t = new TAPHOSO();
+						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất");
+						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất, phê duyệt chủ trương");
 						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
 						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
 					}
-					TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					TapHoso_View b = new TapHoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+					Taphoso_View b = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 					b.open();
 					fillTaphoso(ths);
 				} catch (SQLException e1) {
@@ -240,7 +239,7 @@ public class NhapDeXuat extends Dialog {
 		btnNewButton.setText("Hồ sơ - Đề xuất");
 
 		Button btnTip = new Button(shell, SWT.NONE);
-		btnTip.setImage(SWTResourceManager.getImage(NhapDeXuat.class, "/Actions-document-save-icon (1).png"));
+		btnTip.setImage(user.getIcondata().saveIcon);
 		btnTip.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -280,7 +279,7 @@ public class NhapDeXuat extends Dialog {
 		init();
 	}
 
-	private void fillTaphoso(TAP_HO_SO ths) throws SQLException {
+	private void fillTaphoso(TAPHOSO ths) throws SQLException {
 		table.removeAll();
 		ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 		int i = 1;

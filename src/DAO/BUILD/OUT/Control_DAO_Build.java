@@ -45,7 +45,9 @@ import DAO.ROLE;
 import DAO.Row_PTTSthamgia_Baoduong;
 import DAO.SYSTEM_LOG;
 import DAO.TAISAN;
+import DAO.TAPHOSO;
 import DAO.THONGBAO;
+import DAO.VANBAN;
 import View.DateTime.MyDateFormat;
 
 public class Control_DAO_Build {
@@ -606,6 +608,26 @@ public class Control_DAO_Build {
 		result.setMA_LICH_CONG_TAC(rs.getInt("MA_LICH_CONG_TAC"));
 		result.setNOIDUNG(rs.getString("NOIDUNG"));
 		result.setTHOIGIAN(rs.getTimestamp("THOIGIAN"));
+		return result;
+	}
+
+	public TAPHOSO get_TAPHOSO(ResultSet rs) throws SQLException {
+		TAPHOSO result = new TAPHOSO();
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		result.setTEN_TAPHOSO(rs.getString("TEN_TAPHOSO"));
+		result.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
+		result.setGIOITHIEU_TAPHOSO(rs.getString("GIOITHIEU_TAPHOSO"));
+		return result;
+	}
+
+	public VANBAN get_VANBAN(ResultSet rs) throws SQLException {
+		VANBAN result = new VANBAN();
+		result.setMA_VANBAN(rs.getInt("MA_VANBAN"));
+		result.setSO_VANBAN(rs.getString("SO_VANBAN"));
+		result.setNGAY_BAN_HANH(rs.getTimestamp("NGAY_BAN_HANH"));
+		result.setCO_QUAN_BAN_HANH(rs.getString("CO_QUAN_BAN_HANH"));
+		result.setTRICH_YEU(rs.getString("TRICH_YEU"));
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 		return result;
 	}
 }

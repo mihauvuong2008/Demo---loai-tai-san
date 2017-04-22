@@ -115,11 +115,11 @@ public class LenhDieuxe extends Dialog {
 					dx.shlChnNgiL.dispose();
 			}
 		});
-		shlThngTiniu.setImage(SWTResourceManager.getImage(LenhDieuxe.class, "/license-management-icon.png"));
+		shlThngTiniu.setImage(user.getIcondata().LenhDieuxeIcon);
 		shlThngTiniu.setLayout(new GridLayout(7, false));
 
 		Label lblNewLabel_1 = new Label(shlThngTiniu, SWT.NONE);
-		lblNewLabel_1.setImage(SWTResourceManager.getImage(LenhDieuxe.class, "/train-icon.png"));
+		lblNewLabel_1.setImage(user.getIcondata().LenhDieuxeIcon2);
 
 		Label lblNewLabel = new Label(shlThngTiniu, SWT.NONE);
 		lblNewLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));

@@ -50,7 +50,7 @@ import Controler.Controler;
 import DAO.FILESCAN;
 import DAO.HOSO_ROW;
 import DAO.NGUOIDUNG;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.AssetManagers.Wait.Wait;
 import View.DateTime.MyDateFormat;
@@ -89,6 +89,14 @@ public class HosoLuutru extends Shell {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(HosoLuutru.class);
 	private Button btnTimkiemtuongdoi;
+	private Tree tree_Congviec;
+	private TreeItem trtmTatCa;
+	private TreeItem treeItem_Bangiaonoibo;
+	private TreeItem treeItem_Baoduong;
+	private TreeItem treeItem_Suachua;
+	private TreeItem treeItem_Muasam;
+	private TreeItem treeItem_Thanhly;
+	private TreeItem treeItem_Dangkiem;
 
 	/**
 	 * Launch the application.
@@ -120,7 +128,7 @@ public class HosoLuutru extends Shell {
 	 */
 	public HosoLuutru(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(HosoLuutru.class, "/folder-documents-icon.png"));
+		setImage(user.getIcondata().QuanlyHosoIcon);
 		setLayout(new GridLayout(8, false));
 		HosoLuutru.user = user;
 		TreeRowStyle ts = new TreeRowStyle();
@@ -130,7 +138,7 @@ public class HosoLuutru extends Shell {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 
 		ToolItem tltmThm = new ToolItem(toolBar, SWT.NONE);
-		tltmThm.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/add-1-icon (1).png"));
+		tltmThm.setImage(user.getIcondata().addIcon);
 		tltmThm.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -141,8 +149,8 @@ public class HosoLuutru extends Shell {
 							Object o = items[0].getData();
 							if (o instanceof HOSO_ROW) {
 								HOSO_ROW ths = (HOSO_ROW) o;
-								TAP_HO_SO t = new TAP_HO_SO();
-								t.setMA_TAPHOSO(ths.getMA_TAPHOSO());
+								TAPHOSO t = new TAPHOSO();
+								t.setMA_TAPHOSO(ths.getTaphoso().getMA_TAPHOSO());
 								Vanban_View vv = new Vanban_View(getShell(), SWT.NONE, user, t, null, false);
 
 								vv.open();
@@ -212,7 +220,7 @@ public class HosoLuutru extends Shell {
 						}
 
 					}
-					loadAllData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+					loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -254,11 +262,11 @@ public class HosoLuutru extends Shell {
 				dateTime.setEnabled(true);
 			}
 		});
-		tltmCpNht.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/edit-validated-icon (1).png"));
+		tltmCpNht.setImage(user.getIcondata().editIcon);
 		tltmCpNht.setText("Cập nhật");
 
 		ToolItem tltmXa = new ToolItem(toolBar, SWT.NONE);
-		tltmXa.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/delete-1-icon (1).png"));
+		tltmXa.setImage(user.getIcondata().deleteIcon);
 		tltmXa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -269,8 +277,8 @@ public class HosoLuutru extends Shell {
 							Object o = items[0].getData();
 							if (o instanceof HOSO_ROW) {
 								HOSO_ROW ths = (HOSO_ROW) o;
-								TAP_HO_SO t = new TAP_HO_SO();
-								t.setMA_TAPHOSO(ths.getMA_TAPHOSO());
+								TAPHOSO t = new TAPHOSO();
+								t.setMA_TAPHOSO(ths.getTaphoso().getMA_TAPHOSO());
 								controler.getControl_TAPHOSO().delete_TAPHOSO(t);
 							} else {
 								VANBAN vb = (VANBAN) o;
@@ -289,7 +297,7 @@ public class HosoLuutru extends Shell {
 								.get_Vanban(((FILESCAN) items[0].getData()).getMA_VANBAN());
 						loadIMG(vb);
 					}
-					loadAllData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+					loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -300,7 +308,7 @@ public class HosoLuutru extends Shell {
 		tltmXa.setText("X\u00F3a");
 
 		ToolItem tltmLu = new ToolItem(toolBar, SWT.NONE);
-		tltmLu.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-document-save-icon (1).png"));
+		tltmLu.setImage(user.getIcondata().saveIcon);
 		tltmLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -308,7 +316,7 @@ public class HosoLuutru extends Shell {
 					SaveVanBan();
 					SaveTaphoso();
 					SaveIMG();
-					loadAllData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+					loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -326,11 +334,11 @@ public class HosoLuutru extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		tltmTmKim.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/search-icon.png"));
+		tltmTmKim.setImage(user.getIcondata().searchIcon);
 		tltmTmKim.setText("Tìm kiếm");
 
 		ToolItem tltmIn = new ToolItem(toolBar, SWT.NONE);
-		tltmIn.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-document-print-icon (1).png"));
+		tltmIn.setImage(user.getIcondata().printIcon);
 		tltmIn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -392,7 +400,7 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		toolItem_2.setText("Phóng ảnh");
-		toolItem_2.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/math-add-icon.png"));
+		toolItem_2.setImage(user.getIcondata().buleAddIcon);
 
 		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.NONE);
 		toolItem_3.addSelectionListener(new SelectionAdapter() {
@@ -425,14 +433,32 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		toolItem_3.setText("Thu ảnh");
-		toolItem_3.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/math-minus-icon.png"));
+		toolItem_3.setImage(user.getIcondata().blueMinusIcon);
 
 		SashForm sashForm = new SashForm(this, SWT.NONE);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
 		SashForm sashForm_3 = new SashForm(sashForm, SWT.VERTICAL);
 
-		tree_TuHoso = new Tree(sashForm_3, SWT.BORDER | SWT.FULL_SELECTION);
+		SashForm sashForm_1 = new SashForm(sashForm_3, SWT.NONE);
+
+		tree_Congviec = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_Congviec.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TreeItem til[] = tree_Congviec.getSelection();
+				if (til.length <= 0)
+					return;
+				try {
+					loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		tree_TuHoso = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_TuHoso.setLinesVisible(true);
 		tree_TuHoso.setHeaderVisible(true);
 		tree_TuHoso.addListener(SWT.Selection, new Listener() {
@@ -447,13 +473,13 @@ public class HosoLuutru extends Shell {
 					if (ob instanceof VANBAN) {
 						VANBAN vb = (VANBAN) ob;
 						fillVanban(vb);
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
 						fillTaphoso(ths);
 						loadIMG(vb);
 					} else {
 						clearText();
 						HOSO_ROW hrs = (HOSO_ROW) ob;
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hrs.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hrs.getTaphoso().getMA_TAPHOSO());
 						fillTaphoso(ths);
 						ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 						if (vbl != null) {
@@ -527,17 +553,17 @@ public class HosoLuutru extends Shell {
 					Object o = items[0].getData();
 					if (o instanceof HOSO_ROW) {
 						HOSO_ROW hsr = (HOSO_ROW) o;
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hsr.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(hsr.getTaphoso().getMA_TAPHOSO());
 						if (ths == null)
 							return;
-						TapHoso_View thsv = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsv = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} else {
 						VANBAN vb = (VANBAN) o;
-						TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
+						TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(vb.getMA_TAPHOSO());
 						if (ths == null)
 							return;
-						TapHoso_View thsv = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+						Taphoso_View thsv = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					}
 				} catch (SQLException e1) {
@@ -547,6 +573,7 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		mntmXemTpH.setText("Xem tập hồ sơ");
+		sashForm_1.setWeights(new int[] { 166, 239 });
 
 		SashForm sashForm_2 = new SashForm(sashForm_3, SWT.NONE);
 
@@ -555,7 +582,7 @@ public class HosoLuutru extends Shell {
 		expandBar.setForeground(SWTResourceManager.getColor(SWT.COLOR_LIST_FOREGROUND));
 
 		ExpandItem xpndtmThngTinVn = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmThngTinVn.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-document-edit-icon (1).png"));
+		xpndtmThngTinVn.setImage(user.getIcondata().whiteTextIcon);
 		xpndtmThngTinVn.setText("Thông tin văn bản");
 
 		Composite composite_2 = new Composite(expandBar, SWT.NONE);
@@ -597,7 +624,7 @@ public class HosoLuutru extends Shell {
 		xpndtmThngTinVn.setHeight(150);
 
 		ExpandItem xpndtmFile = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmFile.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Actions-insert-image-icon (1).png"));
+		xpndtmFile.setImage(user.getIcondata().insertImageIcon);
 		xpndtmFile.setText("File");
 
 		Composite composite_3 = new Composite(expandBar, SWT.NONE);
@@ -649,7 +676,7 @@ public class HosoLuutru extends Shell {
 		text_Stt.setText("0");
 
 		ExpandItem xpndtmTpHS = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmTpHS.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Documents-Folder-Graphite-icon.png"));
+		xpndtmTpHS.setImage(user.getIcondata().greyDocumentIcon);
 		xpndtmTpHS.setText("Tập hồ sơ");
 
 		Composite composite_4 = new Composite(expandBar, SWT.NONE);
@@ -799,7 +826,7 @@ public class HosoLuutru extends Shell {
 		});
 		mntmnhSTrang.setText("Tự đánh số trang");
 		sashForm_2.setWeights(new int[] { 166, 239 });
-		sashForm_3.setWeights(new int[] { 618, 809 });
+		sashForm_3.setWeights(new int[] { 713, 809 });
 
 		scrolledComposite = new ScrolledComposite(sashForm, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
@@ -831,7 +858,7 @@ public class HosoLuutru extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					loadAllData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+					loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
 					e1.printStackTrace();
@@ -839,7 +866,7 @@ public class HosoLuutru extends Shell {
 				return;
 			}
 		});
-		btnXem.setImage(SWTResourceManager.getImage(HosoLuutru.class, "/Accept-icon (1).png"));
+		btnXem.setImage(user.getIcondata().acceptIcon);
 		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnXem.widthHint = 75;
 		btnXem.setLayoutData(gd_btnXem);
@@ -874,7 +901,7 @@ public class HosoLuutru extends Shell {
 		text_Trichyeu.setText(vb.getTRICH_YEU());
 	}
 
-	protected void fillTaphoso(TAP_HO_SO ths) {
+	protected void fillTaphoso(TAPHOSO ths) {
 		if (ths == null)
 			return;
 		text_Mataphoso.setText(String.valueOf(ths.getMA_TAPHOSO()));
@@ -883,6 +910,7 @@ public class HosoLuutru extends Shell {
 	}
 
 	private void init() throws SQLException {
+		createTreeCongviec(tree_Congviec);
 		Date thisDay = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(thisDay);
@@ -891,7 +919,53 @@ public class HosoLuutru extends Shell {
 		int month = cal.get(Calendar.MONTH);
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		dateTime_Start.setDate(year, month, day);
-		loadAllData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+		loadData(mdf.getDate(dateTime_Start), mdf.getDate(dateTime_End), text_Search.getText());
+	}
+
+	private void createTreeCongviec(Tree tree) {
+
+		TreeColumn trclmnCngVic = new TreeColumn(tree, SWT.NONE);
+		trclmnCngVic.setWidth(250);
+		trclmnCngVic.setText("CÔNG VIỆC");
+
+		trtmTatCa = new TreeItem(tree, SWT.NONE);
+		trtmTatCa.setImage(user.getIcondata().buleFolderIcon);
+		trtmTatCa.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		trtmTatCa.setText("Tất cả");
+
+		treeItem_Bangiaonoibo = new TreeItem(trtmTatCa, 0);
+		treeItem_Bangiaonoibo.setImage(user.getIcondata().export_importIcon);
+		treeItem_Bangiaonoibo.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Bangiaonoibo.setText("Hồ sơ Bàn giao nội bộ");
+		treeItem_Bangiaonoibo.setExpanded(true);
+
+		treeItem_Baoduong = new TreeItem(trtmTatCa, 0);
+		treeItem_Baoduong.setImage(user.getIcondata().BaoduongIcon);
+		treeItem_Baoduong.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Baoduong.setText("Hồ sơ Bảo dưỡng PTTS");
+
+		treeItem_Suachua = new TreeItem(trtmTatCa, 0);
+		treeItem_Suachua.setImage(user.getIcondata().SuachuaIcon);
+		treeItem_Suachua.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Suachua.setText("Hồ sơ Sửa chữa PTTS");
+
+		treeItem_Muasam = new TreeItem(trtmTatCa, 0);
+		treeItem_Muasam.setImage(user.getIcondata().MuasamIcon);
+		treeItem_Muasam.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Muasam.setText("Hồ sơ Mua sắm - Tiếp nhận");
+
+		treeItem_Thanhly = new TreeItem(trtmTatCa, 0);
+		treeItem_Thanhly.setImage(user.getIcondata().ThanhlyIcon);
+		treeItem_Thanhly.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Thanhly.setText("Hồ sơ Thanh lý - Chuyển giao");
+
+		treeItem_Dangkiem = new TreeItem(trtmTatCa, 0);
+		treeItem_Dangkiem.setImage(user.getIcondata().allItemIcon);
+		treeItem_Dangkiem.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		treeItem_Dangkiem.setText("Hồ sơ Đăng kiểm PTGT");
+		trtmTatCa.setExpanded(true);
+		TreeRowStyle trs = new TreeRowStyle();
+		trs.setTreeItemHeight(tree_Congviec, 23);
 	}
 
 	protected void SaveIMG() throws SQLException {
@@ -904,7 +978,7 @@ public class HosoLuutru extends Shell {
 
 	protected void SaveTaphoso() throws SQLException {
 		if (!text_Mataphoso.getText().equals("")) {
-			TAP_HO_SO ths = new TAP_HO_SO();
+			TAPHOSO ths = new TAPHOSO();
 			ths.setMA_TAPHOSO(Integer.valueOf(text_Mataphoso.getText()));
 			ths.setTEN_TAPHOSO(text_Tentaphoso.getText());
 			ths.setGIOITHIEU_TAPHOSO(text_Mota.getText());
@@ -948,22 +1022,47 @@ public class HosoLuutru extends Shell {
 			}
 	}
 
-	private void loadAllData(Date Start, Date End, String SearchString) throws SQLException {
+	private void loadData(Date Start, Date End, String SearchString) throws SQLException {
 		tree_TuHoso.removeAll();
 		boolean tuongdoi = btnTimkiemtuongdoi.getSelection();
-		ArrayList<HOSO_ROW> hsrl = controler.getControl_Hoso_Row().get_AllData(Start, End,
-				tuongdoi ? "" : SearchString);
+		TreeItem[] til = tree_Congviec.getSelection();
+		ArrayList<HOSO_ROW> hsrl = null;
+		if (til.length > 0) {
+			if (til[0].equals(trtmTatCa)) {
+				hsrl = controler.getControl_Hoso_Row().get_AllData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Bangiaonoibo)) {
+				hsrl = controler.getControl_Hoso_Row().get_BangiaonoiboData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Baoduong)) {
+				hsrl = controler.getControl_Hoso_Row().get_BaoduongData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Suachua)) {
+				hsrl = controler.getControl_Hoso_Row().get_SuachuaData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Muasam)) {
+				hsrl = controler.getControl_Hoso_Row().get_MuasamData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Thanhly)) {
+				hsrl = controler.getControl_Hoso_Row().get_ThanhlyData(Start, End, tuongdoi ? "" : SearchString);
+			} else if (til[0].equals(treeItem_Dangkiem)) {
+				hsrl = controler.getControl_Hoso_Row().get_DangkiemData(Start, End, tuongdoi ? "" : SearchString);
+			}
+		} else {
+			hsrl = controler.getControl_Hoso_Row().get_AllData(Start, End, tuongdoi ? "" : SearchString);
+		}
+		if (hsrl == null)
+			return;
 		hsrl = new Sortter().SortHOSO_ROW(hsrl, SearchString);
+		fillTree(hsrl);
+	}
+
+	private void fillTree(ArrayList<HOSO_ROW> hsrl) {
 		int i = 1;
 		if (hsrl != null)
 			for (HOSO_ROW hsr : hsrl) {
-				String date = hsr.getNGAY_TAO_TAPHOSO() == null ? "-"
-						: mdf.getViewStringDate(hsr.getNGAY_TAO_TAPHOSO());
-				ArrayList<VANBAN> vbl = hsr.getVbl();
+				String date = hsr.getTaphoso().getNGAY_TAO_TAPHOSO() == null ? "-"
+						: mdf.getViewStringDate(hsr.getTaphoso().getNGAY_TAO_TAPHOSO());
+				ArrayList<VANBAN> vbl = hsr.getVanbanList();
 				int soluong = vbl.size();
 				TreeItem ti = new TreeItem(tree_TuHoso, SWT.NONE);
-				ti.setText(new String[] { "" + i, hsr.getTEN_TAPHOSO(), "" + soluong, date, hsr.getGIOITHIEU_TAPHOSO(),
-						hsr.getMA_TAPHOSO() + "" });
+				ti.setText(new String[] { "" + i, hsr.getTaphoso().getTEN_TAPHOSO(), "" + soluong, date,
+						hsr.getTaphoso().getGIOITHIEU_TAPHOSO(), hsr.getTaphoso().getMA_TAPHOSO() + "" });
 				ti.setData(hsr);
 				int ii = 1;
 				for (VANBAN vb : vbl) {
@@ -983,7 +1082,6 @@ public class HosoLuutru extends Shell {
 				i++;
 				ti.setExpanded(false);
 			}
-		System.err.println("a" + selectedIndex);
 		if (selectedIndex > 0 && selectedIndex < tree_TuHoso.getItemCount()) {
 			TreeItem treeItem = tree_TuHoso.getItem(selectedIndex);
 			tree_TuHoso.setSelection(treeItem);

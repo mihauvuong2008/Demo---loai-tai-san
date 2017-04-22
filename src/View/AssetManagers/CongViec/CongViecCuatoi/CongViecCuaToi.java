@@ -53,12 +53,12 @@ import DAO.NGUONSUACHUA_BAODUONG;
 import DAO.NGUONTANG;
 import DAO.PHUKIEN;
 import DAO.TAISAN;
-import DAO.TAP_HO_SO;
+import DAO.TAPHOSO;
 import DAO.VANBAN;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
-import View.AssetManagers.Hoso.TapHoso_View;
+import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.AssetManagers.ThongBao.Library.ThongBao_Lib_Congviec;
@@ -143,7 +143,7 @@ public class CongViecCuaToi extends Shell {
 	 */
 	public CongViecCuaToi(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
-		setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Actions-view-calendar-tasks-icon (1).png"));
+		setImage(user.getIcondata().CongviecCuatoiIcon);
 		CongViecCuaToi.user = user;
 		controler = new Controler(user);
 		this.setLayout(new GridLayout(1, false));
@@ -152,7 +152,7 @@ public class CongViecCuaToi extends Shell {
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		ToolItem tltmHSLu = new ToolItem(toolBar, SWT.NONE);
-		tltmHSLu.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/folder-documents-icon(1).png"));
+		tltmHSLu.setImage(user.getIcondata().buleFolderIcon);
 		tltmHSLu.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -161,7 +161,7 @@ public class CongViecCuaToi extends Shell {
 						TreeItem[] ti = tree_Dangthuchien.getSelection();
 						if (ti.length > 0) {
 							CONGVIEC_PHANVIEC p = (CONGVIEC_PHANVIEC) ti[0].getData();
-							TAP_HO_SO ths = null;
+							TAPHOSO ths = null;
 							if (p.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 								GIAI_DOAN_THUC_HIEN gdth = (GIAI_DOAN_THUC_HIEN) p.getPHANVIEC();
 								NGUOIDUNG_THUCHIEN ndth = controler.getControl_THUCHIEN_CANBO()
@@ -184,7 +184,7 @@ public class CongViecCuaToi extends Shell {
 								controler.getControl_QUYETTOAN_CANBO().update_TAPHOSO(ndqt, ths);
 							}
 							if (ths != null) {
-								TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+								Taphoso_View b = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 								b.open();
 
 								int style = SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CANCEL;
@@ -218,7 +218,7 @@ public class CongViecCuaToi extends Shell {
 						TreeItem[] ti = tree_Hoso_Dathuchien.getSelection();
 						if (ti.length > 0) {
 							Object o = ti[0].getData();
-							TAP_HO_SO ths = null;
+							TAPHOSO ths = null;
 							if (o instanceof NGUOIDUNG_THUCHIEN) {
 								NGUOIDUNG_THUCHIEN ndth = (NGUOIDUNG_THUCHIEN) o;
 								ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
@@ -230,16 +230,16 @@ public class CongViecCuaToi extends Shell {
 								ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndqt.getMA_TAPHOSO());
 							}
 							if (ths != null) {
-								TapHoso_View b = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, true);
+								Taphoso_View b = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, true);
 								b.open();
 							}
 						}
 					} else if (tree_Hoso_PhanviecTuoc.isVisible()) {
 						TreeItem[] til = tree_Hoso_PhanviecTuoc.getSelection();
 						if (til.length > 0) {
-							TAP_HO_SO ths = (TAP_HO_SO) til[0].getData();
+							TAPHOSO ths = (TAPHOSO) til[0].getData();
 							boolean view_mode = true;/* Xem */
-							TapHoso_View thss = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
+							Taphoso_View thss = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
 							thss.open();
 						}
 					}
@@ -249,11 +249,11 @@ public class CongViecCuaToi extends Shell {
 				}
 			}
 
-			private TAP_HO_SO Creat_TapHoso_if_Null(int ma_TAPHOSO) throws SQLException {
-				TAP_HO_SO ths = null;
+			private TAPHOSO Creat_TapHoso_if_Null(int ma_TAPHOSO) throws SQLException {
+				TAPHOSO ths = null;
 				ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ma_TAPHOSO);
 				if (ths == null) {
-					ths = new TAP_HO_SO();
+					ths = new TAPHOSO();
 					int MA_TAPHOSO = controler.getControl_TAPHOSO().Create_TAP_HO_SO(ths);
 					if (MA_TAPHOSO > 0) {
 						ths.setMA_TAPHOSO(MA_TAPHOSO);
@@ -330,7 +330,7 @@ public class CongViecCuaToi extends Shell {
 		tltmHSLu.setText("Cập nhật Hồ sơ");
 
 		ToolItem tltmBoCo = new ToolItem(toolBar, SWT.NONE);
-		tltmBoCo.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/page-white-text-icon.png"));
+		tltmBoCo.setImage(user.getIcondata().whiteTextIcon);
 		tltmBoCo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -507,7 +507,7 @@ public class CongViecCuaToi extends Shell {
 				}
 			}
 		});
-		tltmNgunSaCha.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/phone-icon.png"));
+		tltmNgunSaCha.setImage(user.getIcondata().PhoneIcon);
 		tltmNgunSaCha.setText("Liên hệ");
 
 		ToolItem tltmDKin = new ToolItem(toolBar, SWT.NONE);
@@ -563,7 +563,7 @@ public class CongViecCuaToi extends Shell {
 				}
 			}
 		});
-		tltmDKin.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Calendar-icon (1).png"));
+		tltmDKin.setImage(user.getIcondata().redCalendar);
 		tltmDKin.setText("D\u1EF1 ki\u1EBFn th\u1EDDi gian tri\u1EC3n khai");
 		tabFolder = new TabFolder(this, SWT.NONE);
 		tabFolder.addSelectionListener(new SelectionAdapter() {
@@ -895,9 +895,9 @@ public class CongViecCuaToi extends Shell {
 				try {
 					TreeItem[] til = tree_Hoso_PhanviecTuoc.getSelection();
 					if (til.length > 0) {
-						TAP_HO_SO ths = (TAP_HO_SO) til[0].getData();
+						TAPHOSO ths = (TAPHOSO) til[0].getData();
 						boolean view_mode = true;
-						TapHoso_View thss = new TapHoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
+						Taphoso_View thss = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
 						thss.open();
 					}
 				} catch (SQLException e1) {
@@ -1520,8 +1520,7 @@ public class CongViecCuaToi extends Shell {
 		composite.setLayout(gl_composite);
 
 		btnTiepNhan = new Button(composite, SWT.NONE);
-		btnTiepNhan
-				.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Mailbox-receive-message-2-icon (1).png"));
+		btnTiepNhan.setImage(user.getIcondata().tiepnhanIcon);
 		btnTiepNhan.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1539,7 +1538,7 @@ public class CongViecCuaToi extends Shell {
 		GridData gd_btnTraLai = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnTraLai.widthHint = 75;
 		btnTraLai.setLayoutData(gd_btnTraLai);
-		btnTraLai.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Actions-blue-arrow-undo-icon (1).png"));
+		btnTraLai.setImage(user.getIcondata().tralaiIcon);
 		btnTraLai.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1555,7 +1554,7 @@ public class CongViecCuaToi extends Shell {
 		btnTraLai.setText("Trả lại");
 
 		btnChuyengiao = new Button(composite, SWT.NONE);
-		btnChuyengiao.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/Transfer-icon (1).png"));
+		btnChuyengiao.setImage(user.getIcondata().chuyengiaoIcon);
 		btnChuyengiao.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1571,7 +1570,7 @@ public class CongViecCuaToi extends Shell {
 		btnChuyengiao.setText("Chuy\u1EC3n giao");
 
 		btnNgungChuyenGiao = new Button(composite, SWT.NONE);
-		btnNgungChuyenGiao.setImage(SWTResourceManager.getImage(CongViecCuaToi.class, "/stop-red-icon (1).png"));
+		btnNgungChuyenGiao.setImage(user.getIcondata().ngungChuyengiaoIcon);
 		btnNgungChuyenGiao.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1626,7 +1625,7 @@ public class CongViecCuaToi extends Shell {
 			TreeItem ti = new TreeItem(tree_Hoso_Dathuchien, SWT.NONE);
 			if (ths instanceof NGUOIDUNG_THUCHIEN) {
 				NGUOIDUNG_THUCHIEN o = (NGUOIDUNG_THUCHIEN) ths;
-				TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
+				TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(o.getTEN_TAI_KHOAN());
 				if (t != null) {
 					ti.setText(new String[] { i + "", t.getMA_TAPHOSO() + "", t.getTEN_TAPHOSO(),
@@ -1636,7 +1635,7 @@ public class CongViecCuaToi extends Shell {
 				}
 			} else if (ths instanceof NGUOIDUNG_NGHIEMTHU) {
 				NGUOIDUNG_NGHIEMTHU o = (NGUOIDUNG_NGHIEMTHU) ths;
-				TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
+				TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(o.getTEN_TAI_KHOAN());
 				if (t != null) {
 					ti.setText(new String[] { i + "", t.getMA_TAPHOSO() + "", t.getTEN_TAPHOSO(),
@@ -1646,7 +1645,7 @@ public class CongViecCuaToi extends Shell {
 				}
 			} else if (ths instanceof NGUOIDUNG_QUYETTOAN) {
 				NGUOIDUNG_QUYETTOAN o = (NGUOIDUNG_QUYETTOAN) ths;
-				TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
+				TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(o.getMA_TAPHOSO());
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(o.getTEN_TAI_KHOAN());
 				if (t != null) {
 					ti.setText(new String[] { i + "", t.getMA_TAPHOSO() + "", t.getTEN_TAPHOSO(),
@@ -1705,7 +1704,7 @@ public class CongViecCuaToi extends Shell {
 				.get_AllNGUOIDUNG_QUYETTOAN(phanviec);
 		int i = 1;
 		for (NGUOIDUNG_QUYETTOAN nq : nql) {
-			TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
+			TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
 			if (t != null) {
 				TreeItem ti = new TreeItem(tree_Hoso_Dathuchien, SWT.NONE);
 				ti.setText(new String[] { i + "", t.getMA_TAPHOSO() + "", t.getTEN_TAPHOSO(),
@@ -1722,7 +1721,7 @@ public class CongViecCuaToi extends Shell {
 				.get_AllNGUOIDUNG_NGHIEMTHU(phanviec);
 		int i = 1;
 		for (NGUOIDUNG_NGHIEMTHU nq : nql) {
-			TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
+			TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
 			if (t != null) {
 
 				TreeItem ti = new TreeItem(tree_Hoso_Dathuchien, SWT.NONE);
@@ -1739,7 +1738,7 @@ public class CongViecCuaToi extends Shell {
 		ArrayList<NGUOIDUNG_THUCHIEN> nql = controler.getControl_THUCHIEN_CANBO().get_AllNGUOIDUNG_THUCHIEN(phanviec);
 		int i = 1;
 		for (NGUOIDUNG_THUCHIEN nq : nql) {
-			TAP_HO_SO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
+			TAPHOSO t = controler.getControl_TAPHOSO().get_TAP_HO_SO(nq.getMA_TAPHOSO());
 			if (t != null) {
 				TreeItem ti = new TreeItem(tree_Hoso_Dathuchien, SWT.NONE);
 				ti.setText(new String[] { i + "", t.getMA_TAPHOSO() + "", t.getTEN_TAPHOSO(),
@@ -2211,7 +2210,7 @@ public class CongViecCuaToi extends Shell {
 		ArrayList<NGUOIDUNG_NGHIEMTHU> thsl = controler.getControl_NGHIEMTHU_CANBO().get_AllNGUOIDUNG_NGHIEMTHU(gdnt);
 		int i = 1;
 		for (NGUOIDUNG_NGHIEMTHU ndgt : thsl) {
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndgt.getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndgt.getMA_TAPHOSO());
 			if (ths != null) {
 				TreeItem ti = new TreeItem(tree_Hoso_PhanviecTuoc, SWT.NONE);
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndgt.getTEN_TAI_KHOAN());
@@ -2231,7 +2230,7 @@ public class CongViecCuaToi extends Shell {
 		ArrayList<NGUOIDUNG_THUCHIEN> thsl = controler.getControl_THUCHIEN_CANBO().get_AllNGUOIDUNG_THUCHIEN(gdth);
 		int i = 1;
 		for (NGUOIDUNG_THUCHIEN ndth : thsl) {
-			TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
+			TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth.getMA_TAPHOSO());
 			if (ths != null) {
 				TreeItem ti = new TreeItem(tree_Hoso_PhanviecTuoc, SWT.NONE);
 				NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(ndth.getTEN_TAI_KHOAN());
@@ -2248,7 +2247,7 @@ public class CongViecCuaToi extends Shell {
 
 	protected void loadHosoPhanviecTruoc(DE_XUAT d) throws SQLException {
 		tree_Hoso_PhanviecTuoc.removeAll();
-		TAP_HO_SO thsl = controler.getControl_TAPHOSO().get_TAP_HO_SO(d.getMA_TAPHOSO());
+		TAPHOSO thsl = controler.getControl_TAPHOSO().get_TAP_HO_SO(d.getMA_TAPHOSO());
 		if (thsl != null) {
 			TreeItem ti = new TreeItem(tree_Hoso_PhanviecTuoc, SWT.NONE);
 			NGUOIDUNG nd = controler.getControl_NGUOIDUNG().get_NGUOIDUNG(d.getTEN_TAI_KHOAN());
@@ -2319,7 +2318,7 @@ public class CongViecCuaToi extends Shell {
 		tree_HosoPhanviec.removeAll();
 		NGUOIDUNG_QUYETTOAN ndqt = controler.getControl_QUYETTOAN_CANBO()
 				.getNGUOIDUNG_QUYETTOAN(user.getTEN_TAI_KHOAN(), gdqt);
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndqt);
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndqt);
 		if (ths != null) {
 			ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 			int i = 1;
@@ -2338,7 +2337,7 @@ public class CongViecCuaToi extends Shell {
 		tree_HosoPhanviec.removeAll();
 		NGUOIDUNG_NGHIEMTHU ndnt = controler.getControl_NGHIEMTHU_CANBO()
 				.getNGUOIDUNG_NGHIEMTHU(user.getTEN_TAI_KHOAN(), gdnt);
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndnt);
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndnt);
 		if (ths != null) {
 			ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 			int i = 1;
@@ -2358,7 +2357,7 @@ public class CongViecCuaToi extends Shell {
 		tree_HosoPhanviec.removeAll();
 		NGUOIDUNG_THUCHIEN ndth = controler.getControl_THUCHIEN_CANBO().getNGUOIDUNG_THUCHIEN(user.getTEN_TAI_KHOAN(),
 				gdth);
-		TAP_HO_SO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ndth);
 		if (ths != null) {
 			ArrayList<VANBAN> vbl = controler.getControl_VANBAN().get_AllVanban(ths);
 			int i = 1;

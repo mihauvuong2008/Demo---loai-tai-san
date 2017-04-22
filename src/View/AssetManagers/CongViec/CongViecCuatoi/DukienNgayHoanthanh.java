@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import View.AssetManagers.Icondataset;
 import View.DateTime.MyDateFormat;
 import View.Template.FormTemplate;
 
@@ -31,6 +32,7 @@ public class DukienNgayHoanthanh extends Dialog {
 	private DateTime dateTime_1;
 	private Date tHISDAY;
 	private final MyDateFormat mdf = new MyDateFormat();
+	private final Icondataset icondata = new Icondataset();
 
 	/**
 	 * Create the dialog.
@@ -69,7 +71,7 @@ public class DukienNgayHoanthanh extends Dialog {
 	 */
 	private void createContents() {
 		shlDKinNgy = new Shell(getParent(), SWT.CLOSE | SWT.TITLE);
-		shlDKinNgy.setImage(SWTResourceManager.getImage(DukienNgayHoanthanh.class, "/Calendar-icon (1).png"));
+		shlDKinNgy.setImage(icondata.redCalendar);
 		shlDKinNgy.setSize(321, 393);
 		shlDKinNgy.setText("D\u1EF1 ki\u1EBFn ng\u00E0y ho\u00E0n th\u00E0nh");
 		shlDKinNgy.setLayout(new GridLayout(3, false));
