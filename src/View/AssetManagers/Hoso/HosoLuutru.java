@@ -533,10 +533,6 @@ public class HosoLuutru extends Shell {
 		TreeColumn trclmnMT = new TreeColumn(tree_TuHoso, SWT.NONE);
 		trclmnMT.setWidth(160);
 		trclmnMT.setText("M\u00F4 t\u1EA3");
-
-		TreeColumn trclmnMS = new TreeColumn(tree_TuHoso, SWT.NONE);
-		trclmnMS.setWidth(100);
-		trclmnMS.setText("M\u00E3 s\u1ED1");
 		ts.setTreeItemHeight(tree_TuHoso, treeItemHeight);
 
 		Menu menu_1 = new Menu(tree_TuHoso);
@@ -573,6 +569,10 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		mntmXemTpH.setText("Xem tập hồ sơ");
+
+		TreeColumn trclmnNewColumn = new TreeColumn(tree_TuHoso, SWT.NONE);
+		trclmnNewColumn.setWidth(100);
+		trclmnNewColumn.setText("Người tạo");
 		sashForm_1.setWeights(new int[] { 166, 239 });
 
 		SashForm sashForm_2 = new SashForm(sashForm_3, SWT.NONE);
@@ -965,7 +965,8 @@ public class HosoLuutru extends Shell {
 		treeItem_Dangkiem.setText("Hồ sơ Đăng kiểm PTGT");
 		trtmTatCa.setExpanded(true);
 		TreeRowStyle trs = new TreeRowStyle();
-		trs.setTreeItemHeight(tree_Congviec, 23);
+		trs.setTreeItemHeight(tree_Congviec, 21);
+		trtmTatCa.setExpanded(false);
 	}
 
 	protected void SaveIMG() throws SQLException {
@@ -1062,7 +1063,8 @@ public class HosoLuutru extends Shell {
 				int soluong = vbl.size();
 				TreeItem ti = new TreeItem(tree_TuHoso, SWT.NONE);
 				ti.setText(new String[] { "" + i, hsr.getTaphoso().getTEN_TAPHOSO(), "" + soluong, date,
-						hsr.getTaphoso().getGIOITHIEU_TAPHOSO(), hsr.getTaphoso().getMA_TAPHOSO() + "" });
+						hsr.getTaphoso().getGIOITHIEU_TAPHOSO(),
+						hsr.getTEN_TAI_KHOAN() == null ? "--" : hsr.getTEN_TAI_KHOAN() });
 				ti.setData(hsr);
 				int ii = 1;
 				for (VANBAN vb : vbl) {

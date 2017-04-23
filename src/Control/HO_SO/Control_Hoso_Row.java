@@ -87,40 +87,6 @@ public class Control_Hoso_Row {
 	}
 
 	private class Select extends REAactivity {
-		public ArrayList<HOSO_ROW> get_AllData(Date start, Date end, String searchString) throws SQLException {
-			if (conn != null && isPrivilegeREA()) {
-				ArrayList<HOSO_ROW> result = new ArrayList<>();
-				String query = "SELECT *  FROM TAPHOSO WHERE NGAY_TAO_TAPHOSO >= '" + mdf.getSQLStringDate(start)
-						+ "' AND NGAY_TAO_TAPHOSO <='" + mdf.getSQLStringDate(end) + "' AND (MA_TAPHOSO LIKE '%"
-						+ searchString + "%' OR TEN_TAPHOSO LIKE '%" + searchString + "%' OR GIOITHIEU_TAPHOSO LIKE '%"
-						+ searchString + "%' ) ";
-				Statement st = conn.createStatement();
-				ResultSet rs = st.executeQuery(query);
-				Control_DAO_Build cdb = new Control_DAO_Build();
-				while (rs.next()) {
-					HOSO_ROW hsr = new HOSO_ROW();
-					TAPHOSO ths = cdb.get_TAPHOSO(rs);
-					hsr.setTaphoso(ths);
-					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
-
-					Statement st2 = conn.createStatement();
-					ResultSet rs2 = st2.executeQuery(query2);
-					ArrayList<VANBAN> vbl = new ArrayList<>();
-					while (rs2.next()) {
-						VANBAN vb = cdb.get_VANBAN(rs2);
-						vbl.add(vb);
-					}
-					hsr.setVanbanList(vbl);
-					st2.close();
-					rs2.close();
-					result.add(hsr);
-				}
-				rs.close();
-				st.close();
-				return result;
-			}
-			return null;
-		}
 
 		public ArrayList<HOSO_ROW> get_BangiaonoiboData(Date start, Date end, String searchString) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
@@ -137,6 +103,7 @@ public class Control_Hoso_Row {
 					HOSO_ROW hsr = new HOSO_ROW();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
+					hsr.setTEN_TAI_KHOAN(rs.getString("dbtn.TEN_TAI_KHOAN"));
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -191,6 +158,21 @@ public class Control_Hoso_Row {
 					HOSO_ROW hsr = new HOSO_ROW();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
+					String TEN_TAI_KHOAN = null;
+					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
+					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
+					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
+					}
+					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -244,6 +226,21 @@ public class Control_Hoso_Row {
 					HOSO_ROW hsr = new HOSO_ROW();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
+					String TEN_TAI_KHOAN = null;
+					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
+					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
+					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
+					}
+					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -288,6 +285,15 @@ public class Control_Hoso_Row {
 					HOSO_ROW hsr = new HOSO_ROW();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
+					String TEN_TAI_KHOAN = null;
+					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
+					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
+					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
+						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
+					}
+					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -312,7 +318,8 @@ public class Control_Hoso_Row {
 		public ArrayList<HOSO_ROW> get_DangkiemData(Date start, Date end, String searchString) throws SQLException {
 			if (conn != null && isPrivilegeREA()) {
 				ArrayList<HOSO_ROW> result = new ArrayList<>();
-				String query = "SELECT *  FROM TAPHOSO as ths " + " INNER JOIN DOT_THUCHIEN_DANGKIEM as ddk "
+				String query = "SELECT * , ddk.TEN_TAI_KHOAN  FROM TAPHOSO as ths "
+						+ " INNER JOIN DOT_THUCHIEN_DANGKIEM as ddk "
 						+ " ON ths.MA_TAPHOSO = ddk.MA_TAPHOSO WHERE NGAY_TAO_TAPHOSO >= '"
 						+ mdf.getSQLStringDate(start) + "' AND NGAY_TAO_TAPHOSO <='" + mdf.getSQLStringDate(end)
 						+ "' AND (ths.MA_TAPHOSO LIKE '%" + searchString + "%' OR TEN_TAPHOSO LIKE '%" + searchString
@@ -324,7 +331,7 @@ public class Control_Hoso_Row {
 					HOSO_ROW hsr = new HOSO_ROW();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
-
+					hsr.setTEN_TAI_KHOAN(rs.getString("ddk.TEN_TAI_KHOAN"));
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
 					ResultSet rs2 = st2.executeQuery(query2);
@@ -353,7 +360,22 @@ public class Control_Hoso_Row {
 	}
 
 	public ArrayList<HOSO_ROW> get_AllData(Date start, Date end, String searchString) throws SQLException {
-		return getSelecter().get_AllData(start, end, searchString);
+		ArrayList<HOSO_ROW> rs = new ArrayList<>();
+		addElement(rs, getSelecter().get_Suachua_BaoduongData(start, end, new Fill_ItemData().getInt_Baoduong(),
+				searchString));
+		addElement(rs,
+				getSelecter().get_Suachua_BaoduongData(start, end, new Fill_ItemData().getInt_Suachua(), searchString));
+		addElement(rs, getSelecter().get_MuasamData(start, end, searchString));
+		addElement(rs, getSelecter().get_ThanhlyData(start, end, searchString));
+		addElement(rs, getSelecter().get_DangkiemData(start, end, searchString));
+		return rs;
+	}
+
+	private void addElement(ArrayList<HOSO_ROW> par1, ArrayList<HOSO_ROW> par2) {
+		if (par1 == null)
+			return;
+		if (par2 != null)
+			par1.addAll(par2);
 	}
 
 	public ArrayList<HOSO_ROW> get_BangiaonoiboData(Date start, Date end, String searchString) throws SQLException {

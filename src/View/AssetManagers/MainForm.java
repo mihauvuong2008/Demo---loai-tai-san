@@ -84,6 +84,7 @@ import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
 import View.AssetManagers.Hoso.Taphoso_View;
+import View.AssetManagers.LenhDieuXe.QuanLy_Lenhdieuxe;
 import View.AssetManagers.Taisan.ChuyenGiaoTaiSanNoibo.TaoDot_ChuyenGiao_Taisan_Noibo;
 import View.AssetManagers.Wait.Wait;
 import View.Box.ErorrBox;
@@ -1286,13 +1287,7 @@ public class MainForm {
 		SashForm sashForm_1 = new SashForm(shell, SWT.NONE);
 		sashForm_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		TabFolder tabFolder = new TabFolder(sashForm_1, SWT.NONE);
-
-		TabItem tbtmNhmTiSn_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmNhmTiSn_1.setText("Phân loại tài sản");
-
-		Composite composite_1 = new Composite(tabFolder, SWT.NONE);
-		tbtmNhmTiSn_1.setControl(composite_1);
+		Composite composite_1 = new Composite(sashForm_1, SWT.NONE);
 		GridLayout gl_composite_1 = new GridLayout(1, false);
 		gl_composite_1.marginWidth = 0;
 		gl_composite_1.marginHeight = 0;
@@ -1509,37 +1504,6 @@ public class MainForm {
 		xpndtmLoaiTaisan.setHeight(280);
 
 		sashForm.setWeights(new int[] { 382, 1000 });
-		TabItem tbtmNhmCnh = new TabItem(tabFolder, SWT.NONE);
-		tbtmNhmCnh.setText("Mua sắm gần đây");
-
-		Composite composite_2 = new Composite(tabFolder, SWT.NONE);
-		tbtmNhmCnh.setControl(composite_2);
-		GridLayout gl_composite_2 = new GridLayout(1, false);
-		gl_composite_2.marginWidth = 0;
-		gl_composite_2.marginHeight = 0;
-		composite_2.setLayout(gl_composite_2);
-
-		TableViewer tableViewer = new TableViewer(composite_2, SWT.BORDER | SWT.FULL_SELECTION);
-		table_muasamganday = tableViewer.getTable();
-		table_muasamganday.setLinesVisible(true);
-		table_muasamganday.setHeaderVisible(true);
-		table_muasamganday.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		TableColumn tblclmnnVNhn = new TableColumn(table_muasamganday, SWT.NONE);
-		tblclmnnVNhn.setWidth(110);
-		tblclmnnVNhn.setText("Hình thức");
-
-		TableColumn tblclmnNgyThngBn = new TableColumn(table_muasamganday, SWT.NONE);
-		tblclmnNgyThngBn.setWidth(160);
-		tblclmnNgyThngBn.setText("Thời điểm");
-
-		TableColumn DonviDexuat = new TableColumn(table_muasamganday, SWT.NONE);
-		DonviDexuat.setWidth(120);
-		DonviDexuat.setText("Đơn vị đề xuất");
-
-		TableColumn tblclmnTntMua = new TableColumn(table_muasamganday, SWT.NONE);
-		tblclmnTntMua.setWidth(200);
-		tblclmnTntMua.setText("Tên đợt mua sắm - tiếp nhận");
 
 		TabFolder tabFolder_Main = new TabFolder(sashForm_1, SWT.NONE);
 
@@ -2212,6 +2176,28 @@ public class MainForm {
 		TableColumn tblclmnNgiLi = new TableColumn(table_LichSudieuxe, SWT.NONE);
 		tblclmnNgiLi.setWidth(150);
 		tblclmnNgiLi.setText("NGƯỜI LÁI");
+
+		Menu menu_23 = new Menu(table_LichSudieuxe);
+		table_LichSudieuxe.setMenu(menu_23);
+
+		MenuItem mntmXemLnhiu = new MenuItem(menu_23, SWT.NONE);
+		mntmXemLnhiu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_LichSudieuxe.getSelection();
+				if (ti.length <= 0)
+					return;
+				LENH_DIEU_XE ldx = (LENH_DIEU_XE) ti[0].getData();
+				QuanLy_Lenhdieuxe ql = new QuanLy_Lenhdieuxe(shell, SWT.DIALOG_TRIM, user, ldx, true);
+				try {
+					ql.open();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXemLnhiu.setText("Xem Lệnh điều xe");
 		sashForm_6.setWeights(new int[] { 1000, 618 });
 
 		tbtmDanhSachTaisan = new TabItem(tabFolder_Main, SWT.NONE);
@@ -2543,7 +2529,7 @@ public class MainForm {
 					}
 				}
 				if (min != null) {
-					((ExpandItem) e.item).setHeight((int) (expandBar_2.getSize().y - (min.getHeaderHeight() * 4.8)));
+					((ExpandItem) e.item).setHeight((int) (expandBar_2.getSize().y - (min.getHeaderHeight() * 6)));
 				}
 			}
 		});
@@ -2556,6 +2542,56 @@ public class MainForm {
 		ThongtinThongkeDanhsachTaisan = new Composite(expandBar_2, SWT.NONE);
 		xpndtmThongKe.setControl(ThongtinThongkeDanhsachTaisan);
 		xpndtmThongKe.setHeight(340);
+
+		ExpandItem xpndtmMuaSmGn = new ExpandItem(expandBar_2, SWT.NONE);
+		xpndtmMuaSmGn.setText("Mua sắm gần đây");
+
+		TableViewer tableViewer = new TableViewer(expandBar_2, SWT.BORDER | SWT.FULL_SELECTION);
+		table_muasamganday = tableViewer.getTable();
+		xpndtmMuaSmGn.setControl(table_muasamganday);
+		table_muasamganday.setLinesVisible(true);
+		table_muasamganday.setHeaderVisible(true);
+
+		TableColumn tblclmnnVNhn = new TableColumn(table_muasamganday, SWT.NONE);
+		tblclmnnVNhn.setWidth(110);
+		tblclmnnVNhn.setText("Hình thức");
+
+		TableColumn tblclmnNgyThngBn = new TableColumn(table_muasamganday, SWT.NONE);
+		tblclmnNgyThngBn.setWidth(160);
+		tblclmnNgyThngBn.setText("Thời điểm");
+
+		TableColumn DonviDexuat = new TableColumn(table_muasamganday, SWT.NONE);
+		DonviDexuat.setWidth(120);
+		DonviDexuat.setText("Đơn vị đề xuất");
+
+		TableColumn tblclmnTntMua = new TableColumn(table_muasamganday, SWT.NONE);
+		tblclmnTntMua.setWidth(200);
+		tblclmnTntMua.setText("Tên đợt mua sắm - tiếp nhận");
+
+		Menu menu_22 = new Menu(table_muasamganday);
+		table_muasamganday.setMenu(menu_22);
+
+		MenuItem mntmXemChiTit_1 = new MenuItem(menu_22, SWT.NONE);
+		mntmXemChiTit_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem ti[] = table_muasamganday.getSelection();
+				if (ti.length <= 0)
+					return;
+				DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) ti[0].getData();
+				TaoDotTangtaisan tdtt = new TaoDotTangtaisan(shell, SWT.DIALOG_TRIM, user, dtt);
+				try {
+					tdtt.open();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXemChiTit_1.setText("Xem chi tiết");
+
+		TableColumn[] columns = table_muasamganday.getColumns();
+		xpndtmMuaSmGn.setHeight(350);
 
 		ExpandItem xpndtmLchSSa = new ExpandItem(expandBar_2, SWT.NONE);
 		xpndtmLchSSa.setText("Lịch sử sửa chữa - bảo dưỡng");
@@ -3347,12 +3383,10 @@ public class MainForm {
 		});
 		mntmThongkeTinhhinhPTTS.setSelection(true);
 		mntmThongkeTinhhinhPTTS.setText("Thống kê Tình hình PTTS");
-
-		TableColumn[] columns = table_muasamganday.getColumns();
+		sashForm_1.setWeights(new int[] { 202, 689 });
 		for (int i = 0, n = columns.length; i < n; i++) {
 			columns[i].pack();
 		}
-		sashForm_1.setWeights(new int[] { 202, 689 });
 		init(w);
 	}
 
@@ -3375,6 +3409,7 @@ public class MainForm {
 		Mainformfiller.fillDataOto(table_Oto, getdata_Oto());
 		Mainformfiller.fillDataHosoGanday(table_HosoGanday);
 		Mainformfiller.fillDataCongviecDangThuchien(tree_CongviecDangtrienkhai);
+		Mainformfiller.fillMuasamGanday(table_muasamganday);
 		// Show Data TaiSan MainForm
 		row_taisan_mainForm = getdata_LoaiTaisan();
 		Mainformfiller.loadData_ViewTaiSan_MainForm(tree_DanhsachTaisan, row_taisan_mainForm, Selectindex,

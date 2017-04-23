@@ -9,6 +9,7 @@ public class DOT_BANGIAO_TAISAN_NOIBO {
 	private int BEN_GIAO;
 	private int BEN_NHAN;
 	private int MA_TAPHOSO;
+	private String TEN_TAI_KHOAN;
 
 	public final int getMA_DOT_BANGIAO_TAISAN_NOIBO() {
 		return MA_DOT_BANGIAO_TAISAN_NOIBO;
@@ -56,6 +57,14 @@ public class DOT_BANGIAO_TAISAN_NOIBO {
 
 	public final void setMA_TAPHOSO(int mA_TAPHOSO) {
 		MA_TAPHOSO = mA_TAPHOSO;
+	}
+
+	public final String getTEN_TAI_KHOAN() {
+		return TEN_TAI_KHOAN;
+	}
+
+	public final void setTEN_TAI_KHOAN(String tEN_TAI_KHOAN) {
+		TEN_TAI_KHOAN = tEN_TAI_KHOAN;
 	}
 
 }

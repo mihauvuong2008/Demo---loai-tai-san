@@ -600,6 +600,7 @@ public class Control_DAO_Build {
 		result.setBEN_GIAO(rs.getInt("BEN_GIAO"));
 		result.setBEN_NHAN(rs.getInt("BEN_NHAN"));
 		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		result.setTEN_TAI_KHOAN(rs.getString("TEN_TAI_KHOAN"));
 		return result;
 	}
 

@@ -415,14 +415,7 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 					creatTaphoso();// tạo tập hồ sơ
 					if (ths.getMA_TAPHOSO() > 0) {
 						if (data == null)// tạo mới nếu thêm mới
-							data = new DOT_BANGIAO_TAISAN_NOIBO();
-						data.setTEN_DOT_BANGIAO_TAISAN_NOIBO(text_TenDotChuyengiao.getText());
-						data.setBEN_GIAO(
-								((PHONGBAN) combo_Phongban1.getData(combo_Phongban1.getText())).getMA_PHONGBAN());
-						data.setBEN_NHAN(
-								((PHONGBAN) combo_Phongban2.getData(combo_Phongban2.getText())).getMA_PHONGBAN());
-						data.setNGAY_THUCHIEN(mdf.getDate(dateTime));
-						data.setMA_TAPHOSO(ths.getMA_TAPHOSO());
+							data = getDotBangiaoTaisan();
 						if (data.getMA_DOT_BANGIAO_TAISAN_NOIBO() <= 0) {
 							// thêm mới
 							int Key = controler.getControl_DOT_BANGIAO_TAISAN_NOIBO()
@@ -480,6 +473,17 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("Đóng");
 		init();
+	}
+
+	protected DOT_BANGIAO_TAISAN_NOIBO getDotBangiaoTaisan() {
+		DOT_BANGIAO_TAISAN_NOIBO data = new DOT_BANGIAO_TAISAN_NOIBO();
+		data.setTEN_DOT_BANGIAO_TAISAN_NOIBO(text_TenDotChuyengiao.getText());
+		data.setBEN_GIAO(((PHONGBAN) combo_Phongban1.getData(combo_Phongban1.getText())).getMA_PHONGBAN());
+		data.setBEN_NHAN(((PHONGBAN) combo_Phongban2.getData(combo_Phongban2.getText())).getMA_PHONGBAN());
+		data.setNGAY_THUCHIEN(mdf.getDate(dateTime));
+		data.setMA_TAPHOSO(ths.getMA_TAPHOSO());
+		data.setTEN_TAI_KHOAN(user.getTEN_TAI_KHOAN());
+		return data;
 	}
 
 	private void init() throws SQLException {

@@ -369,7 +369,7 @@ public class LichDangkiem extends Dialog {
 			DOT_THUCHIEN_DANGKIEM dtdl = controler.getControl_DOT_THUCHIEN_DANGKIEM()
 					.get_DOT_THUCHIEN_DANGKIEM_GANNHAT(phuongtien_GIAOTHONG);
 			Color bg = null;
-			if (dtdl == null)
+			if (dtdl == null || dtdl.getNGAY_THUCHIEN() == null || cd == null)
 				bg = new Color(table.getDisplay(), 179, 224, 255);
 			else {
 				bg = getbgc(dtdl.getNGAY_THUCHIEN(), cd.getCHU_KY());

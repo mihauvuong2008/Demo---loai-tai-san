@@ -43,6 +43,7 @@ import DAO.TAISAN;
 import DAO.TAPHOSO;
 import View.AssetManagers.Wait.Wait;
 import View.DateTime.MyDateFormat;
+import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 
 public class Fill_MainForm {
@@ -452,6 +453,24 @@ public class Fill_MainForm {
 		}
 		// for (TableColumn tc : table_LichsuChuyengiaoNoibo.getColumns())
 		// tc.pack();
+	}
+
+	public void fillMuasamGanday(Table table_muasamganday) throws SQLException {
+		table_muasamganday.removeAll();
+		ArrayList<DOT_THUCHIEN_TANG_TAISAN> dttl = controler.getControl_DOT_THUCHIEN_TANG_TAISAN()
+				.get_AndFind_DOT_THUCHIEN_TANG_TAISAN_list(mdf.addDate(new Date(), -360), new Date(), "");
+		for (DOT_THUCHIEN_TANG_TAISAN dtt : dttl) {
+			TableItem ti = new TableItem(table_muasamganday, SWT.NONE);
+			DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(dtt);
+			PHONGBAN pb = controler.getControl_PHONGBAN().get_PHONGBAN(dx.getMA_PHONGBAN());
+			GIAI_DOAN_QUYET_TOAN gdqt = controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(dtt);
+			String time = gdqt.getTHOI_GIAN_KET_THUC() == null ? "--"
+					: mdf.getViewStringDate(gdqt.getTHOI_GIAN_KET_THUC());
+			ti.setText(new String[] { new Fill_ItemData().getStringHinhthucMuasam(dtt.getLY_DO_TANG()), time,
+					pb.getTEN_PHONGBAN(), dtt.getTEN_DOT_TANG() });
+			ti.setData(dtt);
+		}
+
 	}
 
 }

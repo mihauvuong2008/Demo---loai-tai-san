@@ -104,12 +104,12 @@ public class Control_DOT_BANGIAO_TAISAN_NOIBO {
 			return -1;
 		}
 
-		public int InsertTAISAN_DOT_BANGIAO_TAISAN_NOIBO(String string, DOT_BANGIAO_TAISAN_NOIBO dbtn)
+		public int InsertTAISAN_DOT_BANGIAO_TAISAN_NOIBO(String Mataisan, DOT_BANGIAO_TAISAN_NOIBO dbtn)
 				throws SQLException {
 			if (conn != null && isPrivilegeADD()) {
 				int nextkey = getNextKey();
 				String query = (new query_Insert_DOT_BANGIAO_TAISAN_NOIBO())
-						.InsertTAISAN_DOT_BANGIAO_TAISAN_NOIBO(string, dbtn);
+						.InsertTAISAN_DOT_BANGIAO_TAISAN_NOIBO(Mataisan, dbtn);
 				if (query == null)
 					return -1;
 				PreparedStatement prs = conn.prepareStatement(query);
