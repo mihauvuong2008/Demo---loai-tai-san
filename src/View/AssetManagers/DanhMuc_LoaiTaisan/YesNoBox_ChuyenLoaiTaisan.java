@@ -12,10 +12,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import Control.TAISAN.Control_TAISAN;
 import DAO.NGUOIDUNG;
 import View.AssetManagers.DanhMuc_NhomTaisan.YesNoBox_ChuyenNhomTaisan;
 import View.Template.FormTemplate;
+import myControler.Control_TAISAN;
 
 import org.eclipse.swt.layout.GridLayout;
 

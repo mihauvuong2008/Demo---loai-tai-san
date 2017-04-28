@@ -12,10 +12,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import Control.TAISAN.Control_TAISAN;
 import DAO.NGUOIDUNG;
 import View.Box.OkBox;
 import View.Template.FormTemplate;
+import myControler.Control_TAISAN;
+
 import org.eclipse.swt.widgets.Label;
 
 public class _1_HinhThuc_Chuyen_DuLieu_Noibo extends Shell {

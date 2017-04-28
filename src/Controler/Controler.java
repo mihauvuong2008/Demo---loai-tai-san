@@ -2,61 +2,61 @@ package Controler;
 
 import java.sql.SQLException;
 
-import Control.CHUKY_DANGKIEM.Control_CHUKY_DANGKIEM;
 import Control.DATETIME_SERVER.Control_DATETIME_FROM_SERVER;
-import Control.DEXUAT.Control_DEXUAT;
-import Control.DOT_BANGIAO_TAISAN_NOIBO.Control_DOT_BANGIAO_TAISAN_NOIBO;
-import Control.DOT_THUCHIEN_DANGKIEM.Control_DOT_THUCHIEN_DANGKIEM;
-import Control.DOT_THUCHIEN_GIAM_TAISAN.Control_DOT_THUCHIEN_GIAM_TAISAN;
-import Control.DOT_THUCHIEN_GIAM_TAISAN.Control_TAISAN_DOT_THUCHIEN_GIAM_TAISAN;
-import Control.DOT_THUCHIEN_SUACHUA_BAODUONG.Control_DOT_THUCHIEN_SUACHUA_BAODUONG;
-import Control.DOT_THUCHIEN_SUACHUA_BAODUONG.Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN;
-import Control.DOT_THUCHIEN_TANG_TAISAN.Control_DOT_THUCHIEN_TANG_TAISAN;
-import Control.DOT_THUCHIEN_TANG_TAISAN.Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN;
-import Control.HO_SO.Control_FILESCAN;
-import Control.HO_SO.Control_Hoso_Row;
-import Control.HO_SO.Control_TAPHOSO;
-import Control.HO_SO.Control_VANBAN;
-import Control.KY_HAN_THONGKE_XANG_DAU.Control_KY_HAN_THONGKE_XANG_DAU;
-import Control.KY_HAN_THONGKE_XANG_DAU.Control_NHOM_DONVI_THAMGIA_THONGKE;
-import Control.LENH_DIEU_XE.Control_LENH_DIEU_XE;
-import Control.LICH_CONG_TAC.Control_LICH_CONG_TAC;
-import Control.LOAITAISAN.Control_LOAITAISAN_CAP_I;
-import Control.LOAITAISAN.Control_LOAITAISAN_CAP_II;
-import Control.LOAITAISAN.Control_LOAITAISAN_CAP_III;
-import Control.NGHIEMTHU.Control_NGHIEMTHU;
-import Control.NGHIEMTHU.Control_NGHIEMTHU_CANBO;
-import Control.NGUOIDUNG.Control_NGUOIDUNG;
-import Control.NGUONGIAM.Control_NGUONGIAM;
-import Control.NGUONSUACHUA_BAODUONG.Control_NGUONSUACHUA_BAODUONG;
-import Control.NGUONTANG.Control_NGUONTANG;
-import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_I;
-import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_II;
-import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_III;
-import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_IV;
-import Control.NHOMTAISAN.Control_NHOMTAISAN_CAP_V;
-import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_DACBIET;
-import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_DACTHU;
-import Control.NHOMTAISAN.Control_NHOM_TAISANCODINH_VOHINH;
-import Control.PHONGBAN.Control_PHONGBAN;
-import Control.PHUONGTIEN_GIAOTHONG.Control_LOAI_XE;
-import Control.PHUONGTIEN_GIAOTHONG.Control_PHUONGTIEN_GIAOTHONG;
-import Control.QUATRINH_DEXUAT_THUCHIEN.Control_QUATRINH_DEXUAT_THUCHIEN;
-import Control.QUATRINH_NGHIEMTHU_QUYETTOAN.Control_QUATRINH_NGHIEMTHU_QUYETTOAN;
-import Control.QUYETTOAN.Control_QUYETTOAN;
-import Control.QUYETTOAN.Control_QUYETTOAN_CANBO;
-import Control.ROLE.Control_Role;
-import Control.ROLE.Control_Role_User;
 import Control.SYSTEM_LOG.Control_SYSTEM_LOG;
-import Control.TAISAN.Control_TAISAN;
-import Control.THONGBAO.Control_NGUOIDUNG_NHAN_THONGBAO;
-import Control.THONGBAO.Control_THONGBAO;
-import Control.THUCHIEN.Control_THUCHIEN;
-import Control.THUCHIEN.Control_THUCHIEN_CANBO;
 import DAO.LENH_DIEU_XE;
 import DAO.NGUOIDUNG;
 import View.AssetManagers.LenhDieuXe.BeanRealator;
 import View.AssetManagers.LenhDieuXe.Relator;
+import myControler.Control_CHUKY_DANGKIEM;
+import myControler.Control_DEXUAT;
+import myControler.Control_DOT_BANGIAO_TAISAN_NOIBO;
+import myControler.Control_DOT_THUCHIEN_DANGKIEM;
+import myControler.Control_DOT_THUCHIEN_GIAM_TAISAN;
+import myControler.Control_DOT_THUCHIEN_SUACHUA_BAODUONG;
+import myControler.Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN;
+import myControler.Control_DOT_THUCHIEN_TANG_TAISAN;
+import myControler.Control_HOSO_FILESCAN;
+import myControler.Control_HOSO_Hoso_Row;
+import myControler.Control_HOSO_TAPHOSO;
+import myControler.Control_HOSO_VANBAN;
+import myControler.Control_KY_HAN_THONGKE_XANG_DAU;
+import myControler.Control_LENH_DIEU_XE;
+import myControler.Control_LICH_CONG_TAC;
+import myControler.Control_LOAITAISAN_CAP_I;
+import myControler.Control_LOAITAISAN_CAP_II;
+import myControler.Control_LOAITAISAN_CAP_III;
+import myControler.Control_LOAI_XE;
+import myControler.Control_NGHIEMTHU;
+import myControler.Control_NGHIEMTHU_CANBO;
+import myControler.Control_NGUOIDUNG;
+import myControler.Control_NGUOIDUNG_NHAN_THONGBAO;
+import myControler.Control_NGUONGIAM;
+import myControler.Control_NGUONSUACHUA_BAODUONG;
+import myControler.Control_NGUONTANG;
+import myControler.Control_NHOMTAISAN_CAP_I;
+import myControler.Control_NHOMTAISAN_CAP_II;
+import myControler.Control_NHOMTAISAN_CAP_III;
+import myControler.Control_NHOMTAISAN_CAP_IV;
+import myControler.Control_NHOMTAISAN_CAP_V;
+import myControler.Control_NHOM_DONVI_THAMGIA_THONGKE;
+import myControler.Control_NHOM_TAISANCODINH_DACBIET;
+import myControler.Control_NHOM_TAISANCODINH_DACTHU;
+import myControler.Control_NHOM_TAISANCODINH_VOHINH;
+import myControler.Control_PHONGBAN;
+import myControler.Control_PHUONGTIEN_GIAOTHONG;
+import myControler.Control_QUATRINH_DEXUAT_THUCHIEN;
+import myControler.Control_QUATRINH_NGHIEMTHU_QUYETTOAN;
+import myControler.Control_QUYETTOAN;
+import myControler.Control_QUYETTOAN_CANBO;
+import myControler.Control_Role;
+import myControler.Control_Role_User;
+import myControler.Control_TAISAN;
+import myControler.Control_TAISAN_DOT_THUCHIEN_GIAM_TAISAN;
+import myControler.Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN;
+import myControler.Control_THONGBAO;
+import myControler.Control_THUCHIEN;
+import myControler.Control_THUCHIEN_CANBO;
 
 public class Controler {
 
@@ -70,10 +70,10 @@ public class Controler {
 	private final Control_DOT_THUCHIEN_SUACHUA_BAODUONG Control_DOT_THUCHIEN_SUACHUA_BAODUONG;
 	private final Control_DOT_THUCHIEN_TANG_TAISAN Control_DOT_THUCHIEN_TANG_TAISAN;
 	private final Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN;
-	private final Control_FILESCAN Control_FILESCAN;
-	private final Control_Hoso_Row Control_Hoso_Row;
-	private final Control_TAPHOSO Control_TAPHOSO;
-	private final Control_VANBAN Control_VANBAN;
+	private final Control_HOSO_FILESCAN Control_FILESCAN;
+	private final Control_HOSO_Hoso_Row Control_Hoso_Row;
+	private final Control_HOSO_TAPHOSO Control_TAPHOSO;
+	private final Control_HOSO_VANBAN Control_VANBAN;
 	private final Control_KY_HAN_THONGKE_XANG_DAU Control_KY_HAN_THONGKE_XANG_DAU;
 	private final Control_NHOM_DONVI_THAMGIA_THONGKE Control_NHOM_DONVI_THAMGIA_THONGKE;
 	private final Control_LENH_DIEU_XE Control_LENH_DIEU_XE;
@@ -128,10 +128,10 @@ public class Controler {
 		Control_DOT_THUCHIEN_SUACHUA_BAODUONG = new Control_DOT_THUCHIEN_SUACHUA_BAODUONG(user);
 		Control_DOT_THUCHIEN_TANG_TAISAN = new Control_DOT_THUCHIEN_TANG_TAISAN(user);
 		Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN = new Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN(user);
-		Control_FILESCAN = new Control_FILESCAN(user);
-		Control_Hoso_Row = new Control_Hoso_Row(user);
-		Control_TAPHOSO = new Control_TAPHOSO(user);
-		Control_VANBAN = new Control_VANBAN(user);
+		Control_FILESCAN = new Control_HOSO_FILESCAN(user);
+		Control_Hoso_Row = new Control_HOSO_Hoso_Row(user);
+		Control_TAPHOSO = new Control_HOSO_TAPHOSO(user);
+		Control_VANBAN = new Control_HOSO_VANBAN(user);
 		Control_KY_HAN_THONGKE_XANG_DAU = new Control_KY_HAN_THONGKE_XANG_DAU(user);
 		Control_NHOM_DONVI_THAMGIA_THONGKE = new Control_NHOM_DONVI_THAMGIA_THONGKE(user);
 		Control_LENH_DIEU_XE = new Control_LENH_DIEU_XE(user);
@@ -210,19 +210,19 @@ public class Controler {
 		return Control_TAISAN_DOT_THUCHIEN_TANG_TAISAN;
 	}
 
-	public final Control_FILESCAN getControl_FILESCAN() {
+	public final Control_HOSO_FILESCAN getControl_FILESCAN() {
 		return Control_FILESCAN;
 	}
 
-	public final Control_Hoso_Row getControl_Hoso_Row() {
+	public final Control_HOSO_Hoso_Row getControl_Hoso_Row() {
 		return Control_Hoso_Row;
 	}
 
-	public final Control_TAPHOSO getControl_TAPHOSO() {
+	public final Control_HOSO_TAPHOSO getControl_TAPHOSO() {
 		return Control_TAPHOSO;
 	}
 
-	public final Control_VANBAN getControl_VANBAN() {
+	public final Control_HOSO_VANBAN getControl_VANBAN() {
 		return Control_VANBAN;
 	}
 

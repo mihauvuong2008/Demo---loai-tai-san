@@ -6,6 +6,7 @@ import org.junit.Test;
 import Connectionfortesting.CONNECTION;
 import DAO.DE_XUAT;
 import DAO.NGUOIDUNG;
+import myControler.Control_DEXUAT;
 
 public class DE_XUAT_UnitTest {
 	NGUOIDUNG user = new CONNECTION().getUser();

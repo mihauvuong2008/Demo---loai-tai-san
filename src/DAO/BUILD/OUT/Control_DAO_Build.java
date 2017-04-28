@@ -13,6 +13,7 @@ import DAO.DOT_THUCHIEN_TANG_TAISAN;
 import DAO.GIAI_DOAN_NGHIEM_THU;
 import DAO.GIAI_DOAN_QUYET_TOAN;
 import DAO.GIAI_DOAN_THUC_HIEN;
+import DAO.HOSO_CUATOI;
 import DAO.Hinhthuc_Baoduong;
 import DAO.KY_HAN_THONGKE_XANG_DAU;
 import DAO.Kyhan_Baoduong;
@@ -628,6 +629,15 @@ public class Control_DAO_Build {
 		result.setNGAY_BAN_HANH(rs.getTimestamp("NGAY_BAN_HANH"));
 		result.setCO_QUAN_BAN_HANH(rs.getString("CO_QUAN_BAN_HANH"));
 		result.setTRICH_YEU(rs.getString("TRICH_YEU"));
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		return result;
+	}
+
+	public HOSO_CUATOI get_HOSO_CUATOI(ResultSet rs) throws SQLException {
+		HOSO_CUATOI result = new HOSO_CUATOI();
+		result.setMA_HOSO_CUATOI(rs.getInt("MA_HOSO_CUATOI"));
+		result.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
+		result.setTEN_TAI_KHOAN(rs.getString("TEN_TAI_KHOAN"));
 		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
 		return result;
 	}

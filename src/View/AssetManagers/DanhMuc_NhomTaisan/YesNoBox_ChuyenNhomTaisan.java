@@ -11,9 +11,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import Control.TAISAN.Control_TAISAN;
 import DAO.NGUOIDUNG;
 import View.Template.FormTemplate;
+import myControler.Control_TAISAN;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;

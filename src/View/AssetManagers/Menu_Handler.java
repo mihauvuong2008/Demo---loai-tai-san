@@ -220,7 +220,7 @@ public class Menu_Handler {
 	}
 
 	public void OpenForm_TaiKhoanCuatoi() throws SQLException {
-		TaikhoanHienhanh th = new TaikhoanHienhanh(null, user, false);
+		TaikhoanHienhanh th = new TaikhoanHienhanh(shell.getDisplay(), user, false);
 		th.open();
 	}
 

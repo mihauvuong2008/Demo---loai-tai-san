@@ -531,9 +531,9 @@ public class QuanlyTaikhoan extends Shell {
 		ArrayList<NGUOIDUNG> data = controler.getControl_NGUOIDUNG().get_All();
 		int i = 1;
 		for (NGUOIDUNG nd : data) {
-			TableItem ti = new TableItem(table_danhsachNguoidung, SWT.NONE);
 			PHONGBAN pb = controler.getControl_PHONGBAN().get_PHONGBAN(nd.getMA_PHONGBAN());
 			if (pb != null) {
+				TableItem ti = new TableItem(table_danhsachNguoidung, SWT.NONE);
 				ti.setText(new String[] { i + "", nd.getTEN_TAI_KHOAN(), nd.getTEN_CAN_BO(), nd.getGIOI_THIEU(),
 						pb.getTEN_PHONGBAN() });
 				ti.setData(nd);

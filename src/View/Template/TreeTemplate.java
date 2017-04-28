@@ -7,10 +7,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import Control.PHONGBAN.Control_PHONGBAN;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import View.AssetManagers.MainForm;
+import myControler.Control_PHONGBAN;
 
 public class TreeTemplate {
 	private NGUOIDUNG user;

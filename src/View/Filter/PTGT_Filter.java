@@ -2,11 +2,11 @@ package View.Filter;
 
 import java.sql.SQLException;
 
-import Control.PHUONGTIEN_GIAOTHONG.Control_LOAI_XE;
 import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAISAN;
+import myControler.Control_LOAI_XE;
 
 public class PTGT_Filter {
 	TAISAN t;

@@ -103,6 +103,10 @@ public class Icondataset {
 	public Image thongbaokhacIcon = SWTResourceManager.getImage(Icondataset.class, "/table-relationship-icon.png");
 	public Image messageIcon32 = SWTResourceManager.getImage(Icondataset.class, "/messages-icon (1).png");
 	public Image messageIcon16 = SWTResourceManager.getImage(Icondataset.class, "/messages-icon.png");
+	public Image upload16 = SWTResourceManager.getImage(Icondataset.class, "/upload-icon.png");
+	public Image Sendicon16 = SWTResourceManager.getImage(Icondataset.class, "/Send-icon.png");
+	public Image receiveIcon16 = SWTResourceManager.getImage(Icondataset.class, "/Open-icon.png");
+	public Image myDocument16 = SWTResourceManager.getImage(Icondataset.class, "/Library-Folder-white-icon.png");
 
 	public Icondataset() {
 		MainIcon = new Image[2];

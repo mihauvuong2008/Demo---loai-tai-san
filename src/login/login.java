@@ -17,9 +17,9 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import Control.NGUOIDUNG.Control_NGUOIDUNG;
-import Control.ROLE.PrivilegeChecker;
 import DAO.NGUOIDUNG;
+import myControler.Control_NGUOIDUNG;
+import myControler.PrivilegeChecker;
 
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -76,7 +76,8 @@ public class login {
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shlDangNhap = new Shell(shlDangNhap, (SWT.SHELL_TRIM & (~SWT.RESIZE) & (SWT.TITLE | SWT.CLOSE | SWT.MIN)));
+		shlDangNhap = new Shell(shlDangNhap,
+				(SWT.SHELL_TRIM & (~SWT.RESIZE) & (SWT.TITLE | SWT.CLOSE | SWT.MIN | SWT.ON_TOP)));
 		shlDangNhap.setImage(SWTResourceManager.getImage(login.class, "/Key-icon.png"));
 		shlDangNhap.setSize(426, 210);
 		shlDangNhap.setText("\u0110\u0103ng nh\u1EADp");

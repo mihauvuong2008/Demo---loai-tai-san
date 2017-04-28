@@ -21,11 +21,11 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import Control.ROLE.PrivilegeChecker;
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.ROLE;
 import View.Template.FormTemplate;
+import myControler.PrivilegeChecker;
 
 public class TaikhoanHienhanh extends Shell {
 	private Text text_tentaikhoan;
@@ -69,8 +69,9 @@ public class TaikhoanHienhanh extends Shell {
 	public TaikhoanHienhanh(Display display, NGUOIDUNG user_, boolean view_Mode) throws SQLException {
 		super(display, SWT.SHELL_TRIM);
 		controler = new Controler(user_);
-
+		TaikhoanHienhanh.user = user_;
 		setImage(user.getIcondata().taikhoan);
+
 		setLayout(new GridLayout(1, false));
 		refreshUser(user_);
 

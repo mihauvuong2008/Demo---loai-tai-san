@@ -3,11 +3,11 @@ package View.AssetManagers.LenhDieuXe;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-import Control.NGUOIDUNG.Control_NGUOIDUNG;
-import Control.PHUONGTIEN_GIAOTHONG.Control_PHUONGTIEN_GIAOTHONG;
 import DAO.LENH_DIEU_XE;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
+import myControler.Control_NGUOIDUNG;
+import myControler.Control_PHUONGTIEN_GIAOTHONG;
 
 public class BeanRealator {
 	private String ma_lenh_dieu_xe;// integer (20) not null auto_increment,

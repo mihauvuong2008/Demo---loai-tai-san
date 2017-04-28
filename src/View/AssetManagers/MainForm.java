@@ -229,6 +229,7 @@ public class MainForm {
 		shell.setMinimumSize(new Point(500, 300));
 		shell.setSize(938, 580);
 		shell.setText("Giao diện chính - Tài khoản hiện hành: [" + user.getTEN_TAI_KHOAN() + "]");
+
 		mh = new Menu_Handler(user, shell);
 		th = new Tool_Handler(user, shell.getDisplay(), shell);
 		PopupMenu_MainView_TreeTaisan_Handler pmth = new PopupMenu_MainView_TreeTaisan_Handler(Display.getDefault(),
@@ -1245,7 +1246,7 @@ public class MainForm {
 			}
 		});
 		tltmCapNhatThongTin.setImage(user.getIcondata().QuanlyHosoIcon);
-		tltmCapNhatThongTin.setText("Quản lý hồ sơ");
+		tltmCapNhatThongTin.setText("Tủ hồ sơ");
 
 		ToolItem tltmNghNhim = new ToolItem(toolBar, SWT.NONE);
 		setIconThongbaomoi(tltmNghNhim);

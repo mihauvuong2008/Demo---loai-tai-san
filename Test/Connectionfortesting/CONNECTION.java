@@ -3,8 +3,8 @@ package Connectionfortesting;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import Control.ROLE.PrivilegeChecker;
 import DAO.NGUOIDUNG;
+import myControler.PrivilegeChecker;
 
 public class CONNECTION {
 	public NGUOIDUNG getUser() {

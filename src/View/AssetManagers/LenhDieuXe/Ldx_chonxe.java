@@ -23,8 +23,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import Control.PHUONGTIEN_GIAOTHONG.Control_LOAI_XE;
-import Control.TAISAN.Control_TAISAN;
+
 import DAO.LOAI_XE;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
@@ -32,6 +31,8 @@ import DAO.PHUONGTIEN_GIAOTHONG;
 import DAO.TAISAN;
 import View.Template.TreeRowStyle;
 import View.Template.TreeTemplate;
+import myControler.Control_LOAI_XE;
+import myControler.Control_TAISAN;
 
 import org.eclipse.swt.layout.GridLayout;
 

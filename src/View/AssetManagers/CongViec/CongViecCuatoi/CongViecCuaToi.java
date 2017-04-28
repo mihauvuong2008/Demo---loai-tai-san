@@ -147,9 +147,393 @@ public class CongViecCuaToi extends Shell {
 		CongViecCuaToi.user = user;
 		controler = new Controler(user);
 		this.setLayout(new GridLayout(1, false));
+		tabFolder = new TabFolder(this, SWT.NONE);
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int i = tabFolder.getSelectionIndex();
+				switch (i) {
+				case 0:
+					DisableControlDangthuchien();
+					EnableControlTiepnhan();
+					break;
+				case 1:
+					DisableControlTiepnhan();
+					EnableControlDangthuchien();
+					break;
+				case 2:
+					break;
+				default:
+					break;
+				}
+			}
 
-		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			private void DisableControlTiepnhan() {
+				if (btnTiepNhan != null)
+					btnTiepNhan.setEnabled(false);
+			}
+
+			private void EnableControlTiepnhan() {
+				if (btnTiepNhan != null)
+					btnTiepNhan.setEnabled(true);
+			}
+
+			private void EnableControlDangthuchien() {
+				if (btnTraLai != null)
+					btnTraLai.setEnabled(true);
+				if (btnChuyengiao != null)
+					btnChuyengiao.setEnabled(true);
+				if (btnNgungChuyenGiao != null)
+					btnNgungChuyenGiao.setEnabled(true);
+			}
+
+			private void DisableControlDangthuchien() {
+				if (btnTraLai != null)
+					btnTraLai.setEnabled(false);
+				if (btnChuyengiao != null)
+					btnChuyengiao.setEnabled(false);
+				if (btnNgungChuyenGiao != null)
+					btnNgungChuyenGiao.setEnabled(false);
+			}
+		});
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		CongViecCuaToi.user = user;
+
+		TreeRowStyle ts = new TreeRowStyle();
+
+		TabItem tbtmTipNhnPhn_1 = new TabItem(tabFolder, SWT.NONE);
+		tbtmTipNhnPhn_1.setText("Phần việc chưa bắt đầu - Chờ tiếp nhận");
+
+		SashForm sashForm_7 = new SashForm(tabFolder, SWT.VERTICAL);
+		tbtmTipNhnPhn_1.setControl(sashForm_7);
+
+		tree_Tiepnhan = new Tree(sashForm_7, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_Tiepnhan.setLinesVisible(true);
+		tree_Tiepnhan.setHeaderVisible(true);
+		ts.setTreeItemHeight(tree_Tiepnhan, ItemHeight);
+		tree_Tiepnhan.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event arg0) {
+				try {
+					/* get selection */
+					TreeItem[] items = tree_Tiepnhan.getSelection();
+					if (items.length > 0) {
+						clearText_ThongTin_Congviec_Truoc();
+						CONGVIEC_PHANVIEC e = (CONGVIEC_PHANVIEC) items[0].getData();
+						Object CONGVIEC = e.getCONGVIEC();
+						Object PHANVIEC = e.getPHANVIEC();
+						if (CONGVIEC instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
+							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) CONGVIEC;
+							if (PHANVIEC instanceof GIAI_DOAN_THUC_HIEN) {
+								DE_XUAT d = null;
+								if (dsb != null) {
+									d = controler.getControl_DEXUAT().get_DEXUAT(dsb);
+								}
+								String Header = "Đề xuất - Sửa chữa, Bảo dưỡng";
+								Fill_Dexuat(Header, d);
+							} else if (PHANVIEC instanceof GIAI_DOAN_NGHIEM_THU) {
+								GIAI_DOAN_THUC_HIEN gdth = null;
+								if (dsb != null) {
+									gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
+								}
+								String Header = "Thực hiện - Sửa chữa, Bảo dưỡng";
+								Fill_Hoso_THUCHIEN(Header, gdth);
+							} else if (PHANVIEC instanceof GIAI_DOAN_QUYET_TOAN) {
+								GIAI_DOAN_NGHIEM_THU gdnt = null;
+								if (dsb != null) {
+									gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
+								}
+								String Header = "Thực hiện - Sửa chữa, Bảo dưỡng";
+								Fill_Hoso_NGHIEMTHU(Header, gdnt);
+							}
+						} else if (CONGVIEC instanceof DOT_THUCHIEN_TANG_TAISAN) {
+							DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) CONGVIEC;
+							if (PHANVIEC instanceof GIAI_DOAN_THUC_HIEN) {
+								DE_XUAT d = null;
+								if (dtt != null) {
+									d = controler.getControl_DEXUAT().get_DEXUAT(dtt);
+								}
+								String Header = "Đề xuất - Mua sắm, Tiếp nhận";
+								Fill_Dexuat(Header, d);
+							} else if (PHANVIEC instanceof GIAI_DOAN_NGHIEM_THU) {
+								GIAI_DOAN_THUC_HIEN gdth = null;
+								if (dtt != null) {
+									gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
+								}
+								String Header = "Thực hiện - Mua sắm, Tiếp nhận";
+								Fill_Hoso_THUCHIEN(Header, gdth);
+							} else if (PHANVIEC instanceof GIAI_DOAN_QUYET_TOAN) {
+								GIAI_DOAN_NGHIEM_THU gdnt = null;
+								if (dtt != null) {
+									gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
+								}
+								String Header = "Nghiệm thu - Mua sắm, Tiếp nhận";
+								Fill_Hoso_NGHIEMTHU(Header, gdnt);
+							}
+						} else if (CONGVIEC instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+							if (e.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
+								DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) CONGVIEC;
+								DE_XUAT d = null;
+								if (dgt != null) {
+									d = controler.getControl_DEXUAT().get_DEXUAT(dgt);
+
+								}
+								String Header = "Đề xuất - Thanh lý, Bàn giao";
+								Fill_Dexuat(Header, d);
+							}
+						}
+					}
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+
+			private void Fill_Hoso_NGHIEMTHU(String header, GIAI_DOAN_NGHIEM_THU gdnt) throws SQLException {
+				if (gdnt != null) {
+					text_Congviectruoc_TenPhanviec.setText(header);
+					String Date2 = gdnt.getTHOI_DIEM_TIEP_NHAN() == null ? "Chưa bắt đầu"
+							: mdf.getViewStringDate(gdnt.getTHOI_DIEM_TIEP_NHAN());
+					text_Congviectruoc_Ngaybatdau.setText(Date2);
+					String Date = gdnt.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
+							: mdf.getViewStringDate(gdnt.getTHOI_DIEM_CHUYEN_GIAO());
+					text_Congviectruoc_Ngaychuyengiao.setText(Date);
+					boolean flag = true;
+					if (gdnt.getTHOI_DIEM_CHUYEN_GIAO() == null || gdnt.getTHOI_DIEM_TIEP_NHAN() == null)
+						flag = false;
+					if (flag) {
+						int t = gdnt.getTHOI_DIEM_CHUYEN_GIAO().compareTo(gdnt.getTHOI_DIEM_TIEP_NHAN());
+						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
+					}
+					text_Congviectruoc_Ghichu.setText(gdnt.getGHI_CHU() == null ? "" : gdnt.getGHI_CHU());
+					loadHosoPhanviecTruoc(gdnt);
+				}
+			}
+
+			private void Fill_Hoso_THUCHIEN(String header, GIAI_DOAN_THUC_HIEN gdth) throws SQLException {
+				if (gdth != null) {
+					text_Congviectruoc_TenPhanviec.setText(header);
+					String Date2 = gdth.getTHOI_DIEM_BAT_DAU() == null ? "Chưa bắt đầu"
+							: mdf.getViewStringDate(gdth.getTHOI_DIEM_BAT_DAU());
+					text_Congviectruoc_Ngaybatdau.setText(Date2);
+					String Date = gdth.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
+							: mdf.getViewStringDate(gdth.getTHOI_DIEM_CHUYEN_GIAO());
+					text_Congviectruoc_Ngaychuyengiao.setText(Date);
+					boolean flag = true;
+					if (gdth.getTHOI_DIEM_CHUYEN_GIAO() == null || gdth.getTHOI_DIEM_BAT_DAU() == null)
+						flag = false;
+					if (flag) {
+						int t = gdth.getTHOI_DIEM_CHUYEN_GIAO().compareTo(gdth.getTHOI_DIEM_BAT_DAU());
+						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
+					}
+					text_Congviectruoc_Ghichu.setText(gdth.getGHI_CHU() == null ? "" : gdth.getGHI_CHU());
+					loadHosoPhanviecTruoc(gdth);
+				}
+			}
+
+			private void Fill_Dexuat(String header, DE_XUAT d) throws SQLException {
+				if (d != null) {
+					text_Congviectruoc_TenPhanviec.setText(header);
+					String Date2 = d.getTHOI_DIEM_BAT_DAU() == null ? "Chưa bắt đầu"
+							: mdf.getViewStringDate(d.getTHOI_DIEM_BAT_DAU());
+					text_Congviectruoc_Ngaybatdau.setText(Date2);
+					String Date = d.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
+							: mdf.getViewStringDate(d.getTHOI_DIEM_CHUYEN_GIAO());
+					text_Congviectruoc_Ngaychuyengiao.setText(Date);
+					boolean flag = true;
+					if (d.getTHOI_DIEM_CHUYEN_GIAO() == null || d.getTHOI_DIEM_BAT_DAU() == null)
+						flag = false;
+					if (flag) {
+						int t = d.getTHOI_DIEM_CHUYEN_GIAO().compareTo(d.getTHOI_DIEM_BAT_DAU());
+						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
+					}
+					text_Congviectruoc_Ghichu.setText(d.getGHI_CHU() == null ? "" : d.getGHI_CHU());
+					loadHosoPhanviecTruoc(d);
+				}
+			}
+		});
+		TreeColumn trclmnStt_3 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnStt_3.setWidth(50);
+		trclmnStt_3.setText("STT");
+
+		TreeColumn trclmnPhnVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnPhnVic_2.setWidth(100);
+		trclmnPhnVic_2.setText("PH\u1EA6N VI\u1EC6C");
+
+		TreeColumn trclmnLoiCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnLoiCngVic_2.setWidth(120);
+		trclmnLoiCngVic_2.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnTnCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnTnCngVic_2.setWidth(100);
+		trclmnTnCngVic_2.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnIdCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnIdCngVic_2.setWidth(100);
+		trclmnIdCngVic_2.setText("ID C\u00D4NG VI\u1EC6C");
+
+		TreeColumn trclmnNgyThamGia = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnNgyThamGia.setWidth(120);
+		trclmnNgyThamGia.setText("NG\u00C0Y THAM GIA");
+
+		Menu menu_2 = new Menu(tree_Tiepnhan);
+		tree_Tiepnhan.setMenu(menu_2);
+
+		MenuItem mntmTipNhn = new MenuItem(menu_2, SWT.NONE);
+		mntmTipNhn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					TiepNhan();
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		mntmTipNhn.setText("Ti\u1EBFp nh\u1EADn");
+
+		MenuItem mntmNewItem = new MenuItem(menu_2, SWT.NONE);
+		mntmNewItem.setText("Xem hồ sơ phần việc trước");
+
+		TreeColumn trclmnNewColumn = new TreeColumn(tree_Tiepnhan, SWT.NONE);
+		trclmnNewColumn.setWidth(100);
+		trclmnNewColumn.setText("TRẠNG THÁI");
+
+		SashForm sashForm_10 = new SashForm(sashForm_7, SWT.NONE);
+
+		Composite composite_4 = new Composite(sashForm_10, SWT.NONE);
+		composite_4.setLayout(new GridLayout(4, false));
+
+		Label lblTnPhnVic = new Label(composite_4, SWT.NONE);
+		lblTnPhnVic.setText("Tên phần việc trước:");
+
+		text_Congviectruoc_TenPhanviec = new Text(composite_4, SWT.NONE);
+		text_Congviectruoc_TenPhanviec.setEditable(false);
+		text_Congviectruoc_TenPhanviec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+
+		Label lblNgyBtu_1 = new Label(composite_4, SWT.NONE);
+		lblNgyBtu_1.setText("Ngày bắt đầu:");
+
+		text_Congviectruoc_Ngaybatdau = new Text(composite_4, SWT.NONE);
+		text_Congviectruoc_Ngaybatdau.setEditable(false);
+		text_Congviectruoc_Ngaybatdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+
+		Label lblNgyChuynGiao = new Label(composite_4, SWT.NONE);
+		lblNgyChuynGiao.setText("Ngày chuyển giao:");
+
+		text_Congviectruoc_Ngaychuyengiao = new Text(composite_4, SWT.NONE);
+		text_Congviectruoc_Ngaychuyengiao.setEditable(false);
+		GridData gd_text_Congviectruoc_Ngaychuyengiao = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
+		gd_text_Congviectruoc_Ngaychuyengiao.widthHint = 93;
+		text_Congviectruoc_Ngaychuyengiao.setLayoutData(gd_text_Congviectruoc_Ngaychuyengiao);
+
+		Label lblTongsongay = new Label(composite_4, SWT.NONE);
+		lblTongsongay.setText("Tổng:");
+
+		text_Congviectruoc_Tongsongay = new Text(composite_4, SWT.NONE);
+		text_Congviectruoc_Tongsongay.setEditable(false);
+		text_Congviectruoc_Tongsongay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+
+		Label lblGhiCh_2 = new Label(composite_4, SWT.NONE);
+		lblGhiCh_2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+		lblGhiCh_2.setText("Ghi chú:");
+
+		text_Congviectruoc_Ghichu = new Text(composite_4, SWT.WRAP);
+		text_Congviectruoc_Ghichu.setEditable(false);
+		text_Congviectruoc_Ghichu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+
+		Composite composite_3 = new Composite(composite_4, SWT.NONE);
+		GridLayout gl_composite_3 = new GridLayout(1, false);
+		gl_composite_3.marginWidth = 0;
+		gl_composite_3.marginHeight = 0;
+		composite_3.setLayout(gl_composite_3);
+		composite_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
+
+		btnTiepNhan = new Button(composite_3, SWT.NONE);
+		btnTiepNhan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		btnTiepNhan.setImage(user.getIcondata().tiepnhanIcon);
+		btnTiepNhan.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					TiepNhan();
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnTiepNhan.setText("Tiếp nhận xử lý");
+
+		tree_Hoso_PhanviecTuoc = new Tree(sashForm_10, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
+		tree_Hoso_PhanviecTuoc.setLinesVisible(true);
+		tree_Hoso_PhanviecTuoc.setHeaderVisible(true);
+		ts.setTreeItemHeight(tree_Hoso_PhanviecTuoc, ItemHeight);
+
+		TreeColumn treeColumn = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
+		treeColumn.setWidth(55);
+		treeColumn.setText("STT");
+
+		TreeColumn trclmnTnHS = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
+		trclmnTnHS.setWidth(100);
+		trclmnTnHS.setText("TÊN HỒ SƠ");
+
+		TreeColumn trclmnSLngTh = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
+		trclmnSLngTh.setWidth(143);
+		trclmnSLngTh.setText("MÔ TẢ");
+
+		TreeColumn trclmnNgyTo = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
+		trclmnNgyTo.setWidth(100);
+		trclmnNgyTo.setText("NGÀY TẠO");
+
+		TreeColumn trclmnNgiTo = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
+		trclmnNgiTo.setWidth(100);
+		trclmnNgiTo.setText("NGƯỜI TẠO");
+
+		Menu menu_1 = new Menu(tree_Hoso_PhanviecTuoc);
+		tree_Hoso_PhanviecTuoc.setMenu(menu_1);
+
+		MenuItem mntmXem = new MenuItem(menu_1, SWT.NONE);
+		mntmXem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					TreeItem[] til = tree_Hoso_PhanviecTuoc.getSelection();
+					if (til.length > 0) {
+						TAPHOSO ths = (TAPHOSO) til[0].getData();
+						boolean view_mode = true;
+						Taphoso_View thss = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
+						thss.open();
+					}
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmXem.setText("Xem Tập hồ sơ");
+		sashForm_10.setWeights(new int[] { 300, 479 });
+		sashForm_7.setWeights(new int[] { 1000, 618 });
+		TabItem tbtmCngVicang = new TabItem(tabFolder, SWT.NONE);
+		tbtmCngVicang.setText("Phần việc đang thực hiện");
+
+		SashForm sashForm = new SashForm(tabFolder, SWT.VERTICAL);
+		tbtmCngVicang.setControl(sashForm);
+
+		SashForm sashForm_4 = new SashForm(sashForm, SWT.NONE);
+
+		Composite composite_7 = new Composite(sashForm_4, SWT.NONE);
+		GridLayout gl_composite_7 = new GridLayout(1, false);
+		gl_composite_7.marginWidth = 0;
+		gl_composite_7.marginHeight = 0;
+		composite_7.setLayout(gl_composite_7);
+
+		ToolBar toolBar = new ToolBar(composite_7, SWT.FLAT | SWT.RIGHT);
+		GridData gd_toolBar = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_toolBar.verticalIndent = 5;
+		toolBar.setLayoutData(gd_toolBar);
 
 		ToolItem tltmHSLu = new ToolItem(toolBar, SWT.NONE);
 		tltmHSLu.setImage(user.getIcondata().buleFolderIcon);
@@ -565,361 +949,9 @@ public class CongViecCuaToi extends Shell {
 		});
 		tltmDKin.setImage(user.getIcondata().redCalendar);
 		tltmDKin.setText("D\u1EF1 ki\u1EBFn th\u1EDDi gian tri\u1EC3n khai");
-		tabFolder = new TabFolder(this, SWT.NONE);
-		tabFolder.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int i = tabFolder.getSelectionIndex();
-				switch (i) {
-				case 0:
-					DisableControlDangthuchien();
-					EnableControlTiepnhan();
-					break;
-				case 1:
-					DisableControlTiepnhan();
-					EnableControlDangthuchien();
-					break;
-				case 2:
-					break;
-				default:
-					break;
-				}
-			}
 
-			private void DisableControlTiepnhan() {
-				if (btnTiepNhan != null)
-					btnTiepNhan.setEnabled(false);
-			}
-
-			private void EnableControlTiepnhan() {
-				if (btnTiepNhan != null)
-					btnTiepNhan.setEnabled(true);
-			}
-
-			private void EnableControlDangthuchien() {
-				if (btnTraLai != null)
-					btnTraLai.setEnabled(true);
-				if (btnChuyengiao != null)
-					btnChuyengiao.setEnabled(true);
-				if (btnNgungChuyenGiao != null)
-					btnNgungChuyenGiao.setEnabled(true);
-			}
-
-			private void DisableControlDangthuchien() {
-				if (btnTraLai != null)
-					btnTraLai.setEnabled(false);
-				if (btnChuyengiao != null)
-					btnChuyengiao.setEnabled(false);
-				if (btnNgungChuyenGiao != null)
-					btnNgungChuyenGiao.setEnabled(false);
-			}
-		});
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		CongViecCuaToi.user = user;
-
-		TreeRowStyle ts = new TreeRowStyle();
-
-		TabItem tbtmTipNhnPhn_1 = new TabItem(tabFolder, SWT.NONE);
-		tbtmTipNhnPhn_1.setText("Phần việc chưa bắt đầu");
-
-		SashForm sashForm_7 = new SashForm(tabFolder, SWT.VERTICAL);
-		tbtmTipNhnPhn_1.setControl(sashForm_7);
-
-		tree_Tiepnhan = new Tree(sashForm_7, SWT.BORDER | SWT.FULL_SELECTION);
-		tree_Tiepnhan.setLinesVisible(true);
-		tree_Tiepnhan.setHeaderVisible(true);
-		ts.setTreeItemHeight(tree_Tiepnhan, ItemHeight);
-		tree_Tiepnhan.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event arg0) {
-				try {
-					/* get selection */
-					TreeItem[] items = tree_Tiepnhan.getSelection();
-					if (items.length > 0) {
-						clearText_ThongTin_Congviec_Truoc();
-						CONGVIEC_PHANVIEC e = (CONGVIEC_PHANVIEC) items[0].getData();
-						Object CONGVIEC = e.getCONGVIEC();
-						Object PHANVIEC = e.getPHANVIEC();
-						if (CONGVIEC instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
-							DOT_THUCHIEN_SUACHUA_BAODUONG dsb = (DOT_THUCHIEN_SUACHUA_BAODUONG) CONGVIEC;
-							if (PHANVIEC instanceof GIAI_DOAN_THUC_HIEN) {
-								DE_XUAT d = null;
-								if (dsb != null) {
-									d = controler.getControl_DEXUAT().get_DEXUAT(dsb);
-								}
-								String Header = "Đề xuất - Sửa chữa, Bảo dưỡng";
-								Fill_Dexuat(Header, d);
-							} else if (PHANVIEC instanceof GIAI_DOAN_NGHIEM_THU) {
-								GIAI_DOAN_THUC_HIEN gdth = null;
-								if (dsb != null) {
-									gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dsb);
-								}
-								String Header = "Thực hiện - Sửa chữa, Bảo dưỡng";
-								Fill_Hoso_THUCHIEN(Header, gdth);
-							} else if (PHANVIEC instanceof GIAI_DOAN_QUYET_TOAN) {
-								GIAI_DOAN_NGHIEM_THU gdnt = null;
-								if (dsb != null) {
-									gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dsb);
-								}
-								String Header = "Thực hiện - Sửa chữa, Bảo dưỡng";
-								Fill_Hoso_NGHIEMTHU(Header, gdnt);
-							}
-						} else if (CONGVIEC instanceof DOT_THUCHIEN_TANG_TAISAN) {
-							DOT_THUCHIEN_TANG_TAISAN dtt = (DOT_THUCHIEN_TANG_TAISAN) CONGVIEC;
-							if (PHANVIEC instanceof GIAI_DOAN_THUC_HIEN) {
-								DE_XUAT d = null;
-								if (dtt != null) {
-									d = controler.getControl_DEXUAT().get_DEXUAT(dtt);
-								}
-								String Header = "Đề xuất - Mua sắm, Tiếp nhận";
-								Fill_Dexuat(Header, d);
-							} else if (PHANVIEC instanceof GIAI_DOAN_NGHIEM_THU) {
-								GIAI_DOAN_THUC_HIEN gdth = null;
-								if (dtt != null) {
-									gdth = controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(dtt);
-								}
-								String Header = "Thực hiện - Mua sắm, Tiếp nhận";
-								Fill_Hoso_THUCHIEN(Header, gdth);
-							} else if (PHANVIEC instanceof GIAI_DOAN_QUYET_TOAN) {
-								GIAI_DOAN_NGHIEM_THU gdnt = null;
-								if (dtt != null) {
-									gdnt = controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(dtt);
-								}
-								String Header = "Nghiệm thu - Mua sắm, Tiếp nhận";
-								Fill_Hoso_NGHIEMTHU(Header, gdnt);
-							}
-						} else if (CONGVIEC instanceof DOT_THUCHIEN_GIAM_TAISAN) {
-							if (e.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
-								DOT_THUCHIEN_GIAM_TAISAN dgt = (DOT_THUCHIEN_GIAM_TAISAN) CONGVIEC;
-								DE_XUAT d = null;
-								if (dgt != null) {
-									d = controler.getControl_DEXUAT().get_DEXUAT(dgt);
-
-								}
-								String Header = "Đề xuất - Thanh lý, Bàn giao";
-								Fill_Dexuat(Header, d);
-							}
-						}
-					}
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-
-			private void Fill_Hoso_NGHIEMTHU(String header, GIAI_DOAN_NGHIEM_THU gdnt) throws SQLException {
-				if (gdnt != null) {
-					text_Congviectruoc_TenPhanviec.setText(header);
-					String Date2 = gdnt.getTHOI_DIEM_TIEP_NHAN() == null ? "Chưa bắt đầu"
-							: mdf.getViewStringDate(gdnt.getTHOI_DIEM_TIEP_NHAN());
-					text_Congviectruoc_Ngaybatdau.setText(Date2);
-					String Date = gdnt.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
-							: mdf.getViewStringDate(gdnt.getTHOI_DIEM_CHUYEN_GIAO());
-					text_Congviectruoc_Ngaychuyengiao.setText(Date);
-					boolean flag = true;
-					if (gdnt.getTHOI_DIEM_CHUYEN_GIAO() == null || gdnt.getTHOI_DIEM_TIEP_NHAN() == null)
-						flag = false;
-					if (flag) {
-						int t = gdnt.getTHOI_DIEM_CHUYEN_GIAO().compareTo(gdnt.getTHOI_DIEM_TIEP_NHAN());
-						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
-					}
-					text_Congviectruoc_Ghichu.setText(gdnt.getGHI_CHU() == null ? "" : gdnt.getGHI_CHU());
-					loadHosoPhanviecTruoc(gdnt);
-				}
-			}
-
-			private void Fill_Hoso_THUCHIEN(String header, GIAI_DOAN_THUC_HIEN gdth) throws SQLException {
-				if (gdth != null) {
-					text_Congviectruoc_TenPhanviec.setText(header);
-					String Date2 = gdth.getTHOI_DIEM_BAT_DAU() == null ? "Chưa bắt đầu"
-							: mdf.getViewStringDate(gdth.getTHOI_DIEM_BAT_DAU());
-					text_Congviectruoc_Ngaybatdau.setText(Date2);
-					String Date = gdth.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
-							: mdf.getViewStringDate(gdth.getTHOI_DIEM_CHUYEN_GIAO());
-					text_Congviectruoc_Ngaychuyengiao.setText(Date);
-					boolean flag = true;
-					if (gdth.getTHOI_DIEM_CHUYEN_GIAO() == null || gdth.getTHOI_DIEM_BAT_DAU() == null)
-						flag = false;
-					if (flag) {
-						int t = gdth.getTHOI_DIEM_CHUYEN_GIAO().compareTo(gdth.getTHOI_DIEM_BAT_DAU());
-						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
-					}
-					text_Congviectruoc_Ghichu.setText(gdth.getGHI_CHU() == null ? "" : gdth.getGHI_CHU());
-					loadHosoPhanviecTruoc(gdth);
-				}
-			}
-
-			private void Fill_Dexuat(String header, DE_XUAT d) throws SQLException {
-				if (d != null) {
-					text_Congviectruoc_TenPhanviec.setText(header);
-					String Date2 = d.getTHOI_DIEM_BAT_DAU() == null ? "Chưa bắt đầu"
-							: mdf.getViewStringDate(d.getTHOI_DIEM_BAT_DAU());
-					text_Congviectruoc_Ngaybatdau.setText(Date2);
-					String Date = d.getTHOI_DIEM_CHUYEN_GIAO() == null ? "Chưa chuyển giao"
-							: mdf.getViewStringDate(d.getTHOI_DIEM_CHUYEN_GIAO());
-					text_Congviectruoc_Ngaychuyengiao.setText(Date);
-					boolean flag = true;
-					if (d.getTHOI_DIEM_CHUYEN_GIAO() == null || d.getTHOI_DIEM_BAT_DAU() == null)
-						flag = false;
-					if (flag) {
-						int t = d.getTHOI_DIEM_CHUYEN_GIAO().compareTo(d.getTHOI_DIEM_BAT_DAU());
-						text_Congviectruoc_Tongsongay.setText(String.valueOf(t));
-					}
-					text_Congviectruoc_Ghichu.setText(d.getGHI_CHU() == null ? "" : d.getGHI_CHU());
-					loadHosoPhanviecTruoc(d);
-				}
-			}
-		});
-		TreeColumn trclmnStt_3 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnStt_3.setWidth(50);
-		trclmnStt_3.setText("STT");
-
-		TreeColumn trclmnPhnVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnPhnVic_2.setWidth(100);
-		trclmnPhnVic_2.setText("PH\u1EA6N VI\u1EC6C");
-
-		TreeColumn trclmnLoiCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnLoiCngVic_2.setWidth(120);
-		trclmnLoiCngVic_2.setText("LO\u1EA0I C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnTnCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnTnCngVic_2.setWidth(100);
-		trclmnTnCngVic_2.setText("T\u00CAN C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnIdCngVic_2 = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnIdCngVic_2.setWidth(100);
-		trclmnIdCngVic_2.setText("ID C\u00D4NG VI\u1EC6C");
-
-		TreeColumn trclmnNgyThamGia = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnNgyThamGia.setWidth(120);
-		trclmnNgyThamGia.setText("NG\u00C0Y THAM GIA");
-
-		Menu menu_2 = new Menu(tree_Tiepnhan);
-		tree_Tiepnhan.setMenu(menu_2);
-
-		MenuItem mntmTipNhn = new MenuItem(menu_2, SWT.NONE);
-		mntmTipNhn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					TiepNhan();
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-
-		});
-		mntmTipNhn.setText("Ti\u1EBFp nh\u1EADn");
-
-		MenuItem mntmNewItem = new MenuItem(menu_2, SWT.NONE);
-		mntmNewItem.setText("Xem hồ sơ phần việc trước");
-
-		TreeColumn trclmnNewColumn = new TreeColumn(tree_Tiepnhan, SWT.NONE);
-		trclmnNewColumn.setWidth(100);
-		trclmnNewColumn.setText("TRẠNG THÁI");
-
-		SashForm sashForm_10 = new SashForm(sashForm_7, SWT.NONE);
-
-		Composite composite_4 = new Composite(sashForm_10, SWT.NONE);
-		composite_4.setLayout(new GridLayout(2, false));
-
-		Label lblTnPhnVic = new Label(composite_4, SWT.NONE);
-		lblTnPhnVic.setText("Tên phần việc trước:");
-
-		text_Congviectruoc_TenPhanviec = new Text(composite_4, SWT.NONE);
-		text_Congviectruoc_TenPhanviec.setEditable(false);
-		text_Congviectruoc_TenPhanviec.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblNgyBtu_1 = new Label(composite_4, SWT.NONE);
-		lblNgyBtu_1.setText("Ngày bắt đầu:");
-
-		text_Congviectruoc_Ngaybatdau = new Text(composite_4, SWT.NONE);
-		text_Congviectruoc_Ngaybatdau.setEditable(false);
-		text_Congviectruoc_Ngaybatdau.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblNgyChuynGiao = new Label(composite_4, SWT.NONE);
-		lblNgyChuynGiao.setText("Ngày chuyển giao:");
-
-		text_Congviectruoc_Ngaychuyengiao = new Text(composite_4, SWT.NONE);
-		text_Congviectruoc_Ngaychuyengiao.setEditable(false);
-		text_Congviectruoc_Ngaychuyengiao.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblTongsongay = new Label(composite_4, SWT.NONE);
-		lblTongsongay.setText("Tổng số ngày:");
-
-		text_Congviectruoc_Tongsongay = new Text(composite_4, SWT.NONE);
-		text_Congviectruoc_Tongsongay.setEditable(false);
-		text_Congviectruoc_Tongsongay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblGhiCh_2 = new Label(composite_4, SWT.NONE);
-		lblGhiCh_2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblGhiCh_2.setText("Ghi chú:");
-
-		text_Congviectruoc_Ghichu = new Text(composite_4, SWT.WRAP);
-		text_Congviectruoc_Ghichu.setEditable(false);
-		text_Congviectruoc_Ghichu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		tree_Hoso_PhanviecTuoc = new Tree(sashForm_10, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
-		tree_Hoso_PhanviecTuoc.setLinesVisible(true);
-		tree_Hoso_PhanviecTuoc.setHeaderVisible(true);
-		ts.setTreeItemHeight(tree_Hoso_PhanviecTuoc, ItemHeight);
-
-		TreeColumn treeColumn = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
-		treeColumn.setWidth(55);
-		treeColumn.setText("STT");
-
-		TreeColumn trclmnTnHS = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
-		trclmnTnHS.setWidth(100);
-		trclmnTnHS.setText("TÊN HỒ SƠ");
-
-		TreeColumn trclmnSLngTh = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
-		trclmnSLngTh.setWidth(143);
-		trclmnSLngTh.setText("MÔ TẢ");
-
-		TreeColumn trclmnNgyTo = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
-		trclmnNgyTo.setWidth(100);
-		trclmnNgyTo.setText("NGÀY TẠO");
-
-		TreeColumn trclmnNgiTo = new TreeColumn(tree_Hoso_PhanviecTuoc, SWT.NONE);
-		trclmnNgiTo.setWidth(100);
-		trclmnNgiTo.setText("NGƯỜI TẠO");
-
-		Menu menu_1 = new Menu(tree_Hoso_PhanviecTuoc);
-		tree_Hoso_PhanviecTuoc.setMenu(menu_1);
-
-		MenuItem mntmXem = new MenuItem(menu_1, SWT.NONE);
-		mntmXem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					TreeItem[] til = tree_Hoso_PhanviecTuoc.getSelection();
-					if (til.length > 0) {
-						TAPHOSO ths = (TAPHOSO) til[0].getData();
-						boolean view_mode = true;
-						Taphoso_View thss = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, view_mode);
-						thss.open();
-					}
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-		});
-		mntmXem.setText("Xem Tập hồ sơ");
-		sashForm_10.setWeights(new int[] { 300, 479 });
-		sashForm_7.setWeights(new int[] { 1000, 618 });
-		TabItem tbtmCngVicang = new TabItem(tabFolder, SWT.NONE);
-		tbtmCngVicang.setText("Phần việc đang thực hiện");
-
-		SashForm sashForm = new SashForm(tabFolder, SWT.VERTICAL);
-		tbtmCngVicang.setControl(sashForm);
-
-		SashForm sashForm_4 = new SashForm(sashForm, SWT.NONE);
-
-		SashForm sashForm_1 = new SashForm(sashForm_4, SWT.VERTICAL);
-
-		tree_Dangthuchien = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_Dangthuchien = new Tree(composite_7, SWT.BORDER | SWT.FULL_SELECTION);
+		tree_Dangthuchien.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		tree_Dangthuchien.setLinesVisible(true);
 		tree_Dangthuchien.setHeaderVisible(true);
 		tree_Dangthuchien.addListener(SWT.Selection, new Listener() {
@@ -1034,7 +1066,6 @@ public class CongViecCuaToi extends Shell {
 			}
 		});
 		mntmTrLi.setText("Trả lại");
-		sashForm_1.setWeights(new int[] { 223 });
 
 		TabFolder tabFolder_4 = new TabFolder(sashForm_4, SWT.NONE);
 
@@ -1086,6 +1117,61 @@ public class CongViecCuaToi extends Shell {
 		text_Ghichu_Phanviec = new Text(composite_5, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		text_Ghichu_Phanviec.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		text_Ghichu_Phanviec.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
+
+		btnChuyengiao = new Button(composite_5, SWT.NONE);
+		btnChuyengiao.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnChuyengiao.setImage(user.getIcondata().chuyengiaoIcon);
+		btnChuyengiao.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					ChuyenGiao();
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnChuyengiao.setText("Chuyển giao");
+
+		btnNgungChuyenGiao = new Button(composite_5, SWT.NONE);
+		btnNgungChuyenGiao.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnNgungChuyenGiao.setImage(user.getIcondata().ngungChuyengiaoIcon);
+		btnNgungChuyenGiao.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					DungChuyengiao();
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNgungChuyenGiao.setText("Ngừng chuyển giao");
+
+		Composite composite_1 = new Composite(composite_5, SWT.NONE);
+		GridLayout gl_composite_1 = new GridLayout(1, false);
+		gl_composite_1.marginHeight = 0;
+		gl_composite_1.marginWidth = 0;
+		composite_1.setLayout(gl_composite_1);
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+
+		btnTraLai = new Button(composite_1, SWT.NONE);
+		btnTraLai.setImage(user.getIcondata().tralaiIcon);
+		btnTraLai.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					TraLai();
+				} catch (SQLException e1) {
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		btnTraLai.setText("Trả lại");
 
 		tree_HosoPhanviec = new Tree(composite_5, SWT.BORDER | SWT.FULL_SELECTION);
 		tree_HosoPhanviec.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, true, 2, 1));
@@ -1356,7 +1442,7 @@ public class CongViecCuaToi extends Shell {
 
 		ExpandItem xpndtmHSPhn = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmHSPhn.setText("Hồ sơ phần việc trước");
-		sashForm_4.setWeights(new int[] { 1000, 618 });
+		sashForm_4.setWeights(new int[] { 495, 201 });
 		sashForm.setWeights(new int[] { 1000 });
 
 		TabItem tbtmCngVic_1 = new TabItem(tabFolder, SWT.NONE);
@@ -1508,92 +1594,16 @@ public class CongViecCuaToi extends Shell {
 		sashForm_6.setWeights(new int[] { 1000, 618 });
 		sashForm_5.setWeights(new int[] { 1000, 618 });
 
-		TabItem tbtmBiuCng = new TabItem(tabFolder, SWT.NONE);
-		tbtmBiuCng.setText("Nhật ký - Biểu đồ công việc");
-
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		GridLayout gl_composite = new GridLayout(5, false);
-		gl_composite.verticalSpacing = 0;
-		gl_composite.marginWidth = 0;
-		gl_composite.marginHeight = 0;
-		composite.setLayout(gl_composite);
-
-		btnTiepNhan = new Button(composite, SWT.NONE);
-		btnTiepNhan.setImage(user.getIcondata().tiepnhanIcon);
-		btnTiepNhan.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					TiepNhan();
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnTiepNhan.setText("Tiếp nhận");
-
-		btnTraLai = new Button(composite, SWT.NONE);
-		GridData gd_btnTraLai = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnTraLai.widthHint = 75;
-		btnTraLai.setLayoutData(gd_btnTraLai);
-		btnTraLai.setImage(user.getIcondata().tralaiIcon);
-		btnTraLai.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					TraLai();
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-
-		});
-		btnTraLai.setText("Trả lại");
-
-		btnChuyengiao = new Button(composite, SWT.NONE);
-		btnChuyengiao.setImage(user.getIcondata().chuyengiaoIcon);
-		btnChuyengiao.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					ChuyenGiao();
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnChuyengiao.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnChuyengiao.setText("Chuy\u1EC3n giao");
-
-		btnNgungChuyenGiao = new Button(composite, SWT.NONE);
-		btnNgungChuyenGiao.setImage(user.getIcondata().ngungChuyengiaoIcon);
-		btnNgungChuyenGiao.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					DungChuyengiao();
-				} catch (SQLException e1) {
-					log.error(e1.getMessage());
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnNgungChuyenGiao.setText("Ngừng chuyển giao");
-
-		Button btnng = new Button(composite, SWT.NONE);
+		Button btnng = new Button(this, SWT.NONE);
+		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnng.widthHint = 75;
+		btnng.setLayoutData(gd_btnng);
 		btnng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				dispose();
 			}
 		});
-		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.BOTTOM, true, true, 1, 1);
-		gd_btnng.widthHint = 75;
-		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");
 		createContents();
 		fillCongviecDangThuchien();

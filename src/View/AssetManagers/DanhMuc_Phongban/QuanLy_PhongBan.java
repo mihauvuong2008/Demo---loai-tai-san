@@ -190,7 +190,6 @@ public class QuanLy_PhongBan extends Shell {
 							controler.getControl_PHONGBAN().update_PHONGBAN(p);
 						}
 					}
-					new TreeTemplate(user).getTreePHONGBAN(tree);
 					setCompleteMode();
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());

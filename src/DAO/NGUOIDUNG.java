@@ -3,8 +3,8 @@ package DAO;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import Control.ROLE.PrivilegeChecker;
 import View.AssetManagers.Icondataset;
+import myControler.PrivilegeChecker;
 
 public class NGUOIDUNG {
 	private String TEN_TAI_KHOAN;

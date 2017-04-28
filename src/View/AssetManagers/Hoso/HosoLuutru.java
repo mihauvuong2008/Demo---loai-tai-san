@@ -97,6 +97,10 @@ public class HosoLuutru extends Shell {
 	private TreeItem treeItem_Muasam;
 	private TreeItem treeItem_Thanhly;
 	private TreeItem treeItem_Dangkiem;
+	private TreeItem trtmHosoCuatoi;
+	private TreeItem trtmTaiLen;
+	private TreeItem trtmDagui;
+	private TreeItem trtmDanhan;
 
 	/**
 	 * Launch the application.
@@ -911,6 +915,28 @@ public class HosoLuutru extends Shell {
 
 	private void init() throws SQLException {
 		createTreeCongviec(tree_Congviec);
+
+		Menu menu = new Menu(tree_Congviec);
+		tree_Congviec.setMenu(menu);
+
+		MenuItem mntmTiLnH = new MenuItem(menu, SWT.NONE);
+		mntmTiLnH.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TAPHOSO ths = new TAPHOSO();
+				ths.setTEN_TAPHOSO("Tải lên tập hồ sơ");
+				ths.setGIOITHIEU_TAPHOSO("Tải lên");
+				Taphoso_View thsv = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
+				try {
+					thsv.open();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		mntmTiLnH.setText("Tải lên Tập hồ sơ của tôi");
+
 		Date thisDay = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(thisDay);
@@ -931,42 +957,55 @@ public class HosoLuutru extends Shell {
 		trtmTatCa = new TreeItem(tree, SWT.NONE);
 		trtmTatCa.setImage(user.getIcondata().buleFolderIcon);
 		trtmTatCa.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
-		trtmTatCa.setText("Tất cả");
+		trtmTatCa.setText("Hồ sơ công việc");
 
 		treeItem_Bangiaonoibo = new TreeItem(trtmTatCa, 0);
 		treeItem_Bangiaonoibo.setImage(user.getIcondata().export_importIcon);
-		treeItem_Bangiaonoibo.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Bangiaonoibo.setText("Hồ sơ Bàn giao nội bộ");
 		treeItem_Bangiaonoibo.setExpanded(true);
 
 		treeItem_Baoduong = new TreeItem(trtmTatCa, 0);
 		treeItem_Baoduong.setImage(user.getIcondata().BaoduongIcon);
-		treeItem_Baoduong.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Baoduong.setText("Hồ sơ Bảo dưỡng PTTS");
 
 		treeItem_Suachua = new TreeItem(trtmTatCa, 0);
 		treeItem_Suachua.setImage(user.getIcondata().SuachuaIcon);
-		treeItem_Suachua.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Suachua.setText("Hồ sơ Sửa chữa PTTS");
 
 		treeItem_Muasam = new TreeItem(trtmTatCa, 0);
 		treeItem_Muasam.setImage(user.getIcondata().MuasamIcon);
-		treeItem_Muasam.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Muasam.setText("Hồ sơ Mua sắm - Tiếp nhận");
 
 		treeItem_Thanhly = new TreeItem(trtmTatCa, 0);
 		treeItem_Thanhly.setImage(user.getIcondata().ThanhlyIcon);
-		treeItem_Thanhly.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Thanhly.setText("Hồ sơ Thanh lý - Chuyển giao");
 
 		treeItem_Dangkiem = new TreeItem(trtmTatCa, 0);
 		treeItem_Dangkiem.setImage(user.getIcondata().allItemIcon);
-		treeItem_Dangkiem.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		treeItem_Dangkiem.setText("Hồ sơ Đăng kiểm PTGT");
 		trtmTatCa.setExpanded(true);
 		TreeRowStyle trs = new TreeRowStyle();
 		trs.setTreeItemHeight(tree_Congviec, 21);
 		trtmTatCa.setExpanded(false);
+
+		trtmHosoCuatoi = new TreeItem(tree_Congviec, SWT.NONE);
+		trtmHosoCuatoi.setImage(user.getIcondata().myDocument16);
+		trtmHosoCuatoi.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		trtmHosoCuatoi.setText("Hồ sơ của tôi");
+
+		trtmTaiLen = new TreeItem(trtmHosoCuatoi, SWT.NONE);
+		trtmTaiLen.setImage(user.getIcondata().upload16);
+		trtmTaiLen.setText("Tải lên");
+
+		trtmDagui = new TreeItem(trtmHosoCuatoi, SWT.NONE);
+		trtmDagui.setImage(user.getIcondata().Sendicon16);
+		trtmDagui.setText("Đã gửi");
+
+		trtmDanhan = new TreeItem(trtmHosoCuatoi, SWT.NONE);
+		trtmDanhan.setImage(user.getIcondata().receiveIcon16);
+		trtmDanhan.setText("Đã nhận");
+
+		trtmHosoCuatoi.setExpanded(false);
 	}
 
 	protected void SaveIMG() throws SQLException {

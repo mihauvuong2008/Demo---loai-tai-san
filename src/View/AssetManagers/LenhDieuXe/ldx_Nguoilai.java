@@ -15,11 +15,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
-import Control.NGUOIDUNG.Control_NGUOIDUNG;
 import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import View.Template.TreeRowStyle;
 import View.Template.TreeTemplate;
+import myControler.Control_NGUOIDUNG;
 
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
