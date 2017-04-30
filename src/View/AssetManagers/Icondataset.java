@@ -24,11 +24,11 @@ public class Icondataset {
 	public final Image LienheDichvuIcon = SWTResourceManager.getImage(Icondataset.class, "/phone-icon.png");
 	public final Image CongviecCuatoiIcon = SWTResourceManager.getImage(Icondataset.class,
 			"/Actions-view-calendar-tasks-icon.png");
-	public final Image DanhthuchienIcon = SWTResourceManager.getImage(Icondataset.class, "/reunion (1).png");
+	public final Image DangthuchienIcon = SWTResourceManager.getImage(Icondataset.class, "/reunion (1).png");
 	public final Image QuanlycongviecIcon = SWTResourceManager.getImage(Icondataset.class,
 			"/Actions-view-list-details-icon.png");
 	public final Image BieudoIcon = SWTResourceManager.getImage(Icondataset.class, "/Actions-view-statistics-icon.png");
-	public final Image QuanlyHosoIcon = SWTResourceManager.getImage(Icondataset.class, "/folder-documents-icon.png");
+	public final Image blueFolderIcon = SWTResourceManager.getImage(Icondataset.class, "/folder-documents-icon.png");
 	public final Image HopthuluIcon = SWTResourceManager.getImage(Icondataset.class, "/Email-Reply-icon.png");
 	public final Image TimkiemIcon = SWTResourceManager.getImage(Icondataset.class, "/search-green-neon-icon.png");
 	public final Image TongNhomtaisan = SWTResourceManager.getImage(Icondataset.class, "/Books-2-icon.png");
@@ -107,6 +107,9 @@ public class Icondataset {
 	public Image Sendicon16 = SWTResourceManager.getImage(Icondataset.class, "/Send-icon.png");
 	public Image receiveIcon16 = SWTResourceManager.getImage(Icondataset.class, "/Open-icon.png");
 	public Image myDocument16 = SWTResourceManager.getImage(Icondataset.class, "/Library-Folder-white-icon.png");
+	public Image working16 = SWTResourceManager.getImage(Icondataset.class, "/calculator-icon.png");
+	public Image QuanlyHosoIcon = SWTResourceManager.getImage(Icondataset.class, "/cabinetDoc.png");
+	public Image mailSent16 = SWTResourceManager.getImage(Icondataset.class, "/page-save-icon.png");
 
 	public Icondataset() {
 		MainIcon = new Image[2];

@@ -1204,7 +1204,7 @@ public class MainForm {
 			}
 		});
 		tltmangThcHin_1.setText("Đang thực hiện");
-		tltmangThcHin_1.setImage(user.getIcondata().DanhthuchienIcon);
+		tltmangThcHin_1.setImage(user.getIcondata().DangthuchienIcon);
 
 		ToolItem tltmDanhSachCongViec = new ToolItem(toolBar, SWT.NONE);
 		tltmDanhSachCongViec.addSelectionListener(new SelectionAdapter() {

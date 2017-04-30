@@ -16,6 +16,9 @@ import myControler.Control_DOT_THUCHIEN_GIAM_TAISAN;
 import myControler.Control_DOT_THUCHIEN_SUACHUA_BAODUONG;
 import myControler.Control_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN;
 import myControler.Control_DOT_THUCHIEN_TANG_TAISAN;
+import myControler.Control_HOSO_DAGUI;
+import myControler.Control_HOSO_DANHAN;
+import myControler.Control_HOSO_TAILEN;
 import myControler.Control_HOSO_FILESCAN;
 import myControler.Control_HOSO_Hoso_Row;
 import myControler.Control_HOSO_TAPHOSO;
@@ -116,6 +119,9 @@ public class Controler {
 	private final Control_NHOM_TAISANCODINH_DACTHU Control_NHOM_TAISANCODINH_DACTHU;
 	private final Control_DOT_BANGIAO_TAISAN_NOIBO Control_DOT_BANGIAO_TAISAN_NOIBO;
 	private final Control_LICH_CONG_TAC Control_LICH_CONG_TAC;
+	private final Control_HOSO_TAILEN Control_HOSO_CUATOI;
+	private final Control_HOSO_DAGUI Control_HOSO_DAGUI;
+	private final Control_HOSO_DANHAN Control_HOSO_DANHAN;
 
 	public Controler(NGUOIDUNG user) {
 		super();
@@ -172,6 +178,9 @@ public class Controler {
 		Control_NHOM_TAISANCODINH_DACTHU = new Control_NHOM_TAISANCODINH_DACTHU(user);
 		Control_DOT_BANGIAO_TAISAN_NOIBO = new Control_DOT_BANGIAO_TAISAN_NOIBO(user);
 		Control_LICH_CONG_TAC = new Control_LICH_CONG_TAC(user);
+		Control_HOSO_CUATOI = new Control_HOSO_TAILEN(user);
+		Control_HOSO_DAGUI = new Control_HOSO_DAGUI(user);
+		Control_HOSO_DANHAN = new Control_HOSO_DANHAN(user);
 	}
 
 	public final NGUOIDUNG getUser() {
@@ -388,6 +397,18 @@ public class Controler {
 
 	public final Control_LICH_CONG_TAC getControl_LICH_CONG_TAC() {
 		return Control_LICH_CONG_TAC;
+	}
+
+	public final Control_HOSO_TAILEN getControl_HOSO_CUATOI() {
+		return Control_HOSO_CUATOI;
+	}
+
+	public final Control_HOSO_DAGUI getControl_HOSO_DAGUI() {
+		return Control_HOSO_DAGUI;
+	}
+
+	public final Control_HOSO_DANHAN getControl_HOSO_DANHAN() {
+		return Control_HOSO_DANHAN;
 	}
 
 }

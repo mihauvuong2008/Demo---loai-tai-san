@@ -2,12 +2,12 @@ package View.Filter;
 
 import java.sql.SQLException;
 
-import DAO.HOSO_ROW;
+import DAO.HOSO_USER;
 import DAO.VANBAN;
 import View.DateTime.MyDateFormat;
 
 public class HOSO_ROW_Filter {
-	private HOSO_ROW t;
+	private HOSO_USER t;
 	private String TEN_TAPHOSO = "";// INTEGER(5) NOT NULL,
 	private String GIOITHIEU_TAPHOSO = "";// VARCHAR(40) NOT NULL,
 	private String NGAY_TAO_TAPHOSO = "";// VARCHAR(40) NOT NULL,
@@ -18,7 +18,7 @@ public class HOSO_ROW_Filter {
 
 	double Value = 0;
 
-	public HOSO_ROW_Filter(HOSO_ROW t, String Pattern) throws SQLException {
+	public HOSO_ROW_Filter(HOSO_USER t, String Pattern) throws SQLException {
 		this.t = t;
 		if (t != null) {
 			TEN_TAPHOSO = t.getTaphoso().getTEN_TAPHOSO();
@@ -40,7 +40,7 @@ public class HOSO_ROW_Filter {
 		Value = new Valuer(getData(), Pattern).getValue();
 	}
 
-	public final HOSO_ROW getT() {
+	public final HOSO_USER getT() {
 		return t;
 	}
 
@@ -49,7 +49,7 @@ public class HOSO_ROW_Filter {
 				+ " " + CO_QUAN_BAN_HANH + " " + TRICH_YEU;
 	}
 
-	public void setT(HOSO_ROW t) {
+	public void setT(HOSO_USER t) {
 		this.t = t;
 	}
 

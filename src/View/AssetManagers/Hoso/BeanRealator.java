@@ -54,6 +54,27 @@ public class BeanRealator {
 		}
 	}
 
+	public BeanRealator(ArrayList<VANBAN> vbl, NGUOIDUNG user) throws SQLException, IOException {
+		if (user != null) {
+			socongvan = "collect";
+			coquanbanhanh = "collect";
+			ngaythangVanban = "collect";
+			trichyeu = "collect";
+			macongvan = "collect";
+			ArrayList<FILESCAN> datal = new ArrayList<>();
+			for (VANBAN vb : vbl) {
+				ArrayList<FILESCAN> tmp = new Controler(user).getControl_FILESCAN().get_IMAGE_l(vb);
+				if (tmp != null)
+					datal.addAll(tmp);
+			}
+			if (datal != null) {
+				for (int i = 0; i < datal.size(); i++) {
+					data.add(new ImageBean(ImageIO.read(datal.get(i).getImage())));
+				}
+			}
+		}
+	}
+
 	public final String getSocongvan() {
 		return socongvan;
 	}

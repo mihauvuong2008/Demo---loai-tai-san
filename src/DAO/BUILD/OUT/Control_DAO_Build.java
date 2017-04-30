@@ -13,7 +13,9 @@ import DAO.DOT_THUCHIEN_TANG_TAISAN;
 import DAO.GIAI_DOAN_NGHIEM_THU;
 import DAO.GIAI_DOAN_QUYET_TOAN;
 import DAO.GIAI_DOAN_THUC_HIEN;
-import DAO.HOSO_CUATOI;
+import DAO.HOSO_DAGUI;
+import DAO.HOSO_DANHAN;
+import DAO.HOSO_TAILEN;
 import DAO.Hinhthuc_Baoduong;
 import DAO.KY_HAN_THONGKE_XANG_DAU;
 import DAO.Kyhan_Baoduong;
@@ -27,6 +29,7 @@ import DAO.NGUOIDUNG;
 import DAO.NGUOIDUNG_NGHIEMTHU;
 import DAO.NGUOIDUNG_QUYETTOAN;
 import DAO.NGUOIDUNG_THUCHIEN;
+import DAO.NGUOINHAN_HOSO_DAGUI;
 import DAO.NGUONGIAM;
 import DAO.NGUONSUACHUA_BAODUONG;
 import DAO.NGUONTANG;
@@ -633,12 +636,38 @@ public class Control_DAO_Build {
 		return result;
 	}
 
-	public HOSO_CUATOI get_HOSO_CUATOI(ResultSet rs) throws SQLException {
-		HOSO_CUATOI result = new HOSO_CUATOI();
-		result.setMA_HOSO_CUATOI(rs.getInt("MA_HOSO_CUATOI"));
-		result.setNGAY_TAO_TAPHOSO(rs.getTimestamp("NGAY_TAO_TAPHOSO"));
+	public HOSO_TAILEN get_HOSO_TAILEN(ResultSet rs) throws SQLException {
+		HOSO_TAILEN result = new HOSO_TAILEN();
+		result.setMA_HOSO_TAILEN(rs.getInt("MA_HOSO_TAILEN"));
 		result.setTEN_TAI_KHOAN(rs.getString("TEN_TAI_KHOAN"));
 		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		return result;
+	}
+
+	public HOSO_DAGUI get_HOSO_DAGUI(ResultSet rs) throws SQLException {
+		HOSO_DAGUI result = new HOSO_DAGUI();
+		result.setMA_HOSO_DAGUI(rs.getInt("MA_HOSO_DAGUI"));
+		result.setNGAY_GUI(rs.getTimestamp("NGAY_GUI"));
+		result.setTEN_TAI_KHOAN(rs.getString("TEN_TAI_KHOAN"));
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		return result;
+	}
+
+	public HOSO_DANHAN get_HOSO_DANHAN(ResultSet rs) throws SQLException {
+		HOSO_DANHAN result = new HOSO_DANHAN();
+		result.setMA_HOSO_DANHAN(rs.getInt("MA_HOSO_DANHAN"));
+		result.setNGAY_NHAN(rs.getTimestamp("NGAY_NHAN"));
+		result.setTAIKHOAN_NHAN(rs.getString("TAIKHOAN_NHAN"));
+		result.setTAIKHOAN_GUI(rs.getString("TAIKHOAN_GUI"));
+		result.setMA_TAPHOSO(rs.getInt("MA_TAPHOSO"));
+		return result;
+	}
+
+	public NGUOINHAN_HOSO_DAGUI getNGUOINHAN_HOSO_DAGUI(ResultSet rs) throws SQLException {
+		NGUOINHAN_HOSO_DAGUI result = new NGUOINHAN_HOSO_DAGUI();
+		result.setMA_HOSO_DAGUI(rs.getInt("nhd.MA_HOSO_DAGUI"));
+		result.setTEN_TAI_KHOAN(rs.getString("nhd.TEN_TAI_KHOAN"));
+		result.setDA_DOC(rs.getBoolean("nhd.DA_DOC"));
 		return result;
 	}
 }

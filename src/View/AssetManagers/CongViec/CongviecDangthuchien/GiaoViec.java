@@ -2993,7 +2993,7 @@ public class GiaoViec {
 	 */
 	protected void createContents() {
 		shlQunLCng = new Shell();
-		shlQunLCng.setImage(user.getIcondata().DanhthuchienIcon);
+		shlQunLCng.setImage(user.getIcondata().DangthuchienIcon);
 		shlQunLCng.setSize(875, 540);
 		shlQunLCng.setText("Công việc đang thực hiện");
 

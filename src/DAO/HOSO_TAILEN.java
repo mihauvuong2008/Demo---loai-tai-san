@@ -2,33 +2,17 @@ package DAO;
 
 import java.util.Date;
 
-public class HOSO_DAGUI {
-	private int MA_HOSO_DAGUI;
-	private Date NGAY_GUI;
+public class HOSO_TAILEN {
+	private int MA_HOSO_TAILEN;
 	private String TEN_TAI_KHOAN;
 	private int MA_TAPHOSO;
 
-	public final int getMA_HOSO_DAGUI() {
-		return MA_HOSO_DAGUI;
+	public final int getMA_HOSO_TAILEN() {
+		return MA_HOSO_TAILEN;
 	}
 
-	public final void setMA_HOSO_DAGUI(int mA_HOSO_DAGUI) {
-		MA_HOSO_DAGUI = mA_HOSO_DAGUI;
-	}
-
-	/**
-	 * @return the nGAY_GUI
-	 */
-	public final Date getNGAY_GUI() {
-		return NGAY_GUI;
-	}
-
-	/**
-	 * @param nGAY_GUI
-	 *            the nGAY_GUI to set
-	 */
-	public final void setNGAY_GUI(Date nGAY_GUI) {
-		NGAY_GUI = nGAY_GUI;
+	public final void setMA_HOSO_TAILEN(int mA_HOSO_TAILEN) {
+		MA_HOSO_TAILEN = mA_HOSO_TAILEN;
 	}
 
 	/**

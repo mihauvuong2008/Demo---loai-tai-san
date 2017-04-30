@@ -3,6 +3,7 @@ package DAO;
 public class NGUOINHAN_HOSO_DAGUI {
 	private int MA_HOSO_DAGUI;
 	private String TEN_TAI_KHOAN;
+	private Boolean DA_DOC;
 
 	/**
 	 * @return the mA_HOSO_DAGUI
@@ -32,6 +33,14 @@ public class NGUOINHAN_HOSO_DAGUI {
 	 */
 	public final void setTEN_TAI_KHOAN(String tEN_TAI_KHOAN) {
 		TEN_TAI_KHOAN = tEN_TAI_KHOAN;
+	}
+
+	public final Boolean getDA_DOC() {
+		return DA_DOC;
+	}
+
+	public final void setDA_DOC(Boolean dA_DOC) {
+		DA_DOC = dA_DOC;
 	}
 
 }

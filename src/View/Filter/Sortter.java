@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import DAO.HOSO_ROW;
+import DAO.HOSO_USER;
 import DAO.NGUOIDUNG;
 import DAO.TAISAN;
 
@@ -52,9 +52,9 @@ public class Sortter {
 		return result;
 	}
 
-	public ArrayList<HOSO_ROW> SortHOSO_ROW(ArrayList<HOSO_ROW> tl, String Pattern) throws SQLException {
+	public ArrayList<HOSO_USER> SortHOSO_ROW(ArrayList<HOSO_USER> tl, String Pattern) throws SQLException {
 		ArrayList<HOSO_ROW_Filter> ftl = new ArrayList<>();
-		for (HOSO_ROW t : tl) {
+		for (HOSO_USER t : tl) {
 			HOSO_ROW_Filter f = new HOSO_ROW_Filter(t, Pattern);
 			ftl.add(f);
 		}
@@ -65,7 +65,7 @@ public class Sortter {
 				return Double.compare(f2.getValue(), f1.getValue());
 			}
 		});
-		ArrayList<HOSO_ROW> result = new ArrayList<>();
+		ArrayList<HOSO_USER> result = new ArrayList<>();
 		for (HOSO_ROW_Filter f : ftl) {
 			result.add(f.getT());
 		}
