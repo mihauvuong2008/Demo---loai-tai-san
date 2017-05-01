@@ -58,11 +58,12 @@ import DAO.VANBAN;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
 import View.AssetManagers.CongViec.TangTaiSan.TaoDotTangtaisan;
+import View.AssetManagers.Hoso.TailenTaphoso;
 import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
-import View.AssetManagers.ThongBao.Library.ThongBao_Lib_Congviec;
-import View.AssetManagers.ThongBao.Library.Thongbao_Lib_Hoso;
+import View.AssetManagers.ThongBao.Library.ThongBao_Congviec_Creater;
+import View.AssetManagers.ThongBao.Library.Thongbao_Hoso_Creater;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -584,7 +585,7 @@ public class CongViecCuaToi extends Shell {
 								case SWT.CANCEL:
 									break;
 								case SWT.YES:
-									Thongbao_Lib_Hoso tb = new Thongbao_Lib_Hoso(user);
+									Thongbao_Hoso_Creater tb = new Thongbao_Hoso_Creater(user);
 									Gui_Thongbao_Congviec(p.getCONGVIEC(), p.getPHANVIEC(), tb);
 									break;
 								case SWT.NO:
@@ -637,16 +638,16 @@ public class CongViecCuaToi extends Shell {
 				TAPHOSO ths = null;
 				ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(ma_TAPHOSO);
 				if (ths == null) {
-					ths = new TAPHOSO();
-					int MA_TAPHOSO = controler.getControl_TAPHOSO().Create_TAP_HO_SO(ths);
-					if (MA_TAPHOSO > 0) {
-						ths.setMA_TAPHOSO(MA_TAPHOSO);
-					}
+					TailenTaphoso tlt = new TailenTaphoso(getShell(), SWT.DIALOG_TRIM, user);
+					tlt.open();
+					ths = (TAPHOSO) tlt.result;
+					if (ths == null)
+						return null;
 				}
 				return ths;
 			}
 
-			private void Gui_Thongbao_Congviec(Object congviec, Object phanviec, Thongbao_Lib_Hoso tb)
+			private void Gui_Thongbao_Congviec(Object congviec, Object phanviec, Thongbao_Hoso_Creater tb)
 					throws SQLException {
 				if (congviec instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
 					Gui_Thongbao_Phanviec_Congviec_Suachua_Baoduong((DOT_THUCHIEN_SUACHUA_BAODUONG) congviec, phanviec,
@@ -659,7 +660,7 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_Phanviec_Congviec_Muasam(DOT_THUCHIEN_GIAM_TAISAN congviec, Object phanviec,
-					Thongbao_Lib_Hoso tb) throws SQLException {
+					Thongbao_Hoso_Creater tb) throws SQLException {
 				if (phanviec instanceof GIAI_DOAN_THUC_HIEN) {
 					tb.create_THONGBAO_Congvieccuatoi_CapnhatHoSo_THUCHIEN_GIAMTAISAN(congviec,
 							(GIAI_DOAN_THUC_HIEN) phanviec);
@@ -667,7 +668,7 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_Phanviec_Congviec_Muasam(DOT_THUCHIEN_TANG_TAISAN congviec, Object phanviec,
-					Thongbao_Lib_Hoso tb) throws SQLException {
+					Thongbao_Hoso_Creater tb) throws SQLException {
 				if (phanviec instanceof GIAI_DOAN_THUC_HIEN) {
 					tb.create_THONGBAO_Congvieccuatoi_CapnhatHoSo_THUCHIEN_TANGTAISAN(congviec,
 							(GIAI_DOAN_THUC_HIEN) phanviec);
@@ -681,7 +682,7 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_Phanviec_Congviec_Suachua_Baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG congviec,
-					Object phanviec, Thongbao_Lib_Hoso tb) throws SQLException {
+					Object phanviec, Thongbao_Hoso_Creater tb) throws SQLException {
 				if (phanviec instanceof GIAI_DOAN_THUC_HIEN) {
 					if (congviec.getSUACHUA_BAODUONG() == 1) {
 						tb.create_THONGBAO_Congvieccuatoi_CapnhatHoSo_THUCHIEN_BAODUONG(congviec,
@@ -789,7 +790,7 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_CapnhatGhichu(Object congviec, Object phanviec) throws SQLException {
-				Thongbao_Lib_Hoso tb = new Thongbao_Lib_Hoso(user);
+				Thongbao_Hoso_Creater tb = new Thongbao_Hoso_Creater(user);
 				if (congviec instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
 					DOT_THUCHIEN_SUACHUA_BAODUONG d = (DOT_THUCHIEN_SUACHUA_BAODUONG) congviec;
 					Gui_Thongbao_CapnhatGhichu_Congviec_Suachua_Baoduong(d, phanviec, tb);
@@ -805,13 +806,13 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_CapnhatGhichu_Congviec_Suachua_Baoduong(DOT_THUCHIEN_GIAM_TAISAN congviec,
-					Object phanviec, Thongbao_Lib_Hoso tb) throws SQLException {
+					Object phanviec, Thongbao_Hoso_Creater tb) throws SQLException {
 				tb.create_THONGBAO_Congvieccuatoi_CapnhatGhichu_THUCHIEN_GIAMTAISAN((DOT_THUCHIEN_GIAM_TAISAN) congviec,
 						(GIAI_DOAN_THUC_HIEN) phanviec);
 			}
 
 			private void Gui_Thongbao_CapnhatGhichu_Congviec_Suachua_Baoduong(DOT_THUCHIEN_TANG_TAISAN congviec,
-					Object phanviec, Thongbao_Lib_Hoso tb) throws SQLException {
+					Object phanviec, Thongbao_Hoso_Creater tb) throws SQLException {
 				if (phanviec instanceof GIAI_DOAN_THUC_HIEN) {
 					tb.create_THONGBAO_Congvieccuatoi_CapnhatGhichu_THUCHIEN_TANGTAISAN(
 							(DOT_THUCHIEN_TANG_TAISAN) congviec, (GIAI_DOAN_THUC_HIEN) phanviec);
@@ -825,7 +826,7 @@ public class CongViecCuaToi extends Shell {
 			}
 
 			private void Gui_Thongbao_CapnhatGhichu_Congviec_Suachua_Baoduong(DOT_THUCHIEN_SUACHUA_BAODUONG d,
-					Object phanviec, Thongbao_Lib_Hoso tb) throws SQLException {
+					Object phanviec, Thongbao_Hoso_Creater tb) throws SQLException {
 				if (phanviec instanceof GIAI_DOAN_THUC_HIEN) {
 					if (d.getSUACHUA_BAODUONG() == 1) {
 						tb.create_THONGBAO_Congvieccuatoi_CapnhatGhichu_THUCHIEN_BAODUONG(d,
@@ -1775,7 +1776,7 @@ public class CongViecCuaToi extends Shell {
 
 	private void SetupChuaHoanthanhPhanViec_Chuyengiao(CONGVIEC_PHANVIEC p) throws SQLException {
 		Date THISDAY = null;
-		ThongBao_Lib_Congviec tb = new ThongBao_Lib_Congviec(user);
+		ThongBao_Congviec_Creater tb = new ThongBao_Congviec_Creater(user);
 		if (p.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 			controler.getControl_THUCHIEN().set_NGAYCHUYENGIAO_PHANVIEC((GIAI_DOAN_THUC_HIEN) p.getPHANVIEC(), THISDAY);
 			if (p.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
@@ -1839,7 +1840,7 @@ public class CongViecCuaToi extends Shell {
 
 		Date THISDAY = null;
 		final int DukienNgayThuchien_0 = 0;
-		ThongBao_Lib_Congviec tb = new ThongBao_Lib_Congviec(user);
+		ThongBao_Congviec_Creater tb = new ThongBao_Congviec_Creater(user);
 		if (p.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 			controler.getControl_THUCHIEN().set_NGAYCHUYENGIAO_PHANVIEC((GIAI_DOAN_THUC_HIEN) p.getPHANVIEC(), THISDAY);
 			if (p.getCONGVIEC() instanceof DOT_THUCHIEN_GIAM_TAISAN) {
@@ -1979,7 +1980,7 @@ public class CongViecCuaToi extends Shell {
 
 	private void SetupHoanthanhPhanViec_Chuyengiao(CONGVIEC_PHANVIEC p) throws SQLException {
 		Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
-		ThongBao_Lib_Congviec tb = new ThongBao_Lib_Congviec(user);
+		ThongBao_Congviec_Creater tb = new ThongBao_Congviec_Creater(user);
 		if (p.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 			controler.getControl_THUCHIEN().set_NGAYCHUYENGIAO_PHANVIEC((GIAI_DOAN_THUC_HIEN) p.getPHANVIEC(), THISDAY);
 			if (p.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {
@@ -2053,7 +2054,7 @@ public class CongViecCuaToi extends Shell {
 				dk.open();
 				int DukienThuchien = dk.result;
 				if (DukienThuchien > 0) {
-					ThongBao_Lib_Congviec tb = new ThongBao_Lib_Congviec(user);
+					ThongBao_Congviec_Creater tb = new ThongBao_Congviec_Creater(user);
 					if (p.getPHANVIEC() instanceof GIAI_DOAN_THUC_HIEN) {
 						DE_XUAT dx = null;
 						if (p.getCONGVIEC() instanceof DOT_THUCHIEN_SUACHUA_BAODUONG) {

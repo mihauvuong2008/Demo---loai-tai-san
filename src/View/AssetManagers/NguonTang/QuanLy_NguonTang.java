@@ -29,14 +29,13 @@ import DAO.NGUOIDUNG;
 import DAO.NGUONTANG;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 
 public class QuanLy_NguonTang extends Shell {
-	private Text text_TenNguontang;
-	private Text text_Lienlac;
-	private Text text_Gioithieu;
 	private Table table;
 	private String ItemIndex;
-	private Text text_MaNguonTang;
 	private int ItemHeight = 22;
 	private static NGUOIDUNG user;
 	private Text text_1;
@@ -44,6 +43,11 @@ public class QuanLy_NguonTang extends Shell {
 	private int mode;
 	private final Controler controler;
 	private static Log log = LogFactory.getLog(QuanLy_NguonTang.class);
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Text txtMadonvi;
+	private Text txtTendonvi;
+	private Text txtLienhe;
+	private Text txtGioithieu;
 
 	/**
 	 * Launch the application.
@@ -75,12 +79,15 @@ public class QuanLy_NguonTang extends Shell {
 	public QuanLy_NguonTang(Display display, NGUOIDUNG user) throws SQLException {
 		super(display, SWT.SHELL_TRIM | SWT.BORDER);
 		setImage(user.getIcondata().phukienIcon);
-		setLayout(new GridLayout(6, false));
+		setLayout(new GridLayout(5, false));
 		QuanLy_NguonTang.user = user;
 		controler = new Controler(user);
 
-		SashForm sashForm = new SashForm(this, SWT.NONE | SWT.ON_TOP);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+		text_1 = new Text(this, SWT.BORDER);
+		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+
+		SashForm sashForm = new SashForm(this, SWT.NONE);
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -94,10 +101,10 @@ public class QuanLy_NguonTang extends Shell {
 					if (t != null) {
 
 						ItemIndex = items[0].getText(0);
-						text_MaNguonTang.setText(String.valueOf(t.getMA_NGUONTANG()));
-						text_TenNguontang.setText(t.getTEN_NGUONTANG());
-						text_Lienlac.setText(t.getLIEN_HE());
-						text_Gioithieu.setText(t.getGIOI_THIEU());
+						txtMadonvi.setText(String.valueOf(t.getMA_NGUONTANG()));
+						txtTendonvi.setText(t.getTEN_NGUONTANG());
+						txtLienhe.setText(t.getLIEN_HE());
+						txtGioithieu.setText(t.getGIOI_THIEU());
 
 					}
 				}
@@ -118,47 +125,49 @@ public class QuanLy_NguonTang extends Shell {
 		TableColumn tblclmnLinH = new TableColumn(table, SWT.NONE);
 		tblclmnLinH.setWidth(100);
 		tblclmnLinH.setText("LIÊN HỆ");
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
-
-		Label lblMNgunTng = new Label(composite, SWT.NONE);
-		lblMNgunTng.setText("Mã:");
-
-		text_MaNguonTang = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-		text_MaNguonTang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblTnNgunTng = new Label(composite, SWT.NONE);
-		lblTnNgunTng.setText("Tên:");
-
-		text_TenNguontang = new Text(composite, SWT.BORDER);
-		text_TenNguontang.setEditable(false);
-		text_TenNguontang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblLinLc = new Label(composite, SWT.NONE);
-		lblLinLc.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblLinLc.setText("Liên lạc:");
-
-		text_Lienlac = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		text_Lienlac.setEditable(false);
-		GridData gd_text_Lienlac = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_text_Lienlac.heightHint = 68;
-		text_Lienlac.setLayoutData(gd_text_Lienlac);
-
-		Label label_3 = new Label(composite, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_3.setText("Giới thiệu:");
-
-		text_Gioithieu = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		text_Gioithieu.setEditable(false);
-		GridData gd_text_Gioithieu = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_text_Gioithieu.heightHint = 146;
-		text_Gioithieu.setLayoutData(gd_text_Gioithieu);
-		sashForm.setWeights(new int[] { 1000, 618 });
 		new TreeRowStyle().setTableItemHeight(table, ItemHeight);
-		Filltable();
 
-		text_1 = new Text(this, SWT.BORDER);
-		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		Composite composite_1 = formToolkit.createComposite(sashForm, SWT.NONE);
+		formToolkit.paintBordersFor(composite_1);
+		{
+			TableWrapLayout twl_composite_1 = new TableWrapLayout();
+			twl_composite_1.numColumns = 2;
+			composite_1.setLayout(twl_composite_1);
+		}
+
+		Label lblMnV = formToolkit.createLabel(composite_1, "Mã đơn vị: ", SWT.NONE);
+		lblMnV.setBounds(0, 0, 55, 15);
+
+		txtMadonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtMadonvi.setText("");
+		txtMadonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
+
+		@SuppressWarnings("unused")
+		Label lblTnnV = formToolkit.createLabel(composite_1, "Tên đơn vị: ", SWT.NONE);
+
+		txtTendonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtTendonvi.setText("");
+		txtTendonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
+
+		@SuppressWarnings("unused")
+		Label lblLinH = formToolkit.createLabel(composite_1, "Liên hệ: ", SWT.NONE);
+
+		txtLienhe = formToolkit.createText(composite_1, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtLienhe.setText("");
+		TableWrapData twd_txtLienhe = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 1);
+		twd_txtLienhe.heightHint = 120;
+		txtLienhe.setLayoutData(twd_txtLienhe);
+
+		@SuppressWarnings("unused")
+		Label lblGiiThiu = formToolkit.createLabel(composite_1, "Giới thiệu: ", SWT.NONE);
+
+		txtGioithieu = formToolkit.createText(composite_1, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtGioithieu.setText("");
+		TableWrapData twd_txtGioithieu = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 1);
+		twd_txtGioithieu.heightHint = 120;
+		txtGioithieu.setLayoutData(twd_txtGioithieu);
+		sashForm.setWeights(new int[] { 225, 146 });
+		Filltable();
 
 		btnThmNgunTng = new Button(this, SWT.NONE);
 		btnThmNgunTng.setImage(user.getIcondata().addIcon);
@@ -202,10 +211,10 @@ public class QuanLy_NguonTang extends Shell {
 						m.open();
 						Filltable();
 
-						text_MaNguonTang.setText("");
-						text_TenNguontang.setText("");
-						text_Lienlac.setText("");
-						text_Gioithieu.setText("");
+						txtMadonvi.setText("");
+						txtTendonvi.setText("");
+						txtLienhe.setText("");
+						txtGioithieu.setText("");
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -225,35 +234,35 @@ public class QuanLy_NguonTang extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				// flag2 = true: quá trình sửa thông tin hồ sơ
 				try {
-					if ((!text_TenNguontang.getText().equals("")) && (!text_Lienlac.getText().equals(""))) {
-
-						MessageBox m = new MessageBox(getShell(), SWT.ICON_WORKING);
-						if (getEdit()) {
-							NGUONTANG nt = new NGUONTANG();
-							nt.setMA_NGUONTANG(Integer.valueOf(text_MaNguonTang.getText()));
-							nt.setTEN_NGUONTANG(text_TenNguontang.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienlac.getText());
-							controler.getControl_NGUONTANG().update_NGUONTANG(nt);
-							m.setMessage("Lưu hoàn tất!");
+					if (getCreate() || getEdit())
+						if ((!txtTendonvi.getText().equals("")) && (!txtLienhe.getText().equals(""))) {
+							MessageBox m = new MessageBox(getShell(), SWT.ICON_WORKING);
+							if (getEdit()) {
+								NGUONTANG nt = new NGUONTANG();
+								nt.setMA_NGUONTANG(Integer.valueOf(txtMadonvi.getText()));
+								nt.setTEN_NGUONTANG(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONTANG().update_NGUONTANG(nt);
+								m.setMessage("Lưu hoàn tất!");
+								m.setText("Hoàn tất");
+								m.open();
+							} else if (getCreate()) {
+								NGUONTANG nt = new NGUONTANG();
+								nt.setTEN_NGUONTANG(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONTANG().Insert_NGUONTANG(nt);
+								m.setMessage("Tạo mới hoàn tất!");
+								m.setText("Hoàn tất");
+								m.open();
+							}
+						} else {
+							MessageBox m = new MessageBox(getShell(), SWT.ICON_ERROR);
+							m.setText("lỗi");
+							m.setMessage("Tên, Liên hệ không để trống!");
+							m.open();
 						}
-
-						if (getCreate()) {
-							NGUONTANG nt = new NGUONTANG();
-							nt.setTEN_NGUONTANG(text_TenNguontang.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienlac.getText());
-							controler.getControl_NGUONTANG().Insert_NGUONTANG(nt);
-							m.setMessage("Tạo mới hoàn tất!");
-						}
-						m.setText("Hoàn tất");
-						m.open();
-					} else {
-						MessageBox m = new MessageBox(getShell(), SWT.ICON_ERROR);
-						m.setText("lỗi");
-						m.setMessage("Tên, Liên hệ không để trống!");
-						m.open();
-					}
 					disableText();
 					setComplete();
 					Filltable();
@@ -263,7 +272,7 @@ public class QuanLy_NguonTang extends Shell {
 				}
 			}
 		});
-		GridData gd_btnSa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_btnSa = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_btnSa.widthHint = 75;
 		btnSa.setLayoutData(gd_btnSa);
 		btnSa.setText("Lưu");
@@ -312,24 +321,24 @@ public class QuanLy_NguonTang extends Shell {
 	}
 
 	private void resetText() {
-		text_MaNguonTang.setText("");
-		text_TenNguontang.setText("");
-		text_Lienlac.setText("");
-		text_Gioithieu.setText("");
+		txtMadonvi.setText("");
+		txtTendonvi.setText("");
+		txtLienhe.setText("");
+		txtGioithieu.setText("");
 	}
 
 	protected void disableText() {
-		text_MaNguonTang.setEditable(false);
-		text_TenNguontang.setEditable(false);
-		text_Lienlac.setEditable(false);
-		text_Gioithieu.setEditable(false);
+		txtMadonvi.setEditable(false);
+		txtTendonvi.setEditable(false);
+		txtLienhe.setEditable(false);
+		txtGioithieu.setEditable(false);
 	}
 
 	private void EnableText() {
-		text_MaNguonTang.setEditable(true);
-		text_TenNguontang.setEditable(true);
-		text_Lienlac.setEditable(true);
-		text_Gioithieu.setEditable(true);
+		txtMadonvi.setEditable(true);
+		txtTendonvi.setEditable(true);
+		txtLienhe.setEditable(true);
+		txtGioithieu.setEditable(true);
 
 	}
 

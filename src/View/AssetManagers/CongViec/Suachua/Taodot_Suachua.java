@@ -610,6 +610,7 @@ public class Taodot_Suachua extends Dialog {
 				button.setText("Xem Hồ sơ");
 				PHONGBAN p = controler.getControl_PHONGBAN().get_PHONGBAN(dx.getMA_PHONGBAN());
 				text_DonviDexuat.setText(p.getTEN_PHONGBAN());
+				fillNguonSuachuaBaoduong(ViewAndEdit_MODE_dsb);
 				fillDexuat(dx);
 			}
 

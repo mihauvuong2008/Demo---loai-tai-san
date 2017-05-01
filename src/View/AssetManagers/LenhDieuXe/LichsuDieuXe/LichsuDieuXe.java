@@ -40,6 +40,7 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import View.AssetManagers.LenhDieuXe.QuanLy_Lenhdieuxe;
+import View.Box.messageField;
 import View.DateTime.MyDateFormat;
 import View.DateTime.startDate_endDate;
 import View.Template.FormTemplate;
@@ -412,7 +413,19 @@ public class LichsuDieuXe extends Shell {
 		TableItem[] ti = table.getSelection();
 		if (ti.length > 0) {
 			LENH_DIEU_XE l = (LENH_DIEU_XE) ti[0].getData();
-			controler.getControl_LENH_DIEU_XE().detele_LENH_DIEU_XE(l);
+			messageField mf = new messageField();
+			int rs = mf.showBox(getShell(), "Xóa", "Bạn muốn xóa Lệnh điều xe này? ",
+					SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+			switch (rs) {
+			case SWT.YES:
+				controler.getControl_LENH_DIEU_XE().detele_LENH_DIEU_XE(l);
+				break;
+			case SWT.NO:
+
+				break;
+			default:
+				break;
+			}
 			fillTable(p, Date_Batdau, Date_Ketthuc);
 		}
 	}

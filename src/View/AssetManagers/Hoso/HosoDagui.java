@@ -81,7 +81,7 @@ public class HosoDagui extends Dialog {
 	private void createContents() {
 		shlHS = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlHS.setImage(user.getIcondata().mailSent16);
-		shlHS.setSize(624, 386);
+		shlHS.setSize(597, 369);
 		shlHS.setText("Hồ sơ đã gửi");
 		shlHS.setLayout(new GridLayout(2, false));
 		new FormTemplate().setCenterScreen(shlHS);

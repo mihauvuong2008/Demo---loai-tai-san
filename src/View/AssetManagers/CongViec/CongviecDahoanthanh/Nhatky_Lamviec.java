@@ -49,6 +49,8 @@ import DAO.NGUONTANG;
 import DAO.PHONGBAN;
 import DAO.TAISAN;
 import DAO.TAPHOSO;
+import View.AssetManagers.Hoso.TailenTaphoso;
+import View.AssetManagers.Hoso.TapHoso_Creator;
 import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.NguonGiam.ChonNguonGiam;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
@@ -440,14 +442,18 @@ public class Nhatky_Lamviec extends Dialog {
 					if (Nguoidung.equals(TEN_TAI_KHOAN)) {
 						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAPHOSO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ Đề xuất");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Đề xuất");
-							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
-							if (Ma_NewTapHoso > 0) {
-								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
-								dx.setMA_TAPHOSO(Ma_NewTapHoso);
-							}
+							TapHoso_Creator tc = new TapHoso_Creator(user);
+							ths = tc.getTaphoso("Tập hồ sơ Đề xuất", "Tập hồ sơ bổ sung - Đề xuất");
+							TailenTaphoso tlt = new TailenTaphoso(shlNhtKCng, SWT.DIALOG_TRIM, user, ths);
+							tlt.open();
+							ths = (TAPHOSO) tlt.result;
+							if (ths == null)
+								return;
+							int Ma_NewTapHoso = ths.getMA_TAPHOSO();
+							if (Ma_NewTapHoso <= 0)
+								return;
+							controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
+							dx.setMA_TAPHOSO(Ma_NewTapHoso);
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
 						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
@@ -572,14 +578,18 @@ public class Nhatky_Lamviec extends Dialog {
 					if (thamgiaCongviec != null) {
 						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAPHOSO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Thực hiện");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Thực hiện");
-							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
-							if (Ma_NewTapHoso > 0) {
-								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
-								dx.setMA_TAPHOSO(Ma_NewTapHoso);
-							}
+							TapHoso_Creator tc = new TapHoso_Creator(user);
+							ths = tc.getTaphoso("Tập hồ sơ bổ sung - Thực hiện", "Tập hồ sơ bổ sung - Thực hiện");
+							TailenTaphoso tlt = new TailenTaphoso(shlNhtKCng, SWT.DIALOG_TRIM, user, ths);
+							tlt.open();
+							ths = (TAPHOSO) tlt.result;
+							if (ths == null)
+								return;
+							int Ma_NewTapHoso = ths.getMA_TAPHOSO();
+							if (Ma_NewTapHoso <= 0)
+								return;
+							controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
+							dx.setMA_TAPHOSO(Ma_NewTapHoso);
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
 						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
@@ -698,14 +708,18 @@ public class Nhatky_Lamviec extends Dialog {
 					if (thamgiaCongviec != null) {
 						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAPHOSO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Nghiệm thu");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Nghiệm thu");
-							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
-							if (Ma_NewTapHoso > 0) {
-								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
-								dx.setMA_TAPHOSO(Ma_NewTapHoso);
-							}
+							TapHoso_Creator tc = new TapHoso_Creator(user);
+							ths = tc.getTaphoso("Tập hồ sơ bổ sung - Nghiệm thu", "Tập hồ sơ bổ sung - Nghiệm thu");
+							TailenTaphoso tlt = new TailenTaphoso(shlNhtKCng, SWT.DIALOG_TRIM, user, ths);
+							tlt.open();
+							ths = (TAPHOSO) tlt.result;
+							if (ths == null)
+								return;
+							int Ma_NewTapHoso = ths.getMA_TAPHOSO();
+							if (Ma_NewTapHoso <= 0)
+								return;
+							controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
+							dx.setMA_TAPHOSO(Ma_NewTapHoso);
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
 						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);
@@ -818,14 +832,18 @@ public class Nhatky_Lamviec extends Dialog {
 					if (thamgiaCongviec != null) {
 						TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(thamgiaCongviec.getMA_TAPHOSO()));
 						if (ths == null) {
-							ths = new TAPHOSO();
-							ths.setTEN_TAPHOSO("Tập hồ sơ bổ sung - Quyết toán");
-							ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ bổ sung - Quyết toán");
-							int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(ths);
-							if (Ma_NewTapHoso > 0) {
-								controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
-								dx.setMA_TAPHOSO(Ma_NewTapHoso);
-							}
+							TapHoso_Creator tc = new TapHoso_Creator(user);
+							ths = tc.getTaphoso("Tập hồ sơ bổ sung - Quyết toán", "Tập hồ sơ bổ sung - Quyết toán");
+							TailenTaphoso tlt = new TailenTaphoso(shlNhtKCng, SWT.DIALOG_TRIM, user, ths);
+							tlt.open();
+							ths = (TAPHOSO) tlt.result;
+							if (ths == null)
+								return;
+							int Ma_NewTapHoso = ths.getMA_TAPHOSO();
+							if (Ma_NewTapHoso <= 0)
+								return;
+							controler.getControl_DEXUAT().update_TapHoso(dx, Ma_NewTapHoso);
+							dx.setMA_TAPHOSO(Ma_NewTapHoso);
 							ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Ma_NewTapHoso));
 						}
 						Taphoso_View thsV = new Taphoso_View(shlNhtKCng, SWT.DIALOG_TRIM, user, ths, false);

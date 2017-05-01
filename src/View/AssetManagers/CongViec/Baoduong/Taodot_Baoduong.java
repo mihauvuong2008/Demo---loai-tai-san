@@ -849,6 +849,7 @@ public class Taodot_Baoduong extends Dialog {
 								.set_DOT_THUCHIEN_SUACHUA_TAISAN(ViewAndEdit_MODE_dsb, rp);
 					}
 				}
+				shell.dispose();
 			} else {
 				showMessage_Fail();
 			}
@@ -871,6 +872,7 @@ public class Taodot_Baoduong extends Dialog {
 				.getPTTS_BAODUONG(ViewAndEdit_MODE_dsb);
 		fillTable_ROW(rpl);
 		nsb = controler.getControl_NGUONSUACHUA_BAODUONG().get_NguonSuachua_Baoduong(ViewAndEdit_MODE_dsb);
+		fillNguonSuachuaBaoduong(ViewAndEdit_MODE_dsb);
 		DE_XUAT dx = controler.getControl_DEXUAT().get_DEXUAT(ViewAndEdit_MODE_dsb);
 		if (dx == null)
 			return;

@@ -19,6 +19,8 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAPHOSO;
 import DAO.VANBAN;
+import View.AssetManagers.Hoso.TailenTaphoso;
+import View.AssetManagers.Hoso.TapHoso_Creator;
 import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
@@ -191,19 +193,9 @@ public class NhapDeXuat extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if (dx.getMA_TAPHOSO() <= 0) {
-						TAPHOSO t = new TAPHOSO();
-						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất");
-						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất, phê duyệt chủ trương");
-						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
-						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
-					}
-					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					Taphoso_View b = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
-					b.open();
-					fillTaphoso(ths);
+					add_Edit_Hoso_Dexuat();
 				} catch (SQLException e1) {
-					log.error(e1.getMessage());
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -217,19 +209,9 @@ public class NhapDeXuat extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if (dx.getMA_TAPHOSO() <= 0) {
-						TAPHOSO t = new TAPHOSO();
-						t.setTEN_TAPHOSO("Tập hồ sơ - Đề xuất");
-						t.setGIOITHIEU_TAPHOSO("Tập hồ sơ - Đề xuất, phê duyệt chủ trương");
-						t.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
-						dx.setMA_TAPHOSO(controler.getControl_TAPHOSO().Create_TAP_HO_SO(t));
-					}
-					TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
-					Taphoso_View b = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
-					b.open();
-					fillTaphoso(ths);
+					add_Edit_Hoso_Dexuat();
 				} catch (SQLException e1) {
-					log.error(e1.getMessage());
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -277,6 +259,23 @@ public class NhapDeXuat extends Dialog {
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");
 		init();
+	}
+
+	protected void add_Edit_Hoso_Dexuat() throws SQLException {
+		if (dx.getMA_TAPHOSO() <= 0) {
+			TAPHOSO ths_tmp = new TapHoso_Creator(user).getTaphoso("Tập hồ sơ - Đề xuất",
+					"Tập hồ sơ - Đề xuất, phê duyệt chủ trương");
+			TailenTaphoso tlt = new TailenTaphoso(shell, SWT.DIALOG_TRIM, user, ths_tmp);
+			tlt.open();
+			ths_tmp = (TAPHOSO) tlt.result;
+			if (ths_tmp == null)
+				return;
+			dx.setMA_TAPHOSO(ths_tmp.getMA_TAPHOSO());
+		}
+		TAPHOSO ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(dx.getMA_TAPHOSO());
+		Taphoso_View b = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
+		b.open();
+		fillTaphoso(ths);
 	}
 
 	private void fillTaphoso(TAPHOSO ths) throws SQLException {

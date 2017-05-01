@@ -20,13 +20,13 @@ import DAO.NGUOIDUNG_THUCHIEN;
 import DAO.THONGBAO;
 import View.MarkItem.Fill_ItemData;
 
-public class Thongbao_CongviecCuaToi {
+public class Thongbao_CongviecCuaToi_Sender {
 	private static NGUOIDUNG user;
 	private Fill_ItemData f;
 	private final Controler controler;
 
-	public Thongbao_CongviecCuaToi(NGUOIDUNG user) {
-		Thongbao_CongviecCuaToi.user = user;
+	public Thongbao_CongviecCuaToi_Sender(NGUOIDUNG user) {
+		Thongbao_CongviecCuaToi_Sender.user = user;
 		f = new Fill_ItemData();
 		controler = new Controler(user);
 	}

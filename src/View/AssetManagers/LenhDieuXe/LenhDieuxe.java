@@ -34,12 +34,14 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.LENH_DIEU_XE;
+import DAO.LICH_CONG_TAC;
 import DAO.NGUOIDUNG;
 import DAO.PHUONGTIEN_GIAOTHONG;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import net.sf.jasperreports.engine.JRException;
+import org.eclipse.swt.widgets.Composite;
 
 public class LenhDieuxe extends Dialog {
 	private Text text_SoKmhientai;
@@ -67,6 +69,8 @@ public class LenhDieuxe extends Dialog {
 	private static Log log = LogFactory.getLog(LenhDieuxe.class);
 	private Shell shlThngTiniu;
 	private Object result;
+	private DateTime dateTime_GioXuatphat;
+	private Composite composite_DateXuatphat;
 
 	public LenhDieuxe(Shell parent, int Style, NGUOIDUNG user, PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
 		super(parent, Style);
@@ -285,9 +289,33 @@ public class LenhDieuxe extends Dialog {
 		text_Noiden = new Text(shlThngTiniu, SWT.BORDER);
 		text_Noiden.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
-		Label lblNgyi = new Label(shlThngTiniu, SWT.NONE);
-		lblNgyi.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblNgyi.setText("Ng\u00E0y \u0111i:");
+		Composite composite_1 = new Composite(shlThngTiniu, SWT.NONE);
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		GridLayout gl_composite_1 = new GridLayout(2, false);
+		gl_composite_1.horizontalSpacing = 0;
+		gl_composite_1.marginHeight = 0;
+		gl_composite_1.marginWidth = 0;
+		composite_1.setLayout(gl_composite_1);
+
+		Label lblNgyi = new Label(composite_1, SWT.NONE);
+		lblNgyi.setText("Ngày đi");
+
+		Button btnXuatPhat = new Button(composite_1, SWT.CHECK);
+		btnXuatPhat.setSelection(true);
+		btnXuatPhat.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnXuatPhat.getSelection()) {
+					createDatetimeGioXuatphat();
+				} else {
+					dateTime_GioXuatphat.dispose();
+				}
+			}
+		});
+		GridData gd_btnXuatPhat = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gd_btnXuatPhat.horizontalIndent = 5;
+		btnXuatPhat.setLayoutData(gd_btnXuatPhat);
+		btnXuatPhat.setText("(giờ đi): ");
 
 		Button btnC = new Button(shlThngTiniu, SWT.NONE);
 		btnC.addSelectionListener(new SelectionAdapter() {
@@ -311,9 +339,20 @@ public class LenhDieuxe extends Dialog {
 		btnC.setLayoutData(gd_btnC);
 		btnC.setText("C");
 
-		dateTime_Ngaydi = new DateTime(shlThngTiniu, SWT.BORDER);
+		composite_DateXuatphat = new Composite(shlThngTiniu, SWT.NONE);
+		GridLayout gl_composite = new GridLayout(2, false);
+		gl_composite.marginWidth = 0;
+		gl_composite.verticalSpacing = 0;
+		gl_composite.marginHeight = 0;
+		composite_DateXuatphat.setLayout(gl_composite);
+		composite_DateXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
+
+		dateTime_GioXuatphat = new DateTime(composite_DateXuatphat, SWT.BORDER | SWT.TIME);
+		dateTime_GioXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+		dateTime_Ngaydi = new DateTime(composite_DateXuatphat, SWT.BORDER);
+		dateTime_Ngaydi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		dateTime_Ngaydi.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		dateTime_Ngaydi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 
 		Label lblNgyV = new Label(shlThngTiniu, SWT.NONE);
 		lblNgyV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -653,7 +692,6 @@ public class LenhDieuxe extends Dialog {
 		btnHonTt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
 				try {
 					if (check_Ngaydi_Ngayve() && check_NhienLieu_Daydu()) {
 						if (check_Xe_trong_Thoigiandieu()) {
@@ -670,6 +708,7 @@ public class LenhDieuxe extends Dialog {
 								controler.getControl_LENH_DIEU_XE().insert_LENH_DIEU_XE(l);
 								controler.getControl_PHUONGTIEN_GIAOTHONG().update_soKmXe(Maptgt,
 										Integer.valueOf(text_SoKmhientai.getText()));
+								addLichLamviec(l);
 							}
 							shlThngTiniu.dispose();
 
@@ -678,6 +717,14 @@ public class LenhDieuxe extends Dialog {
 				} catch (JRException | NumberFormatException | SQLException e1) {
 					e1.printStackTrace();
 				}
+			}
+
+			private void addLichLamviec(LENH_DIEU_XE l) throws SQLException {
+				LICH_CONG_TAC lct = new LICH_CONG_TAC();
+				lct.setNOIDUNG(l.getTEN_TAI_KHOAN() + ": " + "Điều xe ô tô: " + combo_Bienso.getText()
+						+ l.getDIADIEM_GIODON() + "; " + "; Nội dung: " + l.getNOIDUNG_CHUYENDI());
+				lct.setTHOIGIAN(l.getNGAY_DI());
+				controler.getControl_LICH_CONG_TAC().InsertLICH_CONG_TAC(lct);
 			}
 
 			private boolean check_Xe_trong_Thoigiandieu() throws SQLException {
@@ -704,12 +751,6 @@ public class LenhDieuxe extends Dialog {
 					openLenhdieuXe_Gannhat(ptgt);
 				case SWT.NO:
 					return false;
-				case SWT.RETRY:
-					break;
-				case SWT.ABORT:
-					break;
-				case SWT.IGNORE:
-					break;
 				}
 				return false;
 			}
@@ -820,7 +861,14 @@ public class LenhDieuxe extends Dialog {
 			}
 			l.setDIEM_XUATPHAT(text_xuatphat.getText());
 			l.setDIEM_DEN(text_Noiden.getText());
-			l.setNGAY_DI(mdf.getDate(dateTime_Ngaydi));
+			if (dateTime_GioXuatphat.isDisposed()) {
+				Date date = mdf.date(0, 0, dateTime_Ngaydi.getDay(), dateTime_Ngaydi.getMonth(),
+						dateTime_Ngaydi.getYear());
+				l.setNGAY_DI(date);
+
+			} else {
+				l.setNGAY_DI(mdf.getDate(dateTime_GioXuatphat, dateTime_Ngaydi));
+			}
 			l.setNGAY_VE(mdf.getDate(dateTime_Ngayve));
 			l.setSO_KM_HIENTAI(Integer.valueOf(text_SoKmhientai.getText()));
 			l.setQUANG_DUONG_DUKIEN(Integer.valueOf(text_Quangduongdukien.getText()));
@@ -858,10 +906,15 @@ public class LenhDieuxe extends Dialog {
 		text_Diadiemgiodon.setEditable(true);
 		text_Noidung.setEditable(true);
 		btnHonTt.setText("Hoàn tất");
-
 		if (ptgt != null) {
 			setCombo_PhuongtienGiaothong(ptgt);
 		}
+	}
+
+	void createDatetimeGioXuatphat() {
+		dateTime_GioXuatphat = new DateTime(composite_DateXuatphat, SWT.BORDER | SWT.TIME);
+		dateTime_GioXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		composite_DateXuatphat.layout();
 	}
 
 	@Override

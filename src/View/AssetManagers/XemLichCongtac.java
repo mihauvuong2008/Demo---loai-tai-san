@@ -80,7 +80,7 @@ public class XemLichCongtac extends Dialog {
 		shlLchCngTc.setLayout(new GridLayout(6, false));
 		new FormTemplate().setCenterScreen(shlLchCngTc);
 
-		text = new Text(shlLchCngTc, SWT.BORDER | SWT.READ_ONLY);
+		text = new Text(shlLchCngTc, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		text.setEditable(true);
 		text.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));

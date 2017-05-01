@@ -30,7 +30,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import View.Template.FormTemplate;
 
-public class QuanLyTaiSan {
+public class rmQuanLyTaiSan {
 
 	protected Shell shlHoso;
 
@@ -41,7 +41,7 @@ public class QuanLyTaiSan {
 	 */
 	public static void main(String[] args) {
 		try {
-			QuanLyTaiSan window = new QuanLyTaiSan();
+			rmQuanLyTaiSan window = new rmQuanLyTaiSan();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ public class QuanLyTaiSan {
 			gd_LbImage.heightHint = 100;
 			btnCheckButton.setLayoutData(gd_LbImage);
 			btnCheckButton.setText("none");
-			Image img = SWTResourceManager.getImage(QuanLyTaiSan.class, "/question_mark.png");
+			Image img = SWTResourceManager.getImage(rmQuanLyTaiSan.class, "/question_mark.png");
 			btnCheckButton.setImage(resize(img, 100, 100));
 			btnCheckButton.addMouseTrackListener(new MouseTrackAdapter() {
 				@Override

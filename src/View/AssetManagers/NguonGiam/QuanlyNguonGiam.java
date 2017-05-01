@@ -24,13 +24,15 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.NGUONGIAM;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 
 public class QuanlyNguonGiam extends Dialog {
 
@@ -38,14 +40,15 @@ public class QuanlyNguonGiam extends Dialog {
 	protected Shell shlQunLNgun;
 	private Text text;
 	private Table table;
-	private Text text_Ma;
-	private Text text_Ten;
-	private Text text_Gioithieu;
-	private Text text_Lienhe;
 	private int mode;
 	private final Controler controler;
 	private static Log log = LogFactory.getLog(QuanlyNguonGiam.class);
 	private NGUOIDUNG user;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Text txtMadonvi;
+	private Text txtGioithieu;
+	private Text txtLienhe;
+	private Text txtTendonvi;
 
 	/**
 	 * Create the dialog.
@@ -91,10 +94,13 @@ public class QuanlyNguonGiam extends Dialog {
 		shlQunLNgun.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlQunLNgun);
 		shlQunLNgun.setText("Quản lý Nguồn giảm");
-		shlQunLNgun.setLayout(new GridLayout(6, false));
+		shlQunLNgun.setLayout(new GridLayout(5, false));
+
+		text = new Text(shlQunLNgun, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 
 		SashForm sashForm = new SashForm(shlQunLNgun, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
@@ -111,10 +117,10 @@ public class QuanlyNguonGiam extends Dialog {
 			}
 
 			private void fillText(NGUONGIAM ng) {
-				text_Ma.setText(ng.getMA_NGUONGIAM() + "");
-				text_Ten.setText(ng.getTEN_NGUONGIAM());
-				text_Gioithieu.setText(ng.getGIOI_THIEU());
-				text_Lienhe.setText(ng.getLIEN_HE());
+				txtMadonvi.setText(ng.getMA_NGUONGIAM() + "");
+				txtTendonvi.setText(ng.getTEN_NGUONGIAM());
+				txtGioithieu.setText(ng.getGIOI_THIEU());
+				txtLienhe.setText(ng.getLIEN_HE());
 			}
 		});
 
@@ -130,50 +136,47 @@ public class QuanlyNguonGiam extends Dialog {
 		tableColumn_2.setWidth(100);
 		tableColumn_2.setText("GI\u1EDAI THI\u1EC6U");
 
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
+		Composite composite_1 = formToolkit.createComposite(sashForm, SWT.NONE);
+		formToolkit.paintBordersFor(composite_1);
+		{
+			TableWrapLayout twl_composite_1 = new TableWrapLayout();
+			twl_composite_1.numColumns = 2;
+			composite_1.setLayout(twl_composite_1);
+		}
 
-		Label label = new Label(composite, SWT.NONE);
-		label.setText("M\u00E3:");
+		Label lblMnV = formToolkit.createLabel(composite_1, "Mã đơn vị: ", SWT.NONE);
+		lblMnV.setLayoutData(new TableWrapData(TableWrapData.LEFT, TableWrapData.MIDDLE, 1, 1));
+		lblMnV.setBounds(0, 0, 55, 15);
 
-		text_Ma = new Text(composite, SWT.BORDER);
-		text_Ma.setEditable(false);
-		text_Ma.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Ma.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtMadonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtMadonvi.setText("");
+		txtMadonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		Label label_1 = new Label(composite, SWT.NONE);
-		label_1.setText("T\u00EAn:");
+		Label lblTnnV = formToolkit.createLabel(composite_1, "Tên đơn vị: ", SWT.NONE);
+		lblTnnV.setLayoutData(new TableWrapData(TableWrapData.LEFT, TableWrapData.MIDDLE, 1, 1));
 
-		text_Ten = new Text(composite, SWT.BORDER);
-		text_Ten.setEditable(false);
-		text_Ten.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Ten.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtTendonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtTendonvi.setText("");
+		txtTendonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		Label label_2 = new Label(composite, SWT.NONE);
-		GridData gd_label_2 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_label_2.verticalIndent = 3;
-		label_2.setLayoutData(gd_label_2);
-		label_2.setText("Gi\u1EDBi thi\u1EC7u:");
+		@SuppressWarnings("unused")
+		Label lblGiiThiu = formToolkit.createLabel(composite_1, "Giới thiệu: ", SWT.NONE);
 
-		text_Gioithieu = new Text(composite, SWT.BORDER | SWT.MULTI);
-		text_Gioithieu.setEditable(false);
-		text_Gioithieu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Gioithieu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		txtGioithieu = formToolkit.createText(composite_1, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtGioithieu.setText("");
+		TableWrapData twd_txtGioithieu = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 1, 1);
+		twd_txtGioithieu.heightHint = 120;
+		txtGioithieu.setLayoutData(twd_txtGioithieu);
 
-		Label label_3 = new Label(composite, SWT.NONE);
-		GridData gd_label_3 = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_label_3.verticalIndent = 3;
-		label_3.setLayoutData(gd_label_3);
-		label_3.setText("Li\u00EAn h\u1EC7:");
+		@SuppressWarnings("unused")
+		Label lblLinH = formToolkit.createLabel(composite_1, "Liên hệ: ", SWT.NONE);
 
-		text_Lienhe = new Text(composite, SWT.BORDER | SWT.MULTI);
-		text_Lienhe.setEditable(false);
-		text_Lienhe.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Lienhe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		sashForm.setWeights(new int[] { 1000, 618 });
-
-		text = new Text(shlQunLNgun, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtLienhe = formToolkit.createText(composite_1, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtLienhe.setText("");
+		TableWrapData twd_txtLienhe = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 1, 1);
+		twd_txtLienhe.heightHint = 120;
+		txtLienhe.setLayoutData(twd_txtLienhe);
+		sashForm.setWeights(new int[] { 440, 270 });
 
 		Button button = new Button(shlQunLNgun, SWT.NONE);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -206,35 +209,35 @@ public class QuanlyNguonGiam extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if ((!text_Ten.getText().equals("")) && (!text_Lienhe.getText().equals(""))) {
-
-						MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_WORKING);
-						if (getEdit()) {
-							NGUONGIAM nt = new NGUONGIAM();
-							nt.setMA_NGUONGIAM(Integer.valueOf(text_Ma.getText()));
-							nt.setTEN_NGUONGIAM(text_Ten.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienhe.getText());
-							controler.getControl_NGUONGIAM().update_NGUONGIAM(nt);
-							m.setMessage("Lưu hoàn tất!");
+					if (getEdit() || getCreate())
+						if ((!txtTendonvi.getText().equals("")) && (!txtLienhe.getText().equals(""))) {
+							MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_WORKING);
+							if (getEdit()) {
+								NGUONGIAM nt = new NGUONGIAM();
+								nt.setMA_NGUONGIAM(Integer.valueOf(txtMadonvi.getText()));
+								nt.setTEN_NGUONGIAM(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONGIAM().update_NGUONGIAM(nt);
+								m.setMessage("Lưu hoàn tất!");
+								m.setText("Hoàn tất");
+								m.open();
+							} else if (getCreate()) {
+								NGUONGIAM nt = new NGUONGIAM();
+								nt.setTEN_NGUONGIAM(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONGIAM().Insert_NGUONGIAM(nt);
+								m.setMessage("Tạo mới hoàn tất!");
+								m.setText("Hoàn tất");
+								m.open();
+							}
+						} else {
+							MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_ERROR);
+							m.setText("lỗi");
+							m.setMessage("Tên, Liên hệ không để trống!");
+							m.open();
 						}
-
-						if (getCreate()) {
-							NGUONGIAM nt = new NGUONGIAM();
-							nt.setTEN_NGUONGIAM(text_Ten.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienhe.getText());
-							controler.getControl_NGUONGIAM().Insert_NGUONGIAM(nt);
-							m.setMessage("Tạo mới hoàn tất!");
-						}
-						m.setText("Hoàn tất");
-						m.open();
-					} else {
-						MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_ERROR);
-						m.setText("lỗi");
-						m.setMessage("Tên, Liên hệ không để trống!");
-						m.open();
-					}
 					disableText();
 					setComplete();
 					init();
@@ -267,18 +270,17 @@ public class QuanlyNguonGiam extends Dialog {
 						m.open();
 						init();
 
-						text_Ma.setText("");
-						text_Ten.setText("");
-						text_Lienhe.setText("");
-						text_Gioithieu.setText("");
+						txtMadonvi.setText("");
+						txtTendonvi.setText("");
+						txtLienhe.setText("");
+						txtGioithieu.setText("");
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
-		GridData gd_button_2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_button_2 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_button_2.widthHint = 75;
 		button_2.setLayoutData(gd_button_2);
 		button_2.setText("Xóa");
@@ -310,24 +312,24 @@ public class QuanlyNguonGiam extends Dialog {
 	}
 
 	private void resetText() {
-		text_Ma.setText("");
-		text_Ten.setText("");
-		text_Lienhe.setText("");
-		text_Gioithieu.setText("");
+		txtMadonvi.setText("");
+		txtTendonvi.setText("");
+		txtLienhe.setText("");
+		txtGioithieu.setText("");
 	}
 
 	protected void disableText() {
-		text_Ma.setEditable(false);
-		text_Ten.setEditable(false);
-		text_Lienhe.setEditable(false);
-		text_Gioithieu.setEditable(false);
+		txtMadonvi.setEditable(false);
+		txtTendonvi.setEditable(false);
+		txtLienhe.setEditable(false);
+		txtGioithieu.setEditable(false);
 	}
 
 	private void EnableText() {
-		text_Ma.setEditable(true);
-		text_Ten.setEditable(true);
-		text_Lienhe.setEditable(true);
-		text_Gioithieu.setEditable(true);
+		txtMadonvi.setEditable(true);
+		txtTendonvi.setEditable(true);
+		txtLienhe.setEditable(true);
+		txtGioithieu.setEditable(true);
 
 	}
 
@@ -367,15 +369,15 @@ public class QuanlyNguonGiam extends Dialog {
 	}
 
 	private void clearText() {
-		text_Ten.setText("");
-		text_Gioithieu.setText("");
-		text_Lienhe.setText("");
+		txtTendonvi.setText("");
+		txtGioithieu.setText("");
+		txtLienhe.setText("");
 	}
 
 	private void enableText() {
-		text_Ten.setEditable(true);
-		text_Gioithieu.setEditable(true);
-		text_Lienhe.setEditable(true);
+		txtTendonvi.setEditable(true);
+		txtGioithieu.setEditable(true);
+		txtLienhe.setEditable(true);
 	}
 
 	protected void setEditMode() {

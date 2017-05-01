@@ -15,7 +15,6 @@ import org.eclipse.swt.layout.GridData;
 
 import Controler.Controler;
 import DAO.FILESCAN;
-import DAO.HOSO_TAILEN;
 import DAO.NGUOIDUNG;
 import DAO.TAPHOSO;
 import DAO.VANBAN;
@@ -31,27 +30,36 @@ import org.eclipse.swt.custom.SashForm;
 
 public class TailenTaphoso extends Dialog {
 
-	protected Object result;
-	protected Shell shlToTpH;
+	public Object result;
+	protected Shell shlTailenTapHoso;
 	private Text text;
 	private Text text_1;
 	private NGUOIDUNG user;
 	private Controler controler;
-	TAPHOSO ths;
 	ArrayList<VANBAN> vbl;
 	protected ArrayList<ArrayList<FILESCAN>> fscll;
+	private TAPHOSO ths_tmp;
 
 	/**
 	 * Create the dialog.
 	 * 
 	 * @param parent
 	 * @param style
+	 * @wbp.parser.constructor
 	 */
 	public TailenTaphoso(Shell parent, int style, NGUOIDUNG user) {
 		super(parent, style);
 		setText("SWT Dialog");
 		this.user = user;
 		controler = new Controler(user);
+	}
+
+	public TailenTaphoso(Shell parent, int style, NGUOIDUNG user, TAPHOSO ths_tmp) {
+		super(parent, style);
+		setText("SWT Dialog");
+		this.user = user;
+		controler = new Controler(user);
+		this.ths_tmp = ths_tmp;
 	}
 
 	/**
@@ -61,10 +69,10 @@ public class TailenTaphoso extends Dialog {
 	 */
 	public Object open() {
 		createContents();
-		shlToTpH.open();
-		shlToTpH.layout();
+		shlTailenTapHoso.open();
+		shlTailenTapHoso.layout();
 		Display display = getParent().getDisplay();
-		while (!shlToTpH.isDisposed()) {
+		while (!shlTailenTapHoso.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -76,14 +84,14 @@ public class TailenTaphoso extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlToTpH = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
-		shlToTpH.setImage(user.getIcondata().upload16);
-		shlToTpH.setSize(565, 369);
-		shlToTpH.setText("Tạo tập hồ sơ tải lên");
-		shlToTpH.setLayout(new GridLayout(3, false));
-		new FormTemplate().setCenterScreen(shlToTpH);
+		shlTailenTapHoso = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
+		shlTailenTapHoso.setImage(user.getIcondata().upload16);
+		shlTailenTapHoso.setSize(597, 369);
+		shlTailenTapHoso.setText("Tạo tập hồ sơ tải lên");
+		shlTailenTapHoso.setLayout(new GridLayout(3, false));
+		new FormTemplate().setCenterScreen(shlTailenTapHoso);
 
-		SashForm sashForm = new SashForm(shlToTpH, SWT.VERTICAL);
+		SashForm sashForm = new SashForm(shlTailenTapHoso, SWT.VERTICAL);
 		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
@@ -107,11 +115,11 @@ public class TailenTaphoso extends Dialog {
 		List list = new List(sashForm, SWT.BORDER);
 		sashForm.setWeights(new int[] { 134, 73 });
 
-		Button btnThmVnBn = new Button(shlToTpH, SWT.NONE);
+		Button btnThmVnBn = new Button(shlTailenTapHoso, SWT.NONE);
 		btnThmVnBn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TailenVanban tlv = new TailenVanban(shlToTpH, SWT.DIALOG_TRIM, user);
+				TailenVanban tlv = new TailenVanban(shlTailenTapHoso, SWT.DIALOG_TRIM, user);
 				tlv.open();
 				if (vbl == null)
 					vbl = new ArrayList<>();
@@ -138,7 +146,7 @@ public class TailenTaphoso extends Dialog {
 		btnThmVnBn.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1));
 		btnThmVnBn.setText("Thêm");
 
-		Button btnHonTt = new Button(shlToTpH, SWT.NONE);
+		Button btnHonTt = new Button(shlTailenTapHoso, SWT.NONE);
 		btnHonTt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -148,14 +156,19 @@ public class TailenTaphoso extends Dialog {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				shlToTpH.dispose();
+				shlTailenTapHoso.dispose();
 			}
 
 			private void insertTaphoso() throws SQLException {
-				ths = new TAPHOSO();
+				TAPHOSO ths = new TAPHOSO();
 				ths.setTEN_TAPHOSO(text.getText());
 				ths.setGIOITHIEU_TAPHOSO(text_1.getText());
+				ths.setNGAY_TAO_TAPHOSO(controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME());
 				int key = controler.getControl_TAPHOSO().Create_TAP_HO_SO(ths);
+				if (key <= 0)
+					return;
+				result = ths;
+				ths.setMA_TAPHOSO(key);
 				if (vbl != null) {
 					int i = 0;
 					for (VANBAN vanban : vbl) {
@@ -172,37 +185,34 @@ public class TailenTaphoso extends Dialog {
 						i++;
 					}
 				}
-				HOSO_TAILEN hsct = getHOSO_CUATOI(key);
-				if (key <= 0)
-					return;
-				controler.getControl_HOSO_CUATOI().insert_HOSO_CUATOI(hsct);
 
 			}
 
-			private HOSO_TAILEN getHOSO_CUATOI(int key) {
-				HOSO_TAILEN rs = new HOSO_TAILEN();
-				rs.setTEN_TAI_KHOAN(user.getTEN_TAI_KHOAN());
-				rs.setMA_TAPHOSO(key);
-				return rs;
-			}
 		});
 		GridData gd_btnHonTt = new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1);
 		gd_btnHonTt.widthHint = 75;
 		btnHonTt.setLayoutData(gd_btnHonTt);
 		btnHonTt.setText("Hoàn tất");
 
-		Button btnng = new Button(shlToTpH, SWT.NONE);
+		Button btnng = new Button(shlTailenTapHoso, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				shlToTpH.dispose();
+				shlTailenTapHoso.dispose();
 			}
 		});
 		GridData gd_btnng = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("Đóng");
+		init();
+	}
 
+	private void init() {
+		if (ths_tmp == null)
+			return;
+		text.setText(ths_tmp.getTEN_TAPHOSO());
+		text_1.setText(ths_tmp.getGIOITHIEU_TAPHOSO());
 	}
 
 }

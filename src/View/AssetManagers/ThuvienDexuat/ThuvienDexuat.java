@@ -12,6 +12,8 @@ import DAO.NGUOIDUNG;
 import DAO.PHONGBAN;
 import DAO.TAPHOSO;
 import DAO.VANBAN;
+import View.AssetManagers.Hoso.TailenTaphoso;
+import View.AssetManagers.Hoso.TapHoso_Creator;
 import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
@@ -478,7 +480,14 @@ public class ThuvienDexuat extends Dialog {
 		if (Selected != null) {
 			TAPHOSO ths = (controler.getControl_TAPHOSO().get_TAP_HO_SO(Selected.getMA_TAPHOSO()));
 			if (ths == null) {
-				int Ma_NewTapHoso = (controler.getControl_TAPHOSO()).Create_TAP_HO_SO(new TAPHOSO());
+				TapHoso_Creator tc = new TapHoso_Creator(user);
+				ths = tc.getTaphoso("Cập nhật hồ sơ", "Cập nhật hồ sơ");
+				TailenTaphoso tlt = new TailenTaphoso(shlThVin, SWT.DIALOG_TRIM, user, ths);
+				tlt.open();
+				ths = (TAPHOSO) tlt.result;
+				if (ths == null)
+					return;
+				int Ma_NewTapHoso = ths.getMA_TAPHOSO();
 				if (Ma_NewTapHoso > 0) {
 					controler.getControl_DEXUAT().update_TapHoso(Selected, Ma_NewTapHoso);
 					Selected.setMA_TAPHOSO(Ma_NewTapHoso);

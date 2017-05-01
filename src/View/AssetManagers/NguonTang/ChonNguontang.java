@@ -21,12 +21,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.NGUONTANG;
 import View.Template.FormTemplate;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 
 public class ChonNguontang extends Dialog {
 
@@ -36,12 +38,13 @@ public class ChonNguontang extends Dialog {
 	private Text text_4;
 	private static NGUOIDUNG user;
 	public NGUONTANG nt = null;
-	private Text lblMaNguontang;
-	private Text lblTenNguontang;
-	private Text lblGioithieu;
-	private Text lblLienlac;
 	private int Ma_NGUONTANG;
 	private final Controler controler;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Text txtMadonvi;
+	private Text txtTendonvi;
+	private Text txtGioithieu;
+	private Text txtLienhe;
 
 	public NGUONTANG getResult() {
 		return nt;
@@ -91,16 +94,19 @@ public class ChonNguontang extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlChnNgunTng = new Shell(getParent(), SWT.DIALOG_TRIM);
+		shlChnNgunTng = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlChnNgunTng.setImage(user.getIcondata().PhoneIcon);
 		shlChnNgunTng.setSize(650, 400);
 		// center position
 		new FormTemplate().setCenterScreen(shlChnNgunTng);
 		shlChnNgunTng.setText("Chọn Nguồn tăng");
-		shlChnNgunTng.setLayout(new GridLayout(4, false));
+		shlChnNgunTng.setLayout(new GridLayout(3, false));
+
+		text_4 = new Text(shlChnNgunTng, SWT.BORDER);
+		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
 		SashForm sashForm = new SashForm(shlChnNgunTng, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
@@ -114,10 +120,10 @@ public class ChonNguontang extends Dialog {
 					NGUONTANG t = (NGUONTANG) items[0].getData();
 					if (t != null) {
 
-						lblMaNguontang.setText(String.valueOf(t.getMA_NGUONTANG()));
-						lblTenNguontang.setText(t.getTEN_NGUONTANG());
-						lblLienlac.setText(t.getLIEN_HE());
-						lblGioithieu.setText(t.getGIOI_THIEU());
+						txtMadonvi.setText(String.valueOf(t.getMA_NGUONTANG()));
+						txtTendonvi.setText(t.getTEN_NGUONTANG());
+						txtLienhe.setText(t.getLIEN_HE());
+						txtGioithieu.setText(t.getGIOI_THIEU());
 
 					}
 				}
@@ -138,61 +144,47 @@ public class ChonNguontang extends Dialog {
 		TableColumn tableColumn_3 = new TableColumn(table, SWT.NONE);
 		tableColumn_3.setWidth(100);
 		tableColumn_3.setText("LIÊN HỆ");
-		Composite composite = new Composite(sashForm, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
 
-		Label lblM = new Label(composite, SWT.NONE);
-		lblM.setText("Mã:");
+		Composite composite_1 = formToolkit.createComposite(sashForm, SWT.NONE);
+		formToolkit.paintBordersFor(composite_1);
+		{
+			TableWrapLayout twl_composite_1 = new TableWrapLayout();
+			twl_composite_1.numColumns = 2;
+			composite_1.setLayout(twl_composite_1);
+		}
 
-		lblMaNguontang = new Text(composite, SWT.BORDER);
-		lblMaNguontang.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblMaNguontang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		@SuppressWarnings("unused")
+		Label lblMnV = formToolkit.createLabel(composite_1, "Mã đơn vị:", SWT.NONE);
 
-		Label lblTn = new Label(composite, SWT.NONE);
-		lblTn.setText("Tên:");
+		txtMadonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtMadonvi.setText("");
+		txtMadonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		lblTenNguontang = new Text(composite, SWT.BORDER);
-		lblTenNguontang.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblTenNguontang.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		@SuppressWarnings("unused")
+		Label lblTnnV = formToolkit.createLabel(composite_1, "Tên đơn vị: ", SWT.NONE);
 
-		Label label_3 = new Label(composite, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_3.setText("Giới thiệu:");
+		txtTendonvi = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtTendonvi.setText("");
+		txtTendonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		lblGioithieu = new Text(composite, SWT.BORDER | SWT.WRAP);
-		lblGioithieu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblGioithieu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		@SuppressWarnings("unused")
+		Label lblGiiThiu = formToolkit.createLabel(composite_1, "Giới thiệu: ", SWT.NONE);
 
-		Label label_2 = new Label(composite, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_2.setText("Liên lạc:");
+		txtGioithieu = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtGioithieu.setText("");
+		TableWrapData twd_txtGioithieu = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 1);
+		twd_txtGioithieu.heightHint = 120;
+		txtGioithieu.setLayoutData(twd_txtGioithieu);
 
-		lblLienlac = new Text(composite, SWT.BORDER | SWT.WRAP);
-		lblLienlac.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblLienlac.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		@SuppressWarnings("unused")
+		Label lblLinH = formToolkit.createLabel(composite_1, "Liên hệ: ", SWT.NONE);
+
+		txtLienhe = formToolkit.createText(composite_1, "New Text", SWT.NONE);
+		txtLienhe.setText("");
+		TableWrapData twd_txtLienhe = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL, 1, 1);
+		twd_txtLienhe.heightHint = 120;
+		txtLienhe.setLayoutData(twd_txtLienhe);
 		sashForm.setWeights(new int[] { 1000, 618 });
-
-		text_4 = new Text(shlChnNgunTng, SWT.BORDER);
-		text_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Button btnChn = new Button(shlChnNgunTng, SWT.NONE);
-		btnChn.setImage(user.getIcondata().successIcon);
-		GridData gd_btnChn = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnChn.widthHint = 75;
-		btnChn.setLayoutData(gd_btnChn);
-		btnChn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				TableItem[] item = table.getSelection();
-				if (item != null) {
-					if (item.length > 0) {
-						nt = (NGUONTANG) item[0].getData();
-						shlChnNgunTng.dispose();
-					}
-				}
-			}
-		});
-		btnChn.setText("Chọn");
 
 		Button btnMRng = new Button(shlChnNgunTng, SWT.NONE);
 		btnMRng.setImage(user.getIcondata().addIcon);
@@ -214,6 +206,25 @@ public class ChonNguontang extends Dialog {
 		btnMRng.setLayoutData(gd_btnMRng);
 		btnMRng.setText("Thêm");
 
+		Button btnChn = new Button(shlChnNgunTng, SWT.NONE);
+		btnChn.setImage(user.getIcondata().successIcon);
+		GridData gd_btnChn = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnChn.widthHint = 75;
+		btnChn.setLayoutData(gd_btnChn);
+		btnChn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem[] item = table.getSelection();
+				if (item != null) {
+					if (item.length > 0) {
+						nt = (NGUONTANG) item[0].getData();
+						shlChnNgunTng.dispose();
+					}
+				}
+			}
+		});
+		btnChn.setText("Chọn");
+
 		Button btnng = new Button(shlChnNgunTng, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -221,7 +232,7 @@ public class ChonNguontang extends Dialog {
 				shlChnNgunTng.dispose();
 			}
 		});
-		GridData gd_btnng = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_btnng = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("Đóng");

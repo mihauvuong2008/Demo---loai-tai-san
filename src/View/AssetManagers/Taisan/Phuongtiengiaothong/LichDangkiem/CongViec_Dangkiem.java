@@ -21,6 +21,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
+import View.AssetManagers.Hoso.TailenTaphoso;
+import View.AssetManagers.Hoso.TapHoso_Creator;
 import View.AssetManagers.Hoso.Taphoso_View;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
@@ -198,20 +200,26 @@ public class CongViec_Dangkiem extends Dialog {
 										.get_PHUONGTIEN_GIAOTHONG(dtd.getMA_PHUONGTIEN_GIAOTHONG());
 							}
 							if (pg != null) {
-								ths = new TAPHOSO();
-								ths.setTEN_TAPHOSO("Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
-										+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()));
-								ths.setGIOITHIEU_TAPHOSO("Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
-										+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()));
-								int key = controler.getControl_TAPHOSO().Create_TAP_HO_SO(ths);
-								if (key > 0) {
-									dtd.setMA_TAPHOSO(key);
-									controler.getControl_DOT_THUCHIEN_DANGKIEM().update_DOT_THUCHIEN_DANGKIEM(dtd);
-									ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(key);
-									Taphoso_View tv = new Taphoso_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
-									tv.open();
-									loadVanban();
-								}
+								TapHoso_Creator tc = new TapHoso_Creator(user);
+								ths = tc.getTaphoso(
+										"Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
+												+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()),
+										"Tập hồ sơ Đăng kiểm xe ô tô: " + pg.getBIENSO() + ", ngày: "
+												+ new MyDateFormat().getViewStringDate(dtd.getNGAY_THUCHIEN()));
+								TailenTaphoso tlt = new TailenTaphoso(shlngKimPhng, SWT.DIALOG_TRIM, user, ths);
+								tlt.open();
+								ths = (TAPHOSO) tlt.result;
+								if (ths == null)
+									return;
+								int key = ths.getMA_TAPHOSO();
+								if (key <= 0)
+									return;
+								dtd.setMA_TAPHOSO(key);
+								controler.getControl_DOT_THUCHIEN_DANGKIEM().update_DOT_THUCHIEN_DANGKIEM(dtd);
+								ths = controler.getControl_TAPHOSO().get_TAP_HO_SO(key);
+								Taphoso_View tv = new Taphoso_View(shlngKimPhng, SWT.DIALOG_TRIM, user, ths, false);
+								tv.open();
+								loadVanban();
 							}
 						}
 					} else {

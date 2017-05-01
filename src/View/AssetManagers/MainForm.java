@@ -89,6 +89,7 @@ import View.AssetManagers.Taisan.ChuyenGiaoTaiSanNoibo.TaoDot_ChuyenGiao_Taisan_
 import View.AssetManagers.Wait.Wait;
 import View.Box.ErorrBox;
 import View.Box.Exit_Box;
+import View.Box.messageField;
 import View.DateTime.MyDateFormat;
 import View.Filter.Sortter;
 import View.MarkItem.Fill_ItemData;
@@ -174,6 +175,7 @@ public class MainForm {
 	private Table table_LichsuChuyengiaoNoibo;
 	private DateTime dateTime_LichCongtac;
 	private Fill_ItemData fi = new Fill_ItemData();
+	messageField mf = new messageField();
 
 	public MainForm(NGUOIDUNG user) {
 		MainForm.user = user;
@@ -300,7 +302,8 @@ public class MainForm {
 				try {
 					restartApplication();
 				} catch (URISyntaxException | IOException e1) {
-					// TODO Auto-generated catch block
+					mf.showBox(shell, mf.Phathienloi, mf.loiKhoidonglaiungdung, SWT.ERROR);
+					log.error(e1.getMessage());
 					e1.printStackTrace();
 				}
 			}
@@ -353,8 +356,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_TaiKhoanCuatoi();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.loiMotaikhoancuatoi, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -367,8 +370,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_QuanlyTaikhoanNguoidung(Display.getCurrent());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.loiMoQuanlyTaikhoannguoidung, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -383,8 +386,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_LogUser(Display.getCurrent());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LogUser_error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -397,8 +400,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_QuanlyQuyenhan(Display.getCurrent());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_QuanlyQuyenhan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -419,8 +422,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Tool_Excel_NhapPTTS(shell.getDisplay());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Excel_NhapPTTS_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -558,8 +561,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Tool_QuanlyLoaiTaisan(shell.getDisplay());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_QuanlyLoaiTaisan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -572,8 +575,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Tool_QuanLyNhomTaisan(shell.getDisplay());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_QuanLyNhomTaisan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -633,8 +636,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Tool_QuanLy_DanhMuc_PhongBan(Display.getDefault());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_QuanLy_DanhMuc_PhongBan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -647,8 +650,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Danhmuc_Suachua_Baoduong(shell);
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Danhmuc_Suachua_Baoduong_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -661,8 +664,8 @@ public class MainForm {
 				try {
 					mh.OpForm_NguonTang();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpForm_NguonMuasam_Tiepnhan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -675,8 +678,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_Danhmuc_Nguongiam(shell);
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Danhmuc_Nguongiam_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -695,10 +698,10 @@ public class MainForm {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					mh.OpenForm_TangTaiSan();
+					mh.OpenForm_Muasam_BangiaoTaiSan();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Muasam_TiepnhanTaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -957,8 +960,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_LenhDieuXe();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_LenhDieuXe_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -972,8 +975,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_Lichsu_Dieuxe();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Lichsu_Dieuxe_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -987,8 +990,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_ThongKe_PHUONGTIEN_GIAOTHONG();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_ThongKe_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1002,8 +1005,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_LichBaoduong();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_LichBaoduong_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1017,8 +1020,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_Lich_Dang_Kiem();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_LichBaoduong_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1034,8 +1037,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_TieuchuanBaoduong();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_TieuchuanBaoduong_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1063,8 +1066,8 @@ public class MainForm {
 				try {
 					mh.OpenForm_DinhmucNhienlieu(shell.getDisplay());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_DinhmucNhienlieu_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1080,8 +1083,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_Baoduong_Phuongtien_Giaothong(new ArrayList<>());
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_DinhmucNhienlieu_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1095,8 +1098,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_TangTaiSan();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Muasam_TiepnhanTaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1110,8 +1113,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_Suachua();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_SuachuaTaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1125,8 +1128,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_GiamTaiSan();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_SuachuaTaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1142,8 +1145,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_XemDot_Bangiao_Taisan_Noibo();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_XemDot_Bangiao_Taisan_Noibo_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1157,8 +1160,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_ThuvienDexuat();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_ThuvienDexuat_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1184,8 +1187,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_CongViecCuaToi();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_CongViecCuaToi_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1213,8 +1216,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_Quanly_CongViec();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Quanly_CongViec_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1240,8 +1243,8 @@ public class MainForm {
 				try {
 					th.OpenForm_Tool_QuanlyHoso();
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_QuanlyHoso_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1258,8 +1261,8 @@ public class MainForm {
 					th.OpenForm_Tool_Thongbao_Chuadoc();
 					setIconThongbaomoi(tltmNghNhim);
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Thongbao_Chuadoc_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1335,8 +1338,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1383,8 +1386,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1413,8 +1416,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1440,8 +1443,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1467,8 +1470,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1495,8 +1498,8 @@ public class MainForm {
 								mntmHienthiGiatriconlai.getSelection());
 					}
 				} catch (SQLException e) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinTaisan_Error, SWT.ERROR);
 					log.error(e.getMessage());
-					e.printStackTrace();
 				}
 			}
 		});
@@ -1623,8 +1626,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.TruycapThongtinPhuongtienGiaothong_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1637,8 +1640,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_LichBaoduong_PHUONGTIEN_GIAOTHONG(fi.getInt_Oto());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LichBaoduong_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1651,8 +1654,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_LichDangKiem_PhuongtienGiaothong(fi.getInt_Oto());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LichDangKiem_PhuongtienGiaothong_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1675,8 +1678,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_Tool_Baoduong_Phuongtien_Giaothong(data);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Baoduong_Phuongtien_Giaothong_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1695,8 +1698,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_Export_PHUONGTIEN_GIAOTHONG(data);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Export_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1715,8 +1718,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Edit_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1736,8 +1739,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_View_TaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1825,8 +1828,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_LichBaoduong_PHUONGTIEN_GIAOTHONG(fi.getInt_Xemay());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LichBaoduong_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1839,8 +1842,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_LichDangKiem_PhuongtienGiaothong(fi.getInt_Xemay());
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LichDangKiem_PhuongtienGiaothong_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1880,8 +1883,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_Export_PHUONGTIEN_GIAOTHONG(data);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Export_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -1900,8 +1903,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Edit_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -1921,8 +1924,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_View_TaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -2025,8 +2028,8 @@ public class MainForm {
 							.get_LICH_CONG_TAC_list(mdf.getDate(dateTime_LichCongtac));
 					fillLichCongtac(lctl);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.get_LICH_CONG_TAC_list_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 
@@ -2062,8 +2065,8 @@ public class MainForm {
 				try {
 					LoadCongviec();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.get_LICH_CONG_TAC_list_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2078,8 +2081,8 @@ public class MainForm {
 				try {
 					LoadCongviec();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.get_LICH_CONG_TAC_list_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2096,8 +2099,8 @@ public class MainForm {
 						controler.getControl_LICH_CONG_TAC().delete_LICH_CONG_TAC(lct);
 						LoadCongviec();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.delete_LICH_CONG_TAC_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 				}
 			}
@@ -2151,8 +2154,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.Taodot_Suachua_Baoduong_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2193,8 +2196,8 @@ public class MainForm {
 				try {
 					ql.open();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.QuanLy_Lenhdieuxe_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2293,8 +2296,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_View_TaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -2315,8 +2318,8 @@ public class MainForm {
 
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Edit_TaiSan_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -2341,8 +2344,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Edit_PHUONGTIEN_GIAOTHONG_Error, SWT.ERROR);
 					log.error(e1.getMessage());
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -2352,11 +2355,8 @@ public class MainForm {
 		mntmXoa.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				MessageBox messageBox_Thongbao = new MessageBox(shell,
+				int rc = mf.showBox(shell, mf.Xoa, mf.XoaPhuongtientaisan,
 						SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
-				messageBox_Thongbao.setText("Xóa");
-				messageBox_Thongbao.setMessage("Xóa Thông tin Phương tiện tài sản đã chọn?");
-				int rc = messageBox_Thongbao.open();
 				switch (rc) {
 				case SWT.YES:
 					try {
@@ -2370,8 +2370,8 @@ public class MainForm {
 								Selectindex, mntmHienthiNamconlai.getSelection(),
 								mntmHienthiGiatriconlai.getSelection());
 					} catch (SQLException e1) {
+						mf.showBox(shell, mf.Phathienloi, mf.delete_TAISAN_Error, SWT.ERROR);
 						log.error(e1.getMessage());
-						e1.printStackTrace();
 					}
 					break;
 				case SWT.NO:
@@ -2410,8 +2410,8 @@ public class MainForm {
 									"Không có dữ liệu mua sắm, tiếp nhận PTTS trong hệ thống!");
 						}
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.OpenForm_HosoMuasam_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 
 				}
@@ -2440,8 +2440,8 @@ public class MainForm {
 								dbtn, user);
 						tctn.open();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.TaoDot_ChuyenGiao_Taisan_Noibo_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 					pmth.OpenForm_View_Hoso_Chuyengiao_TaiSan_Noibo(t);
 				}
@@ -2468,8 +2468,8 @@ public class MainForm {
 				try {
 					pmth.OpenForm_Tool_Suachua_Taisan(data);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Tool_Suachua_Taisan_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 
 			}
@@ -2495,8 +2495,8 @@ public class MainForm {
 						pmth.OpenForm_Thanhly_TaiSan_list(taisan_list);
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_Thanhly_TaiSan_list_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 
 			}
@@ -2584,8 +2584,8 @@ public class MainForm {
 				try {
 					tdtt.open();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.TaoDotTangtaisan_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2662,8 +2662,8 @@ public class MainForm {
 						}
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.Taodot_Suachua_Baoduong_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2712,8 +2712,8 @@ public class MainForm {
 						Taphoso_View thsv = new Taphoso_View(shell, SWT.DIALOG_TRIM, user, ths, false);
 						thsv.open();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.Xemhosos_Chuyengiaonoibo_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 				}
 			}
@@ -2923,8 +2923,8 @@ public class MainForm {
 					try {
 						Mainformfiller.fillPartCongviec(o, tree_Dexuat, tree_Thuchien, tree_Nghiemthu, tree_Quyettoan);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.Xemhosos_Chuyengiaonoibo_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 				}
 			}
@@ -2977,8 +2977,8 @@ public class MainForm {
 						tdg.open();
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.XemThongtinCongviec_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -2991,8 +2991,8 @@ public class MainForm {
 				try {
 					Mainformfiller.fillDataCongviecDangThuchien(tree_CongviecDangtrienkhai);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.XemThongtinCongviec_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -3012,8 +3012,8 @@ public class MainForm {
 				try {
 					gv.open();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.XemThongtinCongviec_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -3027,8 +3027,8 @@ public class MainForm {
 					CongViecCuaToi cvct = new CongViecCuaToi(shell.getDisplay(), user);
 					cvct.open();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					mf.showBox(shell, mf.Phathienloi, mf.LoitruycapCongViecCuaToi_Error, SWT.ERROR);
+					log.error(e1.getMessage());
 				}
 			}
 		});
@@ -3172,8 +3172,8 @@ public class MainForm {
 					try {
 						thsv.open();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						mf.showBox(shell, mf.Phathienloi, mf.LoitruycapHosoCongviecGanday_Error, SWT.ERROR);
+						log.error(e1.getMessage());
 					}
 				}
 			}

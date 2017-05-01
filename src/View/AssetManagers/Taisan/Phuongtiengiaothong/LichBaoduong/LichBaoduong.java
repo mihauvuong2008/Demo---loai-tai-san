@@ -374,7 +374,7 @@ public class LichBaoduong extends Dialog {
 			}
 		});
 		btnXemDanhSch.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		btnXemDanhSch.setText("Xem danh sách đề nghị");
+		btnXemDanhSch.setText("Xem danh sách đề nghị - Bảo dưỡng ô tô");
 
 		Button btnng = new Button(shlLchBoDng, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {

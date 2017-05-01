@@ -78,7 +78,7 @@ public class GuiTaphoso extends Dialog {
 		shlGiVnBn = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlGiVnBn
 				.setImage(SWTResourceManager.getImage(GuiTaphoso.class, "/javax/swing/plaf/basic/icons/JavaCup16.png"));
-		shlGiVnBn.setSize(599, 386);
+		shlGiVnBn.setSize(597, 369);
 		shlGiVnBn.setText("Gửi Văn bản");
 		shlGiVnBn.setLayout(new GridLayout(3, false));
 

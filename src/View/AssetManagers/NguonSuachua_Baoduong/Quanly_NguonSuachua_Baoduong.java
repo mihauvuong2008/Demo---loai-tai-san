@@ -24,13 +24,17 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.NGUONSUACHUA_BAODUONG;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.ui.forms.widgets.TableWrapData;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 public class Quanly_NguonSuachua_Baoduong extends Dialog {
 
@@ -38,14 +42,15 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	protected Shell shlQunLNgun;
 	private Text text;
 	private Table table;
-	private Text text_MaNguon;
-	private Text text_Tennguon;
-	private Text text_Lienlac;
-	private Text text_Gioithieu;
 	private int mode;
 	private final Controler controler;
 	private NGUOIDUNG user;
 	private static Log log = LogFactory.getLog(Quanly_NguonSuachua_Baoduong.class);
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Text txtMadonvi;
+	private Text txtTendonvi;
+	private Text txtGioithieu;
+	private Text txtLienhe;
 
 	/**
 	 * Create the dialog.
@@ -91,10 +96,27 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		shlQunLNgun.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlQunLNgun);
 		shlQunLNgun.setText("Quản lý nguồn Sửa chữa - Bảo dưỡng");
-		shlQunLNgun.setLayout(new GridLayout(6, false));
+		shlQunLNgun.setLayout(new GridLayout(5, false));
+
+		text = new Text(shlQunLNgun, SWT.BORDER);
+		text.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == SWT.CR) {
+					try {
+						init();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		text.setMessage("Tìm kiếm");
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 
 		SashForm sashForm = new SashForm(shlQunLNgun, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1));
 
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
@@ -111,10 +133,10 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 			}
 
 			private void fillText(NGUONSUACHUA_BAODUONG ng) {
-				text_MaNguon.setText(ng.getMA_NGUONSUACHUA_BAODUONG() + "");
-				text_Tennguon.setText(ng.getTEN_NGUONSUACHUA_BAODUONG());
-				text_Gioithieu.setText(ng.getGIOI_THIEU());
-				text_Lienlac.setText(ng.getLIEN_HE());
+				txtMadonvi.setText(ng.getMA_NGUONSUACHUA_BAODUONG() + "");
+				txtTendonvi.setText(ng.getTEN_NGUONSUACHUA_BAODUONG());
+				txtGioithieu.setText(ng.getGIOI_THIEU());
+				txtLienhe.setText(ng.getLIEN_HE());
 			}
 		});
 
@@ -134,50 +156,46 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		tableColumn_3.setWidth(100);
 		tableColumn_3.setText("LIÊN HỆ");
 
-		Composite composite_1 = new Composite(sashForm, SWT.NONE);
-		composite_1.setLayout(new GridLayout(2, false));
+		Composite composite = formToolkit.createComposite(sashForm, SWT.NONE);
+		formToolkit.paintBordersFor(composite);
+		{
+			TableWrapLayout twl_composite = new TableWrapLayout();
+			twl_composite.numColumns = 2;
+			composite.setLayout(twl_composite);
+		}
 
-		Label lblMNgunScbd = new Label(composite_1, SWT.NONE);
-		lblMNgunScbd.setText("Mã Đơn vị:");
+		@SuppressWarnings("unused")
+		Label lblMnV = formToolkit.createLabel(composite, "Mã đơn vị: ", SWT.NONE);
 
-		text_MaNguon = new Text(composite_1, SWT.BORDER | SWT.READ_ONLY);
-		text_MaNguon.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_MaNguon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtMadonvi = formToolkit.createText(composite, "New Text", SWT.NONE);
+		txtMadonvi.setLayoutData(new TableWrapData(TableWrapData.FILL, TableWrapData.TOP, 1, 1));
+		txtMadonvi.setText("");
 
-		Label lblTnNgunScbd = new Label(composite_1, SWT.NONE);
-		lblTnNgunScbd.setText("Tên đơn vị");
+		@SuppressWarnings("unused")
+		Label lblTnnV = formToolkit.createLabel(composite, "Tên đơn vị: ", SWT.NONE);
 
-		text_Tennguon = new Text(composite_1, SWT.BORDER);
-		text_Tennguon.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Tennguon.setEditable(false);
-		text_Tennguon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtTendonvi = formToolkit.createText(composite, "New Text", SWT.NONE);
+		txtTendonvi.setText("");
+		txtTendonvi.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		Label label_2 = new Label(composite_1, SWT.NONE);
-		label_2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_2.setText("Liên lạc:");
+		@SuppressWarnings("unused")
+		Label lblGiiThiu = formToolkit.createLabel(composite, "Giới thiệu: ", SWT.NONE);
 
-		text_Lienlac = new Text(composite_1, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		text_Lienlac.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Lienlac.setEditable(false);
-		GridData gd_text_Lienlac = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_text_Lienlac.heightHint = 68;
-		text_Lienlac.setLayoutData(gd_text_Lienlac);
+		txtGioithieu = formToolkit.createText(composite, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtGioithieu.setText("");
+		TableWrapData twd_txtGioithieu = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 1, 1);
+		twd_txtGioithieu.heightHint = 120;
+		txtGioithieu.setLayoutData(twd_txtGioithieu);
 
-		Label label_3 = new Label(composite_1, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_3.setText("Giới thiệu:");
+		@SuppressWarnings("unused")
+		Label lblLinH = formToolkit.createLabel(composite, "Liên hệ: ", SWT.NONE);
 
-		text_Gioithieu = new Text(composite_1, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		text_Gioithieu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		text_Gioithieu.setEditable(false);
-		GridData gd_text_Gioithieu = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_text_Gioithieu.heightHint = 146;
-		text_Gioithieu.setLayoutData(gd_text_Gioithieu);
+		txtLienhe = formToolkit.createText(composite, "New Text", SWT.WRAP | SWT.V_SCROLL);
+		txtLienhe.setText("");
+		TableWrapData twd_txtLienhe = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 1, 1);
+		twd_txtLienhe.heightHint = 120;
+		txtLienhe.setLayoutData(twd_txtLienhe);
 		sashForm.setWeights(new int[] { 1000, 618 });
-
-		text = new Text(shlQunLNgun, SWT.BORDER);
-		text.setMessage("Tìm kiếm");
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Button btnThm = new Button(shlQunLNgun, SWT.NONE);
 		btnThm.setImage(user.getIcondata().addIcon);
@@ -187,7 +205,9 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 				setInsertMode();
 			}
 		});
-		btnThm.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		GridData gd_btnThm = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnThm.widthHint = 75;
+		btnThm.setLayoutData(gd_btnThm);
 		btnThm.setText("Thêm");
 
 		Button button_1 = new Button(shlQunLNgun, SWT.NONE);
@@ -220,10 +240,10 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 						m.open();
 						init();
 
-						text_MaNguon.setText("");
-						text_Tennguon.setText("");
-						text_Lienlac.setText("");
-						text_Gioithieu.setText("");
+						txtMadonvi.setText("");
+						txtTendonvi.setText("");
+						txtLienhe.setText("");
+						txtGioithieu.setText("");
 					}
 				} catch (SQLException e1) {
 					log.error(e1.getMessage());
@@ -243,33 +263,36 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					if ((!text_Tennguon.getText().equals("")) && (!text_Lienlac.getText().equals(""))) {
-						MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_WORKING);
-						if (getEdit()) {
-							NGUONSUACHUA_BAODUONG nt = new NGUONSUACHUA_BAODUONG();
-							nt.setMA_NGUONSUACHUA_BAODUONG(Integer.valueOf(text_MaNguon.getText()));
-							nt.setTEN_NGUONSUACHUA_BAODUONG(text_Tennguon.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienlac.getText());
-							controler.getControl_NGUONSUACHUA_BAODUONG().update_NGUONSUACHUA_BAODUONG(nt);
-							m.setMessage("Lưu hoàn tất!");
+					if (getEdit() || getCreate())
+						if ((!txtTendonvi.getText().equals("")) && (!txtLienhe.getText().equals(""))) {
+							MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_WORKING);
+							if (getEdit()) {
+								NGUONSUACHUA_BAODUONG nt = new NGUONSUACHUA_BAODUONG();
+								nt.setMA_NGUONSUACHUA_BAODUONG(Integer.valueOf(txtMadonvi.getText()));
+								nt.setTEN_NGUONSUACHUA_BAODUONG(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONSUACHUA_BAODUONG().update_NGUONSUACHUA_BAODUONG(nt);
+								m.setMessage("Lưu hoàn tất!");
+								m.setText("Hoàn tất");
+								m.open();
+							} else if (getCreate()) {
+								NGUONSUACHUA_BAODUONG nt = new NGUONSUACHUA_BAODUONG();
+								nt.setTEN_NGUONSUACHUA_BAODUONG(txtTendonvi.getText());
+								nt.setGIOI_THIEU(txtGioithieu.getText());
+								nt.setLIEN_HE(txtLienhe.getText());
+								controler.getControl_NGUONSUACHUA_BAODUONG().Insert_NGUONSUACHUA_BAODUONG(nt);
+								m.setMessage("Tạo mới hoàn tất!");
+
+								m.setText("Hoàn tất");
+								m.open();
+							}
+						} else {
+							MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_ERROR);
+							m.setText("lỗi");
+							m.setMessage("Tên, Liên hệ không để trống!");
+							m.open();
 						}
-						if (getCreate()) {
-							NGUONSUACHUA_BAODUONG nt = new NGUONSUACHUA_BAODUONG();
-							nt.setTEN_NGUONSUACHUA_BAODUONG(text_Tennguon.getText());
-							nt.setGIOI_THIEU(text_Gioithieu.getText());
-							nt.setLIEN_HE(text_Lienlac.getText());
-							controler.getControl_NGUONSUACHUA_BAODUONG().Insert_NGUONSUACHUA_BAODUONG(nt);
-							m.setMessage("Tạo mới hoàn tất!");
-						}
-						m.setText("Hoàn tất");
-						m.open();
-					} else {
-						MessageBox m = new MessageBox(shlQunLNgun, SWT.ICON_ERROR);
-						m.setText("lỗi");
-						m.setMessage("Tên, Liên hệ không để trống!");
-						m.open();
-					}
 					disableText();
 					setCompleteAction();
 					init();
@@ -279,7 +302,7 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 				}
 			}
 		});
-		GridData gd_button_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_button_3 = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
 		gd_button_3.widthHint = 75;
 		button_3.setLayoutData(gd_button_3);
 		button_3.setText("Lưu");
@@ -325,13 +348,13 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	protected void setCompleteAction() {
 		mode = 0;
 		disableText();
-		clearText();
 	}
 
 	private void disableText() {
-		text_Tennguon.setEditable(false);
-		text_Gioithieu.setEditable(false);
-		text_Lienlac.setEditable(false);
+		txtMadonvi.setEditable(false);
+		txtTendonvi.setEditable(false);
+		txtGioithieu.setEditable(false);
+		txtLienhe.setEditable(false);
 	}
 
 	protected void setEditMode() {
@@ -340,9 +363,9 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	}
 
 	private void enableText() {
-		text_Tennguon.setEditable(true);
-		text_Gioithieu.setEditable(true);
-		text_Lienlac.setEditable(true);
+		txtTendonvi.setEditable(true);
+		txtGioithieu.setEditable(true);
+		txtLienhe.setEditable(true);
 	}
 
 	protected void setInsertMode() {
@@ -352,10 +375,10 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 	}
 
 	private void clearText() {
-		text_MaNguon.setText("");
-		text_Tennguon.setText("");
-		text_Gioithieu.setText("");
-		text_Lienlac.setText("");
+		txtMadonvi.setText("");
+		txtTendonvi.setText("");
+		txtGioithieu.setText("");
+		txtLienhe.setText("");
 	}
 
 	private void init() throws SQLException {
@@ -372,5 +395,4 @@ public class Quanly_NguonSuachua_Baoduong extends Dialog {
 		new TreeRowStyle().Pack(table);
 		disableText();
 	}
-
 }

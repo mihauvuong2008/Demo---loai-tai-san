@@ -21,12 +21,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.NGUONSUACHUA_BAODUONG;
 import View.Template.FormTemplate;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.ui.forms.widgets.TableWrapData;
 
 public class ChonNguonSuachua_Baoduong extends Dialog {
 
@@ -35,11 +37,12 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 	private Text text;
 	private Table table;
 	private static NGUOIDUNG user;
-	private Text lblMaNguonScbd;
-	private Text lblTenNguonScbd;
-	private Text label_Gioithieu;
-	private Text label_Lienhe;
 	private final Controler controler;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Text txtManguon;
+	private Text txtTennguon;
+	private Text txtGioithieu;
+	private Text txtLienhe;
 
 	/**
 	 * Create the dialog.
@@ -79,15 +82,19 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 	 * @throws SQLException
 	 */
 	private void createContents() throws SQLException {
-		shlChnNgunSa = new Shell(getParent(), getStyle());
+		shlChnNgunSa = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlChnNgunSa.setImage(user.getIcondata().PhoneIcon);
 		shlChnNgunSa.setSize(650, 400);
 		new FormTemplate().setCenterScreen(shlChnNgunSa);
 		shlChnNgunSa.setText("Chọn Nguồn Sửa chữa - bảo dưỡng");
-		shlChnNgunSa.setLayout(new GridLayout(4, false));
+		shlChnNgunSa.setLayout(new GridLayout(3, false));
+
+		text = new Text(shlChnNgunSa, SWT.BORDER);
+		text.setMessage("Tìm kiếm");
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
 		SashForm sashForm = new SashForm(shlChnNgunSa, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
@@ -100,10 +107,10 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 				if (items.length > 0) {
 					NGUONSUACHUA_BAODUONG t = (NGUONSUACHUA_BAODUONG) items[0].getData();
 					if (t != null) {
-						lblMaNguonScbd.setText(String.valueOf(t.getMA_NGUONSUACHUA_BAODUONG()));
-						lblTenNguonScbd.setText(t.getTEN_NGUONSUACHUA_BAODUONG());
-						label_Lienhe.setText(t.getLIEN_HE());
-						label_Gioithieu.setText(t.getGIOI_THIEU());
+						txtManguon.setText(String.valueOf(t.getMA_NGUONSUACHUA_BAODUONG()));
+						txtTennguon.setText(t.getTEN_NGUONSUACHUA_BAODUONG());
+						txtLienhe.setText(t.getLIEN_HE());
+						txtGioithieu.setText(t.getGIOI_THIEU());
 
 					}
 				}
@@ -126,62 +133,46 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 		tableColumn_3.setWidth(100);
 		tableColumn_3.setText("LIÊN HỆ");
 
-		Composite composite_1 = new Composite(sashForm, SWT.NONE);
-		composite_1.setLayout(new GridLayout(2, false));
+		Composite composite = formToolkit.createComposite(sashForm, SWT.NONE);
+		formToolkit.paintBordersFor(composite);
+		{
+			TableWrapLayout twl_composite = new TableWrapLayout();
+			twl_composite.numColumns = 2;
+			composite.setLayout(twl_composite);
+		}
 
-		Label lblMNgunScbd = new Label(composite_1, SWT.NONE);
-		lblMNgunScbd.setText("Mã Nguồn:");
+		@SuppressWarnings("unused")
+		Label lblNewLable = formToolkit.createLabel(composite, "Mã nguồn: ", SWT.NONE);
 
-		lblMaNguonScbd = new Text(composite_1, SWT.BORDER);
-		lblMaNguonScbd.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblMaNguonScbd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtManguon = formToolkit.createText(composite, "New Text", SWT.NONE);
+		txtManguon.setText("");
+		txtManguon.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		Label lblTnNgunScbd = new Label(composite_1, SWT.NONE);
-		lblTnNgunScbd.setText("Tên nguồn:");
+		@SuppressWarnings("unused")
+		Label lblLabel = formToolkit.createLabel(composite, "Tên nguồn: ", SWT.NONE);
 
-		lblTenNguonScbd = new Text(composite_1, SWT.BORDER);
-		lblTenNguonScbd.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		lblTenNguonScbd.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		txtTennguon = formToolkit.createText(composite, "New Text", SWT.NONE);
+		txtTennguon.setText("");
+		txtTennguon.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.TOP, 1, 1));
 
-		Label label_ = new Label(composite_1, SWT.NONE);
-		label_.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		label_.setText("Giới thiệu:");
+		@SuppressWarnings("unused")
+		Label lblGioiThieu = formToolkit.createLabel(composite, "Giới thiệu: ", SWT.NONE);
 
-		label_Gioithieu = new Text(composite_1, SWT.BORDER | SWT.WRAP);
-		label_Gioithieu.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		label_Gioithieu.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		txtGioithieu = formToolkit.createText(composite, "New Text", SWT.NONE);
+		TableWrapData twd_txtGioithieu = new TableWrapData(TableWrapData.FILL, TableWrapData.TOP, 1, 1);
+		twd_txtGioithieu.heightHint = 120;
+		txtGioithieu.setLayoutData(twd_txtGioithieu);
+		txtGioithieu.setText("");
 
-		Label lblLinH = new Label(composite_1, SWT.NONE);
-		lblLinH.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblLinH.setText("Liên hệ:");
+		@SuppressWarnings("unused")
+		Label lblLienHe = formToolkit.createLabel(composite, "Liên hệ: ", SWT.NONE);
 
-		label_Lienhe = new Text(composite_1, SWT.BORDER | SWT.WRAP);
-		label_Lienhe.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
-		label_Lienhe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		txtLienhe = formToolkit.createText(composite, "New Text", SWT.NONE);
+		txtLienhe.setText("");
+		TableWrapData twd_txtLienhe = new TableWrapData(TableWrapData.FILL_GRAB, TableWrapData.FILL_GRAB, 1, 1);
+		twd_txtLienhe.heightHint = 120;
+		txtLienhe.setLayoutData(twd_txtLienhe);
 		sashForm.setWeights(new int[] { 1000, 618 });
-
-		text = new Text(shlChnNgunSa, SWT.BORDER);
-		text.setMessage("Tìm kiếm");
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Button button = new Button(shlChnNgunSa, SWT.NONE);
-		button.setImage(user.getIcondata().successIcon);
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				TableItem[] item = table.getSelection();
-				if (item != null) {
-					if (item.length > 0) {
-						setResult((NGUONSUACHUA_BAODUONG) item[0].getData());
-						shlChnNgunSa.dispose();
-					}
-				}
-			}
-		});
-		GridData gd_button = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_button.widthHint = 75;
-		button.setLayoutData(gd_button);
-		button.setText("Chọn");
 
 		Button button_1 = new Button(shlChnNgunSa, SWT.NONE);
 		button_1.setImage(user.getIcondata().addIcon);
@@ -203,6 +194,25 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 		button_1.setLayoutData(gd_button_1);
 		button_1.setText("Thêm");
 
+		Button button = new Button(shlChnNgunSa, SWT.NONE);
+		button.setImage(user.getIcondata().successIcon);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem[] item = table.getSelection();
+				if (item != null) {
+					if (item.length > 0) {
+						setResult((NGUONSUACHUA_BAODUONG) item[0].getData());
+						shlChnNgunSa.dispose();
+					}
+				}
+			}
+		});
+		GridData gd_button = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gd_button.widthHint = 75;
+		button.setLayoutData(gd_button);
+		button.setText("Chọn");
+
 		Button button_2 = new Button(shlChnNgunSa, SWT.NONE);
 		button_2.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -210,15 +220,15 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 				shlChnNgunSa.dispose();
 			}
 		});
-		GridData gd_button_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_button_2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_button_2.widthHint = 75;
 		button_2.setLayoutData(gd_button_2);
 		button_2.setText("Đóng");
-		init(text.getText());
+		init();
 	}
 
-	private void init(String pattern) throws SQLException {
-		ArrayList<NGUONSUACHUA_BAODUONG> sbdl = controler.getControl_NGUONSUACHUA_BAODUONG().getAllData(pattern);
+	private void init() throws SQLException {
+		ArrayList<NGUONSUACHUA_BAODUONG> sbdl = controler.getControl_NGUONSUACHUA_BAODUONG().getAllData(text.getText());
 		int i = 1;
 		for (NGUONSUACHUA_BAODUONG nsb : sbdl) {
 			TableItem tbi = new TableItem(table, SWT.NONE);
@@ -236,5 +246,4 @@ public class ChonNguonSuachua_Baoduong extends Dialog {
 	public void setResult(NGUONSUACHUA_BAODUONG result) {
 		this.result = result;
 	}
-
 }

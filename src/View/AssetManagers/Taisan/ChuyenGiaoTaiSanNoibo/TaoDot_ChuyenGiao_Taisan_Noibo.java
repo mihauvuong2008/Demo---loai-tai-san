@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Label;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
@@ -25,6 +24,8 @@ import DAO.PHONGBAN;
 import DAO.TAISAN;
 import DAO.TAPHOSO;
 import DAO.VANBAN;
+import View.AssetManagers.Hoso.TailenTaphoso;
+import View.AssetManagers.Hoso.TapHoso_Creator;
 import View.AssetManagers.Hoso.Vanban_View;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
@@ -533,13 +534,14 @@ public class TaoDot_ChuyenGiao_Taisan_Noibo extends Dialog {
 		if (ths == null)
 			ths = new TAPHOSO();
 		if (ths.getMA_TAPHOSO() <= 0) {
-			ths.setTEN_TAPHOSO(
-					"Hồ sơ bàn giao tài sản giữa " + combo_Phongban1.getText() + " và " + combo_Phongban2.getText());
-			ths.setGIOITHIEU_TAPHOSO("Hồ sơ Bàn giao tài sản giữa " + combo_Phongban1.getText() + " và "
-					+ combo_Phongban2.getText() + " (" + user.getTEN_CAN_BO() + ")");
-			ths.setNGAY_TAO_TAPHOSO(new Date());
-			int tmp = controler.getControl_TAPHOSO().Create_TAP_HO_SO(ths);
-			ths.setMA_TAPHOSO(tmp);
+			TapHoso_Creator tc = new TapHoso_Creator(user);
+			ths = tc.getTaphoso(
+					"Hồ sơ bàn giao tài sản giữa " + combo_Phongban1.getText() + " và " + combo_Phongban2.getText(),
+					"Hồ sơ Bàn giao tài sản giữa " + combo_Phongban1.getText() + " và " + combo_Phongban2.getText()
+							+ " (" + user.getTEN_CAN_BO() + ")");
+			TailenTaphoso tlt = new TailenTaphoso(shlChuynGiaoTi, SWT.DIALOG_TRIM, user, ths);
+			tlt.open();
+			ths = (TAPHOSO) tlt.result;
 		}
 	}
 

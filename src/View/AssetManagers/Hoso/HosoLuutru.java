@@ -139,7 +139,7 @@ public class HosoLuutru extends Shell {
 		TreeRowStyle ts = new TreeRowStyle();
 		controler = new Controler(user);
 
-		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
+		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.WRAP | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 
 		ToolItem tltmThm = new ToolItem(toolBar, SWT.NONE);
@@ -153,10 +153,9 @@ public class HosoLuutru extends Shell {
 						if (items.length > 0) {
 							Object o = items[0].getData();
 							if (o instanceof HOSO_USER) {
-								HOSO_USER ths = (HOSO_USER) o;
-								TAPHOSO t = new TAPHOSO();
-								t.setMA_TAPHOSO(ths.getTaphoso().getMA_TAPHOSO());
-								Vanban_View vv = new Vanban_View(getShell(), SWT.NONE, user, t, null, false);
+								HOSO_USER hsr = (HOSO_USER) o;
+								Vanban_View vv = new Vanban_View(getShell(), SWT.NONE, user, hsr.getTaphoso(), null,
+										false);
 								vv.open();
 
 							} else {
@@ -279,16 +278,14 @@ public class HosoLuutru extends Shell {
 						if (items.length > 0) {
 							Object o = items[0].getData();
 							if (o instanceof HOSO_USER) {
-								HOSO_USER ths = (HOSO_USER) o;
+								HOSO_USER hsr = (HOSO_USER) o;
 								MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
 								m.setText("Xóa");
-								m.setMessage("Bạn muốn Xóa Tập hồ sơ: " + ths.getTaphoso().getTEN_TAPHOSO());
+								m.setMessage("Bạn muốn Xóa Tập hồ sơ: " + hsr.getTaphoso().getTEN_TAPHOSO());
 								int rs = m.open();
 								switch (rs) {
 								case SWT.YES:
-									TAPHOSO t = new TAPHOSO();
-									t.setMA_TAPHOSO(ths.getTaphoso().getMA_TAPHOSO());
-									controler.getControl_TAPHOSO().delete_TAPHOSO(t);
+									controler.getControl_TAPHOSO().delete_TAPHOSO(hsr.getTaphoso());
 									break;
 
 								default:
@@ -373,8 +370,10 @@ public class HosoLuutru extends Shell {
 				TAPHOSO ths = (TAPHOSO) tlt.result;
 				if (ths == null)
 					return;
-				Taphoso_View thsv = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 				try {
+					TapHoso_Creator tlhct = new TapHoso_Creator(user);
+					tlhct.TailenHosoCuatoi(ths.getMA_TAPHOSO());
+					Taphoso_View thsv = new Taphoso_View(getShell(), SWT.DIALOG_TRIM, user, ths, false);
 					thsv.open();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -462,15 +461,6 @@ public class HosoLuutru extends Shell {
 
 		@SuppressWarnings("unused")
 		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
-
-		ToolItem tltmTmKim = new ToolItem(toolBar, SWT.NONE);
-		tltmTmKim.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		tltmTmKim.setImage(user.getIcondata().searchIcon);
-		tltmTmKim.setText("Tìm kiếm");
 
 		ToolItem tltmIn = new ToolItem(toolBar, SWT.NONE);
 		tltmIn.setImage(user.getIcondata().printIcon);
@@ -666,7 +656,7 @@ public class HosoLuutru extends Shell {
 			}
 		});
 		TreeColumn trclmnStt = new TreeColumn(tree_TuHoso, SWT.NONE);
-		trclmnStt.setWidth(50);
+		trclmnStt.setWidth(45);
 		trclmnStt.setText("Stt");
 
 		TreeColumn trclmnTnTpH = new TreeColumn(tree_TuHoso, SWT.NONE);
@@ -674,7 +664,7 @@ public class HosoLuutru extends Shell {
 		trclmnTnTpH.setText("T\u00EAn H\u1ED3 s\u01A1");
 
 		TreeColumn trclmnSLngVn = new TreeColumn(tree_TuHoso, SWT.NONE);
-		trclmnSLngVn.setWidth(100);
+		trclmnSLngVn.setWidth(65);
 		trclmnSLngVn.setText("S\u1ED1 l\u01B0\u1EE3ng");
 
 		TreeColumn trclmnNgyTo = new TreeColumn(tree_TuHoso, SWT.NONE);
@@ -1111,7 +1101,7 @@ public class HosoLuutru extends Shell {
 		treeItem_Dangkiem.setText("Hồ sơ Đăng kiểm PTGT");
 		TreeRowStyle trs = new TreeRowStyle();
 		trs.setTreeItemHeight(tree_Congviec, 21);
-		trtmTatCa.setExpanded(false);
+		trtmTatCa.setExpanded(true);
 
 		trtmHosoCuatoi = new TreeItem(tree_Congviec, SWT.NONE);
 		trtmHosoCuatoi.setImage(user.getIcondata().myDocument16);
@@ -1133,7 +1123,6 @@ public class HosoLuutru extends Shell {
 		trtmDanhan = new TreeItem(trtmHosoCuatoi, SWT.NONE);
 		trtmDanhan.setImage(user.getIcondata().receiveIcon16);
 		trtmDanhan.setText("Đã nhận");
-
 		trtmHosoCuatoi.setExpanded(true);
 	}
 
@@ -1147,10 +1136,9 @@ public class HosoLuutru extends Shell {
 
 	protected void SaveTaphoso() throws SQLException {
 		if (!text_Mataphoso.getText().equals("")) {
-			TAPHOSO ths = new TAPHOSO();
+			TapHoso_Creator tc = new TapHoso_Creator(user);
+			TAPHOSO ths = tc.getTaphoso(text_Tentaphoso.getText(), text_Mota.getText());
 			ths.setMA_TAPHOSO(Integer.valueOf(text_Mataphoso.getText()));
-			ths.setTEN_TAPHOSO(text_Tentaphoso.getText());
-			ths.setGIOITHIEU_TAPHOSO(text_Mota.getText());
 			controler.getControl_TAPHOSO().update_TAPHOSO(ths);
 		}
 	}

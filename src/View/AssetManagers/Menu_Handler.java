@@ -76,7 +76,7 @@ public class Menu_Handler {
 
 	}
 
-	public void OpenForm_TangTaiSan() throws SQLException {
+	public void OpenForm_Muasam_BangiaoTaiSan() throws SQLException {
 		// TODO Auto-generated method stub
 		TaoDotTangtaisan xdt = new TaoDotTangtaisan(shell, SWT.DIALOG_TRIM, user);
 		xdt.open();

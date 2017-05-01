@@ -77,7 +77,7 @@ public class HosoDanhan extends Dialog {
 	private void createContents() {
 		shlHS = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlHS.setImage(user.getIcondata().receiveIcon16);
-		shlHS.setSize(615, 381);
+		shlHS.setSize(597, 369);
 		shlHS.setText("Hồ sơ đã nhận");
 		new FormTemplate().setCenterScreen(shlHS);
 		shlHS.setLayout(new GridLayout(2, false));
@@ -94,10 +94,6 @@ public class HosoDanhan extends Dialog {
 		TreeColumn treeColumn_1 = new TreeColumn(tree_TuHoso, SWT.NONE);
 		treeColumn_1.setWidth(140);
 		treeColumn_1.setText("Tên Hồ sơ");
-
-		TreeColumn trclmnNgyNhn = new TreeColumn(tree_TuHoso, SWT.NONE);
-		trclmnNgyNhn.setWidth(100);
-		trclmnNgyNhn.setText("Ngày nhận");
 
 		TreeColumn treeColumn_3 = new TreeColumn(tree_TuHoso, SWT.NONE);
 		treeColumn_3.setWidth(100);
@@ -150,6 +146,14 @@ public class HosoDanhan extends Dialog {
 		});
 		menuItem_1.setText("Xóa nhãn");
 
+		TreeColumn trclmnNgiGi = new TreeColumn(tree_TuHoso, SWT.NONE);
+		trclmnNgiGi.setWidth(120);
+		trclmnNgiGi.setText("Người gửi");
+
+		TreeColumn trclmnNgyNhn = new TreeColumn(tree_TuHoso, SWT.NONE);
+		trclmnNgyNhn.setWidth(100);
+		trclmnNgyNhn.setText("Ngày nhận");
+
 		Button btnXong = new Button(shlHS, SWT.NONE);
 		btnXong.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -192,9 +196,8 @@ public class HosoDanhan extends Dialog {
 				String date = hsr.getTaphoso().getNGAY_TAO_TAPHOSO() == null ? "-"
 						: mdf.getViewStringDate(hsr.getTaphoso().getNGAY_TAO_TAPHOSO());
 				TreeItem ti = new TreeItem(tree_TuHoso, SWT.NONE);
-				ti.setText(new String[] { "" + i, hsr.getTaphoso().getTEN_TAPHOSO(), Ngaynhan, date,
-						hsr.getTaphoso().getGIOITHIEU_TAPHOSO(),
-						hsr.getTEN_TAI_KHOAN() == null ? "--" : hsr.getTEN_TAI_KHOAN() });
+				ti.setText(new String[] { "" + i, hsr.getTaphoso().getTEN_TAPHOSO(), date,
+						hsr.getTaphoso().getGIOITHIEU_TAPHOSO(), hsr.getHoso_Danhan().getTAIKHOAN_GUI(), Ngaynhan });
 				ti.setData(hsr);
 				i++;
 				ti.setExpanded(false);

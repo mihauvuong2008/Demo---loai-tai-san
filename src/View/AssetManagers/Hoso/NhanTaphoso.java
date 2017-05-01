@@ -79,7 +79,7 @@ public class NhanTaphoso extends Dialog {
 	private void createContents() throws SQLException {
 		shlNhnHS = new Shell(getParent(), SWT.SHELL_TRIM | SWT.BORDER);
 		shlNhnHS.setImage(user.getIcondata().ThongbaoChuadocIcon);
-		shlNhnHS.setSize(557, 353);
+		shlNhnHS.setSize(597, 369);
 		shlNhnHS.setText("Nhận hồ sơ");
 		shlNhnHS.setLayout(new GridLayout(2, false));
 		new FormTemplate().setCenterScreen(shlNhnHS);
@@ -134,12 +134,12 @@ public class NhanTaphoso extends Dialog {
 				shlNhnHS.dispose();
 			}
 
-			private HOSO_DANHAN getHoso_Danhan(HOSO_DAGUI hoso_Hagui, NGUOINHAN_HOSO_DAGUI nguoiNhanHosoDagui) {
+			private HOSO_DANHAN getHoso_Danhan(HOSO_DAGUI hoso_Dagui, NGUOINHAN_HOSO_DAGUI nguoiNhanHosoDagui) {
 				HOSO_DANHAN rs = new HOSO_DANHAN();
 				rs.setNGAY_NHAN(new Date());
 				rs.setTAIKHOAN_NHAN(nguoiNhanHosoDagui.getTEN_TAI_KHOAN());
-				rs.setTAIKHOAN_GUI(hoso_Hagui.getTEN_TAI_KHOAN());
-				rs.setMA_TAPHOSO(hoso_Hagui.getMA_TAPHOSO());
+				rs.setTAIKHOAN_GUI(hoso_Dagui.getTEN_TAI_KHOAN());
+				rs.setMA_TAPHOSO(hoso_Dagui.getMA_TAPHOSO());
 				return rs;
 			}
 		});
@@ -174,7 +174,7 @@ public class NhanTaphoso extends Dialog {
 				String date = hsr.getHoso_Dagui().getNGAY_GUI() == null ? "-"
 						: mdf.getViewStringDate(hsr.getHoso_Dagui().getNGAY_GUI());
 				TableItem ti = new TableItem(table, SWT.NONE);
-				ti.setText(new String[] { "" + i, hsr.getNguoiNhanHosoDagui().getTEN_TAI_KHOAN(), date,
+				ti.setText(new String[] { "" + i, hsr.getHoso_Dagui().getTEN_TAI_KHOAN(), date,
 						hsr.getTaphoso().getTEN_TAPHOSO(), hsr.getTaphoso().getGIOITHIEU_TAPHOSO(),
 						hsr.getTEN_TAI_KHOAN() == null ? "--" : hsr.getTEN_TAI_KHOAN() });
 				ti.setData(hsr);
