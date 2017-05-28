@@ -9,6 +9,9 @@ import DAO.NGUOIDUNG_NGHIEMTHU;
 import DAO.NGUOIDUNG_QUYETTOAN;
 import DAO.NGUOIDUNG_THUCHIEN;
 import DAO.NHOMTAISAN_CAP_V;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.LOAITAISAN_CAP_III;
 import DAO.LOAI_XE;
 import DAO.PHONGBAN;
@@ -136,14 +139,6 @@ public class Fill_ItemData {
 		for (LOAITAISAN_CAP_III p : pna) {
 			combo.add(p.getTEN_LOAITAISAN_CAP_III());
 			combo.setData(p.getTEN_LOAITAISAN_CAP_III(), p);
-		}
-		combo.select(0);
-	}
-
-	public void setComboBox_NHOMTAISAN(Combo combo, ArrayList<NHOMTAISAN_CAP_V> pna) {
-		for (NHOMTAISAN_CAP_V p : pna) {
-			combo.add(p.getTEN_NHOMTAISAN_CAP_V());
-			combo.setData(p.getTEN_NHOMTAISAN_CAP_V(), p);
 		}
 		combo.select(0);
 	}
@@ -469,6 +464,42 @@ public class Fill_ItemData {
 
 	public int getInt_Suachua() {
 		return 2;
+	}
+
+	public void setComboBox_NHOMTAISAN(Combo combo, ArrayList<NHOMTAISAN_CAP_V> pna) {
+		combo.removeAll();
+		for (NHOMTAISAN_CAP_V p : pna) {
+			combo.add(p.getTEN_NHOMTAISAN_CAP_V());
+			combo.setData(p.getTEN_NHOMTAISAN_CAP_V(), p);
+		}
+		combo.select(0);
+	}
+
+	public void setComboBox_NHOMTAISAN_VoHinh(Combo combo_NhomTaisan, ArrayList<NHOM_TAISANCODINH_VOHINH> nts) {
+		combo_NhomTaisan.removeAll();
+		for (NHOM_TAISANCODINH_VOHINH p : nts) {
+			combo_NhomTaisan.add(p.getTEN_NHOM_TAISANCODINH_VOHINH());
+			combo_NhomTaisan.setData(p.getTEN_NHOM_TAISANCODINH_VOHINH(), p);
+		}
+		combo_NhomTaisan.select(0);
+	}
+
+	public void setComboBox_NHOMTAISAN_Dacbiet(Combo combo_NhomTaisan, ArrayList<NHOM_TAISANCODINH_DACBIET> nts) {
+		combo_NhomTaisan.removeAll();
+		for (NHOM_TAISANCODINH_DACBIET p : nts) {
+			combo_NhomTaisan.add(p.getTEN_NHOM_TAISANCODINH_DACBIET());
+			combo_NhomTaisan.setData(p.getTEN_NHOM_TAISANCODINH_DACBIET(), p);
+		}
+		combo_NhomTaisan.select(0);
+	}
+
+	public void setComboBox_NHOMTAISAN_Dacthu(Combo combo_NhomTaisan, ArrayList<NHOM_TAISANCODINH_DACTHU> nts) {
+		combo_NhomTaisan.removeAll();
+		for (NHOM_TAISANCODINH_DACTHU p : nts) {
+			combo_NhomTaisan.add(p.getTEN_NHOM_TAISANCODINH_DACTHU());
+			combo_NhomTaisan.setData(p.getTEN_NHOM_TAISANCODINH_DACTHU(), p);
+		}
+		combo_NhomTaisan.select(0);
 	}
 
 }

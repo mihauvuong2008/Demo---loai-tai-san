@@ -26,6 +26,7 @@ import View.Template.FormTemplate;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,7 +37,7 @@ import Controler.Controler;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 
-public class Phuongtien_Giaothong extends Shell {
+public class Phuongtien_Giaothong extends Dialog {
 	private Text text_Mataisan;
 	private Text text_Model;
 	private Text text_seri;
@@ -54,26 +55,34 @@ public class Phuongtien_Giaothong extends Shell {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private static Log log = LogFactory.getLog(Phuongtien_Giaothong.class);
 	private Text text_Tenphuongtien;
+	private Shell shlPhuongtienGiaothong;
+	private Object result;
+
+	public Phuongtien_Giaothong(Shell parent, int style, NGUOIDUNG user, TAISAN t) throws SQLException {
+		super(parent, style);
+		setText("SWT Dialog");
+		Phuongtien_Giaothong.t = t;
+		Phuongtien_Giaothong.user = user;
+		controler = new Controler(user);
+	}
 
 	/**
-	 * Launch the application.
+	 * Open the dialog.
 	 * 
-	 * @param args
+	 * @return the result
+	 * @throws SQLException
 	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			Phuongtien_Giaothong shell = new Phuongtien_Giaothong(display, user, t);
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
+	public Object open() throws SQLException {
+		createContents();
+		shlPhuongtienGiaothong.open();
+		shlPhuongtienGiaothong.layout();
+		Display display = getParent().getDisplay();
+		while (!shlPhuongtienGiaothong.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		return result;
 	}
 
 	/**
@@ -82,15 +91,16 @@ public class Phuongtien_Giaothong extends Shell {
 	 * @param display
 	 * @throws SQLException
 	 */
-	public Phuongtien_Giaothong(Display display, NGUOIDUNG user, TAISAN t) throws SQLException {
-		super(display, SWT.CLOSE | SWT.MIN | SWT.RESIZE | SWT.TITLE);
-		setImage(user.getIcondata().carIcon);
-		setLayout(new GridLayout(3, false));
-		Phuongtien_Giaothong.t = t;
-		Phuongtien_Giaothong.user = user;
-		controler = new Controler(user);
+	public void createContents() throws SQLException {
+		shlPhuongtienGiaothong = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
+		shlPhuongtienGiaothong.setImage(user.getIcondata().carIcon);
+		GridLayout gridLayout = new GridLayout(3, false);
+		shlPhuongtienGiaothong.setLayout(gridLayout);
+		setText("Nh\u1EADp th\u00F4ng tin ph\u01B0\u01A1ng ti\u1EC7n giao th\u00F4ng");
+		shlPhuongtienGiaothong.setSize(350, 520);
+		new FormTemplate().setCenterScreen(shlPhuongtienGiaothong);
 
-		Group grpThngTinChung = new Group(this, SWT.NONE);
+		Group grpThngTinChung = new Group(shlPhuongtienGiaothong, SWT.NONE);
 		grpThngTinChung.setLayout(new GridLayout(2, false));
 		grpThngTinChung.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		grpThngTinChung.setText("Th\u00F4ng tin chung");
@@ -101,7 +111,7 @@ public class Phuongtien_Giaothong extends Shell {
 		lblMTiSn.setLayoutData(gd_lblMTiSn);
 		lblMTiSn.setText("M\u00E3 t\u00E0i s\u1EA3n:");
 
-		text_Mataisan = new Text(grpThngTinChung, SWT.BORDER | SWT.RIGHT);
+		text_Mataisan = new Text(grpThngTinChung, SWT.RIGHT);
 		text_Mataisan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Mataisan.setEditable(false);
 		text_Mataisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -133,7 +143,7 @@ public class Phuongtien_Giaothong extends Shell {
 		text_seri.setEditable(false);
 		text_seri.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Group grpThngTinXe = new Group(this, SWT.NONE);
+		Group grpThngTinXe = new Group(shlPhuongtienGiaothong, SWT.NONE);
 		grpThngTinXe.setLayout(new GridLayout(2, false));
 		grpThngTinXe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 		grpThngTinXe.setText("Th\u00F4ng tin xe");
@@ -211,8 +221,7 @@ public class Phuongtien_Giaothong extends Shell {
 		text_So_Km_xe.setText("0");
 
 		Label lblLoiNhinLiu = new Label(grpThngTinXe, SWT.NONE);
-		lblLoiNhinLiu.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblLoiNhinLiu.setText("Loại nhiên liệu tiêu thụ:");
+		lblLoiNhinLiu.setText("Nhiên liệu tiêu thụ:");
 
 		combo_LOAI_NHIENLIEU = new Combo(grpThngTinXe, SWT.READ_ONLY);
 		combo_LOAI_NHIENLIEU.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -225,9 +234,9 @@ public class Phuongtien_Giaothong extends Shell {
 
 		DateTime dateTime = new DateTime(grpThngTinXe, SWT.BORDER);
 		dateTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		new Label(this, SWT.NONE);
+		new Label(shlPhuongtienGiaothong, SWT.NONE);
 
-		Button btnNhp = new Button(this, SWT.NONE);
+		Button btnNhp = new Button(shlPhuongtienGiaothong, SWT.NONE);
 		btnNhp.setImage(user.getIcondata().successIcon);
 		btnNhp.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -249,9 +258,9 @@ public class Phuongtien_Giaothong extends Shell {
 					p.setTHOIHAN_DANGKIEM(date);
 					if (p.getMA_LOAI_XE() != 0) {
 						controler.getControl_PHUONGTIEN_GIAOTHONG().insert_PHUONGTIEN_GIAOTHONG(p);
-						dispose();
+						shlPhuongtienGiaothong.dispose();
 					} else {
-						MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
+						MessageBox m = new MessageBox(shlPhuongtienGiaothong, SWT.ICON_WARNING);
 						m.setText("Lỗi");
 						m.setMessage("Điền đầy đủ thông tin");
 						m.open();
@@ -267,18 +276,17 @@ public class Phuongtien_Giaothong extends Shell {
 		btnNhp.setLayoutData(gd_btnNhp);
 		btnNhp.setText("Nh\u1EADp");
 
-		Button btnng = new Button(this, SWT.NONE);
+		Button btnng = new Button(shlPhuongtienGiaothong, SWT.NONE);
 		btnng.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				dispose();
+				shlPhuongtienGiaothong.dispose();
 			}
 		});
 		GridData gd_btnng = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnng.widthHint = 75;
 		btnng.setLayoutData(gd_btnng);
 		btnng.setText("\u0110\u00F3ng");
-		createContents();
 		init(1);
 	}
 
@@ -302,11 +310,6 @@ public class Phuongtien_Giaothong extends Shell {
 	/**
 	 * Create contents of the shell.
 	 */
-	protected void createContents() {
-		setText("Nh\u1EADp th\u00F4ng tin ph\u01B0\u01A1ng ti\u1EC7n giao th\u00F4ng");
-		setSize(350, 480);
-		new FormTemplate().setCenterScreen(getShell());
-	}
 
 	@Override
 	protected void checkSubclass() {

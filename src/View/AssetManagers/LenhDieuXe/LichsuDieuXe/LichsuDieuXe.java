@@ -16,7 +16,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -91,14 +90,14 @@ public class LichsuDieuXe extends Shell {
 	 * @throws SQLException
 	 */
 	public LichsuDieuXe(Display display, NGUOIDUNG user) throws SQLException {
-		super(display, SWT.CLOSE | SWT.MAX | SWT.TITLE);
+		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		setImage(user.getIcondata().lichsudieuxeIcon);
-		setLayout(new GridLayout(7, false));
+		setLayout(new GridLayout(8, false));
 		LichsuDieuXe.user = user;
 		controler = new Controler(user);
 
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 7, 1));
+		toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 
 		ToolItem tltmXemLnhiu = new ToolItem(toolBar, SWT.NONE);
 		tltmXemLnhiu.addSelectionListener(new SelectionAdapter() {
@@ -161,7 +160,7 @@ public class LichsuDieuXe extends Shell {
 		tltmXa.setImage(user.getIcondata().deleteIcon);
 
 		SashForm sashForm = new SashForm(this, SWT.NONE);
-		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 7, 1));
+		sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 8, 1));
 
 		SashForm sashForm_1 = new SashForm(sashForm, SWT.VERTICAL);
 
@@ -185,34 +184,8 @@ public class LichsuDieuXe extends Shell {
 				}
 			}
 		});
-		Composite composite = new Composite(sashForm_1, SWT.NONE);
-		GridLayout gl_composite = new GridLayout(1, false);
-		gl_composite.marginWidth = 0;
-		gl_composite.marginHeight = 0;
-		gl_composite.horizontalSpacing = 0;
-		composite.setLayout(gl_composite);
 
-		btnLnhHy = new Button(composite, SWT.CHECK);
-		btnLnhHy.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (btnLnhHy.getSelection()) {
-					HuyLenh = true;
-				} else {
-					HuyLenh = false;
-				}
-			}
-		});
-		GridData gd_btnLnhHy = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
-		gd_btnLnhHy.verticalIndent = 5;
-		gd_btnLnhHy.horizontalIndent = 5;
-		btnLnhHy.setLayoutData(gd_btnLnhHy);
-		btnLnhHy.setText("Xem Lệnh đã hủy");
-
-		tree_Quy = new Tree(composite, SWT.BORDER | SWT.FULL_SELECTION);
-		GridData gd_tree_Quy = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd_tree_Quy.widthHint = 242;
-		tree_Quy.setLayoutData(gd_tree_Quy);
+		tree_Quy = new Tree(sashForm_1, SWT.BORDER | SWT.FULL_SELECTION);
 		TreeItem Tatca = new TreeItem(tree_Quy, SWT.NONE);
 		Tatca.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		Tatca.setText("Tất cả");
@@ -220,7 +193,6 @@ public class LichsuDieuXe extends Shell {
 		// "/Home-icon.png"));
 		setItem_Quy(Tatca);
 		tree_Quy.pack();
-		sashForm_1.setWeights(new int[] { 140, 287 });
 
 		tree_Quy.addListener(SWT.Selection, new Listener() {
 			@Override
@@ -252,6 +224,7 @@ public class LichsuDieuXe extends Shell {
 				}
 			}
 		});
+		sashForm_1.setWeights(new int[] { 140, 213 });
 
 		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setHeaderVisible(true);
@@ -356,6 +329,19 @@ public class LichsuDieuXe extends Shell {
 
 		dateTime_1 = new DateTime(this, SWT.BORDER);
 
+		btnLnhHy = new Button(this, SWT.CHECK);
+		btnLnhHy.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnLnhHy.getSelection()) {
+					HuyLenh = true;
+				} else {
+					HuyLenh = false;
+				}
+			}
+		});
+		btnLnhHy.setText("Xem Lệnh đã hủy");
+
 		Button btnXem = new Button(this, SWT.NONE);
 		btnXem.setImage(user.getIcondata().successIcon);
 		GridData gd_btnXem = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -376,9 +362,7 @@ public class LichsuDieuXe extends Shell {
 			}
 		});
 		btnXem.setText("Xem");
-
-		Button btnChaHin = new Button(this, SWT.CHECK);
-		btnChaHin.setText("- chưa hiện thực - Xe chuẩn bị điều");
+		new Label(this, SWT.NONE);
 		Button btnNewButton = new Button(this, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override

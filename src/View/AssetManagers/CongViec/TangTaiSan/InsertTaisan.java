@@ -27,6 +27,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import Controler.Controler;
 import DAO.NGUOIDUNG;
 import DAO.NHOMTAISAN_CAP_V;
+import DAO.NHOM_TAISANCODINH_DACBIET;
+import DAO.NHOM_TAISANCODINH_DACTHU;
+import DAO.NHOM_TAISANCODINH_VOHINH;
 import DAO.LOAITAISAN_CAP_III;
 import DAO.PHONGBAN;
 import DAO.PHUKIEN;
@@ -68,6 +71,10 @@ public class InsertTaisan extends Dialog {
 	private final MyDateFormat mdf = new MyDateFormat();
 	private final Controler controler;
 	private NGUOIDUNG user;
+	private Button btnCodinhHuuhinh;
+	private Button btnCodinhdacbiet;
+	private Button btnTaiSanCodinhdacthu;
+	private Button btnCodinhVohinh;
 
 	/**
 	 * Create the dialog.
@@ -208,6 +215,21 @@ public class InsertTaisan extends Dialog {
 		lblSLng.setText("Số lượng:");
 
 		text_Soluong = new Text(group, SWT.BORDER | SWT.RIGHT);
+		text_Soluong.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				Text text = (Text) e.getSource();
+				final String oldS = text.getText();
+				String newS = oldS.substring(0, e.start) + e.text + oldS.substring(e.end);
+				boolean isFloat = true;
+				try {
+					Float.parseFloat(newS);
+				} catch (NumberFormatException ex) {
+					isFloat = false;
+				}
+				if (!isFloat)
+					e.doit = false;
+			}
+		});
 		text_Soluong.setText("0");
 		text_Soluong.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
@@ -237,22 +259,80 @@ public class InsertTaisan extends Dialog {
 		grpNhmTiSn.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD | SWT.ITALIC));
 		grpNhmTiSn.setLayout(new GridLayout(2, false));
 
-		Button btnCnhHu = new Button(grpNhmTiSn, SWT.RADIO);
-		btnCnhHu.setSelection(true);
-		btnCnhHu.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnCnhHu.setText("Tài sản Cố định Hữu hình");
+		btnCodinhHuuhinh = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCodinhHuuhinh.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnCodinhHuuhinh.getSelection()) {
+					ArrayList<NHOMTAISAN_CAP_V> nts;
+					try {
+						nts = controler.getControl_NHOMTAISAN_CAP_V().getAllData();
+						f.setComboBox_NHOMTAISAN(combo_NhomTaisan, nts);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnCodinhHuuhinh.setSelection(true);
+		btnCodinhHuuhinh.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCodinhHuuhinh.setText("Tài sản Cố định Hữu hình");
 
-		Button btnCnhV = new Button(grpNhmTiSn, SWT.RADIO);
-		btnCnhV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnCnhV.setText("Tài sản Cố định Vô hình");
+		btnCodinhVohinh = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCodinhVohinh.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
 
-		Button btnCnhc = new Button(grpNhmTiSn, SWT.RADIO);
-		btnCnhc.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnCnhc.setText("Tài sản Cố định Đặc biệt");
+				if (btnCodinhVohinh.getSelection()) {
+					ArrayList<NHOM_TAISANCODINH_VOHINH> nts;
+					try {
+						nts = controler.getControl_NHOM_TAISANCODINH_VOHINH().getAllData();
+						f.setComboBox_NHOMTAISAN_VoHinh(combo_NhomTaisan, nts);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnCodinhVohinh.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCodinhVohinh.setText("Tài sản Cố định Vô hình");
 
-		Button btnTiSnC = new Button(grpNhmTiSn, SWT.RADIO);
-		btnTiSnC.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnTiSnC.setText("Tài sản Cố định Đặc thù");
+		btnCodinhdacbiet = new Button(grpNhmTiSn, SWT.RADIO);
+		btnCodinhdacbiet.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if (btnCodinhdacbiet.getSelection()) {
+					ArrayList<NHOM_TAISANCODINH_DACBIET> nts;
+					try {
+						nts = controler.getControl_NHOM_TAISANCODINH_DACBIET().getAllData();
+						f.setComboBox_NHOMTAISAN_Dacbiet(combo_NhomTaisan, nts);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnCodinhdacbiet.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnCodinhdacbiet.setText("Tài sản Cố định Đặc biệt");
+
+		btnTaiSanCodinhdacthu = new Button(grpNhmTiSn, SWT.RADIO);
+		btnTaiSanCodinhdacthu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnTaiSanCodinhdacthu.getSelection()) {
+					ArrayList<NHOM_TAISANCODINH_DACTHU> nts;
+					try {
+						nts = controler.getControl_NHOM_TAISANCODINH_DACTHU().getAllData();
+						f.setComboBox_NHOMTAISAN_Dacthu(combo_NhomTaisan, nts);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		btnTaiSanCodinhdacthu.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnTaiSanCodinhdacthu.setText("Tài sản Cố định Đặc thù");
 
 		Label label = new Label(grpNhmTiSn, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -585,10 +665,58 @@ public class InsertTaisan extends Dialog {
 		text_MaPhanmemKetoan.setText(t.getMA_TANSAN_KETOAN());
 		LOAITAISAN_CAP_III pn = controler.getControl_LOAITAISAN_CAP_III()
 				.get_LOAITAISAN_CAP_III(t.getMA_LOAITAISAN_CAP_III());
-		NHOMTAISAN_CAP_V ntscV = controler.getControl_NHOMTAISAN_CAP_V()
-				.getNHOMTAISAN_CAP_V(t.getMA_NHOMTAISAN_CAP_V());
 		combo_LoaiTaisan.select(combo_LoaiTaisan.indexOf(pn.getTEN_LOAITAISAN_CAP_III()));
-		combo_NhomTaisan.select(combo_NhomTaisan.indexOf(ntscV.getTEN_NHOMTAISAN_CAP_V()));
+
+		int PHANNHOM = controler.getControl_NHOMTAISAN_CAP_V().getPHANNHOM(t.getMA_NHOMTAISAN_CAP_V());
+		switch (PHANNHOM) {
+		case 0:
+			ArrayList<NHOMTAISAN_CAP_V> nntscV = controler.getControl_NHOMTAISAN_CAP_V().getAllData();
+			f.setComboBox_NHOMTAISAN(combo_NhomTaisan, nntscV);
+			NHOMTAISAN_CAP_V ntscV = controler.getControl_NHOMTAISAN_CAP_V()
+					.getNHOMTAISAN_CAP_V(t.getMA_NHOMTAISAN_CAP_V());
+			btnCodinhHuuhinh.setSelection(true);
+			btnCodinhVohinh.setSelection(false);
+			btnTaiSanCodinhdacthu.setSelection(false);
+			btnCodinhdacbiet.setSelection(false);
+			combo_NhomTaisan.select(combo_NhomTaisan.indexOf(ntscV.getTEN_NHOMTAISAN_CAP_V()));
+			break;
+		case 1:
+			ArrayList<NHOM_TAISANCODINH_VOHINH> nts = controler.getControl_NHOM_TAISANCODINH_VOHINH().getAllData();
+			f.setComboBox_NHOMTAISAN_VoHinh(combo_NhomTaisan, nts);
+			NHOM_TAISANCODINH_VOHINH ctv = controler.getControl_NHOM_TAISANCODINH_VOHINH()
+					.getNHOM_TAISANCODINH_VOHINH(t.getMA_NHOMTAISAN_CAP_V());
+			btnCodinhHuuhinh.setSelection(false);
+			btnCodinhVohinh.setSelection(true);
+			btnTaiSanCodinhdacthu.setSelection(false);
+			btnCodinhdacbiet.setSelection(false);
+			combo_NhomTaisan.select(combo_NhomTaisan.indexOf(ctv.getTEN_NHOM_TAISANCODINH_VOHINH()));
+			break;
+		case 2:
+			ArrayList<NHOM_TAISANCODINH_DACTHU> nctt = controler.getControl_NHOM_TAISANCODINH_DACTHU().getAllData();
+			f.setComboBox_NHOMTAISAN_Dacthu(combo_NhomTaisan, nctt);
+			NHOM_TAISANCODINH_DACTHU ctt = controler.getControl_NHOM_TAISANCODINH_DACTHU()
+					.getNHOM_TAISANCODINH_DACTHU(t.getMA_NHOMTAISAN_CAP_V());
+			btnCodinhHuuhinh.setSelection(false);
+			btnCodinhVohinh.setSelection(false);
+			btnTaiSanCodinhdacthu.setSelection(true);
+			btnCodinhdacbiet.setSelection(false);
+			combo_NhomTaisan.select(combo_NhomTaisan.indexOf(ctt.getTEN_NHOM_TAISANCODINH_DACTHU()));
+			break;
+		case 3:
+			ArrayList<NHOM_TAISANCODINH_DACBIET> nctb = controler.getControl_NHOM_TAISANCODINH_DACBIET().getAllData();
+			f.setComboBox_NHOMTAISAN_Dacbiet(combo_NhomTaisan, nctb);
+			NHOM_TAISANCODINH_DACBIET ctb = controler.getControl_NHOM_TAISANCODINH_DACBIET()
+					.getNHOM_TAISANCODINH_DACBIET(t.getMA_NHOMTAISAN_CAP_V());
+			btnCodinhHuuhinh.setSelection(false);
+			btnCodinhVohinh.setSelection(false);
+			btnTaiSanCodinhdacthu.setSelection(false);
+			btnCodinhdacbiet.setSelection(true);
+			combo_NhomTaisan.select(combo_NhomTaisan.indexOf(ctb.getTEN_NHOM_TAISANCODINH_DACBIET()));
+			break;
+		default:
+			break;
+		}
+
 		combo_Donviquanly.select(combo_Donviquanly
 				.indexOf(controler.getControl_PHONGBAN().get_PHONGBAN(t.getMA_DON_VI_QUAN_LY()).getTEN_PHONGBAN()));
 		combo_Donvisudung.select(combo_Donvisudung
@@ -612,8 +740,22 @@ public class InsertTaisan extends Dialog {
 		t.setMA_DON_VI_SU_DUNG(((PHONGBAN) combo_Donvisudung.getData(combo_Donvisudung.getText())).getMA_PHONGBAN());
 		t.setMA_LOAITAISAN_CAP_III(
 				((LOAITAISAN_CAP_III) combo_LoaiTaisan.getData(combo_LoaiTaisan.getText())).getMA_LOAITAISAN_CAP_III());
-		t.setMA_NHOMTAISAN_CAP_V(
-				((NHOMTAISAN_CAP_V) combo_NhomTaisan.getData(combo_NhomTaisan.getText())).getMA_NHOMTAISAN_CAP_V());
+		if (btnCodinhHuuhinh.getSelection()) {
+			t.setMA_NHOMTAISAN_CAP_V(
+					((NHOMTAISAN_CAP_V) combo_NhomTaisan.getData(combo_NhomTaisan.getText())).getMA_NHOMTAISAN_CAP_V());
+		}
+		if (btnCodinhVohinh.getSelection()) {
+			t.setMA_NHOMTAISAN_CAP_V(((NHOM_TAISANCODINH_VOHINH) combo_NhomTaisan.getData(combo_NhomTaisan.getText()))
+					.getMA_NHOM_TAISANCODINH_VOHINH());
+		}
+		if (btnTaiSanCodinhdacthu.getSelection()) {
+			t.setMA_NHOMTAISAN_CAP_V(((NHOM_TAISANCODINH_DACTHU) combo_NhomTaisan.getData(combo_NhomTaisan.getText()))
+					.getMA_NHOM_TAISANCODINH_DACTHU());
+		}
+		if (btnCodinhdacbiet.getSelection()) {
+			t.setMA_NHOMTAISAN_CAP_V(((NHOM_TAISANCODINH_DACBIET) combo_NhomTaisan.getData(combo_NhomTaisan.getText()))
+					.getMA_NHOM_TAISANCODINH_DACBIET());
+		}
 		t.setTINH_TRANG((int) combo_Tinhtrang.getData(combo_Tinhtrang.getText()));
 		t.setDON_VI_TINH(combo_Donvitinh.getText());
 		t.setBAO_HANH(text_Baohanh.getText());

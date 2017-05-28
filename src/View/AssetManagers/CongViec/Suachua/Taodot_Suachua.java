@@ -172,8 +172,10 @@ public class Taodot_Suachua extends Dialog {
 					ChonNguonSuachua_Baoduong cnsb = new ChonNguonSuachua_Baoduong(shell, SWT.DIALOG_TRIM, user);
 					cnsb.open();
 					nsbd = cnsb.getResult();
-					if (ViewAndEdit_MODE_dsb == null)
+					if (ViewAndEdit_MODE_dsb == null) {
+						fillNguonSuachuaBaoduong(nsbd);
 						return;
+					}
 					if (nsbd == null) {
 						MessageBox m = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
 						m.setText("Xóa dữ liệu cũ?");
@@ -347,8 +349,11 @@ public class Taodot_Suachua extends Dialog {
 						NhapDeXuat ndx = new NhapDeXuat(shell, SWT.DIALOG_TRIM, user);
 						ndx.open();
 						Insert_dx = ndx.result;
-						if (Insert_dx == null)
+						if (Insert_dx == null) {
 							return;
+						} else {
+							fillDexuat(Insert_dx);
+						}
 						if (ViewAndEdit_MODE_dsb == null)
 							return;
 						if (ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() <= 0)
@@ -456,6 +461,14 @@ public class Taodot_Suachua extends Dialog {
 			return;
 		NGUONSUACHUA_BAODUONG nsb = controler.getControl_NGUONSUACHUA_BAODUONG()
 				.get_NguonSuachua_Baoduong(viewAndEdit_MODE_dsb2);
+		if (nsb == null)
+			return;
+		text_Tenlienhe.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());
+		text_Gioithieu.setText(nsb.getGIOI_THIEU());
+		text_Lienhe.setText(nsb.getLIEN_HE());
+	}
+
+	void fillNguonSuachuaBaoduong(NGUONSUACHUA_BAODUONG nsb) {
 		if (nsb == null)
 			return;
 		text_Tenlienhe.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());

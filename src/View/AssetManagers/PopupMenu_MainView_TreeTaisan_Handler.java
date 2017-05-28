@@ -47,7 +47,7 @@ public class PopupMenu_MainView_TreeTaisan_Handler {
 	}
 
 	public void OpenForm_Insert_PHUONGTIEN_GIAOTHONG(TAISAN t) throws SQLException {
-		Phuongtien_Giaothong pg = new Phuongtien_Giaothong(display, user, t);
+		Phuongtien_Giaothong pg = new Phuongtien_Giaothong(shell, SWT.DIALOG_TRIM, user, t);
 		pg.open();
 	}
 

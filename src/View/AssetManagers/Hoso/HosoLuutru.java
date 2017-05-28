@@ -906,12 +906,12 @@ public class HosoLuutru extends Shell {
 						try {
 							if (!lbl_Image.isDisposed() && width > 0 && height > 0) {
 								if (!scrolledComposite.isDisposed()) {
-									lbl_Image.setSize(rect.width + 1, (int) (rect.width / tiso) + 1);
+									lbl_Image.setSize(rect.width, (int) ((rect.width) / tiso));
 									lbl_Image.setImage(resize(ii, rect.width, (int) (rect.width / tiso)));
 								}
 							}
 						} catch (Exception e) {
-							System.err.println(e);
+							e.printStackTrace();
 						}
 						text_MaFile.setText(String.valueOf(fs.getImage_id()));
 						text_TenFile.setText(fs.getImage_name());

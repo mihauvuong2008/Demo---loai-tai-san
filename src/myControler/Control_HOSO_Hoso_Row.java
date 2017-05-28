@@ -162,19 +162,21 @@ public class Control_HOSO_Hoso_Row {
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
 					String TEN_TAI_KHOAN = null;
-					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
-					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
-					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
-					}
+
+					int MatapHS_Dexuat = rs.getInt("dx.MA_TAPHOSO");
+					int MatapHS_Thuchien = rs.getInt("gdthcb.MA_TAPHOSO");
+					int MatapHS_Nghiemthu = rs.getInt("gdntcb.MA_TAPHOSO");
+					int MatapHS_Quyettoan = rs.getInt("gdqtcb.MA_TAPHOSO");
+
+					if (ths.getMA_TAPHOSO() == MatapHS_Dexuat)
+						TEN_TAI_KHOAN = rs.getString("dx.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Thuchien)
+						TEN_TAI_KHOAN = rs.getString("gdthcb.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Nghiemthu)
+						TEN_TAI_KHOAN = rs.getString("gdntcb.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Quyettoan)
+						TEN_TAI_KHOAN = rs.getString("gdqtcb.TEN_TAI_KHOAN");
+
 					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
@@ -204,27 +206,28 @@ public class Control_HOSO_Hoso_Row {
 				String query = "SELECT *  FROM TAPHOSO as ths " + " INNER JOIN DOT_THUCHIEN_SUACHUA_BAODUONG as dsb "
 						+ " ON TRUE " + " INNER JOIN QUATRINH_DEXUAT_THUCHIEN as qdxth "
 						+ " ON qdxth.MA_QUATRINH_DEXUAT_THUCHIEN = dsb.MA_QUATRINH_DEXUAT_THUCHIEN "
-						+ " INNER JOIN DE_XUAT as dx " + " ON dx.MA_DE_XUAT = qdxth.MA_DE_XUAT "
+						+ " INNER JOIN DE_XUAT as dx " + " ON (dx.MA_DE_XUAT = qdxth.MA_DE_XUAT) "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN as gdth "
 						+ " ON gdth.MA_QUATRINH_DEXUAT_THUCHIEN = dsb.MA_QUATRINH_DEXUAT_THUCHIEN "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN_CAN_BO gdthcb "
-						+ " ON gdthcb.MA_GIAI_DOAN_THUC_HIEN = gdth.MA_GIAI_DOAN_THUC_HIEN "
+						+ " ON (gdthcb.MA_GIAI_DOAN_THUC_HIEN = gdth.MA_GIAI_DOAN_THUC_HIEN ) "
 						+ " INNER JOIN GIAI_DOAN_NGHIEM_THU as gdnt "
 						+ " ON gdnt.MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dsb.MA_QUATRINH_NGHIEMTHU_QUYETTOAN "
 						+ " INNER JOIN GIAI_DOAN_NGHIEM_THU_CAN_BO as gdntcb "
-						+ " ON gdntcb.MA_GIAI_DOAN_NGHIEM_THU = gdnt.MA_GIAI_DOAN_NGHIEM_THU "
+						+ " ON (gdntcb.MA_GIAI_DOAN_NGHIEM_THU = gdnt.MA_GIAI_DOAN_NGHIEM_THU ) "
 						+ " INNER JOIN GIAI_DOAN_QUYET_TOAN gdqt "
 						+ " ON gdqt.MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dsb.MA_QUATRINH_NGHIEMTHU_QUYETTOAN "
 						+ " INNER JOIN GIAI_DOAN_QUYET_TOAN_CAN_BO as gdqtcb "
-						+ " ON gdqtcb.MA_GIAI_DOAN_QUYET_TOAN =gdqt.MA_GIAI_DOAN_QUYET_TOAN "
+						+ " ON (gdqtcb.MA_GIAI_DOAN_QUYET_TOAN =gdqt.MA_GIAI_DOAN_QUYET_TOAN ) "
 						+ " WHERE ( ths.MA_TAPHOSO = dx.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdthcb.MA_TAPHOSO "
 						+ " OR ths.MA_TAPHOSO = gdntcb.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdqtcb.MA_TAPHOSO ) "
 						+ " AND dsb.SUACHUA_BAODUONG = '" + suachua_baoduong + "' AND NGAY_TAO_TAPHOSO >= '"
-						+ mdf.getSQLStringDate(start) + "' AND NGAY_TAO_TAPHOSO <='" + mdf.getSQLStringDate(end)
-						+ "' AND (dx.TEN_TAI_KHOAN='" + ten_TAI_KHOAN + "' OR gdthcb.TEN_TAI_KHOAN='" + ten_TAI_KHOAN
-						+ "' OR gdntcb.TEN_TAI_KHOAN = '" + ten_TAI_KHOAN + "' OR gdqtcb.TEN_TAI_KHOAN='"
-						+ ten_TAI_KHOAN + "') AND (ths.MA_TAPHOSO LIKE '%" + searchString + "%' OR TEN_TAPHOSO LIKE '%"
-						+ searchString + "%' OR GIOITHIEU_TAPHOSO LIKE '%" + searchString + "%' ) ";
+						+ mdf.getSQLStringDate(start) + "' AND ( dx.TEN_TAI_KHOAN='" + ten_TAI_KHOAN
+						+ "' OR gdthcb.TEN_TAI_KHOAN='" + ten_TAI_KHOAN + "' OR gdntcb.TEN_TAI_KHOAN ='" + ten_TAI_KHOAN
+						+ "' OR gdqtcb.TEN_TAI_KHOAN = '" + ten_TAI_KHOAN + "') AND NGAY_TAO_TAPHOSO <='"
+						+ mdf.getSQLStringDate(end) + "' AND (ths.MA_TAPHOSO LIKE '%" + searchString
+						+ "%' OR TEN_TAPHOSO LIKE '%" + searchString + "%' OR GIOITHIEU_TAPHOSO LIKE '%" + searchString
+						+ "%' ) ";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
 				Control_DAO_Build cdb = new Control_DAO_Build();
@@ -232,21 +235,7 @@ public class Control_HOSO_Hoso_Row {
 					HOSO_USER hsr = new HOSO_USER();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
-					String TEN_TAI_KHOAN = null;
-					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
-					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
-					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
-					}
-					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
+					hsr.setTEN_TAI_KHOAN(ten_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -287,7 +276,7 @@ public class Control_HOSO_Hoso_Row {
 						+ " ON gdqt.MA_QUATRINH_NGHIEMTHU_QUYETTOAN = dtt.MA_QUATRINH_NGHIEMTHU_QUYETTOAN "
 						+ " INNER JOIN GIAI_DOAN_QUYET_TOAN_CAN_BO as gdqtcb "
 						+ " ON gdqtcb.MA_GIAI_DOAN_QUYET_TOAN =gdqt.MA_GIAI_DOAN_QUYET_TOAN "
-						+ " WHERE ( ths.MA_TAPHOSO = dx.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdthcb.MA_TAPHOSO "
+						+ " WHERE (ths.MA_TAPHOSO = dx.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdthcb.MA_TAPHOSO "
 						+ " OR ths.MA_TAPHOSO = gdntcb.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdqtcb.MA_TAPHOSO ) "
 						+ "  AND NGAY_TAO_TAPHOSO >= '" + mdf.getSQLStringDate(start) + "' AND NGAY_TAO_TAPHOSO <='"
 						+ mdf.getSQLStringDate(end) + "' AND (ths.MA_TAPHOSO LIKE '%" + searchString
@@ -301,19 +290,21 @@ public class Control_HOSO_Hoso_Row {
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
 					String TEN_TAI_KHOAN = null;
-					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
-					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
-					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
-					}
+
+					int MatapHS_Dexuat = rs.getInt("dx.MA_TAPHOSO");
+					int MatapHS_Thuchien = rs.getInt("gdthcb.MA_TAPHOSO");
+					int MatapHS_Nghiemthu = rs.getInt("gdntcb.MA_TAPHOSO");
+					int MatapHS_Quyettoan = rs.getInt("gdqtcb.MA_TAPHOSO");
+
+					if (ths.getMA_TAPHOSO() == MatapHS_Dexuat)
+						TEN_TAI_KHOAN = rs.getString("dx.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Thuchien)
+						TEN_TAI_KHOAN = rs.getString("gdthcb.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Nghiemthu)
+						TEN_TAI_KHOAN = rs.getString("gdntcb.TEN_TAI_KHOAN");
+					if (ths.getMA_TAPHOSO() == MatapHS_Quyettoan)
+						TEN_TAI_KHOAN = rs.getString("gdqtcb.TEN_TAI_KHOAN");
+
 					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
@@ -343,7 +334,7 @@ public class Control_HOSO_Hoso_Row {
 				String query = "SELECT *  FROM TAPHOSO as ths " + " INNER JOIN DOT_THUCHIEN_TANG_TAISAN as dtt "
 						+ " ON TRUE " + " INNER JOIN QUATRINH_DEXUAT_THUCHIEN as qdxth "
 						+ " ON qdxth.MA_QUATRINH_DEXUAT_THUCHIEN = dtt.MA_QUATRINH_DEXUAT_THUCHIEN "
-						+ " INNER JOIN DE_XUAT as dx " + " ON dx.MA_DE_XUAT = qdxth.MA_DE_XUAT "
+						+ " INNER JOIN DE_XUAT as dx " + " ON dx.MA_DE_XUAT = qdxth.MA_DE_XUAT  "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN as gdth "
 						+ " ON gdth.MA_QUATRINH_DEXUAT_THUCHIEN = dtt.MA_QUATRINH_DEXUAT_THUCHIEN "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN_CAN_BO gdthcb "
@@ -359,10 +350,10 @@ public class Control_HOSO_Hoso_Row {
 						+ " WHERE ( ths.MA_TAPHOSO = dx.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdthcb.MA_TAPHOSO "
 						+ " OR ths.MA_TAPHOSO = gdntcb.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdqtcb.MA_TAPHOSO ) "
 						+ "  AND NGAY_TAO_TAPHOSO >= '" + mdf.getSQLStringDate(start) + "' AND NGAY_TAO_TAPHOSO <='"
-						+ mdf.getSQLStringDate(end) + "' AND (dx.TEN_TAI_KHOAN = '" + ten_TAI_KHOAN
-						+ "' OR gdthcb.TEN_TAI_KHOAN ='" + ten_TAI_KHOAN + "' OR gdntcb.TEN_TAI_KHOAN = '"
+						+ mdf.getSQLStringDate(end) + "' AND ( dx.TEN_TAI_KHOAN = '" + ten_TAI_KHOAN
+						+ "' OR gdthcb.TEN_TAI_KHOAN ='" + ten_TAI_KHOAN + "' OR  gdntcb.TEN_TAI_KHOAN = '"
 						+ ten_TAI_KHOAN + "' OR gdqtcb.TEN_TAI_KHOAN = '" + ten_TAI_KHOAN
-						+ "')  AND (ths.MA_TAPHOSO LIKE '%" + searchString + "%' OR TEN_TAPHOSO LIKE '%" + searchString
+						+ "' ) AND (ths.MA_TAPHOSO LIKE '%" + searchString + "%' OR TEN_TAPHOSO LIKE '%" + searchString
 						+ "%' OR GIOITHIEU_TAPHOSO LIKE '%" + searchString + "%' ) ";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(query);
@@ -371,21 +362,7 @@ public class Control_HOSO_Hoso_Row {
 					HOSO_USER hsr = new HOSO_USER();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
-					String TEN_TAI_KHOAN = null;
-					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Nghiemthu = rs.getString("gdntcb.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Quyettoan = rs.getString("gdqtcb.TEN_TAI_KHOAN");
-					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Nghiemthu.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Nghiemthu;
-					} else if (!TEN_TAI_KHOAN_Quyettoan.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Quyettoan;
-					}
-					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
+					hsr.setTEN_TAI_KHOAN(ten_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();
@@ -467,11 +444,11 @@ public class Control_HOSO_Hoso_Row {
 				String query = "SELECT *  FROM TAPHOSO as ths " + " INNER JOIN DOT_THUCHIEN_GIAM_TAISAN as dgt "
 						+ " ON TRUE " + " INNER JOIN QUATRINH_DEXUAT_THUCHIEN as qdxth "
 						+ " ON qdxth.MA_QUATRINH_DEXUAT_THUCHIEN = dgt.MA_QUATRINH_DEXUAT_THUCHIEN "
-						+ " INNER JOIN DE_XUAT as dx " + " ON dx.MA_DE_XUAT = qdxth.MA_DE_XUAT "
+						+ " INNER JOIN DE_XUAT as dx " + " ON dx.MA_DE_XUAT = qdxth.MA_DE_XUAT  "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN as gdth "
 						+ " ON gdth.MA_QUATRINH_DEXUAT_THUCHIEN = dgt.MA_QUATRINH_DEXUAT_THUCHIEN "
 						+ " INNER JOIN GIAI_DOAN_THUC_HIEN_CAN_BO gdthcb "
-						+ " ON gdthcb.MA_GIAI_DOAN_THUC_HIEN = gdth.MA_GIAI_DOAN_THUC_HIEN "
+						+ " ON gdthcb.MA_GIAI_DOAN_THUC_HIEN = gdth.MA_GIAI_DOAN_THUC_HIEN  "
 						+ " WHERE ( ths.MA_TAPHOSO = dx.MA_TAPHOSO " + " OR ths.MA_TAPHOSO = gdthcb.MA_TAPHOSO) "
 						+ "  AND NGAY_TAO_TAPHOSO >= '" + mdf.getSQLStringDate(start) + "' AND NGAY_TAO_TAPHOSO <='"
 						+ mdf.getSQLStringDate(end) + "' AND (dx.TEN_TAI_KHOAN='" + ten_TAI_KHOAN
@@ -485,15 +462,7 @@ public class Control_HOSO_Hoso_Row {
 					HOSO_USER hsr = new HOSO_USER();
 					TAPHOSO ths = cdb.get_TAPHOSO(rs);
 					hsr.setTaphoso(ths);
-					String TEN_TAI_KHOAN = null;
-					String TEN_TAI_KHOAN_Dexuat = rs.getString("dx.TEN_TAI_KHOAN");
-					String TEN_TAI_KHOAN_Thuchien = rs.getString("gdthcb.TEN_TAI_KHOAN");
-					if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					} else if (!TEN_TAI_KHOAN_Dexuat.equals("null")) {
-						TEN_TAI_KHOAN = TEN_TAI_KHOAN_Thuchien;
-					}
-					hsr.setTEN_TAI_KHOAN(TEN_TAI_KHOAN);
+					hsr.setTEN_TAI_KHOAN(ten_TAI_KHOAN);
 
 					String query2 = "SELECT * FROM VANBAN WHERE  MA_TAPHOSO='" + hsr.getTaphoso().getMA_TAPHOSO() + "'";
 					Statement st2 = conn.createStatement();

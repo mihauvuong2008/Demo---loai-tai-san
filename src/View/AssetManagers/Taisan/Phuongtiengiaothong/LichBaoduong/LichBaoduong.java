@@ -229,6 +229,8 @@ public class LichBaoduong extends Dialog {
 				if (ti.length <= 0)
 					return;
 				LichBaoduong_ROW data = (LichBaoduong_ROW) ti[0].getData();
+				if (data.getDotBaoduong() == null)
+					return;
 				Taodot_Baoduong tb = new Taodot_Baoduong(shlLchBoDng, SWT.DIALOG_TRIM, user, data.getDotBaoduong());
 				try {
 					tb.open();
@@ -651,7 +653,6 @@ public class LichBaoduong extends Dialog {
 		HinhthucBaoduong htbd = new HinhthucBaoduong(index, Name);
 		htbd.setSQL_NAME(SQL_NAME);
 		ti.setData(index);
-
 		return ti;
 	}
 }

@@ -208,8 +208,10 @@ public class Taodot_Baoduong extends Dialog {
 					ChonNguonSuachua_Baoduong cnsb = new ChonNguonSuachua_Baoduong(shell, SWT.DIALOG_TRIM, user);
 					cnsb.open();
 					nsb = cnsb.getResult();
-					if (ViewAndEdit_MODE_dsb == null)
+					if (ViewAndEdit_MODE_dsb == null) {
+						fillNguonSuachuaBaoduong(nsb);
 						return;
+					}
 					if (nsb == null) {
 						MessageBox m = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
 						m.setText("Xóa dữ liệu cũ?");
@@ -316,6 +318,9 @@ public class Taodot_Baoduong extends Dialog {
 						Insert_dx = ndx.result;
 						if (Insert_dx == null)
 							return;
+						else {
+							fillDexuat(Insert_dx);
+						}
 						if (ViewAndEdit_MODE_dsb == null)
 							return;
 						if (ViewAndEdit_MODE_dsb.getMA_DOT_THUCHIEN_SUACHUA_BAODUONG() <= 0)
@@ -678,10 +683,13 @@ public class Taodot_Baoduong extends Dialog {
 			private void TaoMoi_DotSuachua_Baoduong() throws SQLException {
 				if (checkTextNotNULL()) {
 					DOT_THUCHIEN_SUACHUA_BAODUONG dsb = getDOT_SUACHUA_BAODUONG();
-					int ict = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
+					int key = controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
 							.InsertDOT_THUCHIEN_SUACHUA_BAODUONG(dsb, null, null);
-					if (ict >= 0) {
-						dsb.setMA_DOT_THUCHIEN_SUACHUA_BAODUONG(ict);
+					dsb.setMA_DOT_THUCHIEN_SUACHUA_BAODUONG(key);
+					if (key >= 0) {
+						if (nsb != null)
+							dsb.setMA_NGUONSUACHUA_BAODUONG(nsb.getMA_NGUONSUACHUA_BAODUONG());
+						controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG().update_DOT_THUCHIEN_SUACHUA_BAODUONG(dsb);
 						int Ma_Quatrinh_Dexuat_thuchien = getMaQuantrinhDexuatThuchien(Insert_dx);
 						if (Ma_Quatrinh_Dexuat_thuchien > 0)
 							controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG()
@@ -690,7 +698,7 @@ public class Taodot_Baoduong extends Dialog {
 						TreeItem[] til = tree_PTTS.getItems();
 						if (til.length > 0) {
 							for (TreeItem ti : til) {
-								dsb.setMA_DOT_THUCHIEN_SUACHUA_BAODUONG(ict);
+								dsb.setMA_DOT_THUCHIEN_SUACHUA_BAODUONG(key);
 								Row_PTTSthamgia_Baoduong rp = (Row_PTTSthamgia_Baoduong) ti.getData();
 								controler.getControl_DOT_THUCHIEN_SUACHUA_BAODUONG_TAISAN()
 										.set_DOT_THUCHIEN_SUACHUA_TAISAN(dsb, rp);
@@ -758,6 +766,14 @@ public class Taodot_Baoduong extends Dialog {
 			return;
 		NGUONSUACHUA_BAODUONG nsb = controler.getControl_NGUONSUACHUA_BAODUONG()
 				.get_NguonSuachua_Baoduong(viewAndEdit_MODE_dsb2);
+		if (nsb == null)
+			return;
+		text_Tenlienhe.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());
+		text_Gioithieu.setText(nsb.getGIOI_THIEU());
+		text_Lienhe.setText(nsb.getLIEN_HE());
+	}
+
+	void fillNguonSuachuaBaoduong(NGUONSUACHUA_BAODUONG nsb) {
 		if (nsb == null)
 			return;
 		text_Tenlienhe.setText(nsb.getTEN_NGUONSUACHUA_BAODUONG());

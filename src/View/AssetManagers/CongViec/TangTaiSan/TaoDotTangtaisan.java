@@ -179,8 +179,10 @@ public class TaoDotTangtaisan extends Dialog {
 					ChonNguontang cnt = new ChonNguontang(shltMuaSm, SWT.DIALOG_TRIM, user, 0);
 					cnt.open();
 					nt = cnt.getResult();
-					if (dtt == null)
+					if (dtt == null) {
+						fillNguontang(nt);
 						return;
+					}
 					if (nt == null) {
 						MessageBox m = new MessageBox(shltMuaSm, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
 						m.setText("Xóa dữ liệu cũ?");
@@ -352,6 +354,8 @@ public class TaoDotTangtaisan extends Dialog {
 						dexuat = ndx.result;
 						if (dexuat == null)
 							return;
+						else
+							fillDexuat(dexuat);
 						if (dtt == null)
 							return;
 						if (dtt.getMA_DOT_TANG() <= 0)
@@ -752,6 +756,14 @@ public class TaoDotTangtaisan extends Dialog {
 		text_Gioithieu.setText("");
 		text_Lienhe.setText("");
 		NGUONTANG nt = controler.getControl_NGUONTANG().get_NguonTang(dtt2);
+		if (nt != null) {
+			text_TenNguonTang.setText(nt.getTEN_NGUONTANG());
+			text_Gioithieu.setText(nt.getGIOI_THIEU());
+			text_Lienhe.setText(nt.getLIEN_HE());
+		}
+	}
+
+	protected void fillNguontang(NGUONTANG nt) throws SQLException {
 		if (nt != null) {
 			text_TenNguonTang.setText(nt.getTEN_NGUONTANG());
 			text_Gioithieu.setText(nt.getGIOI_THIEU());

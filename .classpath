@@ -46,6 +46,7 @@
 	<classpathentry kind="lib" path="lib/Base64/commons-codec-1.10-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/commonlogging/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/commonlogging/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="lib/jasper/itext-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/jasper/poi-3.12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

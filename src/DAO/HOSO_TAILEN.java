@@ -1,7 +1,5 @@
 package DAO;
 
-import java.util.Date;
-
 public class HOSO_TAILEN {
 	private int MA_HOSO_TAILEN;
 	private String TEN_TAI_KHOAN;

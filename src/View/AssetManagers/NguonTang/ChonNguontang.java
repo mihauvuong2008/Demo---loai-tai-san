@@ -208,7 +208,7 @@ public class ChonNguontang extends Dialog {
 
 		Button btnChn = new Button(shlChnNgunTng, SWT.NONE);
 		btnChn.setImage(user.getIcondata().successIcon);
-		GridData gd_btnChn = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_btnChn = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gd_btnChn.widthHint = 75;
 		btnChn.setLayoutData(gd_btnChn);
 		btnChn.addSelectionListener(new SelectionAdapter() {

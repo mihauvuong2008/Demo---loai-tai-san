@@ -9,6 +9,8 @@ import java.util.Collection;
 
 import javax.imageio.ImageIO;
 
+import com.lowagie.text.FontFactory;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,6 +24,7 @@ public class Relator {
 	public void getRelator(ArrayList<BeanRealator> ldx) throws JRException {
 		InputStream arg = Relator.class.getResourceAsStream("/Report/report3.jrxml");
 		JasperReport repot = JasperCompileManager.compileReport(arg);
+		FontFactory.registerDirectories();
 		JasperPrint print = JasperFillManager.fillReport(repot, null, getDataSource(ldx));
 		JasperViewer jv = new JasperViewer(print, false);
 		// JasperViewer.viewReport(print, false);

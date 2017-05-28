@@ -64,6 +64,7 @@ import View.AssetManagers.Hoso.Vanban_View;
 import View.AssetManagers.NguonSuachua_Baoduong.ChonNguonSuachua_Baoduong;
 import View.AssetManagers.ThongBao.Library.ThongBao_Congviec_Creater;
 import View.AssetManagers.ThongBao.Library.Thongbao_Hoso_Creater;
+import View.Box.messageField;
 import View.DateTime.MyDateFormat;
 import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
@@ -589,12 +590,6 @@ public class CongViecCuaToi extends Shell {
 									Gui_Thongbao_Congviec(p.getCONGVIEC(), p.getPHANVIEC(), tb);
 									break;
 								case SWT.NO:
-									break;
-								case SWT.RETRY:
-									break;
-								case SWT.ABORT:
-									break;
-								case SWT.IGNORE:
 									break;
 								}
 							}
@@ -1220,9 +1215,6 @@ public class CongViecCuaToi extends Shell {
 			}
 		});
 		mntmXemVnBn.setText("Xem văn bản");
-
-		MenuItem mntmThmVnBn = new MenuItem(menu_3, SWT.NONE);
-		mntmThmVnBn.setText("Thêm văn bản");
 
 		TabItem tbtmChiTit = new TabItem(tabFolder_4, SWT.NONE);
 		tbtmChiTit.setText("Chi tiết");
@@ -2047,6 +2039,17 @@ public class CongViecCuaToi extends Shell {
 		if (tree_Tiepnhan.isVisible()) {
 			TreeItem[] ti = tree_Tiepnhan.getSelection();
 			if (ti.length > 0) {
+				messageField m = new messageField();
+				int rs = m.showBox(getShell(), "Chú ý", "Kiểm tra Hồ sơ trước khi nhận việc!, Thực hiện?",
+						SWT.ICON_WARNING | SWT.YES | SWT.NO);
+				switch (rs) {
+				case SWT.YES:
+					break;
+				case SWT.NO:
+					return;
+				default:
+					return;
+				}
 				boolean flag = true;
 				CONGVIEC_PHANVIEC p = (CONGVIEC_PHANVIEC) ti[0].getData();
 				Date THISDAY = controler.getControl_DATETIME_FROM_SERVER().get_CURRENT_DATETIME();
@@ -2091,10 +2094,10 @@ public class CongViecCuaToi extends Shell {
 									controler.getControl_THUCHIEN().get_GIAIDOAN_THUCHIEN(p.getMA_PHANVIEC()),
 									DukienThuchien);
 						} else {
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
-							m.setText("Công việc trước chưa giao");
-							m.setMessage("Đề xuất chưa chuyển giao");
-							m.open();
+							MessageBox msg = new MessageBox(getShell(), SWT.ICON_WARNING);
+							msg.setText("Công việc trước chưa giao");
+							msg.setMessage("Đề xuất chưa chuyển giao");
+							msg.open();
 							flag = false;
 						}
 					} else if (p.getPHANVIEC() instanceof GIAI_DOAN_NGHIEM_THU) {
@@ -2133,10 +2136,10 @@ public class CongViecCuaToi extends Shell {
 									controler.getControl_NGHIEMTHU().get_GIAIDOAN_NGHIEMTHU(p.getMA_PHANVIEC()),
 									DukienThuchien);
 						} else {
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
-							m.setText("Công việc trước chưa giao");
-							m.setMessage("Phần việc Tổ chức - Thực hiện chưa chuyển giao");
-							m.open();
+							MessageBox msg = new MessageBox(getShell(), SWT.ICON_WARNING);
+							msg.setText("Công việc trước chưa giao");
+							msg.setMessage("Phần việc Tổ chức - Thực hiện chưa chuyển giao");
+							msg.open();
 							flag = false;
 						}
 					} else if (p.getPHANVIEC() instanceof GIAI_DOAN_QUYET_TOAN) {
@@ -2163,13 +2166,9 @@ public class CongViecCuaToi extends Shell {
 										(DOT_THUCHIEN_TANG_TAISAN) p.getCONGVIEC(),
 										(GIAI_DOAN_QUYET_TOAN) p.getPHANVIEC());
 						} else if (p.getCONGVIEC() instanceof DOT_THUCHIEN_GIAM_TAISAN) {
+							// DO NOTHING
 						}
 						if (gdnt.getTHOI_DIEM_CHUYEN_GIAO() != null) {
-
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO);
-							m.setText("Chú ý");
-							m.setMessage("Kiểm tra Hồ sơ trước khi nhận việc!");
-							m.open();
 							controler.getControl_NGHIEMTHU().update_ThoiDiemKetthucPhanviec(gdnt, THISDAY);
 							controler.getControl_QUYETTOAN().update_ThoiDiemBatdauCongviec(
 									controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(p.getMA_PHANVIEC()),
@@ -2178,23 +2177,23 @@ public class CongViecCuaToi extends Shell {
 									controler.getControl_QUYETTOAN().get_GIAIDOAN_QUYETTOAN(p.getMA_PHANVIEC()),
 									DukienThuchien);
 						} else {
-							MessageBox m = new MessageBox(getShell(), SWT.ICON_WARNING);
-							m.setText("Công việc trước chưa giao");
-							m.setMessage("Phần việc Nghiệm thu - Bàn giao chưa chuyển giao");
-							m.open();
+							MessageBox msg = new MessageBox(getShell(), SWT.ICON_WARNING);
+							msg.setText("Công việc trước chưa giao");
+							msg.setMessage("Phần việc Nghiệm thu - Bàn giao chưa chuyển giao");
+							msg.open();
 							flag = false;
 						}
+					}
+					if (flag) {
+						MessageBox msg = new MessageBox(getShell(), SWT.ICON_WORKING);
+						msg.setText("Hoàn tất");
+						msg.setMessage("Tiếp nhận công việc thành công");
+						msg.open();
 					}
 				}
 				fillCongviecChotiepnhan();
 				fillCongviecDangThuchien();
 				fillCongviecDaThuchien();
-				if (flag) {
-					MessageBox m = new MessageBox(getShell(), SWT.ICON_WORKING);
-					m.setText("Hoàn tất");
-					m.setMessage("Tiếp nhận công việc thành công");
-					m.open();
-				}
 			}
 		}
 	}

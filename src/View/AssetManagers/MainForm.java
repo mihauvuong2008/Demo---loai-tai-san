@@ -78,7 +78,6 @@ import View.AboutUs.AboutUs;
 import View.AssetManagers.AppMessage.DefaultBoxMessage;
 import View.AssetManagers.CongViec.Baoduong.Taodot_Baoduong;
 import View.AssetManagers.CongViec.CongViecCuatoi.CongViecCuaToi;
-import View.AssetManagers.CongViec.CongviecDahoanthanh.Nhatky_Lamviec;
 import View.AssetManagers.CongViec.CongviecDangthuchien.GiaoViec;
 import View.AssetManagers.CongViec.Giamtaisan.TaoDotGiam;
 import View.AssetManagers.CongViec.Suachua.Taodot_Suachua;
@@ -96,14 +95,12 @@ import View.MarkItem.Fill_ItemData;
 import View.Template.FormTemplate;
 import View.Template.TreeRowStyle;
 import View.Template.TreeTemplate;
-import login.login;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.events.ExpandAdapter;
 import org.eclipse.swt.events.ExpandEvent;
 
-@SuppressWarnings("unused")
 public class MainForm {
 	protected Shell shell;
 	private Text text;
@@ -126,9 +123,6 @@ public class MainForm {
 	private final int treeviewHeight = 23;
 	private Table table_HosoGanday;
 	protected static NGUOIDUNG user;
-	private MenuItem menuItem_SEPARATOR1;
-	private MenuItem menuItem_SEPARATOR3;
-	private ToolItem toolItem;
 	private Text text_XuatXu;
 	private Tree tree_DanhsachTaisan;
 	private Tree Tree_DonViSuDung;
@@ -276,10 +270,34 @@ public class MainForm {
 		mntmngXut.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				user = null;
-				shell.dispose();
-				login l = new login();
-				l.open();
+				try {
+					restartApplication();
+				} catch (URISyntaxException | IOException e1) {
+					mf.showBox(shell, mf.Phathienloi, mf.loiKhoidonglaiungdung, SWT.ERROR);
+					log.error(e1.getMessage());
+					e1.printStackTrace();
+				}
+			}
+
+			public void restartApplication() throws URISyntaxException, IOException {
+				final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator
+						+ "java";
+				final File currentJar = new File(
+						MainForm.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+				/* is it a jar file? */
+				if (!currentJar.getName().endsWith(".jar"))
+					return;
+
+				/* Build command: java -jar application.jar */
+				final ArrayList<String> command = new ArrayList<String>();
+				command.add(javaBin);
+				command.add("-jar");
+				command.add(currentJar.getPath());
+
+				final ProcessBuilder builder = new ProcessBuilder(command);
+				builder.start();
+				System.exit(0);
 			}
 		});
 		mntmngXut.setText("Đăng xuất");
@@ -1028,7 +1046,7 @@ public class MainForm {
 		tltmLichDangKiem.setImage(user.getIcondata().LichDangkiemIcon);
 		tltmLichDangKiem.setText("Lịch Đăng kiểm");
 
-		ToolItem toolItem_3 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmTiuChunBo = new ToolItem(toolBar, SWT.NONE);
 		tltmTiuChunBo.addSelectionListener(new SelectionAdapter() {
@@ -1074,7 +1092,7 @@ public class MainForm {
 		tltmnhMcXng.setImage(user.getIcondata().DinhmucNhienlieu);
 		tltmnhMcXng.setText("Định mức Nhiên liệu");
 
-		toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmBoDng = new ToolItem(toolBar, SWT.NONE);
 		tltmBoDng.addSelectionListener(new SelectionAdapter() {
@@ -1136,7 +1154,7 @@ public class MainForm {
 		tltmGiamTaiSan.setImage(user.getIcondata().ThanhlyIcon);
 		tltmGiamTaiSan.setText("Thanh lý");
 
-		ToolItem toolItem_4 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmBnGiaoNi = new ToolItem(toolBar, SWT.NONE);
 		tltmBnGiaoNi.addSelectionListener(new SelectionAdapter() {
@@ -1178,7 +1196,7 @@ public class MainForm {
 		tltmTiuChunKhu.setImage(user.getIcondata().LienheDichvuIcon);
 		tltmTiuChunKhu.setText("Liên hệ");
 
-		ToolItem toolItem_2 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmCongViecCuaToi = new ToolItem(toolBar, SWT.NONE);
 		tltmCongViecCuaToi.addSelectionListener(new SelectionAdapter() {
@@ -1234,7 +1252,7 @@ public class MainForm {
 		tltmBiu.setText("Biểu đồ");
 		tltmBiu.setImage(user.getIcondata().BieudoIcon);
 
-		ToolItem toolItem_1 = new ToolItem(toolBar, SWT.SEPARATOR);
+		new ToolItem(toolBar, SWT.SEPARATOR);
 
 		ToolItem tltmCapNhatThongTin = new ToolItem(toolBar, SWT.NONE);
 		tltmCapNhatThongTin.addSelectionListener(new SelectionAdapter() {
@@ -1839,12 +1857,17 @@ public class MainForm {
 		menuItem_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				try {
-					pmth.OpenForm_LichDangKiem_PhuongtienGiaothong(fi.getInt_Xemay());
-				} catch (SQLException e1) {
-					mf.showBox(shell, mf.Phathienloi, mf.OpenForm_LichDangKiem_PhuongtienGiaothong_Error, SWT.ERROR);
-					log.error(e1.getMessage());
-				}
+				MessageBox m = new MessageBox(shell);
+				m.setMessage("Hiện thực cho phiên bản nâng cấp");
+				m.open();
+				// try {
+				// pmth.OpenForm_LichDangKiem_PhuongtienGiaothong(fi.getInt_Xemay());
+				// } catch (SQLException e1) {
+				// mf.showBox(shell, mf.Phathienloi,
+				// mf.OpenForm_LichDangKiem_PhuongtienGiaothong_Error,
+				// SWT.ERROR);
+				// log.error(e1.getMessage());
+				// }
 			}
 		});
 		menuItem_2.setText("Xem lịch đăng kiểm");
@@ -1870,7 +1893,7 @@ public class MainForm {
 		});
 		mntmBoDngPhng.setText("Bảo dưỡng Phương tiện giao thông");
 
-		MenuItem menuItem_6 = new MenuItem(menu_14, SWT.SEPARATOR);
+		new MenuItem(menu_14, SWT.SEPARATOR);
 
 		MenuItem mntmXutFileExcel_1 = new MenuItem(menu_14, SWT.NONE);
 		mntmXutFileExcel_1.addSelectionListener(new SelectionAdapter() {
@@ -2381,7 +2404,7 @@ public class MainForm {
 		});
 		mntmXoa.setText("Xóa thông tin tài sản");
 
-		menuItem_SEPARATOR1 = new MenuItem(menu_11, SWT.SEPARATOR);
+		new MenuItem(menu_11, SWT.SEPARATOR);
 
 		mntmHienthiNamconlai = new MenuItem(menu_11, SWT.CHECK);
 		mntmHienthiNamconlai.setText("Hiển thị Năm sử dụng còn lại");
@@ -2449,7 +2472,7 @@ public class MainForm {
 		});
 		mntmHSChuyn_1.setText("Hồ sơ  chuyển giao Nội bộ");
 
-		MenuItem menuItem = new MenuItem(menu_11, SWT.SEPARATOR);
+		new MenuItem(menu_11, SWT.SEPARATOR);
 
 		MenuItem mntmSaChaTi = new MenuItem(menu_11, SWT.NONE);
 		mntmSaChaTi.addSelectionListener(new SelectionAdapter() {
@@ -2503,7 +2526,7 @@ public class MainForm {
 		});
 		mntmChuynTiSn.setText("Thanh lý tài sản");
 
-		menuItem_SEPARATOR3 = new MenuItem(menu_11, SWT.SEPARATOR);
+		new MenuItem(menu_11, SWT.SEPARATOR);
 
 		MenuItem mntmXuata = new MenuItem(menu_11, SWT.NONE);
 		mntmXuata.addSelectionListener(new SelectionAdapter() {
@@ -3217,14 +3240,12 @@ public class MainForm {
 
 		Label lblTNgy = new Label(grpMuaSm, SWT.NONE);
 		lblTNgy.setText("Từ ngày:");
-
-		DateTime dateTime = new DateTime(grpMuaSm, SWT.BORDER);
+		new Label(grpMuaSm, SWT.NONE);
 
 		Label lblnNgy = new Label(grpMuaSm, SWT.NONE);
 		lblnNgy.setBounds(0, 0, 55, 15);
 		lblnNgy.setText("Đến ngày: ");
-
-		DateTime dateTime_1 = new DateTime(grpMuaSm, SWT.BORDER);
+		new Label(grpMuaSm, SWT.NONE);
 
 		Label lblStMua = new Label(grpMuaSm, SWT.NONE);
 		lblStMua.setText("Số đợt mua sắm:");
@@ -3418,8 +3439,7 @@ public class MainForm {
 		if (w != null) {
 			w.dispose();
 			Drager dg = new Drager(tree_DanhsachTaisan);
-			MainTableBuilder tcs = new MainTableBuilder(tree_DanhsachTaisan, Mainformfiller, mntmHienthiNamconlai,
-					mntmHienthiGiatriconlai);
+			new MainTableBuilder(tree_DanhsachTaisan, Mainformfiller, mntmHienthiNamconlai, mntmHienthiGiatriconlai);
 			Droper NhomTaisan = new Droper(tree_NHOMTaisan_Codinh_huuhinh, mh);
 			ThongkeDanhsachPhuongtienTaisan tkdsptts = new ThongkeDanhsachPhuongtienTaisan(
 					ThongtinThongkeDanhsachTaisan, controler);

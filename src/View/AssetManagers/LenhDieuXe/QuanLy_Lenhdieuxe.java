@@ -311,7 +311,7 @@ public class QuanLy_Lenhdieuxe extends Dialog {
 		label_12.setText("Địa điểm, giờ đón:");
 
 		text_Diadiemgiodon = new Text(shlQunLLnh, SWT.BORDER);
-		text_Diadiemgiodon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		text_Diadiemgiodon.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		text_Diadiemgiodon.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 
 		Label label_13 = new Label(shlQunLLnh, SWT.NONE);

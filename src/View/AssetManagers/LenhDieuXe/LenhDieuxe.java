@@ -71,6 +71,7 @@ public class LenhDieuxe extends Dialog {
 	private Object result;
 	private DateTime dateTime_GioXuatphat;
 	private Composite composite_DateXuatphat;
+	private Button btnTaoThongBao;
 
 	public LenhDieuxe(Shell parent, int Style, NGUOIDUNG user, PHUONGTIEN_GIAOTHONG ptgt) throws SQLException {
 		super(parent, Style);
@@ -347,12 +348,12 @@ public class LenhDieuxe extends Dialog {
 		composite_DateXuatphat.setLayout(gl_composite);
 		composite_DateXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 
-		dateTime_GioXuatphat = new DateTime(composite_DateXuatphat, SWT.BORDER | SWT.TIME);
-		dateTime_GioXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
 		dateTime_Ngaydi = new DateTime(composite_DateXuatphat, SWT.BORDER);
 		dateTime_Ngaydi.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		dateTime_Ngaydi.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
+
+		dateTime_GioXuatphat = new DateTime(composite_DateXuatphat, SWT.BORDER | SWT.TIME);
+		dateTime_GioXuatphat.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		Label lblNgyV = new Label(shlThngTiniu, SWT.NONE);
 		lblNgyV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -683,10 +684,11 @@ public class LenhDieuxe extends Dialog {
 		GridData gd_text_Noidung = new GridData(SWT.FILL, SWT.FILL, true, true, 5, 1);
 		gd_text_Noidung.heightHint = 101;
 		text_Noidung.setLayoutData(gd_text_Noidung);
-		new Label(shlThngTiniu, SWT.NONE);
-		new Label(shlThngTiniu, SWT.NONE);
-		new Label(shlThngTiniu, SWT.NONE);
-		new Label(shlThngTiniu, SWT.NONE);
+
+		btnTaoThongBao = new Button(shlThngTiniu, SWT.CHECK);
+		btnTaoThongBao.setSelection(true);
+		btnTaoThongBao.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		btnTaoThongBao.setText("Thêm vào lịch tuần");
 
 		btnHonTt = new Button(shlThngTiniu, SWT.NONE);
 		btnHonTt.addSelectionListener(new SelectionAdapter() {
@@ -708,7 +710,8 @@ public class LenhDieuxe extends Dialog {
 								controler.getControl_LENH_DIEU_XE().insert_LENH_DIEU_XE(l);
 								controler.getControl_PHUONGTIEN_GIAOTHONG().update_soKmXe(Maptgt,
 										Integer.valueOf(text_SoKmhientai.getText()));
-								addLichLamviec(l);
+								if (btnTaoThongBao.getSelection())
+									addLichLamviec(l);
 							}
 							shlThngTiniu.dispose();
 
@@ -721,8 +724,8 @@ public class LenhDieuxe extends Dialog {
 
 			private void addLichLamviec(LENH_DIEU_XE l) throws SQLException {
 				LICH_CONG_TAC lct = new LICH_CONG_TAC();
-				lct.setNOIDUNG(l.getTEN_TAI_KHOAN() + ": " + "Điều xe ô tô: " + combo_Bienso.getText()
-						+ l.getDIADIEM_GIODON() + "; " + "; Nội dung: " + l.getNOIDUNG_CHUYENDI());
+				lct.setNOIDUNG(l.getTEN_TAI_KHOAN() + ": " + "Điều xe ô tô: " + combo_Bienso.getText() + "; "
+						+ l.getDIADIEM_GIODON() + "; " + "Nội dung: " + l.getNOIDUNG_CHUYENDI());
 				lct.setTHOIGIAN(l.getNGAY_DI());
 				controler.getControl_LICH_CONG_TAC().InsertLICH_CONG_TAC(lct);
 			}

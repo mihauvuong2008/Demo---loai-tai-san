@@ -17,8 +17,8 @@ public class query_Select_THONGBAO {
 					+ "THONGBAO.NGUON_TACDONG, THONGBAO.NGUON_BITACDONG, THONGBAO.NOIDUNG_THONGBAO, THONGBAO.NGAY_THONGBAO "
 					+ "FROM THONGBAO, NGUOIDUNG_NHAN_THONGBAO WHERE NGUOIDUNG_NHAN_THONGBAO.MA_THONGBAO = THONGBAO.MA_THONGBAO AND LOAI_THONGBAO = '"
 					+ f.getInt_LOAI_THONGBAO_LenhDieuxe() + "'  AND NGUOIDUNG_NHAN_THONGBAO.TEN_TAI_KHOAN = '"
-					+ user.getTEN_TAI_KHOAN() + "'  AND NGAY_THONGBAO > '" + mdf.getSQLStringDate(date)
-					+ "' AND NGAY_THONGBAO < '" + mdf.getSQLStringDate(date2) + "';";
+					+ user.getTEN_TAI_KHOAN() + "'  AND NGAY_THONGBAO >= '" + mdf.getSQLStringDate(date)
+					+ "' AND NGAY_THONGBAO <= '" + mdf.getSQLStringDate(date2) + "';";
 		} catch (Exception e) {
 			return null;
 		}
@@ -32,7 +32,7 @@ public class query_Select_THONGBAO {
 					+ "FROM THONGBAO, NGUOIDUNG_NHAN_THONGBAO WHERE NGUOIDUNG_NHAN_THONGBAO.MA_THONGBAO = THONGBAO.MA_THONGBAO AND (LOAI_THONGBAO = '"
 					+ f.getInt_LOAI_THONGBAO_Suachua() + "' OR LOAI_THONGBAO = '" + f.getInt_LOAI_THONGBAO_Baoduong()
 					+ "' )  AND NGUOIDUNG_NHAN_THONGBAO.TEN_TAI_KHOAN = '" + user.getTEN_TAI_KHOAN()
-					+ "' AND NGAY_THONGBAO > '" + mdf.getSQLStringDate(date) + "' AND NGAY_THONGBAO < '"
+					+ "' AND NGAY_THONGBAO >= '" + mdf.getSQLStringDate(date) + "' AND NGAY_THONGBAO <= '"
 					+ mdf.getSQLStringDate(date2) + "';";
 		} catch (Exception e) {
 			return null;
@@ -47,7 +47,7 @@ public class query_Select_THONGBAO {
 					+ "FROM THONGBAO, NGUOIDUNG_NHAN_THONGBAO WHERE NGUOIDUNG_NHAN_THONGBAO.MA_THONGBAO = THONGBAO.MA_THONGBAO AND (LOAI_THONGBAO = '"
 					+ f.getInt_LOAI_THONGBAO_Muasam() + "' OR LOAI_THONGBAO='" + f.getInt_LOAI_THONGBAO_Thanhly()
 					+ "' ) AND NGUOIDUNG_NHAN_THONGBAO.TEN_TAI_KHOAN = '" + user.getTEN_TAI_KHOAN()
-					+ "' AND NGAY_THONGBAO > '" + mdf.getSQLStringDate(date) + "' AND NGAY_THONGBAO < '"
+					+ "' AND NGAY_THONGBAO >= '" + mdf.getSQLStringDate(date) + "' AND NGAY_THONGBAO <= '"
 					+ mdf.getSQLStringDate(date2) + "';";
 		} catch (Exception e) {
 			return null;
@@ -61,8 +61,8 @@ public class query_Select_THONGBAO {
 					+ "THONGBAO.NGUON_TACDONG, THONGBAO.NGUON_BITACDONG, THONGBAO.NOIDUNG_THONGBAO, THONGBAO.NGAY_THONGBAO "
 					+ "FROM THONGBAO, NGUOIDUNG_NHAN_THONGBAO WHERE NGUOIDUNG_NHAN_THONGBAO.MA_THONGBAO = THONGBAO.MA_THONGBAO AND LOAI_THONGBAO = '"
 					+ f.getInt_LOAI_THONGBAO_Nguoidung() + "' AND NGUOIDUNG_NHAN_THONGBAO.TEN_TAI_KHOAN = '"
-					+ user.getTEN_TAI_KHOAN() + "' AND NGAY_THONGBAO > '" + mdf.getSQLStringDate(date)
-					+ "' AND NGAY_THONGBAO < '" + mdf.getSQLStringDate(date2) + "';";
+					+ user.getTEN_TAI_KHOAN() + "' AND NGAY_THONGBAO >= '" + mdf.getSQLStringDate(date)
+					+ "' AND NGAY_THONGBAO <= '" + mdf.getSQLStringDate(date2) + "';";
 		} catch (Exception e) {
 			return null;
 		}
@@ -75,8 +75,8 @@ public class query_Select_THONGBAO {
 					+ "THONGBAO.NGUON_TACDONG, THONGBAO.NGUON_BITACDONG, THONGBAO.NOIDUNG_THONGBAO, THONGBAO.NGAY_THONGBAO "
 					+ "FROM THONGBAO, NGUOIDUNG_NHAN_THONGBAO WHERE NGUOIDUNG_NHAN_THONGBAO.MA_THONGBAO = THONGBAO.MA_THONGBAO AND LOAI_THONGBAO = '"
 					+ f.getInt_LOAI_THONGBAO_ThongbaoKhac() + "' AND NGUOIDUNG_NHAN_THONGBAO.TEN_TAI_KHOAN = '"
-					+ user.getTEN_TAI_KHOAN() + "' AND NGAY_THONGBAO > '" + mdf.getSQLStringDate(date)
-					+ "' AND NGAY_THONGBAO < '" + mdf.getSQLStringDate(date2) + "';";
+					+ user.getTEN_TAI_KHOAN() + "' AND NGAY_THONGBAO >= '" + mdf.getSQLStringDate(date)
+					+ "' AND NGAY_THONGBAO <= '" + mdf.getSQLStringDate(date2) + "';";
 		} catch (Exception e) {
 			return null;
 		}

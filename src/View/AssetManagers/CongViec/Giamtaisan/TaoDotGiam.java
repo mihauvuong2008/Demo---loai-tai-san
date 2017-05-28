@@ -178,8 +178,10 @@ public class TaoDotGiam extends Dialog {
 					ChonNguonGiam cng = new ChonNguonGiam(shell, SWT.DIALOG_TRIM, user);
 					cng.open();
 					ng = cng.getResult();
-					if (dgt == null)
+					if (dgt == null) {
+						fillNguonGiam(ng);
 						return;
+					}
 					if (ng == null) {
 						MessageBox m = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO | SWT.CLOSE);
 						m.setText("Xóa dữ liệu cũ?");
@@ -356,6 +358,8 @@ public class TaoDotGiam extends Dialog {
 						dexuat = ndx.result;
 						if (dexuat == null)
 							return;
+						else
+							fillDexuat(dexuat);
 						if (dgt == null)
 							return;
 						if (dgt.getMA_DOT_GIAM() <= 0)
@@ -477,6 +481,14 @@ public class TaoDotGiam extends Dialog {
 		text_Gioithieu.setText("");
 		text_Lienhe.setText("");
 		NGUONGIAM ng = controler.getControl_NGUONGIAM().get_NguonGiam(dgt);
+		if (ng == null)
+			return;
+		text_Tenlienhe.setText(ng.getTEN_NGUONGIAM());
+		text_Gioithieu.setText(ng.getGIOI_THIEU());
+		text_Lienhe.setText(ng.getLIEN_HE());
+	}
+
+	private void fillNguonGiam(NGUONGIAM ng) throws SQLException {
 		if (ng == null)
 			return;
 		text_Tenlienhe.setText(ng.getTEN_NGUONGIAM());

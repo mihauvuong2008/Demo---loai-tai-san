@@ -57,6 +57,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 	private static Log log = LogFactory.getLog(EditPhuongtienGiaothong.class);
 	Fill_ItemData f = new Fill_ItemData();
 	private NGUOIDUNG user;
+	private Text text_Tenphuongtien;
 
 	/**
 	 * Create the dialog.
@@ -103,10 +104,11 @@ public class EditPhuongtienGiaothong extends Dialog {
 	private void createContents() throws SQLException {
 		shlCpNhtPhng = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE);
 		shlCpNhtPhng.setImage(user.getIcondata().carIcon);
-		shlCpNhtPhng.setSize(350, 480);
+		shlCpNhtPhng.setSize(350, 520);
 		new FormTemplate().setCenterScreen(shlCpNhtPhng);
 		shlCpNhtPhng.setText("Cập nhật Phương tiện giao thông");
-		shlCpNhtPhng.setLayout(new GridLayout(2, false));
+		GridLayout gl_shlCpNhtPhng = new GridLayout(2, false);
+		shlCpNhtPhng.setLayout(gl_shlCpNhtPhng);
 
 		Group group = new Group(shlCpNhtPhng, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -114,9 +116,12 @@ public class EditPhuongtienGiaothong extends Dialog {
 		group.setLayout(new GridLayout(2, false));
 
 		Label label = new Label(group, SWT.NONE);
+		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_label.widthHint = 100;
+		label.setLayoutData(gd_label);
 		label.setText("Mã tài sản:");
 
-		text_Mataisan = new Text(group, SWT.BORDER | SWT.RIGHT);
+		text_Mataisan = new Text(group, SWT.RIGHT);
 		text_Mataisan.setEditable(false);
 		text_Mataisan.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_HIGHLIGHT_SHADOW));
 		text_Mataisan.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -149,10 +154,19 @@ public class EditPhuongtienGiaothong extends Dialog {
 		text_Seri.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group group_1 = new Group(shlCpNhtPhng, SWT.NONE);
-		group_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		group_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		group_1.setText("Thông tin xe");
 		group_1.setLayout(new GridLayout(2, false));
 		group_1.setBounds(0, 37, 334, 260);
+
+		Label lblTnPtgt = new Label(group_1, SWT.NONE);
+		GridData gd_lblTnPtgt = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_lblTnPtgt.verticalIndent = 3;
+		lblTnPtgt.setLayoutData(gd_lblTnPtgt);
+		lblTnPtgt.setText("Tên Phương tiện:");
+
+		text_Tenphuongtien = new Text(group_1, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		text_Tenphuongtien.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Label label_4 = new Label(group_1, SWT.NONE);
 		label_4.setText("Loại phương tiện:");
@@ -286,6 +300,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 		text_TenTaisan.setText(t.getTEN_TAISAN());
 		text_Model.setText(t.getMODEL());
 		text_Seri.setText(t.getSERI());
+		text_Tenphuongtien.setText(ptgt.getTEN_PHUONGTIEN_GIAOTHONG());
 		f.setComboBox_LOAIPHUONGTIEN_Phuongtien_Giaothong(combo_LoaiPhuongtien, loaiPTTG);
 		f.setComboBox_LOAI_NHIENLIEU(combo_LoainhienLieu);
 		init_LoaiPhuongtien();
@@ -314,6 +329,7 @@ public class EditPhuongtienGiaothong extends Dialog {
 
 	PHUONGTIEN_GIAOTHONG getPhuongtienGiaothong() {
 		PHUONGTIEN_GIAOTHONG pg = ptgt;
+		ptgt.setTEN_PHUONGTIEN_GIAOTHONG(text_Tenphuongtien.getText());
 		pg.setLOAI_PHUONGTIEN_GIAOTHONG((int) combo_LoaiPhuongtien.getData(combo_LoaiPhuongtien.getText()));
 		pg.setMA_LOAI_XE(((LOAI_XE) combo_Loaixe.getData(combo_Loaixe.getText())).getMA_LOAI_XE());
 		pg.setBIENSO(text_Biensoxe.getText());
